@@ -100,7 +100,8 @@ class UsersController extends JoshController
             $request['pic'] = $safeName;
         }
         //check whether use should be activated by default or not
-        $activate = $request->get('activate') ? true : false;
+        //$activate = $request->get('activate') ? true : false;
+        $activate = true;
 
         try {
             // Register the user
