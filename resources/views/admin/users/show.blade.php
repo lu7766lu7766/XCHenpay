@@ -49,11 +49,7 @@
                             <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                             Change Password</a>
                     </li>
-                    <li>
-                        <a href="{{ URL::to('admin/user_profile') }}" >
-                            <i class="livicon" data-name="gift" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                            Advanced User Profile</a>
-                    </li>
+
 
                 </ul>
                 <div  class="tab-content mar-top">

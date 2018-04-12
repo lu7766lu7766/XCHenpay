@@ -379,9 +379,11 @@ class UsersController extends JoshController
             // create activation record for user and send mail with activation link
             $data->user_name = $user->first_name .' '. $user->last_name;
             $data->activationUrl = URL::route('activate', [$user->id, Activation::create($user)->code]);
-            // Send the activation code through email
-            Mail::to($user->email)
-                ->send(new Restore($data));
+
+            //todo Send the activation code through email
+//            Mail::to($user->email)
+//                ->send(new Restore($data));
+
             // Prepare the success message
             $success = trans('users/message.success.restored');
             activity($user->full_name)
