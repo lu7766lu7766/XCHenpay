@@ -134,6 +134,12 @@
                 <div class="nav_icons">
                     <ul class="sidebar_threeicons">
                         <li>
+                            <a href="{{ route('admin.dashboard') }}">
+                                <i class="livicon" data-name="dashboard" title="Dashboard" data-loop="true"
+                                   data-color="#e9573f" data-hc="#e9573f" data-s="25"></i>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ URL::to('admin/users') }}">
                                 <i class="livicon" data-name="user" title="Users" data-loop="true"
                                    data-color="#6CC66C" data-hc="#6CC66C" data-s="25"></i>
@@ -143,12 +149,6 @@
                             <a href="{{ URL::to('admin/auth_code') }}">
                                 <i class="livicon" data-name="table" title="Advanced tables" data-loop="true"
                                    data-color="#418BCA" data-hc="#418BCA" data-s="25"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ URL::to('admin/tasks') }}">
-                                <i class="livicon" data-name="list-ul" title="Tasks" data-loop="true"
-                                   data-color="#e9573f" data-hc="#e9573f" data-s="25"></i>
                             </a>
                         </li>
                         <li>

@@ -2,7 +2,7 @@
 
     <li {!! (Request::is('admin') ? 'class="active"' : '') !!}>
         <a href="{{ route('admin.dashboard') }}">
-            <i class="livicon" data-name="dashboard" data-size="18" data-c="#418BCA" data-hc="#418BCA"
+            <i class="livicon" data-name="dashboard" data-size="18" data-c="#e9573f" data-hc="#e9573f"
                data-loop="true"></i>
             <span class="title">Dashboard</span>
         </a>
