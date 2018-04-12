@@ -48,7 +48,7 @@
         <a href="#">
             <i class="livicon" data-name="table" data-c="#418bca" data-hc="#418bca" data-size="18"
                data-loop="true"></i>
-            <span class="title">Auth Code</span>
+            <span class="title">Trade Manage</span>
             <span class="fa arrow"></span>
         </a>
 
@@ -56,7 +56,7 @@
             <li {!! (Request::is('admin/auth_code') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('admin/auth_code') }}">
                     <i class="fa fa-angle-double-right"></i>
-                    AuthCode Manage
+                    Trade list
                 </a>
             </li>
         </ul>

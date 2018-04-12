@@ -2,19 +2,19 @@
 
 {{-- Page title --}}
 @section('title')
-    Advanced Data Tables
+    Trade List
     @parent
 @stop
 
 {{-- page level styles --}}
 @section('header_styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/buttons.bootstrap.css') }}"/>
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/colReorder.bootstrap.css') }}"/>
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/colReorder.bootstrap.css') }}"/>--}}
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}"/>
-        <link rel="stylesheet" type="text/css"href="{{ asset('assets/vendors/datatables/css/rowReorder.bootstrap.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/rowReorder.bootstrap.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/buttons.bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/scroller.bootstrap.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/tables.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/tables.css') }}"/>
 @stop
 
 {{-- Page content --}}
@@ -22,7 +22,7 @@
 
     <section class="content-header">
         <!--section starts-->
-        <h1>Advanced Data Tables</h1>
+        <h1>Trade Manage</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.dashboard') }}">
@@ -31,9 +31,9 @@
                 </a>
             </li>
             <li>
-                <a href="#">Auth Code</a>
+                <a href="#">Trade Manage</a>
             </li>
-            <li class="active">Advanced Data Tables</li>
+            <li class="active">Trade list</li>
         </ol>
     </section>
     <!--section ends-->
@@ -44,9 +44,9 @@
                     <div class="panel-heading clearfix  ">
                         <div class="panel-title pull-left">
                             <div class="caption">
-                                <i class="livicon" data-name="camera" data-size="16" data-loop="true" data-c="#fff"
+                                <i class="livicon" data-name="table" data-size="16" data-loop="true" data-c="#fff"
                                    data-hc="white"></i>
-                                TableTools
+                                Trade list
                             </div>
                         </div>
                     </div>
@@ -67,17 +67,17 @@
                             </thead>
                             <tbody>
                             @foreach($authCodes as $authCode)
-                            <tr>
-                                <td>{{ $authCode->id }}</td>
-                                {{--<td>{{ $authCode->auth_code }}</td>--}}
-                                <td>{{ $authCode->trade_seq }}</td>
-                                <td>{{ $authCode->trade_service_id }}</td>
-                                <td>{{ $authCode->payment_type }}</td>
-                                <td>{{ $authCode->amount }}</td>
-                                <td>{{ $authCode->currency }}</td>
-                                {{--<td>{{ $authCode->timestamp }}</td>--}}
-                                <td>{{ $authCode->created_at }}</td>
-                            </tr>
+                                <tr>
+                                    <td>{{ $authCode->id }}</td>
+                                    {{--<td>{{ $authCode->auth_code }}</td>--}}
+                                    <td>{{ $authCode->trade_seq }}</td>
+                                    <td>{{ $authCode->trade_service_id }}</td>
+                                    <td>{{ $authCode->payment_type }}</td>
+                                    <td>{{ $authCode->amount }}</td>
+                                    <td>{{ $authCode->currency }}</td>
+                                    {{--<td>{{ $authCode->timestamp }}</td>--}}
+                                    <td>{{ $authCode->created_at }}</td>
+                                </tr>
                             @endforeach
 
                             </tbody>
@@ -136,7 +136,7 @@
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/pdfmake.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/pages/table-advanced.js') }}"></script>
 
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.colReorder.js') }}"></script>
+{{--    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.colReorder.js') }}"></script>--}}
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.rowReorder.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/jeditable/js/jquery.jeditable.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.responsive.js') }}"></script>
