@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-Users List
+{{ trans('users/UserList/title.title') }}
 @parent
 @stop
 
@@ -16,16 +16,16 @@ Users List
 {{-- Page content --}}
 @section('content')
 <section class="content-header">
-    <h1>Users</h1>
+    <h1>{{ trans('users/title.title') }}</h1>
     <ol class="breadcrumb">
         <li>
             <a href="{{ route('admin.dashboard') }}">
                 <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
-                Dashboard
+                {{ trans('general.dashboard') }}
             </a>
         </li>
-        <li><a href="#"> Users</a></li>
-        <li class="active">Users List</li>
+        <li><a href="#">{{ trans('users/title.title') }}</a></li>
+        <li class="active">{{ trans('users/UserList/title.title') }}</li>
     </ol>
 </section>
 
@@ -35,7 +35,7 @@ Users List
         <div class="panel panel-primary ">
             <div class="panel-heading">
                 <h4 class="panel-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    Users List
+                    {{ trans('users/UserList/title.title') }}
                 </h4>
             </div>
             <br />
@@ -44,13 +44,13 @@ Users List
                 <table class="table table-bordered width100" id="table">
                     <thead>
                         <tr class="filters">
-                            <th>ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>User E-mail</th>
-                            <th>Status</th>
-                            <th>Created At</th>
-                            <th>Actions</th>
+                            <th>{{ trans('users/UserList/form.ID') }}</th>
+                            <th>{{ trans('users/UserList/form.First Name') }}</th>
+                            <th>{{ trans('users/UserList/form.Last Name') }}</th>
+                            <th>{{ trans('users/UserList/form.User E-mail') }}</th>
+                            <th>{{ trans('users/UserList/form.Status') }}</th>
+                            <th>{{ trans('users/UserList/form.Created At') }}</th>
+                            <th>{{ trans('users/UserList/form.Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>

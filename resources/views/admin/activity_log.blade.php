@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Activity Log
+    {{ trans('ActivityLog/title.title') }}
     @parent
 @stop
 
@@ -17,16 +17,16 @@
 {{-- Page content --}}
 @section('content')
     <section class="content-header">
-        <h1>Activity log</h1>
+        <h1>{{ trans('ActivityLog/title.title') }}</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.dashboard') }}">
                     <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
-                    Dashboard
+                    {{ trans('general.dashboard') }}
                 </a>
             </li>
 
-            <li class="active">Activity log</li>
+            <li class="active">{{ trans('ActivityLog/title.title') }}</li>
         </ol>
     </section>
 
@@ -37,7 +37,7 @@
                 <div class="panel-heading">
                     <h4 class="panel-title"><i class="livicon" data-name="user" data-size="16" data-loop="true"
                                                data-c="#fff" data-hc="white"></i>
-                        Activity Log
+                        {{ trans('ActivityLog/title.title') }}
                     </h4>
                 </div>
                 <br/>
@@ -46,10 +46,10 @@
                         <table class="table table-bordered width100" id="table" >
                             <thead>
                             <tr class="filters">
-                                <th>UserID</th>
-                                <th>User Name</th>
-                                <th>Description</th>
-                                <th>Created At</th>
+                                <th>{{ trans('ActivityLog/form.UserID') }}</th>
+                                <th>{{ trans('ActivityLog/form.UserName') }}</th>
+                                <th>{{ trans('ActivityLog/form.Description') }}</th>
+                                <th>{{ trans('ActivityLog/form.CreatedAt') }}</th>
                             </tr>
                             </thead>
                             <tbody>

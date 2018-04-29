@@ -11,6 +11,15 @@ include_once 'web_builder.php';
 |
 */
 
+Route::get('setlocale/{locale}', function ($locale) {
+    if (in_array($locale, \Config::get('app.locales'))) {
+        Session::put('locale', $locale);
+        Session::put('fallback_locale', $locale);
+
+    }
+    return redirect()->back();
+});
+
 Route::pattern('slug', '[a-z0-9- _]+');
 
 Route::group(['prefix' => 'admin', 'namespace'=>'Admin'], function () {
@@ -80,9 +89,20 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
         Route::get('{user}/confirm-delete', 'UsersController@getModalDelete')->name('users.confirm-delete');
         Route::get('{user}/restore', 'UsersController@getRestore')->name('restore.user');
         Route::post('passwordreset', 'UsersController@passwordreset')->name('passwordreset');
-
     });
     Route::resource('users', 'UsersController');
+
+    Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('deleted_users');
+
+    # Company Management
+    Route::group([ 'prefix' => 'companies'], function () {
+        Route::get('data', 'CompanyController@data')->name('company.data');
+        Route::get('{company}/delete', 'CompanyController@destroy')->name('company.delete');
+        Route::get('{company}/confirm-delete', 'CompanyController@getModalDelete')->name('company.confirm-delete');
+        Route::get('{company}/restore', 'CompanyController@getRestore')->name('restore.company');
+        Route::post('{company}/passwordreset', 'CompanyController@passwordreset')->name('company.passwordreset');
+    });
+    Route::resource('company', 'CompanyController');
 
     Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('deleted_users');
 

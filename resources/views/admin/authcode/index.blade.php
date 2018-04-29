@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    Trade List
+    {{ trans('TradeList/title.title') }}
     @parent
 @stop
 
@@ -22,18 +22,18 @@
 
     <section class="content-header">
         <!--section starts-->
-        <h1>Trade Manage</h1>
+        <h1>{{ trans('LogQuery/title.title') }}</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.dashboard') }}">
                     <i class="livicon" data-name="home" data-size="14" data-loop="true"></i>
-                    Dashboard
+                    {{ trans('general.dashboard') }}
                 </a>
             </li>
             <li>
-                <a href="#">Trade Manage</a>
+                <a href="#">{{ trans('LogQuery/title.title') }}</a>
             </li>
-            <li class="active">Trade list</li>
+            <li class="active">{{ trans('TradeList/title.title') }}</li>
         </ol>
     </section>
     <!--section ends-->
@@ -46,7 +46,7 @@
                             <div class="caption">
                                 <i class="livicon" data-name="table" data-size="16" data-loop="true" data-c="#fff"
                                    data-hc="white"></i>
-                                Trade list
+                                {{ trans('TradeList/title.title') }}
                             </div>
                         </div>
                     </div>
@@ -54,29 +54,29 @@
                         <table class="table table-striped table-bordered" id="table1" width="100%">
                             <thead>
                             <tr>
-                                <th>Id</th>
-                                {{--<th>Auth Code</th>--}}
-                                <th>Trade squence</th>
-                                <th>Trade Service Id</th>
-                                <th>Payment Type</th>
-                                <th>Amount</th>
-                                <th>Currency</th>
-                                {{--<th>Time Stamp</th>--}}
-                                <th>Create At</th>
+                                <th>{{ trans('LogQuery/form.pay_summary') }}</th>
+                                <th>{{ trans('LogQuery/form.trade_seq') }}</th>
+                                <th>{{ trans('LogQuery/form.trade_service_id') }}</th>
+                                <th>{{ trans('LogQuery/form.item_code') }}</th>
+                                <th>{{ trans('LogQuery/form.payment_type') }}</th>
+                                <th>{{ trans('LogQuery/form.amount') }}</th>
+                                <th>{{ trans('LogQuery/form.currency') }}</th>
+                                <th>{{ trans('LogQuery/form.pay_start_time') }}</th>
+                                <th>{{ trans('LogQuery/form.pay_end_time') }}</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($authCodes as $authCode)
                                 <tr>
-                                    <td>{{ $authCode->id }}</td>
-                                    {{--<td>{{ $authCode->auth_code }}</td>--}}
+                                    <td>{{ $authCode->pay_summary }}</td>
                                     <td>{{ $authCode->trade_seq }}</td>
                                     <td>{{ $authCode->trade_service_id }}</td>
+                                    <td>{{ $authCode->item_code }}</td>
                                     <td>{{ $authCode->payment_type }}</td>
                                     <td>{{ $authCode->amount }}</td>
                                     <td>{{ $authCode->currency }}</td>
-                                    {{--<td>{{ $authCode->timestamp }}</td>--}}
-                                    <td>{{ $authCode->created_at }}</td>
+                                    <td>{{ $authCode->pay_start_time }}</td>
+                                    <td>{{ $authCode->pay_end_time }}</td>
                                 </tr>
                             @endforeach
 
@@ -108,11 +108,11 @@
                     <div class="modal-footer ">
                         <button type="button" class="btn btn-warning">
                             <span class="glyphicon glyphicon-ok-sign"></span>
-                            Yes
+                            {{ trans('general.yes') }}
                         </button>
                         <button type="button" class="btn btn-warning" data-dismiss="modal">
                             <span class="glyphicon glyphicon-remove"></span>
-                            No
+                            {{ trans('general.no') }}
                         </button>
                     </div>
                 </div>
