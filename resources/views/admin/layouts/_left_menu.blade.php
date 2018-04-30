@@ -44,40 +44,40 @@
         </ul>
     </li>
 
-    {{--<li {!! (Request::is('admin/companies') || Request::is('admin/companies/create') || Request::is('admin/companies_profile') || Request::is('admin/companies/*') || Request::is('admin/deleted_companies') ? 'class="active"' : '') !!}>--}}
-        {{--<a href="#">--}}
-            {{--<i class="livicon" data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"--}}
-               {{--data-loop="true"></i>--}}
-            {{--<span class="title">{{ trans('companies/title.title') }}</span>--}}
-            {{--<span class="fa arrow"></span>--}}
-        {{--</a>--}}
-        {{--<ul class="sub-menu">--}}
-            {{--<li {!! (Request::is('admin/companies') ? 'class="active" id="active"' : '') !!}>--}}
-                {{--<a href="{{ URL::to('admin/companies') }}">--}}
-                    {{--<i class="fa fa-angle-double-right"></i>--}}
-                    {{--{{ trans('companies/title.companies') }}--}}
-                {{--</a>--}}
-            {{--</li>--}}
-            {{--<li {!! (Request::is('admin/companies/create') ? 'class="active" id="active"' : '') !!}>--}}
-                {{--<a href="{{ URL::to('admin/companies/create') }}">--}}
-                    {{--<i class="fa fa-angle-double-right"></i>--}}
-                    {{--{{ trans('companies/title.addCompany') }}--}}
-                {{--</a>--}}
-            {{--</li>--}}
-            {{--<li {!! ((Request::is('admin/companies/*')) && !(Request::is('admin/companies/create')) ? 'class="active" id="active"' : '') !!}>--}}
-                {{--<a href="{{ URL::route('admin.companies.show',Sentinel::getUser()->id) }}">--}}
-                    {{--<i class="fa fa-angle-double-right"></i>--}}
-                    {{--{{ trans('companies/title.viewProfile') }}--}}
-                {{--</a>--}}
-            {{--</li>--}}
-            {{--<li {!! (Request::is('admin/deleted_companies') ? 'class="active" id="active"' : '') !!}>--}}
-                {{--<a href="{{ URL::to('admin/deleted_companies') }}">--}}
-                    {{--<i class="fa fa-angle-double-right"></i>--}}
-                    {{--{{ trans('companies/title.deletedCompanies') }}--}}
-                {{--</a>--}}
-            {{--</li>--}}
-        {{--</ul>--}}
-    {{--</li>--}}
+    <li {!! (Request::is('admin/companies') || Request::is('admin/companies/create') || Request::is('admin/companies_profile') || Request::is('admin/companies/*') || Request::is('admin/deleted_companies') ? 'class="active"' : '') !!}>
+        <a href="#">
+            <i class="livicon" data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+               data-loop="true"></i>
+            <span class="title">{{ trans('companies/title.title') }}</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="sub-menu">
+            <li {!! (Request::is('admin/companies') ? 'class="active" id="active"' : '') !!}>
+                <a href="{{ URL::to('admin/companies') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('companies/title.companies') }}
+                </a>
+            </li>
+            <li {!! (Request::is('admin/companies/create') ? 'class="active" id="active"' : '') !!}>
+                <a href="{{ URL::to('admin/companies/create') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('companies/title.addCompany') }}
+                </a>
+            </li>
+            <li {!! ((Request::is('admin/companies/*')) && !(Request::is('admin/companies/create')) ? 'class="active" id="active"' : '') !!}>
+                <a href="{{ URL::route('admin.companies.show',Sentinel::getUser()->id) }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('companies/title.viewProfile') }}
+                </a>
+            </li>
+            <li {!! (Request::is('admin/deleted_companies') ? 'class="active" id="active"' : '') !!}>
+                <a href="{{ URL::to('admin/deleted_companies') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('companies/title.deletedCompanies') }}
+                </a>
+            </li>
+        </ul>
+    </li>
 
     <li {!! (Request::is('admin/auth_code') ? 'class="active"' : '') !!}>
         <a href="{{ URL::to('admin/auth_code') }}">

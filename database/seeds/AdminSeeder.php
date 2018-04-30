@@ -16,8 +16,8 @@ class AdminSeeder extends DatabaseSeeder {
 		$admin = Sentinel::registerAndActivate(array(
 			'email'       => 'admin@admin.com',
 			'password'    => "admin",
-			'first_name'  => 'John',
-			'last_name'   => 'Doe',
+			'first_name'  => 'Admin',
+			'last_name'   => 'Wang',
 		));
 
 		$adminRole = Sentinel::getRoleRepository()->createModel()->create([

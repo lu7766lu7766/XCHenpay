@@ -6,6 +6,6 @@
 
 return array(
 
-    'title'		=> '厂商列表',
+    'title'		=> '新增厂商',
 
 );

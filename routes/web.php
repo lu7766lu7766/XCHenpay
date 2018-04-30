@@ -96,15 +96,17 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
 
     # Company Management
     Route::group([ 'prefix' => 'companies'], function () {
-        Route::get('data', 'CompanyController@data')->name('company.data');
-        Route::get('{company}/delete', 'CompanyController@destroy')->name('company.delete');
-        Route::get('{company}/confirm-delete', 'CompanyController@getModalDelete')->name('company.confirm-delete');
+        Route::get('data', 'CompanyController@data')->name('companies.data');
+        Route::get('{company}/delete', 'CompanyController@destroy')->name('companies.delete');
+        Route::get('{company}/confirm-delete', 'CompanyController@getModalDelete')->name('companies.confirm-delete');
         Route::get('{company}/restore', 'CompanyController@getRestore')->name('restore.company');
+//        Route::get('{company}/restore', function(){ dd("Dfsgd");
+//        })->name('restore.company');
         Route::post('{company}/passwordreset', 'CompanyController@passwordreset')->name('company.passwordreset');
     });
-    Route::resource('company', 'CompanyController');
-
-    Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('deleted_users');
+    Route::resource('companies', 'CompanyController');
+//    Route::get('deleted_companies',['before' => 'Sentinel', 'companies' => 'CompanyController@getDeletedCompanies'])->name('deleted_companies');
+    Route::get('deleted_companies','CompanyController@getDeletedCompanies')->name('deleted_companies');
 
     //tasks section
     Route::post('task/create', 'TaskController@store')->name('store');

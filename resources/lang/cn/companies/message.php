@@ -6,8 +6,8 @@
 
 return [
 
-    'user_exists'              => 'User already exists!',
-    'user_not_found'           => 'User [:id] does not exist.',
+    'company_exists'              => 'Company already exists!',
+    'company_not_found'           => 'Company [:id] does not exist.',
     'user_login_required'      => 'The login field is required',
     'user_password_required'   => 'The password is required.',
     'insufficient_permissions' => 'Insufficient Permissions.',

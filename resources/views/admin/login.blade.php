@@ -33,12 +33,12 @@
                             <form action="{{ route('signin') }}" autocomplete="on" method="post" role="form" id="login_form">
                                 <h3 class="black_bg">
                                     <img src="{{ asset('assets/img/3rdpay_logo.png') }}" alt="josh logo">
-                                    <br>Log In</h3>
+                                    <br>@lang('SignIn/form.logIn')</h3>
                                     <!-- CSRF Token -->
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <div class="form-group {{ $errors->first('email', 'has-error') }}">
                                     <label style="margin-bottom:0px;" for="email" class="uname control-label"> <i class="livicon" data-name="mail" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
-                                        E-mail
+                                        @lang('SignIn/form.Email')
                                     </label>
                                     <input id="email" name="email" type="email" placeholder="E-mail"
                                            value="{!! old('email') !!}"/>
@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="form-group {{ $errors->first('password', 'has-error') }}">
                                     <label style="margin-bottom:0px;" for="password" class="youpasswd"> <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
-                                        Password
+                                        @lang('SignIn/form.Password')
                                     </label>
                                     <input id="password" name="password" type="password" placeholder="Enter a password" />
                                     <div class="col-sm-12">
@@ -59,20 +59,22 @@
                                     <label>
                                         <input type="checkbox" name="remember-me" id="remember-me" value="remember-me"
                                                class="square-blue"/>
-                                        Keep me logged in
+                                        @lang('SignIn/form.Keeploggedin')
                                     </label>
                                 </div>
                                 <p class="login button">
-                                    <input type="submit" value="Log In" class="btn btn-success" />
+                                    <input type="submit" value=@lang('SignIn/form.logIn') class="btn btn-success" />
                                 </p>
-                                <p class="change_link">
-                                    <a href="#toforgot">
-                                        <button type="button" class="btn btn-responsive botton-alignment btn-warning btn-sm">Forgot password</button>
-                                    </a>
-                                    <a href="#toregister">
-                                        <button type="button" id="signup" class="btn btn-responsive botton-alignment btn-success btn-sm" style="float:right;">Sign Up</button>
-                                    </a>
-                                </p>
+
+                                {{--//todo 把這兩個導到我做的新稱使用者--}}
+                                {{--<p class="change_link">--}}
+                                    {{--<a href="#toforgot">--}}
+                                        {{--<button type="button" class="btn btn-responsive botton-alignment btn-warning btn-sm">Forgot password</button>--}}
+                                    {{--</a>--}}
+                                    {{--<a href="#toregister">--}}
+                                        {{--<button type="button" id="signup" class="btn btn-responsive botton-alignment btn-success btn-sm" style="float:right;">Sign Up</button>--}}
+                                    {{--</a>--}}
+                                {{--</p>--}}
                             </form>
                         </div>
                         <div id="register" class="animate form">

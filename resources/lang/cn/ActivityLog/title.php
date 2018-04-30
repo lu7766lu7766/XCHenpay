@@ -6,6 +6,6 @@
 
 return array(
 
-    'title'		=> '活动日志',
+    'title'		=> '帐户活动日志',
 
 );

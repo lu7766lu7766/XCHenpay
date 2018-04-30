@@ -5,11 +5,12 @@
 */
 
 return array(
-    'title' => '用户',
-    'users' => '用户列表',
-	'addUser' => '新增用户',
-	'viewProfile' => '个人资料',
-	'deletedUsers' => '被删除的用户',
+    'title' => '厂商',
+    'companies' => '厂商列表',
+	'addCompany' => '新增厂商',
+	'viewProfile' => '厂商资料',
+	'deletedCompanies' => '被删除的厂商',
+    'editCompanies' => '修改厂商资料',
 
 
 	'user_profile'			=> '用户资料',
