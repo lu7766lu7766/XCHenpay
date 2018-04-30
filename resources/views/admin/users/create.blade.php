@@ -148,7 +148,7 @@
 
 
                                         <div class="form-group">
-                                            <label for="bio" class="col-sm-2 control-label">@lang('users/AddUser/form.bio') <small>(brief intro) *</small></label>
+                                            <label for="bio" class="col-sm-2 control-label">@lang('users/AddUser/form.bio')*</label>
                                             <div class="col-sm-10">
                         <textarea name="bio" id="bio" class="form-control resize_vertical"
                                   rows="4">{!! old('bio') !!}</textarea>

@@ -100,8 +100,6 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
         Route::get('{company}/delete', 'CompanyController@destroy')->name('companies.delete');
         Route::get('{company}/confirm-delete', 'CompanyController@getModalDelete')->name('companies.confirm-delete');
         Route::get('{company}/restore', 'CompanyController@getRestore')->name('restore.company');
-//        Route::get('{company}/restore', function(){ dd("Dfsgd");
-//        })->name('restore.company');
         Route::post('{company}/passwordreset', 'CompanyController@passwordreset')->name('company.passwordreset');
     });
     Route::resource('companies', 'CompanyController');

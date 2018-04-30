@@ -7,6 +7,7 @@ use App\Http\Controllers\JoshController;
 use App\Http\Requests\UserRequest;
 use App\User;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
+use function compact;
 use File;
 use Hash;
 use Illuminate\Http\Request;
@@ -93,8 +94,7 @@ class CompanyController extends JoshController
                 ->causedBy($company)
                 ->log('New Company Created by '.Sentinel::getUser()->full_name);
             // Redirect to the home page with success menu
-//            return Redirect::route('admin.companies.storeSuccess')->with('success', trans('companies/message.success.create'))->with('pwd', $data['sceret_key']);
-            return view('admin/companies.storeSuccess')->with('pwd', $data['sceret_key']);
+            return Redirect::route('admin.companies.show', compact('company'))->with('success', trans('companies/message.success.create'));
         } catch (LoginRequiredException $e) {
             $error = trans('admin/companies/message.user_login_required');
         } catch (UserExistsException $e) {
@@ -207,6 +207,12 @@ class CompanyController extends JoshController
             // Delete the group
             $company->delete();
 
+            //Activity log for user update
+            activity($company->name)
+                ->performedOn($company)
+                ->causedBy($company)
+                ->log('Company deleted by '.Sentinel::getUser()->full_name);
+
             // Redirect to the group management page
             return Redirect::route('admin.companies.index')->with('success', trans('companies/message.success.delete'));
         } catch (GroupNotFoundException $e) {
@@ -232,7 +238,7 @@ class CompanyController extends JoshController
 
             // Prepare the success message
             $success = trans('companies/message.success.restored');
-            activity($company->full_name)
+            activity($company->name)
                 ->performedOn($company)
                 ->causedBy($company)
                 ->log('Company restored by '.Sentinel::getUser()->full_name);
