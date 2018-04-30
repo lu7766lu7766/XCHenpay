@@ -95,14 +95,14 @@
                         <li>
                             <a href="{{ URL::route('admin.users.show',Sentinel::getUser()->id) }}">
                                 <i class="livicon" data-name="user" data-s="18"></i>
-                                My Profile
+                                @lang('DefaultBlade/form.MyProfile')
                             </a>
                         </li>
                         <li role="presentation"></li>
                         <li>
                             <a href="{{ route('admin.users.edit', Sentinel::getUser()->id) }}">
                                 <i class="livicon" data-name="gears" data-s="18"></i>
-                                Account Settings
+                                @lang('DefaultBlade/form.AccountSettings')
                             </a>
                         </li>
                         <!-- Menu Footer-->
@@ -110,13 +110,13 @@
                             <div class="pull-left">
                                 <a href="{{ URL::route('lockscreen',Sentinel::getUser()->id) }}">
                                     <i class="livicon" data-name="lock" data-size="16" data-c="#555555" data-hc="#555555" data-loop="true"></i>
-                                    Lock
+                                    @lang('DefaultBlade/form.Lock')
                                 </a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ URL::to('admin/logout') }}">
                                     <i class="livicon" data-name="sign-out" data-s="15"></i>
-                                    Logout
+                                    @lang('DefaultBlade/form.Logout')
                                 </a>
                             </div>
                         </li>
@@ -135,7 +135,7 @@
                     <ul class="sidebar_threeicons">
                         <li>
                             <a href="{{ route('admin.dashboard') }}">
-                                <i class="livicon" data-name="dashboard" title="Dashboard" data-loop="true"
+                                <i class="livicon" data-name="home" title="Dashboard" data-loop="true"
                                    data-color="#e9573f" data-hc="#e9573f" data-s="25"></i>
                             </a>
                         </li>

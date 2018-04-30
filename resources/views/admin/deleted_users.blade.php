@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-Deleted users
+@lang('users/DeletedUsers/title.title')
 @parent
 @stop
 
@@ -23,11 +23,11 @@ Deleted users
                     <li>
                         <a href="{{ route('admin.dashboard') }}">
                             <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
-                            Dashboard
+                            @lang('general.dashboard')
                         </a>
                     </li>
-                    <li><a href="#"> Users</a></li>
-                    <li class="active">Deleted users</li>
+                    <li><a href="#">@lang('users/title.title')</a></li>
+                    <li class="active">@lang('users/DeletedUsers/title.title')</li>
                 </ol>
             </section>
             <!-- Main content -->
@@ -37,7 +37,7 @@ Deleted users
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <i class="livicon" data-name="users-remove" data-size="18" data-c="#ffffff" data-hc="#ffffff"></i>
-                    Deleted Users List
+                    @lang('users/DeletedUsers/title.list')
                 </h4>
             </div>
             <div class="panel-body">
@@ -45,20 +45,20 @@ Deleted users
                 <table class="table table-bordered" id="table">
                     <thead>
                     <tr class="filters">
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>User E-mail</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
+                        <th>@lang('users/DeletedUsers/form.last_name')</th>
+                        <th>@lang('users/DeletedUsers/form.first_name')</th>
+                        <th>@lang('users/DeletedUsers/form.user_email')</th>
+                        <th>@lang('users/DeletedUsers/form.deleted_at')</th>
+                        <th>@lang('users/DeletedUsers/form.actions')</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td>{!! $user->first_name !!}</td>
                             <td>{!! $user->last_name !!}</td>
+                            <td>{!! $user->first_name !!}</td>
                             <td>{!! $user->email !!}</td>
-                            <td>{!! $user->created_at->diffForHumans() !!}</td>
+                            <td>{!! \Carbon\Carbon::parse($user->deleted_at)->diffForHumans() !!}</td>
                             <td>
                                 <a href="{{ route('admin.restore.user', $user->id) }}"><i class="livicon" data-name="user-flag" data-c="#6CC66C" data-hc="#6CC66C" data-size="18"></i></a>
                             </td>

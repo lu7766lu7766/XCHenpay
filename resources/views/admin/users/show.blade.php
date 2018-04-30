@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    View User Details
+    @lang('users/ViewProfile/title.title')
     @parent
 @stop
 
@@ -20,18 +20,18 @@
 @section('content')
     <section class="content-header">
         <!--section starts-->
-        <h1>User Profile</h1>
+        <h1>@lang('users/ViewProfile/title.title')</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.dashboard') }}">
                     <i class="livicon" data-name="home" data-size="14" data-loop="true"></i>
-                    Dashboard
+                    @lang('general.dashboard')
                 </a>
             </li>
             <li>
-                <a href="#">Users</a>
+                <a href="#">@lang('users/title.title')</a>
             </li>
-            <li class="active">User Profile</li>
+            <li class="active">@lang('users/ViewProfile/title.title')</li>
         </ol>
     </section>
     <!--section ends-->
@@ -42,12 +42,12 @@
                     <li class="active">
                         <a href="#tab1" data-toggle="tab">
                             <i class="livicon" data-name="user" data-size="16" data-c="#000" data-hc="#000" data-loop="true"></i>
-                            User Profile</a>
+                            @lang('users/ViewProfile/title.title')</a>
                     </li>
                     <li>
                         <a href="#tab2" data-toggle="tab">
                             <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                            Change Password</a>
+                            @lang('users/ViewProfile/title.change_password')</a>
                     </li>
 
 
@@ -60,7 +60,7 @@
                                     <div class="panel-heading">
                                         <h3 class="panel-title">
 
-                                            User Profile
+                                            @lang('users/ViewProfile/title.title')
                                         </h3>
 
                                     </div>
@@ -193,7 +193,7 @@
                                         <div class="form-group">
                                             {{ csrf_field() }}
                                             <label for="inputpassword" class="col-md-3 control-label">
-                                                Password
+                                                @lang('users/ViewProfile/form.newPassword')
                                                 <span class='require'>*</span>
                                             </label>
                                             <div class="col-md-9">
@@ -201,14 +201,14 @@
                                                             <span class="input-group-addon">
                                                                 <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                             </span>
-                                                    <input type="password" id="password" placeholder="Password" name="password"
+                                                    <input type="password" id="password" placeholder=@lang('users/ViewProfile/form.PasswordHolder') name="password"
                                                            class="form-control"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="inputnumber" class="col-md-3 control-label">
-                                                Confirm Password
+                                                @lang('users/ViewProfile/form.confirmPassword')
                                                 <span class='require'>*</span>
                                             </label>
                                             <div class="col-md-9">
@@ -216,7 +216,7 @@
                                                             <span class="input-group-addon">
                                                                 <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                             </span>
-                                                    <input type="password" id="password-confirm" placeholder="Confirm Password" name="confirm_password"
+                                                    <input type="password" id="password-confirm" placeholder=@lang('users/ViewProfile/form.confirmPasswordHolder') name="confirm_password"
                                                            class="form-control"/>
                                                 </div>
                                             </div>
@@ -224,10 +224,10 @@
                                     </div>
                                     <div class="form-actions">
                                         <div class="col-md-offset-3 col-md-9">
-                                            <button type="submit" class="btn btn-primary" id="change-password">Submit
+                                            <button type="submit" class="btn btn-primary" id="change-password">@lang('users/ViewProfile/form.submit')
                                             </button>
                                             &nbsp;
-                                            <input type="reset" class="btn btn-default" value="Reset"></div>
+                                            <input type="reset" class="btn btn-default" value=@lang('users/ViewProfile/form.reset')></div>
                                     </div>
                                 </form>
                             </div>

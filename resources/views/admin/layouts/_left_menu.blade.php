@@ -2,7 +2,7 @@
 
     <li {!! (Request::is('admin') ? 'class="active"' : '') !!}>
         <a href="{{ route('admin.dashboard') }}">
-            <i class="livicon" data-name="dashboard" data-size="18" data-c="#e9573f" data-hc="#e9573f"
+            <i class="livicon" data-name="home" data-size="18" data-c="#e9573f" data-hc="#e9573f"
                data-loop="true"></i>
             <span class="title">{{ trans('general.dashboard') }}</span>
         </a>
@@ -46,7 +46,7 @@
 
     <li {!! (Request::is('admin/companies') || Request::is('admin/companies/create') || Request::is('admin/companies_profile') || Request::is('admin/companies/*') || Request::is('admin/deleted_companies') ? 'class="active"' : '') !!}>
         <a href="#">
-            <i class="livicon" data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
+            <i class="livicon" data-name="users" data-size="18" data-c="#67C5DF" data-hc="#67C5DF"
                data-loop="true"></i>
             <span class="title">{{ trans('companies/title.title') }}</span>
             <span class="fa arrow"></span>
