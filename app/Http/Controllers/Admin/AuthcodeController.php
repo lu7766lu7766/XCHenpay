@@ -16,7 +16,7 @@ class AuthcodeController extends Controller
             $paymentName = DB::table('payments')->where('i6pay_id', $log['payment_type'])->value('name');
             $authCodes[$key]['payment_type'] = $paymentName;
 
-            $currencyName = DB::table('currencies')->where('id', $log['currency'])->value('name');
+            $currencyName = DB::table('currencies')->where('id', $log['currency_id'])->value('name');
             $authCodes[$key]['currency'] = $currencyName;
         }
 

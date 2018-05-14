@@ -72,7 +72,7 @@
                                     <td>{{ $authCode->trade_seq }}</td>
                                     <td>{{ $authCode->trade_service_id }}</td>
                                     <td>{{ $authCode->item_code }}</td>
-                                    <td>{{ $authCode->payment_type }}</td>
+                                    <td>{{ $authCode->i6payment->name }}</td>
                                     <td>{{ $authCode->amount }}</td>
                                     <td>{{ $authCode->currency }}</td>
                                     <td>{{ $authCode->pay_start_time }}</td>
