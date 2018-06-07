@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li {!! ((Request::is('admin/users/*')) && !(Request::is('admin/users/create')) ? 'class="active" id="active"' : '') !!}>
-                <a href="{{ URL::route('admin.users.show',Sentinel::getUser()->id) }}">
+                <a href="{{ URL::route('admin.users.showProfile') }}">
                     <i class="fa fa-angle-double-right"></i>
                     {{ trans('users/title.viewProfile') }}
                 </a>

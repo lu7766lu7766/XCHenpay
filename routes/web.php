@@ -80,19 +80,25 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'as' => 'admin.'], f
 //    Route::get('/', 'JoshController@index')->name('index');
 });
 
-Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
-
-    # User Management
+# User Management
+Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin','users'], 'as' => 'admin.'], function () {
     Route::group([ 'prefix' => 'users'], function () {
         Route::get('data', 'UsersController@data')->name('users.data');
+        Route::get('showProfile', 'UsersController@showProfile')->name('users.showProfile');
+        Route::get('editProfile', 'UsersController@editProfile')->name('users.editProfile');
+        Route::get('updateProfile', 'UsersController@updateProfile')->name('users.updateProfile');
         Route::get('{user}/delete', 'UsersController@destroy')->name('users.delete');
         Route::get('{user}/confirm-delete', 'UsersController@getModalDelete')->name('users.confirm-delete');
         Route::get('{user}/restore', 'UsersController@getRestore')->name('restore.user');
         Route::post('passwordreset', 'UsersController@passwordreset')->name('passwordreset');
     });
     Route::resource('users', 'UsersController');
+    Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('users.deleted_users');
+});
 
-    Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('deleted_users');
+
+
+Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
 
     # Company Management
     Route::group([ 'prefix' => 'companies'], function () {

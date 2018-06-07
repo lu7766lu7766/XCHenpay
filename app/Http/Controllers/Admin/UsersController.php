@@ -29,7 +29,6 @@ class UsersController extends JoshController
 
     public function index()
     {
-
         // Show the page
         return view('admin.users.index', compact('users'));
     }
@@ -57,11 +56,27 @@ class UsersController extends JoshController
 
             })
             ->addColumn('actions',function($user) {
-                $actions = '<a href='. route('admin.users.show', $user->id) .'><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>
-                            <a href='. route('admin.users.edit', $user->id) .'><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.update user') . '></i></a>';
-                if ((Sentinel::getUser()->id != $user->id) && ($user->id != 1)) {
-                    $actions .= '<a href='. route('admin.users.confirm-delete', $user->id) .' data-toggle="modal" data-target="#delete_confirm"><i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=' . trans('users/UserList/form.delete user') . '></i></a>';
-                }
+                $showLink = '<a href='. route('admin.users.show', $user->id) .'><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>';
+                $showSelfLink = '<a href='. route('admin.users.showProfile') .'><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>';
+                $editLink = '<a href='. route('admin.users.edit', $user->id) .'><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.update user') . '></i></a>';
+                $editSelfLink = '<a href='. route('admin.users.editProfile') .'><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.update user') . '></i></a>';
+                $deleteLink = '<a href='. route('admin.users.confirm-delete', $user->id) .' data-toggle="modal" data-target="#delete_confirm"><i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=' . trans('users/UserList/form.delete user') . '></i></a>';
+
+                $actions = '';
+                if(Sentinel::getUser()->id != $user->id)
+                    $actions .= $showLink;
+                else
+                    $actions .= $showSelfLink;
+
+                if(Sentinel::getUser()->id != $user->id)
+                    $actions .= $editLink;
+                else
+                    $actions .= $editSelfLink;
+
+
+                if (Sentinel::inRole('admin') && Sentinel::getUser()->id != $user->id)           //check if user is admin
+                    $actions .= $deleteLink;
+
                 return $actions;
             })
             ->rawColumns(['actions'])
@@ -150,7 +165,6 @@ class UsersController extends JoshController
      */
     public function edit(User $user)
     {
-
         // Get this user groups
         $userRoles = $user->getRoles()->pluck('name', 'id')->all();
         // Get a list of all the available groups
@@ -162,6 +176,13 @@ class UsersController extends JoshController
 
         // Show the page
         return view('admin.users.edit', compact('user', 'roles', 'userRoles', 'countries', 'status'));
+    }
+
+    public function editProfile()
+    {
+        $user = Sentinel::getUser();
+
+        return $this->edit($user);
     }
 
     /**
@@ -274,6 +295,12 @@ class UsersController extends JoshController
 
         // Redirect to the user page
         return Redirect::route('admin.users.edit', $user)->withInput()->with('error', $error);
+    }
+
+    public function updateProfile(UserRequest $request)
+    {
+        $user = Sentinel::getUser();
+        return $this->update($user, $request);
     }
 
     /**
@@ -407,11 +434,9 @@ class UsersController extends JoshController
      * @param  int $id
      * @return Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         try {
-            // Get the user information
-            $user = Sentinel::findUserById($id);
             //get country name
             if ($user->country) {
                 $user->country = $this->countries[$user->country];
@@ -427,7 +452,14 @@ class UsersController extends JoshController
 
     }
 
-    public function passwordreset( Request $request)
+    public function showProfile()
+    {
+        $user = Sentinel::getUser();
+
+        return $this->show($user);
+    }
+
+    public function passwordreset(Request $request)
     {
         $id = $request->id;
         $user = Sentinel::findUserById($id);
