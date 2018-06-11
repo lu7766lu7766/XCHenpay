@@ -34,7 +34,7 @@ class CompanyController extends JoshController
     public function index()
     {
         // Show the page
-        return view('admin.companies.index', compact('companies'));
+        return view('admin.companies.index');
     }
 
     /*

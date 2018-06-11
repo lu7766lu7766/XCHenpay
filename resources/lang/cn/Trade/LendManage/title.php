@@ -6,6 +6,7 @@
 
 return array(
 
-    'title'		=> '订单查询',
+    'title'		=> '下发管理',
+
 
 );

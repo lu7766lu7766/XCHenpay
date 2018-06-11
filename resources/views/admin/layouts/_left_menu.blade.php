@@ -83,20 +83,38 @@
         <a href="{{ URL::to('admin/auth_code') }}">
             <i class="livicon" data-name="table" data-c="#418bca" data-hc="#418bca" data-size="18"
                data-loop="true"></i>
-            {{--<span class="title">--}}
-                {{ trans('LogQuery/title.title') }}
-            {{--</span>--}}
-            {{--<span class="fa arrow"></span>--}}
+            <span class="title">
+                {{ trans('Trade/title.title') }}
+            </span>
+            <span class="fa arrow"></span>
         </a>
 
-        {{--<ul class="sub-menu">--}}
-            {{--<li {!! (Request::is('admin/auth_code') ? 'class="active"' : '') !!}>--}}
-                {{--<a href="{{ URL::to('admin/auth_code') }}">--}}
-                    {{--<i class="fa fa-angle-double-right"></i>--}}
-                    {{--{{ trans('LogQuery/title.title') }}--}}
-                {{--</a>--}}
-            {{--</li>--}}
-        {{--</ul>--}}
+        <ul class="sub-menu">
+            <li {!! (Request::is('admin/logQuery') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('admin/logQuery') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('Trade/LogQuery/title.title') }}
+                </a>
+            </li>
+        </ul>
+
+        <ul class="sub-menu">
+            <li {!! (Request::is('admin/lendApply') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('admin/lendApply') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('Trade/LendApply/title.title') }}
+                </a>
+            </li>
+        </ul>
+
+        <ul class="sub-menu">
+            <li {!! (Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('admin/lendManage') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('Trade/LendManage/title.title') }}
+                </a>
+            </li>
+        </ul>
     </li>
 
     {{--<li {!! (Request::is('admin/tasks') ? 'class="active"' : '') !!}>--}}

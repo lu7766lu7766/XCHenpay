@@ -1,8 +1,8 @@
-@extends('admin/layouts/default')
+@extends('admin.layouts.default')
 
 {{-- Page title --}}
 @section('title')
-    {{ trans('TradeList/title.title') }}
+    {{ trans('Trade/title.title') }}
     @parent
 @stop
 
@@ -22,7 +22,7 @@
 
     <section class="content-header">
         <!--section starts-->
-        <h1>{{ trans('LogQuery/title.title') }}</h1>
+        <h1>{{ trans('Trade/LogQuery/title.title') }}</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.dashboard') }}">
@@ -31,9 +31,9 @@
                 </a>
             </li>
             <li>
-                <a href="#">{{ trans('LogQuery/title.title') }}</a>
+                <a href="#">{{ trans('Trade/LogQuery/title.title') }}</a>
             </li>
-            <li class="active">{{ trans('TradeList/title.title') }}</li>
+            <li class="active">{{ trans('Trade/title.title') }}</li>
         </ol>
     </section>
     <!--section ends-->
@@ -46,7 +46,7 @@
                             <div class="caption">
                                 <i class="livicon" data-name="table" data-size="16" data-loop="true" data-c="#fff"
                                    data-hc="white"></i>
-                                {{ trans('TradeList/title.title') }}
+                                {{ trans('Trade/title.title') }}
                             </div>
                         </div>
                     </div>
@@ -54,15 +54,15 @@
                         <table class="table table-striped table-bordered" id="table1" width="100%">
                             <thead>
                             <tr>
-                                <th>{{ trans('LogQuery/form.pay_summary') }}</th>
-                                <th>{{ trans('LogQuery/form.trade_seq') }}</th>
-                                <th>{{ trans('LogQuery/form.trade_service_id') }}</th>
-                                <th>{{ trans('LogQuery/form.item_code') }}</th>
-                                <th>{{ trans('LogQuery/form.payment_type') }}</th>
-                                <th>{{ trans('LogQuery/form.amount') }}</th>
-                                <th>{{ trans('LogQuery/form.currency') }}</th>
-                                <th>{{ trans('LogQuery/form.pay_start_time') }}</th>
-                                <th>{{ trans('LogQuery/form.pay_end_time') }}</th>
+                                <th>{{ trans('Trade/LogQuery/form.pay_summary') }}</th>
+                                <th>{{ trans('Trade/LogQuery/form.trade_seq') }}</th>
+                                <th>{{ trans('Trade/LogQuery/form.trade_service_id') }}</th>
+                                <th>{{ trans('Trade/LogQuery/form.item_code') }}</th>
+                                <th>{{ trans('Trade/LogQuery/form.payment_type') }}</th>
+                                <th>{{ trans('Trade/LogQuery/form.amount') }}</th>
+                                <th>{{ trans('Trade/LogQuery/form.currency') }}</th>
+                                <th>{{ trans('Trade/LogQuery/form.pay_start_time') }}</th>
+                                <th>{{ trans('Trade/LogQuery/form.pay_end_time') }}</th>
                             </tr>
                             </thead>
                             <tbody>

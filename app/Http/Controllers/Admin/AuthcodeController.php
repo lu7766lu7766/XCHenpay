@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Authcode;
-use function compact;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
@@ -20,6 +19,6 @@ class AuthcodeController extends Controller
             $authCodes[$key]['currency'] = $currencyName;
         }
 
-        return view('admin.authcode.index', compact('authCodes'));
+        return view('admin.trade.logQuery', compact('authCodes'));
     }
 }

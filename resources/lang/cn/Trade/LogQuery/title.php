@@ -6,6 +6,7 @@
 
 return array(
 
-    'title'		=> '交易纪录',
+    'title'		=> '订单查询',
+
 
 );

@@ -42,8 +42,8 @@ class AdminSeeder extends DatabaseSeeder {
 			'name'  => 'User',
 			'slug'  => 'user',
             'permissions' => array(
-                'users.index' => true,
-                'users.data' => true,
+                'users.index' => false,
+                'users.data' => false,
                 'users.show' => false,
                 'users.edit' => false,
                 'users.update' => false,
@@ -53,8 +53,8 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.destroy' => false,
                 'users.getDeletedUsers' => false,
 
-                'companies.index' => true,
-                'companies.data' => true,
+                'companies.index' => false,
+                'companies.data' => false,
                 'companies.show' => false,
                 'companies.edit' => false,
                 'companies.update' => false,

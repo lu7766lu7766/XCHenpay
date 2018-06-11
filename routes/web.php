@@ -119,7 +119,15 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
     Route::post('task/{task}/delete', 'TaskController@delete')->name('delete');
 
 
-    Route::get('auth_code', 'AuthcodeController@index')->name('authcode.index');
+    Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
+
+    Route::get('lendApply', 'LendingController@index')->name('lendApply.index');
+    Route::get('lendApply/data', 'LendingController@data')->name('lendApply.data');
+    Route::post('lendApply/store', 'LendingController@store')->name('lendApply.store');
+    Route::post('lendApply/update', 'LendingController@update')->name('lendApply.update');
+    Route::post('lendApply/delete', 'LendingController@destroy')->name('lendApply.delete');
+
+    Route::get('lendManage', 'AuthcodeController@index');
 });
 
 
