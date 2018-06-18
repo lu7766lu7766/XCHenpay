@@ -22,7 +22,7 @@
 
     <section class="content-header">
         <!--section starts-->
-        <h1>{{ trans('Trade/LogQuery/title.title') }}</h1>
+        <h1>@lang('Trade/title.title')</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="{{ route('admin.dashboard') }}">
@@ -31,9 +31,9 @@
                 </a>
             </li>
             <li>
-                <a href="#">{{ trans('Trade/LogQuery/title.title') }}</a>
+                <a href="#">@lang('Trade/title.title')</a>
             </li>
-            <li class="active">{{ trans('Trade/title.title') }}</li>
+            <li class="active">@lang('Trade/LogQuery/title.title')</li>
         </ol>
     </section>
     <!--section ends-->
@@ -46,7 +46,7 @@
                             <div class="caption">
                                 <i class="livicon" data-name="table" data-size="16" data-loop="true" data-c="#fff"
                                    data-hc="white"></i>
-                                {{ trans('Trade/title.title') }}
+                                @lang('Trade/LogQuery/title.title')
                             </div>
                         </div>
                     </div>

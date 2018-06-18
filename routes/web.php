@@ -126,6 +126,7 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
     Route::post('lendApply/store', 'LendingController@store')->name('lendApply.store');
     Route::post('lendApply/update', 'LendingController@update')->name('lendApply.update');
     Route::post('lendApply/delete', 'LendingController@destroy')->name('lendApply.delete');
+    Route::get('lendApply/sendVerifyCode', 'LendingController@sendVerifyCode')->name('lendApply.verify');
 
     Route::get('lendManage', 'AuthcodeController@index');
 });

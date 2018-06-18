@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    JTable
+    @lang('Trade/title.title')
     @parent
 @stop
 
@@ -19,16 +19,16 @@
 {{-- Page content --}}
 @section('content')
     <section class="content-header">
-        <h1>JTable </h1>
+        <h1>@lang('Trade/title.title')</h1>
         <ol class="breadcrumb">
             <li>
                 <a href="index.html">
                     <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
-                    Dashboard
+                    @lang('general.dashboard')
                 </a>
             </li>
-            <li>Datatables</li>
-            <li class="active">JTable</li>
+            <li>@lang('Trade/title.title')</li>
+            <li class="active">@lang('Trade/lendApply/title.title')</li>
         </ol>
     </section>
     <!-- Main content -->
@@ -40,7 +40,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <i class="livicon" data-name="barchart" data-size="18" data-c="#fff" data-hc="#fff" data-loop="true"></i>
-                            JTable
+                            @lang('Trade/lendApply/title.title')
                         </h4>
                         <span class="pull-right">
                                     <i class="fa fa-fw fa-chevron-up clickable"></i>
@@ -53,15 +53,11 @@
 
                             <form class="form-inline" >
                                 <div class="form-group">
-                                    <label for="fname">First Name:</label>
-                                    <input type="text" name="name" id="fname" placeholder="First Name" class="form-control"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="lname">Last Name:</label>
-                                    <input type="text" name="lname" id="lname" placeholder="Last Name" class="form-control"/>
+                                    <label for="fname">@lang('Trade/lendApply/form.trade_service_id'):</label>
+                                    <input type="text" name="name" id="name" placeholder=@lang('Trade/lendApply/form.trade_service_id') class="form-control"/>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary" id="LoadRecordsButton">Filter</button>
+                                <button type="submit" class="btn btn-primary" id="LoadRecordsButton">@lang('Trade/lendApply/form.filter')</button>
                             </form>
                             <br>
                         </div>
@@ -71,7 +67,7 @@
                         </div>
                         <!-- An area to show selected rows (for demonstration) -->
                         <br>
-                        <button id="DeleteAllButton" class="btn btn-primary">Delete all selected records</button>
+                        <button id="LendAllButton" class="btn btn-primary">@lang('Trade/lendApply/form.applyAll')</button>
                         {{--Selected rows (refreshed on <b>selectionChanged</b> event):--}}
                         {{--<div id="SelectedRowList">--}}
                         {{--No row selected! Select rows to see here...--}}
@@ -94,7 +90,7 @@
 
             //Prepare jtable plugin
             $('#StudentTableContainer').jtable({
-                title: 'Employee List',
+                title: '订单列表',
                 paging: true, //Enable paging
                 pageSize: 10, //Set page size (default: 10)
                 sorting: true, //Enable sorting
@@ -109,63 +105,8 @@
                 },
                 actions: {
                     listAction:  "{{ url('admin/lendApply/data') }}",
-                    deleteAction: function (postData) {
-                        return $.Deferred(function ($dfd) {
-                            $.ajax({
-                                url: "{{ url('admin/lendApply/delete') }}",
-                                type: 'POST',
-                                dataType: 'json',
-                                data: postData,
-                                success: function (data) {
-                                    $dfd.resolve(data);
-                                },
-                                error: function () {
-                                    $dfd.reject();
-                                }
-                            });
-                        });
-                    },
-                    {{--updateAction: function (postData) {--}}
-                        {{--return $.Deferred(function ($dfd) {--}}
-                            {{--$.ajax({--}}
-                                {{--url: "{{ url('admin/lendApply/update') }}",--}}
-                                {{--type: 'POST',--}}
-                                {{--dataType: 'json',--}}
-                                {{--data: postData,--}}
-                                {{--success: function (data) {--}}
-                                    {{--console.log('success');--}}
-                                    {{--$dfd.resolve(data);--}}
-                                {{--},--}}
-                                {{--error: function (data) {--}}
-                                    {{--console.log('error');--}}
-                                    {{--console.log(data);--}}
-                                    {{--$dfd.reject();--}}
-                                {{--}--}}
-                            {{--});--}}
-                        {{--});--}}
-                    {{--},--}}
-                    {{--createAction: function (postData) {--}}
-                        {{--console.log("creating from custom function...");--}}
-                        {{--return $.Deferred(function ($dfd) {--}}
-                            {{--$.ajax({--}}
-                                {{--url: "{{ url('admin/lendApply/store') }}",--}}
-                                {{--type: 'POST',--}}
-                                {{--dataType: 'json',--}}
-                                {{--data: postData,--}}
-                                {{--success: function (data) {--}}
-                                    {{--console.log('success');--}}
-                                    {{--$dfd.resolve(data);--}}
-                                {{--},--}}
-                                {{--error: function (data) {--}}
-                                    {{--console.log('error');--}}
-                                    {{--console.log(data);--}}
-                                    {{--$dfd.reject();--}}
-                                {{--}--}}
-                            {{--});--}}
-                        {{--});--}}
-                    {{--}--}}
                     lendAction: function (postData) {
-                        console.log("creating from custom function...");
+                        // console.log("creating from custom lendAction...");
                         return $.Deferred(function ($dfd) {
                             $.ajax({
                                 url: "{{ url('admin/lendApply/store') }}",
@@ -173,12 +114,34 @@
                                 dataType: 'json',
                                 data: postData,
                                 success: function (data) {
-                                    console.log('success');
+                                    // console.log('success');
+                                    // console.log(data);
                                     $dfd.resolve(data);
                                 },
                                 error: function (data) {
-                                    console.log('error');
-                                    console.log(data);
+                                    // console.log('error');
+                                    // console.log(data);
+                                    $dfd.reject();
+                                }
+                            });
+                        });
+                    },
+                    verificationAction: function (postData) {
+                        // console.log("creating from custom verificationAction...");
+                        return $.Deferred(function ($dfd) {
+                            $.ajax({
+                                url: "{{ url('admin/lendApply/sendVerifyCode') }}",
+                                type: 'POST',
+                                dataType: 'json',
+                                data: postData,
+                                success: function (data) {
+                                    // console.log('success');
+                                    // console.log(data);
+                                    $dfd.resolve(data);
+                                },
+                                error: function (data) {
+                                    // console.log('error');
+                                    // console.log(data);
                                     $dfd.reject();
                                 }
                             });
@@ -193,14 +156,19 @@
                         edit: false,
                         list: false
                     },
+                    pay_summary: {
+                        title: '交易状态',{{--@lang('Trade/landApply/form.pay_summary')--}}
+                        width: '20%',
+                        inputClass: 'validate[required], form-control'
+                    },
                     trade_service_id: {
                         title: '交易服务编号',
-                        width: '23%',
+                        width: '20%',
                         inputClass: 'validate[required], form-control'
                     },
                     item_code: {
                         title: '产品编号',
-                        width: '23%',
+                        width: '20%',
                         inputClass: 'validate[required], form-control'
                     },
                     payment_type: {
@@ -210,12 +178,12 @@
                     },
                     amount: {
                         title: '金额',
-                        width: '15%',
+                        width: '10%',
                         inputClass: 'validate[required], form-control'
                     },
                     currency: {
                         title: '币别',
-                        width: '15%',
+                        width: '20%',
                         inputClass: 'validate[required,custom[email]], form-control'
                     }
 
@@ -226,23 +194,20 @@
             $('#StudentTableContainer').jtable('load');
 
             //Delete selected students
-            $('#DeleteAllButton').button().click(function () {
+            // $('#LendAllButton').button().click(function () {
+            $('#LendAllButton').on('click', function () {
                 var $selectedRows = $('#StudentTableContainer').jtable('selectedRows');
 
-                $('#StudentTableContainer').jtable('deleteRows', $selectedRows);
+                $('#StudentTableContainer').jtable('lendRows', $selectedRows);
             });
 
             //Re-load records when user click 'load records' button.
-            $('#LoadRecordsButton').click(function (e) {
+            $('#LoadRecordsButton').on('click', function (e) {
                 e.preventDefault();
                 $('#StudentTableContainer').jtable('load', {
-                    firstname: $('#name').val(),
-                    lastname: $('#lname').val()
+                    trade_service_id: $('#name').val()
                 });
             });
-
-            //Load all records when page is first shown
-            $('#LoadRecordsButton').click();
 
             $('.jtable-left-area select').addClass('form-control');
             // $('button').addClass('btn btn-default');
