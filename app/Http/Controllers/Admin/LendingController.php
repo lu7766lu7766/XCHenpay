@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Authcode;
 use App\Repositories\AuthCodes;
 use App\Repositories\VerifyCodes;
+use Carbon\Carbon;
 use Curl\Curl;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Response;
 use Illuminate\Support\Facades\DB;
 
@@ -62,26 +62,24 @@ class LendingController extends Controller
         ));
     }
 
-    public function store( Request $request)
+    private function store(Authcode $authCode, $account)
     {
-        $data = Authcode::find($request->id);
-        if($data->pay_state == 4){
-            info($data);
+        if($authCode->pay_state == 4){
             $jTableResult = [];
             $jTableResult['Result'] = "error";
             $jTableResult['Message'] = "此订单已申请下发";
             return $jTableResult;
         }else{
-            $data->pay_state = 4;
-            $data->pay_summary = '申请下发';
+            $authCode->pay_state = AuthCodes::lended_state;
+            $authCode->pay_summary = AuthCodes::lended_summary;
+            $authCode->account = $account;
         }
 
-        if($data->save() )
+        if($authCode->save() )
         {
-            info($data);
             $jTableResult = [];
             $jTableResult['Result'] = "OK";
-            $jTableResult['Record'] = $data;
+            $jTableResult['Record'] = $authCode;
             return $jTableResult;
         }
     }
@@ -97,24 +95,36 @@ class LendingController extends Controller
         $sendCode = new Curl();
         $sendCode->setBasicAuthentication($this->JIGUANG_appKey, $this->JIGUANG_masterSecret);
         $sendCode->setHeader('Content-Type', 'application/json');
-//        $sendCode->post('https://api.sms.jpush.cn/v1/messages', json_encode($data));
-//        $response = $sendCode->response;
-        $response = [];
+        $sendCode->post('https://api.sms.jpush.cn/v1/messages', json_encode($data));
+        $response = $sendCode->response;
+//        $response = [];
 
         if(array_key_exists('error', $response)){
             return $result = ['Result'=>'error', 'Message'=>$response->error->message];
         }else{
-            //todo: add $randCode to specific rows
             $verifyCode = $verifyCodes->createActiveCode($randCode);
-            $authCode = Authcode::find($request->id);
-            $verifyCode->attachCode($authCode);
-            dd($authCode->verifyCode->id);
+            foreach ($request->id as $id){
+                $authCode = Authcode::find($id);
+                $verifyCode->attachCode($authCode);
+            }
 
             return $result = [
                 'Result'=>'OK',
-//                'msg_id'=>$response->msg_id
                 'msg_id'=> $randCode
             ];
         }
+    }
+
+    public function verify(Request $request, VerifyCodes $verifyCodes)
+    {
+        $authCode = Authcode::find($request->id);
+        $verifyCode = $authCode->verifyCode;
+
+        $result = $verifyCodes->isActived($verifyCode, $request->code, Carbon::now());
+
+        if($result['Result'] == 'OK')       //申請下發
+            return $this::store($authCode, $request->account);
+        else
+            return $result;                 //回傳錯誤
     }
 }

@@ -16,8 +16,7 @@ class CreateVerifyCodesTable extends Migration
         Schema::create('verify_codes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code');
-            $table->integer('status');
-            $table->string('stat_summary');
+            $table->integer('active');
             $table->timestamps();
         });
     }

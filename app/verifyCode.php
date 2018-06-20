@@ -12,7 +12,7 @@ class verifyCode extends Model
 
     public function authCode()
     {
-        return $this->hasOne(Authcode::class, 'verifyCode_id', 'id');
+        return $this->hasMany(Authcode::class, 'verifyCode_id', 'id');
     }
 
     public function attachCode(Authcode $trade)

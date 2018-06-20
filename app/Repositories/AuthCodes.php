@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Authcode;
 
 class AuthCodes
 {
+    const lended_state = 4;
+
+    const lended_summary = '申请下发中';
 }

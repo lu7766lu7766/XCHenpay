@@ -109,7 +109,7 @@
                         // console.log("creating from custom lendAction...");
                         return $.Deferred(function ($dfd) {
                             $.ajax({
-                                url: "{{ url('admin/lendApply/store') }}",
+                                url: "{{ url('admin/lendApply/verify') }}",
                                 type: 'POST',
                                 dataType: 'json',
                                 data: postData,
@@ -127,7 +127,6 @@
                         });
                     },
                     verificationAction: function (postData) {
-                        // console.log("creating from custom verificationAction...");
                         return $.Deferred(function ($dfd) {
                             $.ajax({
                                 url: "{{ url('admin/lendApply/sendVerifyCode') }}",
@@ -198,7 +197,7 @@
             $('#LendAllButton').on('click', function () {
                 var $selectedRows = $('#StudentTableContainer').jtable('selectedRows');
 
-                $('#StudentTableContainer').jtable('lendRows', $selectedRows);
+                $('#StudentTableContainer').jtable('lendButtonClickedForRows', $selectedRows);
             });
 
             //Re-load records when user click 'load records' button.
