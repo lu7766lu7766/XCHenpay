@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Curl\Curl;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Validator;
 use Response;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +27,7 @@ class LendingController extends Controller
     public function index()
     {
         // Show the page
-        return view('admin.trade.lendApply', compact('companies'));
+        return view('admin.trade.lendApply');
     }
 
     public function data(Request $request)
@@ -64,6 +65,8 @@ class LendingController extends Controller
 
     private function store(Authcode $authCode, $account)
     {
+        //只有完成交易可以下發
+        //if($authCode->pay_state != 2){
         if($authCode->pay_state == 4){
             $jTableResult = [];
             $jTableResult['Result'] = "error";
@@ -86,6 +89,18 @@ class LendingController extends Controller
 
     public function sendVerifyCode( Request $request, VerifyCodes $verifyCodes)
     {
+        $validator = Validator::make( $request->toArray(), [
+            'mobile' => 'required'
+        ]);
+
+        if ($validator->fails())
+        {
+            return Response::json(array(
+                'Result' => 'error',
+                'Message'=> $validator->messages()
+            ));
+        }
+
         $data = [
             'mobile'=>$request->mobile,
             'temp_id'=>$this->JIGUANG_tempId,
@@ -117,6 +132,20 @@ class LendingController extends Controller
 
     public function verify(Request $request, VerifyCodes $verifyCodes)
     {
+        $validator = Validator::make( $request->toArray(), [
+            'id' => 'required|exists:authcodes,id',
+            'code' => 'required',
+            'account' => 'required'
+        ]);
+
+        if ($validator->fails())
+        {
+            return Response::json(array(
+                'Result' => 'error',
+                'Message'=> $validator->messages()
+            ));
+        }
+
         $authCode = Authcode::find($request->id);
         $verifyCode = $authCode->verifyCode;
 
