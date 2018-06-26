@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Authcode;
 use Illuminate\Support\Facades\DB;
+use Sentinel;
 use Validator;
 use Response;
 
@@ -53,7 +54,6 @@ class LendManageController extends Controller
 
     public function store(Request $request)
     {
-
         $validator = Validator::make( $request->toArray(), [
             'id' => 'required|exists:authcodes,id',
             'operation' => 'required|in:0,1',
@@ -69,10 +69,30 @@ class LendManageController extends Controller
 
         $authCode = Authcode::find($request->id);
 
-        if($request->operation)
+        //訂單下申請狀態不能作管理
+        if($authCode->pay_state != 4){
+            return Response::json(array(
+                'Result' => 'error',
+                'Message'=> '此单非申请下发状态，请重新整理后再次尝试'
+            ));
+        }
+
+        $user = Sentinel::getUser();
+
+        if($request->operation){
             $authCode->update(['pay_state' => AuthCodes::accept_state, 'pay_summary' => AuthCodes::accept_summary]);
-        else
+
+            activity($user->full_name)
+                ->causedBy($user)
+                ->log('准許下发了订单'.$authCode->trade_seq);
+        }
+        else{
             $authCode->update(['pay_state' => AuthCodes::deny_state, 'pay_summary' => AuthCodes::deny_summary]);
+
+            activity($user->full_name)
+                ->causedBy($user)
+                ->log('拒絕下發了订单'.$authCode->trade_seq);
+        }
 
         return Response::json(array(
             'Result' => 'OK'

@@ -393,15 +393,14 @@ class JoshController extends Controller {
             ->groupByMonth( 2017, true);
 
 
-        $countries = DB::table('users')->where('deleted_at', null)
-            ->leftJoin('countries', 'countries.sortname', '=', 'users.country')
-            ->select('countries.name')
-            ->get();
-        $geo = Charts::database($countries, 'geo', 'google')
-            ->dimensions(0,250)
-            ->responsive(true)
-
-            ->groupBy('name');
+//        $countries = DB::table('users')->where('deleted_at', null)
+//            ->leftJoin('countries', 'countries.sortname', '=', 'users.country')
+//            ->select('countries.name')
+//            ->get();
+//        $geo = Charts::database($countries, 'geo', 'google')
+//            ->dimensions(0,250)
+//            ->responsive(true)
+//            ->groupBy('name');
 
         $roles = DB::table('role_users')
             ->join('users','users.id','=','role_users.user_id')->wherenull('deleted_at')
@@ -419,7 +418,7 @@ class JoshController extends Controller {
             ->groupByMonth( 2017, true);
 
         if(Sentinel::check())
-            return view('admin.index',[ 'analytics_error'=>$analytics_error,'chart_data'=>$chart_data,'user_count'=>$user_count,'users'=>$users,'db_chart'=>$db_chart,'geo'=>$geo,'user_roles'=>$user_roles,'visitors'=>$visitors,'pageVisits'=>$pageVisits,'line_chart'=>$line_chart,'month_visits'=>$month_visits,'year_visits'=>$year_visits] );
+            return view('admin.index',[ 'analytics_error'=>$analytics_error,'chart_data'=>$chart_data,'user_count'=>$user_count,'users'=>$users,'db_chart'=>$db_chart,'user_roles'=>$user_roles,'visitors'=>$visitors,'pageVisits'=>$pageVisits,'line_chart'=>$line_chart,'month_visits'=>$month_visits,'year_visits'=>$year_visits] );
         else
             return redirect('admin/signin')->with('error', 'You must be logged in!');
     }

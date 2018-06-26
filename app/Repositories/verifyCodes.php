@@ -41,7 +41,6 @@ class VerifyCodes
                 'Message'=> '验证码逾时，请重新获取验证码'
             ];
         }
-
         if($verifyCode->code != $code){
             return $result = [
                 'Result'=>'error',

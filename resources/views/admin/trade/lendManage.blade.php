@@ -109,7 +109,7 @@
                         // console.log("creating from custom lendAction...");
                         return $.Deferred(function ($dfd) {
                             $.ajax({
-                                url: "{{ url('admin/lendManage/manage') }}",
+                                url: "{{ url('admin/lendManage') }}",
                                 type: 'POST',
                                 dataType: 'json',
                                 data: postData,

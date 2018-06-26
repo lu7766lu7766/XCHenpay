@@ -4,7 +4,7 @@
 *
 */
 return array(
-
+    'app_name'      => '3rd Party Pay',
     'no'  			=> '否',
     'noresults'  	=> '没有结果',
     'yes' 			=> '是',

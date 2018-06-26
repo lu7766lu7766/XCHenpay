@@ -34,9 +34,9 @@ class UserRequest extends FormRequest
                     'first_name' => 'required|min:3',
                     'last_name' => 'required|min:3',
                     'email' => 'required|email|unique:users,email',
-                    'password' => 'required|between:3,32',
-                    'password_confirm' => 'required|same:password',
-                    'pic_file' => 'mimes:jpg,jpeg,bmp,png,gif|max:10000'
+//                    'password' => 'required|between:3,32',
+//                    'password_confirm' => 'required|same:password',
+//                    'pic_file' => 'mimes:jpg,jpeg,bmp,png,gif|max:10000'
                 ];
             }
             case 'PUT':

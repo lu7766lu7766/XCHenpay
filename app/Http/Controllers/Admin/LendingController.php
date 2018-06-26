@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
 use Response;
+use Sentinel;
 use Illuminate\Support\Facades\DB;
 
 class LendingController extends Controller
@@ -149,11 +150,16 @@ class LendingController extends Controller
         $authCode = Authcode::find($request->id);
         $verifyCode = $authCode->verifyCode;
 
-        $result = $verifyCodes->isActived($verifyCode, $request->code, Carbon::now());
+        if($status = $verifyCodes->isActived($verifyCode, $request->code, Carbon::now())){
+            $user = Sentinel::getUser();
+            activity($user->full_name)
+                ->causedBy($user)
+                ->log('申請下發订单'.$authCode->trade_seq);
+        }
 
-        if($result['Result'] == 'OK')       //申請下發
+        if($status['Result'] == 'OK')       //申請下發
             return $this::store($authCode, $request->account);
         else
-            return $result;                 //回傳錯誤
+            return $status;                 //回傳錯誤
     }
 }

@@ -6,14 +6,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\User;
-use Illuminate\Support\Facades\Log;
 
-class Restore extends Mailable
+class Activate extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
+
     /**
      * Create a new message instance.
      *
@@ -31,9 +30,6 @@ class Restore extends Mailable
      */
     public function build()
     {
-//        return $this->view('emails.register-activate');
-        //dd($this->user);
         return $this->markdown('emails.register-activate');
-
     }
 }

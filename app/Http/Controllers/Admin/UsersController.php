@@ -1,22 +1,21 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use App\Http\Controllers\JoshController;
 use App\Http\Requests\UserRequest;
-use App\User;
-use Cartalyst\Sentinel\Laravel\Facades\Activation;
-use File;
-use Hash;
-use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
+Use App\Mail\Activate;
+use App\User;
+use Validator;
 use Redirect;
 use Sentinel;
-use URL;
-use View;
-use Yajra\DataTables\DataTables;
-use Validator;
-Use App\Mail\Restore;
 use stdClass;
-
+use File;
+use Hash;
+use View;
+use URL;
 
 class UsersController extends JoshController
 {
@@ -93,9 +92,8 @@ class UsersController extends JoshController
         // Get all the available groups
         $groups = Sentinel::getRoleRepository()->all();
 
-        $countries = $this->countries;
         // Show the page
-        return view('admin.users.create', compact('groups', 'countries'));
+        return view('admin.users.create', compact('groups'));
     }
 
     /**
@@ -105,37 +103,44 @@ class UsersController extends JoshController
      */
     public function store(UserRequest $request)
     {
-        $data = new stdClass();
-        //upload image
-        if ($file = $request->file('pic_file')) {
-            $extension = $file->extension()?: 'png';
-            $destinationPath = public_path() . '/uploads/users/';
-            $safeName = str_random(10) . '.' . $extension;
-            $file->move($destinationPath, $safeName);
-            $request['pic'] = $safeName;
-        }
+
+
         //check whether use should be activated by default or not
-        //$activate = $request->get('activate') ? true : false;
-        $activate = true;
+
+//        $activate = true;
 
         try {
+            $activate = $request->get('activate') ? true : false;
+
+            $data = $request->except('_token', 'group', 'activate');
+            $data['password'] = strtolower(str_random(8));
+            $data['company_service_id'] = md5(str_random(32));
+            $data['sceret_key'] = md5(str_random(32));
+            //dd($request->toArray());
+
             // Register the user
-            $user = Sentinel::register($request->except('_token', 'password_confirm', 'group', 'activate', 'pic_file'), $activate);
+            $user = Sentinel::register($data, $activate);
 
             //add user to 'User' group
             $role = Sentinel::findRoleById($request->get('group'));
             if ($role) {
                 $role->users()->attach($user);
             }
+
             //check for activation and send activation mail if not activated by default
-            if (!$request->get('activate')) {
+            if (!$activate) {
+                $mail = new stdClass();
+
                 // Data to be used on the email view
-                $data->user_name =$user->first_name .' '. $user->last_name;
-                $data->activationUrl = URL::route('activate', [$user->id, Activation::create($user)->code]);
+                $mail->full_name = $user->last_name .' '. $user->first_name;
+                $mail->username = $user->email;
+                $mail->password = $data['password'];
+                $mail->activationUrl = URL::route('activate', [$user->id, Activation::create($user)->code]);
+//                dd($request->toArray());
 
                 // Send the activation code through email
                 Mail::to($user->email)
-                    ->send(new Restore($data));
+                    ->send(new Activate($mail));
             }
             // Activity log for New user create
             activity($user->full_name)
@@ -172,7 +177,7 @@ class UsersController extends JoshController
 
         $status = Activation::completed($user);
 
-        $countries = $this->countries;
+        //$countries = $this->countries;
 
         // Show the page
         return view('admin.users.edit', compact('user', 'roles', 'userRoles', 'countries', 'status'));

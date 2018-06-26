@@ -323,7 +323,7 @@
     </script>
     {!! Charts::scripts() !!}
     {!! $db_chart->script() !!}
-    {!! $geo->script() !!}
+    {{--{!! $geo->script() !!}--}}
     {!! $user_roles->script() !!}
     {{--{!! $line_chart->script() !!}--}}
 @stop

@@ -21,6 +21,15 @@ $("#dob").datetimepicker({
 });
 $("#commentForm").bootstrapValidator({
     fields: {
+        company_name: {
+            validators: {
+                notEmpty: {
+                    message: 'The company name is required'
+                }
+            },
+            required: true,
+            minlength: 3
+        },
         first_name: {
             validators: {
                 notEmpty: {
