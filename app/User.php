@@ -44,8 +44,14 @@ class User extends EloquentUser {
     {
         return str_limit($this->first_name . ' ' . $this->last_name, 30);
     }
+
     public function country() {
         return $this->belongsTo( Country::class );
+    }
+
+    public function verifyCode()
+    {
+        return $this->hasOne(verifyCode::class, 'id', 'verifyCode_id');
     }
 
 }

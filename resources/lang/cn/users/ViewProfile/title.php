@@ -9,5 +9,6 @@ return array(
     'title'		=> '商户资料',
     'contact_password' => '联系讯息',
     'change_password' => '更换密码',
+    'add_credit_card' => '绑订卡号',
 
 );

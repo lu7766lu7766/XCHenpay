@@ -1,13 +1,18 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Authcode;
+use Carbon\Carbon;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use App\Http\Controllers\JoshController;
-use App\Http\Requests\UserRequest;
-use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\UserRequest;
+use App\Repositories\VerifyCodes;
+use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 Use App\Mail\Activate;
+Use Curl\Curl;
 use App\User;
+use Response;
 use Validator;
 use Redirect;
 use Sentinel;
@@ -19,6 +24,15 @@ use URL;
 
 class UsersController extends JoshController
 {
+
+    private $JIGUANG_appKey, $JIGUANG_masterSecret, $JIGUANG_tempId;
+
+    public function __construct()
+    {
+        $this->JIGUANG_appKey = '84f050f8af5e75229f6045f8';
+        $this->JIGUANG_masterSecret = 'bc51f1100c3a6491384b913b';
+        $this->JIGUANG_tempId = '1';
+    }
 
     /**
      * Show a list of all the users.
@@ -486,5 +500,81 @@ class UsersController extends JoshController
         } else{
             return 'error';
         }
+    }
+
+    public function sendVerifyCode( Request $request, VerifyCodes $verifyCodes)
+    {
+
+        $validator = Validator::make( $request->toArray(), [
+            'id'     => 'required|exists:users,id',
+            'mobile' => 'required'
+        ]);
+
+        if ($validator->fails())
+        {
+            return Response::json(array(
+                'Result' => 'error',
+                'Message'=> $validator->messages()
+            ));
+        }
+
+        $data = [
+            'mobile'=>$request->mobile,
+            'temp_id'=>$this->JIGUANG_tempId,
+            "temp_para"=> ["code"=>$randCode = $verifyCodes->generateCode() ]
+        ];
+
+        $sendCode = new Curl();
+        $sendCode->setBasicAuthentication($this->JIGUANG_appKey, $this->JIGUANG_masterSecret);
+        $sendCode->setHeader('Content-Type', 'application/json');
+        $sendCode->post('https://api.sms.jpush.cn/v1/messages', json_encode($data));
+        $response = $sendCode->response;
+//        $response = [];
+
+        if(array_key_exists('error', $response)){
+            return $result = ['Result'=>'error', 'Message'=>$response->error->message];
+        }else{
+            $verifyCode = $verifyCodes->createActiveCode($randCode);
+            $user = User::find($request->id);
+            $verifyCode->attachUser($user);
+
+            return $result = [
+                'Result'=>'OK',
+                'msg_id'=> $randCode
+            ];
+        }
+    }
+
+    public function verify(Request $request, VerifyCodes $verifyCodes)
+    {
+        $validator = Validator::make($request->toArray(), [
+            'id' => 'required|exists:users,id',
+            'code' => 'required',
+            'account' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return Response::json(array(
+                'Result' => 'error',
+                'Message' => $validator->messages()
+            ));
+        }
+
+        $user = User::find($request->id);
+        $verifyCode = $user->verifyCode;
+
+        if ($status = $verifyCodes->isActived($verifyCode, $request->code, Carbon::now())) {
+            activity($user->full_name)
+                ->causedBy($user)
+                ->log('绑订了一笔帐号');
+        }
+
+
+        if ($status['Result'] == 'OK') {//申請下發
+            $user->update(['account' => $request->account]);
+            return $status;
+        }
+        else
+            return $status;                 //回傳錯誤
     }
 }

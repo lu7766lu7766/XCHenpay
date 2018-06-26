@@ -49,10 +49,17 @@
                             <i class="livicon" data-name="notebook" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                             @lang('users/ViewProfile/title.contact_password')</a>
                     </li>
+
                     <li>
                         <a href="#tab3" data-toggle="tab">
                             <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                             @lang('users/ViewProfile/title.change_password')</a>
+                    </li>
+
+                    <li>
+                        <a href="#tab4" data-toggle="tab">
+                            <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                            @lang('users/ViewProfile/title.add_credit_card')</a>
                     </li>
 
 
@@ -199,6 +206,66 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="tab4" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12 pd-top">
+                                <form class="form-horizontal">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            {{ csrf_field() }}
+                                            <label for="inputPhoneNum" class="col-md-3 control-label">
+                                                @lang('users/ViewProfile/form.inputPhoneNum')
+                                                <span class='require'>*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="livicon" data-name="cellphone" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                    </span>
+                                                    <input type="text" id="mobile" placeholder=@lang('users/ViewProfile/form.PhoneNumHolder') name="mobile" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputCode" class="col-md-3 control-label">
+                                                @lang('users/ViewProfile/form.inputVerifyCode')
+                                                <span class='require'>*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                            </span>
+                                                    <input type="text" id="verifyCode" placeholder=@lang('users/ViewProfile/form.verifyCodeHolder') name="verifyCode" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputAccount" class="col-md-3 control-label">
+                                                @lang('users/ViewProfile/form.inputAccount')
+                                                <span class='require'>*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                            </span>
+                                                    <input type="text" id="acount" placeholder=@lang('users/ViewProfile/form.accountHolder') name="acount" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="col-md-offset-3 col-md-9">
+                                            <input type="submit" class="btn btn-primary" id="add-Account" value=@lang('users/ViewProfile/form.submit')></div>
+                                            <input type="send" class="btn btn-default" id="send-VerifyCode" value=@lang('users/ViewProfile/form.send')></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -244,6 +311,58 @@
                         }
                     });
                 }
+            });
+
+            $('#send-VerifyCode').click(function (e) {
+                var postData = {
+                    id: {{ $user->id }},
+                    mobile: $('#mobile').val()
+
+                    // timestamp: $.now()
+                };
+                //var path = "sendVerifyCode"
+                $.ajax({
+                    url: "sendVerifyCode",
+                    type: "post",
+                    dataType: 'json',
+                    data: postData,
+                    success: function (data) {
+                        $('#mobile').val('');
+                        if(data.Result == 'OK')
+                            alert('send verify code successful, please check your phone message.');
+                        else
+                            alert('error,' + data.Message);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('error in send verify code');
+                    }
+                });
+            });
+
+            $('#add-Account').click(function (e) {
+                var postData = {
+                    id: {{ $user->id }},
+                    code: $('#verifyCode').val(),
+                    account: $('#account').val()
+
+                    // timestamp: $.now()
+                };
+
+                $.ajax({
+                    url: "addAccount",
+                    type: "post",
+                    dataType: 'json',
+                    data: postData,
+                    success: function (data) {
+                        if(data.Result == 'OK')
+                            alert('add account successful, please check the table below.');
+                        else
+                            alert('error,' + data.Message);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('error in add account');
+                    }
+                });
             });
         });
     </script>

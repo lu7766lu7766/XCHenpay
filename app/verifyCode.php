@@ -15,8 +15,18 @@ class verifyCode extends Model
         return $this->hasMany(Authcode::class, 'verifyCode_id', 'id');
     }
 
+    public function users()
+    {
+        return $this->hasMany(User::class, 'verifyCode_id', 'id');
+    }
+
     public function attachCode(Authcode $trade)
     {
         $this->authCode()->save($trade);
+    }
+
+    public function attachUser(User $user)
+    {
+        $this->users()->save($user);
     }
 }
