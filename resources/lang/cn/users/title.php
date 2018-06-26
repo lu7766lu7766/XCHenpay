@@ -5,14 +5,14 @@
 */
 
 return array(
-    'title' => '用户',
-    'users' => '用户列表',
-	'addUser' => '新增用户',
-	'viewProfile' => '个人资料',
-	'deletedUsers' => '被删除的用户',
+    'title' => '商户',
+    'users' => '商户列表',
+	'addUser' => '新增商户',
+	'viewProfile' => '商户资料',
+	'deletedUsers' => '被删除的商户',
 
 
-	'user_profile'			=> '用户资料',
+	'user_profile'			=> '商户资料',
 	'first_name'			=> '名字',
 	'last_name'				=> '姓',
 	'email'					=> '电子邮件',

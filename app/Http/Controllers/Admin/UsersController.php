@@ -40,19 +40,18 @@ class UsersController extends JoshController
      */
     public function data()
     {
-        $users = User::get(['id', 'first_name', 'last_name', 'email','created_at']);
+        $users = User::get(['id', 'first_name', 'last_name', 'company_name', 'email','created_at']);
 
         return DataTables::of($users)
-            ->editColumn('created_at',function(User $user) {
-                return $user->created_at->diffForHumans();
+            ->addColumn('full_name',function($user){
+                return $user->last_name . ' ' . $user->first_name;
             })
             ->addColumn('status',function($user){
 
-                if($activation = Activation::completed($user)){
-
-                    return 'Activated';} else
+                if($activation = Activation::completed($user))
+                    return 'Activated';
+                else
                     return 'Pending';
-
             })
             ->addColumn('actions',function($user) {
                 $showLink = '<a href='. route('admin.users.show', $user->id) .'><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>';
@@ -136,7 +135,6 @@ class UsersController extends JoshController
                 $mail->username = $user->email;
                 $mail->password = $data['password'];
                 $mail->activationUrl = URL::route('activate', [$user->id, Activation::create($user)->code]);
-//                dd($request->toArray());
 
                 // Send the activation code through email
                 Mail::to($user->email)

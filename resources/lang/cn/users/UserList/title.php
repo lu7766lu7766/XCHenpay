@@ -6,6 +6,6 @@
 
 return array(
 
-    'title'		=> '用户列表',
+    'title'		=> '商户列表',
 
 );

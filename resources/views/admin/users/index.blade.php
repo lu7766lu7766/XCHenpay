@@ -45,11 +45,10 @@
                     <thead>
                         <tr class="filters">
                             <th>{{ trans('users/UserList/form.ID') }}</th>
-                            <th>{{ trans('users/UserList/form.First Name') }}</th>
-                            <th>{{ trans('users/UserList/form.Last Name') }}</th>
-                            <th>{{ trans('users/UserList/form.User E-mail') }}</th>
+                            <th>{{ trans('users/UserList/form.company_name') }}</th>
+                            <th>{{ trans('users/UserList/form.full_name') }}</th>
+                            <th>{{ trans('users/UserList/form.User_Email') }}</th>
                             <th>{{ trans('users/UserList/form.Status') }}</th>
-                            <th>{{ trans('users/UserList/form.Created At') }}</th>
                             <th>{{ trans('users/UserList/form.Actions') }}</th>
                         </tr>
                     </thead>
@@ -78,11 +77,10 @@
             ajax: '{!! route('admin.users.data') !!}',
             columns: [
                 { data: 'id', name: 'id' },
-                { data: 'first_name', name: 'first_name' },
-                { data: 'last_name', name: 'last_name' },
+                { data: 'company_name', name: 'company_name' },
+                { data: 'full_name', name: 'first_name' },
                 { data: 'email', name: 'email' },
                 { data: 'status', name: 'status'},
-                { data: 'created_at', name:'created_at'},
                 { data: 'actions', name: 'actions', orderable: false, searchable: false }
             ]
         });
