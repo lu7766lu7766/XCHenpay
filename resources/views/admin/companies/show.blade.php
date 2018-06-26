@@ -58,25 +58,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel">
-                                    {{--<div class="panel-heading">--}}
-                                        {{--<h3 class="panel-title">--}}
-
-                                            {{--{{ trans('companies/ViewProfile/title.title') }}--}}
-                                        {{--</h3>--}}
-
-                                    {{--</div>--}}
                                     <div class="panel-body">
-                                        {{--<div class="col-md-4">--}}
-                                            {{--<div class="img-file">--}}
-                                                {{--@if($company->pic)--}}
-                                                    {{--<img src="{!! url('/').'/uploads/users/'.$company->pic !!}" alt="img"--}}
-                                                         {{--class="img-responsive"/>--}}
-                                                {{--@else--}}
-                                                    {{--<img src="{{ asset('assets/images/authors/no_avatar.jpg') }}" alt="..."--}}
-                                                         {{--class="img-responsive"/>--}}
-                                                {{--@endif--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
                                         <div class="col-md-16">
                                             <div class="panel-body">
                                                 <div class="table-responsive">

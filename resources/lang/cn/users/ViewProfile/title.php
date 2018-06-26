@@ -6,8 +6,8 @@
 
 return array(
 
-    'title'		=> '用户资料',
-
+    'title'		=> '商户资料',
+    'contact_password' => '联系讯息',
     'change_password' => '更换密码',
 
 );

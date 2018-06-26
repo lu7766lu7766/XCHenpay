@@ -452,7 +452,6 @@ class UsersController extends JoshController
         }
         // Show the page
         return view('admin.users.show', compact('user'));
-
     }
 
     public function showProfile()

@@ -46,136 +46,52 @@
                     </li>
                     <li>
                         <a href="#tab2" data-toggle="tab">
+                            <i class="livicon" data-name="notebook" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                            @lang('users/ViewProfile/title.contact_password')</a>
+                    </li>
+                    <li>
+                        <a href="#tab3" data-toggle="tab">
                             <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                             @lang('users/ViewProfile/title.change_password')</a>
                     </li>
 
 
+
                 </ul>
                 <div  class="tab-content mar-top">
+
                     <div id="tab1" class="tab-pane fade active in">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">
-
-                                            @lang('users/ViewProfile/title.title')
-                                        </h3>
-
-                                    </div>
                                     <div class="panel-body">
-                                        <div class="col-md-4">
-                                            <div class="img-file">
-                                                @if($user->pic)
-                                                    <img src="{!! url('/').'/uploads/users/'.$user->pic !!}" alt="img"
-                                                         class="img-responsive"/>
-                                                @elseif($user->gender === "male")
-                                                    <img src="{{ asset('assets/images/authors/avatar3.png') }}" alt="..."
-                                                         class="img-responsive"/>
-                                                @elseif($user->gender === "female")
-                                                    <img src="{{ asset('assets/images/authors/avatar5.png') }}" alt="..."
-                                                         class="img-responsive"/>
-                                                @else
-                                                    <img src="{{ asset('assets/images/authors/no_avatar.jpg') }}" alt="..."
-                                                         class="img-responsive"/>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
+                                        <div class="col-md-16">
                                             <div class="panel-body">
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered table-striped" id="users">
 
                                                         <tr>
-                                                            <td>@lang('users/title.first_name')</td>
+                                                            <td>@lang('users/ViewProfile/form.company_name')</td>
                                                             <td>
-                                                                <p class="user_name_max">{{ $user->first_name }}</p>
+                                                                {{  $user->company_name }}
                                                             </td>
 
                                                         </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.last_name')</td>
-                                                            <td>
-                                                                <p class="user_name_max">{{ $user->last_name }}</p>
-                                                            </td>
 
-                                                        </tr>
                                                         <tr>
-                                                            <td>@lang('users/title.email')</td>
+                                                            <td>@lang('users/ViewProfile/form.company_service_id')</td>
                                                             <td>
-                                                                {{ $user->email }}
+                                                                {{ $user->company_service_id }}
                                                             </td>
                                                         </tr>
-                                                        <tr>
-                                                            <td>
-                                                                @lang('users/title.gender')
-                                                            </td>
-                                                            <td>
-                                                                {{ $user->gender }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.dob')</td>
 
-                                                            @if($user->dob=='0000-00-00')
-                                                                <td>
-                                                                </td>
-                                                            @else
-                                                                <td>
-                                                                    {{ $user->dob }}
-                                                                </td>
-                                                            @endif
-                                                        </tr>
                                                         <tr>
-                                                            <td>@lang('users/title.country')</td>
+                                                            <td>@lang('users/ViewProfile/form.sceret_key')</td>
                                                             <td>
-                                                                {{ $user->country }}
+                                                                {{ $user->sceret_key }}
                                                             </td>
                                                         </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.state')</td>
-                                                            <td>
-                                                                {{ $user->state }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.city')</td>
-                                                            <td>
-                                                                {{ $user->city }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.address')</td>
-                                                            <td>
-                                                                {{ $user->address }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.postal')</td>
-                                                            <td>
-                                                                {{ $user->postal }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.status')</td>
-                                                            <td>
 
-                                                                @if($user->deleted_at)
-                                                                    Deleted
-                                                                @elseif($activation = Activation::completed($user))
-                                                                    Activated
-                                                                @else
-                                                                    Pending
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>@lang('users/title.created_at')</td>
-                                                            <td>
-                                                                {!! $user->created_at->diffForHumans() !!}
-                                                            </td>
-                                                        </tr>
                                                     </table>
                                                 </div>
                                             </div>
@@ -185,7 +101,57 @@
                             </div>
                         </div>
                     </div>
+
                     <div id="tab2" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <div class="col-md-16">
+                                            <div class="panel-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-striped" id="users">
+
+                                                        <tr>
+                                                            <td>@lang('users/ViewProfile/form.full_name')</td>
+                                                            <td>
+                                                                {{  $user->last_name . ' ' . $user->first_name }}
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>@lang('users/ViewProfile/form.mobile')</td>
+                                                            <td>
+                                                                {{ $user->mobile }}
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>@lang('users/ViewProfile/form.email')</td>
+                                                            <td>
+                                                                {{ $user->email }}
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>@lang('users/ViewProfile/form.address')</td>
+                                                            <td>
+                                                                {{ $user->address }}
+                                                            </td>
+                                                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab3" class="tab-pane fade">
                         <div class="row">
                             <div class="col-md-12 pd-top">
                                 <form class="form-horizontal">

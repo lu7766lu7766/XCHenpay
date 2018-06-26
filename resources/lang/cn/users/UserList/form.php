@@ -16,5 +16,4 @@ return array(
     'view user' => '查看商户',
     'update user' => '编辑商户',
     'delete user' => '删除商户',
-
 );
