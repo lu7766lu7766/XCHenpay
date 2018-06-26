@@ -317,7 +317,7 @@ class UsersController extends JoshController
         $users = User::onlyTrashed()->get();
 
         // Show the page
-        return view('admin.deleted_users', compact('users'));
+        return view('admin.users.deleted_users', compact('users'));
     }
 
 

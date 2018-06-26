@@ -1,4 +1,4 @@
-@extends('admin/layouts/default')
+@extends('admin.layouts.default')
 
 {{-- Page title --}}
 @section('title')
@@ -18,7 +18,7 @@
 @section('content')
 
 <section class="content-header">
-                <h1>Deleted users</h1>
+                <h1>@lang('users/DeletedUsers/title.title')</h1>
                 <ol class="breadcrumb">
                     <li>
                         <a href="{{ route('admin.dashboard') }}">
@@ -45,22 +45,25 @@
                 <table class="table table-bordered" id="table">
                     <thead>
                     <tr class="filters">
-                        <th>@lang('users/DeletedUsers/form.last_name')</th>
-                        <th>@lang('users/DeletedUsers/form.first_name')</th>
-                        <th>@lang('users/DeletedUsers/form.user_email')</th>
-                        <th>@lang('users/DeletedUsers/form.deleted_at')</th>
-                        <th>@lang('users/DeletedUsers/form.actions')</th>
+                        <th>@lang('users/DeletedUsers/form.ID')</th>
+                        <th>@lang('users/DeletedUsers/form.company_name')</th>
+                        <th>@lang('users/DeletedUsers/form.full_name')</th>
+                        <th>@lang('users/DeletedUsers/form.User_Email')</th>
+                        <th>@lang('users/DeletedUsers/form.Deleted_At')</th>
+                        <th>@lang('users/DeletedUsers/form.Actions')</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($users as $user)
                         <tr>
-                            <td>{!! $user->last_name !!}</td>
-                            <td>{!! $user->first_name !!}</td>
+                            <td>{!! $user->id !!}</td>
+                            <td>{!! $user->company_name !!}</td>
+                            <td>{!! $user->last_name . ' ' . $user->first_name !!}</td>
                             <td>{!! $user->email !!}</td>
                             <td>{!! \Carbon\Carbon::parse($user->deleted_at)->diffForHumans() !!}</td>
                             <td>
-                                <a href="{{ route('admin.restore.user', $user->id) }}"><i class="livicon" data-name="user-flag" data-c="#6CC66C" data-hc="#6CC66C" data-size="18"></i></a>
+                                <a href="{{ route('admin.restore.user', $user->id) }}" title=@lang('users/DeletedUsers/form.restoreUser')>
+                                    <i class="livicon" data-name="user-flag" data-c="#6CC66C" data-hc="#6CC66C" data-size="18"></i></a>
                             </td>
                         </tr>
                     @endforeach
