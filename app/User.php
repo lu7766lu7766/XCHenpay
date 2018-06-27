@@ -45,13 +45,29 @@ class User extends EloquentUser {
         return str_limit($this->first_name . ' ' . $this->last_name, 30);
     }
 
+    public function attachCode(verifyCode $code)
+    {
+        $this->verifyCodes()->save($code);
+    }
+
+    public function addAccount(Account $account)
+    {
+        $this->accounts()->save($account);
+    }
+
     public function country() {
         return $this->belongsTo( Country::class );
     }
 
-    public function verifyCode()
+    public function verifyCodes()
     {
-        return $this->hasOne(verifyCode::class, 'id', 'verifyCode_id');
+        return $this->hasMany(verifyCode::class, 'user_id', 'id');
     }
+
+    public function accounts()
+    {
+        return $this->hasMany(Account::class, 'user_id', 'id');
+    }
+
 
 }

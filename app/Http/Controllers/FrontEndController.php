@@ -66,7 +66,7 @@ class FrontEndController extends JoshController
                 activity($user->full_name)
                     ->performedOn($user)
                     ->causedBy($user)
-                    ->log('LoggedIn');
+                    ->log('登入');
 
                 return Redirect::route("my-account")->with('success', trans('auth/message.login.success'));
             } else {
@@ -387,7 +387,7 @@ class FrontEndController extends JoshController
             activity($user->full_name)
                 ->performedOn($user)
                 ->causedBy($user)
-                ->log('LoggedOut');
+                ->log('登出');
             // Log the user out
             Sentinel::logout();
         }

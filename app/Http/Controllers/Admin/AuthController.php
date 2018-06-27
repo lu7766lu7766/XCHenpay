@@ -54,7 +54,7 @@ class AuthController extends JoshController
                 activity($user->full_name)
                     ->performedOn($user)
                     ->causedBy($user)
-                    ->log('LoggedIn');
+                    ->log('登入');
                 //activity log ends
                 //return Redirect::route("admin.dashboard")->with('success', trans('auth/message.signin.success'));
                 return Redirect::route("admin.dashboard")->with('success', trans('auth/message.signin.success'));
@@ -250,7 +250,7 @@ class AuthController extends JoshController
             activity($user->full_name)
                 ->performedOn($user)
                 ->causedBy($user)
-                ->log('LoggedOut');
+                ->log('登出');
             // Log the user out
             Sentinel::logout();
         }

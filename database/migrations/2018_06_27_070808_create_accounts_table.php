@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVerifyCodesTable extends Migration
+class CreateAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateVerifyCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('verify_codes', function (Blueprint $table) {
+        Schema::create('accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('code');
-            $table->integer('active');
+            $table->string('account');
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +30,6 @@ class CreateVerifyCodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('verify_codes');
+        Schema::dropIfExists('accounts');
     }
 }

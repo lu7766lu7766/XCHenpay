@@ -251,65 +251,62 @@
                                                             <span class="input-group-addon">
                                                                 <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                             </span>
-                                                    <input type="text" id="acount" placeholder=@lang('users/ViewProfile/form.accountHolder') name="acount" class="form-control"/>
+                                                    <input type="text" id="account" placeholder=@lang('users/ViewProfile/form.accountHolder') name="account" class="form-control"/>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-actions">
                                         <div class="col-md-offset-3 col-md-6">
-                                            <input type="submit" class="btn btn-primary" id="add-Account" value=@lang('users/ViewProfile/form.submit')></div>
-                                            <input type="send" class="btn btn-danger" id="send-VerifyCode" value=@lang('users/ViewProfile/form.send')></div>
+                                            <button type="submit" class="btn btn-primary" id="add-Account" >@lang('users/ViewProfile/form.submit')</button>
+                                            <button type="send" class="btn btn-danger" id="send-VerifyCode" >@lang('users/ViewProfile/form.send')</button>
+                                        </div>
                                     </div>
                                 </form>
 
-                                <!-- BEGIN SAMPLE TABLE PORTLET-->
-                                <div class="portlet box primary">
-                                    <div class="portlet-title">
-                                        <div class="caption">
-                                            <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                                            @lang('users/ViewProfile/title.account_list')
-                                        </div>
-                                    </div>
-                                    <div class="portlet-body">
-                                        <div class="table-scrollable">
-                                            <table class="table table-hover">
-                                                <thead>
-                                                <tr>
-                                                    <th>@lang('users/ViewProfile/form.id')</th>
-                                                    <th>@lang('users/ViewProfile/form.inputAccount')</th>
-                                                    <th>@lang('users/ViewProfile/form.created_at')</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Airi Satou</td>
-                                                    <td>Kelly</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Angelica</td>
-                                                    <td>Ramos</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Ashton</td>
-                                                    <td>Cox</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Bradley</td>
-                                                    <td>Greer</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END SAMPLE TABLE PORTLET-->
                             </div>
                         </div>
+                        <hr>
+                            <!-- BEGIN SAMPLE TABLE PORTLET-->
+                            <div class="portlet box primary">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                                        @lang('users/ViewProfile/title.account_list')
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-scrollable">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>@lang('users/ViewProfile/form.id')</th>
+                                                <th>@lang('users/ViewProfile/form.inputAccount')</th>
+                                                <th>@lang('users/ViewProfile/form.created_at')</th>
+                                                <th>@lang('users/ViewProfile/form.operation')</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            @foreach($user->accounts as $account)
+                                                <tr>
+                                                    <td>{{ $account->id }}</td>
+                                                    <td>{{ $account->account }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($account->created_at)->diffForHumans() }}</td>
+                                                    <td>
+                                                        <a href={{ route('admin.account.confirm-delete', $account->id) }} data-toggle="modal" data-target="#delete_confirm">
+                                                            <i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=@lang('users/ViewProfile/form.deleteAccount') >
+                                                        </i></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END SAMPLE TABLE PORTLET-->
                     </div>
                 </div>
             </div>
@@ -328,10 +325,10 @@
                 e.preventDefault();
                 var check = false;
                 if ($('#password').val() ===""){
-                    alert('Please Enter password');
+                    alert('请输入密码');
                 }
                 else if  ($('#password').val() !== $('#password-confirm').val()) {
-                    alert("confirm password should match with password");
+                    alert("密码确认与新密码不符合");
                 }
                 else if  ($('#password').val() === $('#password-confirm').val()) {
                     check = true;
@@ -403,7 +400,7 @@
                 if ($('#verifyCode').val() ==="" || $('#account').val() ===""){
                     alert('请填齐『验证码』及『帐号』');
                 }
-                else if (isNaN($('#verifyCode'))){
+                else if (isNaN($('#verifyCode').val())){
                     alert('请输入有效验证码');
                 }
                 else if (isNaN($('#account').val())){
@@ -422,8 +419,10 @@
                         dataType: 'json',
                         data: postData,
                         success: function (data) {
-                            if (data.Result == 'OK')
+                            if (data.Result == 'OK'){
                                 alert('帐号新增成功，可在下方表单作确认');
+                                window.location.reload();
+                            }
                             else
                                 alert('error,' + data.Message);
                         },
@@ -436,4 +435,17 @@
         });
     </script>
 
+    <div class="modal fade" id="delete_confirm" tabindex="-1" role="dialog" aria-labelledby="user_delete_confirm_title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('body').on('hidden.bs.modal', '.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+        });
+    </script>
 @stop
+

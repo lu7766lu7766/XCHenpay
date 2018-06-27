@@ -101,8 +101,7 @@ class MigrationCartalystSentinel extends Migration
             $table->string('mobile');
             $table->String('company_service_id');
             $table->String('sceret_key');
-            $table->String('account')->nullable();
-            $table->integer('verifyCode_id')->nullable();
+            $table->String('account_id')->nullable();
             $table->string('address')->nullable();
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
