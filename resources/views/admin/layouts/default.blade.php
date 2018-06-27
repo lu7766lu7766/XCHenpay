@@ -146,7 +146,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ URL::to('admin/auth_code') }}">
+                            <a href="{{ URL::to('admin/logQuery') }}">
                                 <i class="livicon" data-name="table" title="Advanced tables" data-loop="true"
                                    data-color="#418BCA" data-hc="#418BCA" data-s="25"></i>
                             </a>
