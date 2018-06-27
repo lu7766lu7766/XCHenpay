@@ -59,7 +59,7 @@
                     <li>
                         <a href="#tab4" data-toggle="tab">
                             <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                            @lang('users/ViewProfile/title.add_credit_card')</a>
+                            @lang('users/ViewProfile/title.add_account')</a>
                     </li>
 
 
@@ -241,7 +241,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label for="inputAccount" class="col-md-3 control-label">
                                                 @lang('users/ViewProfile/form.inputAccount')
@@ -258,11 +257,57 @@
                                         </div>
                                     </div>
                                     <div class="form-actions">
-                                        <div class="col-md-offset-3 col-md-9">
+                                        <div class="col-md-offset-3 col-md-6">
                                             <input type="submit" class="btn btn-primary" id="add-Account" value=@lang('users/ViewProfile/form.submit')></div>
-                                            <input type="send" class="btn btn-default" id="send-VerifyCode" value=@lang('users/ViewProfile/form.send')></div>
+                                            <input type="send" class="btn btn-danger" id="send-VerifyCode" value=@lang('users/ViewProfile/form.send')></div>
                                     </div>
                                 </form>
+
+                                <!-- BEGIN SAMPLE TABLE PORTLET-->
+                                <div class="portlet box primary">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                                            @lang('users/ViewProfile/title.account_list')
+                                        </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <div class="table-scrollable">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>@lang('users/ViewProfile/form.id')</th>
+                                                    <th>@lang('users/ViewProfile/form.inputAccount')</th>
+                                                    <th>@lang('users/ViewProfile/form.created_at')</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Airi Satou</td>
+                                                    <td>Kelly</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Angelica</td>
+                                                    <td>Ramos</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Ashton</td>
+                                                    <td>Cox</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Bradley</td>
+                                                    <td>Greer</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END SAMPLE TABLE PORTLET-->
                             </div>
                         </div>
                     </div>
@@ -313,56 +358,80 @@
                 }
             });
 
-            $('#send-VerifyCode').click(function (e) {
-                var postData = {
-                    id: {{ $user->id }},
-                    mobile: $('#mobile').val()
+            $('#send-VerifyCode').click(function (event) {
+                event.preventDefault();
 
-                    // timestamp: $.now()
-                };
-                //var path = "sendVerifyCode"
-                $.ajax({
-                    url: "sendVerifyCode",
-                    type: "post",
-                    dataType: 'json',
-                    data: postData,
-                    success: function (data) {
-                        $('#mobile').val('');
-                        if(data.Result == 'OK')
-                            alert('send verify code successful, please check your phone message.');
-                        else
-                            alert('error,' + data.Message);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert('error in send verify code');
-                    }
-                });
+                if ($('#mobile').val() ===""){
+                    alert('请输入手机号码');
+                }
+                else if ($('#mobile').val().length != 11){
+                    alert('手机号码长度应为11码');
+                }
+                else if (isNaN($('#mobile').val())){
+                    alert('请输入有效手机号码');
+                }
+                else{
+                    var postData = {
+                        id: {{ $user->id }},
+                        mobile: $('#mobile').val()
+
+                        // timestamp: $.now()
+                    };
+                    //var path = "sendVerifyCode"
+                    $.ajax({
+                        url: "sendVerifyCode",
+                        type: "post",
+                        dataType: 'json',
+                        data: postData,
+                        success: function (data) {
+                            $('#mobile').val('');
+                            if (data.Result == 'OK')
+                                alert('发送验证码成功，请检查您的手机讯息');
+                            else
+                                alert('错误，' + data.Message);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert('发送验证码失败，与服务器沟通错误');
+                        }
+                    });
+                }
             });
 
             $('#add-Account').click(function (e) {
-                var postData = {
-                    id: {{ $user->id }},
-                    code: $('#verifyCode').val(),
-                    account: $('#account').val()
+                event.preventDefault();
 
-                    // timestamp: $.now()
-                };
+                if ($('#verifyCode').val() ==="" || $('#account').val() ===""){
+                    alert('请填齐『验证码』及『帐号』');
+                }
+                else if (isNaN($('#verifyCode'))){
+                    alert('请输入有效验证码');
+                }
+                else if (isNaN($('#account').val())){
+                    alert('请输入有效帐号');
+                }
+                else {
+                    var postData = {
+                        id: {{ $user->id }},
+                        code: $('#verifyCode').val(),
+                        account: $('#account').val()
+                    };
 
-                $.ajax({
-                    url: "addAccount",
-                    type: "post",
-                    dataType: 'json',
-                    data: postData,
-                    success: function (data) {
-                        if(data.Result == 'OK')
-                            alert('add account successful, please check the table below.');
-                        else
-                            alert('error,' + data.Message);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert('error in add account');
-                    }
-                });
+                    $.ajax({
+                        url: "addAccount",
+                        type: "post",
+                        dataType: 'json',
+                        data: postData,
+                        success: function (data) {
+                            if (data.Result == 'OK')
+                                alert('帐号新增成功，可在下方表单作确认');
+                            else
+                                alert('error,' + data.Message);
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert('新增帐号失败，与服务器沟通错误');
+                        }
+                    });
+                }
             });
         });
     </script>

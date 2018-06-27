@@ -31,4 +31,6 @@ return array(
     'reset'   => '重设',
     'send'    => '发送验证码',
 
+    'id'        => '編號',
+    'created_at'      => '綁定時間',
 );

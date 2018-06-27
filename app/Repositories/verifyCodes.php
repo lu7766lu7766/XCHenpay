@@ -34,13 +34,13 @@ class VerifyCodes
 
     public function isActived(verifyCode $verifyCode, $code, $timestamp)
     {
-//        if($timestamp->diffInSeconds($verifyCode->created_at) >= 60 || $verifyCode->active == $this::EXPIRED_STAT){
-//            $verifyCode->update(['active' => $this::EXPIRED_STAT]);
-//            return $result = [
-//                'Result'=>'error',
-//                'Message'=> '验证码逾时，请重新获取验证码'
-//            ];
-//        }
+        if($timestamp->diffInSeconds($verifyCode->created_at) >= 60 || $verifyCode->active == $this::EXPIRED_STAT){
+            $verifyCode->update(['active' => $this::EXPIRED_STAT]);
+            return $result = [
+                'Result'=>'error',
+                'Message'=> '验证码逾时，请重新获取验证码'
+            ];
+        }
         if($verifyCode->code != $code){
             return $result = [
                 'Result'=>'error',
