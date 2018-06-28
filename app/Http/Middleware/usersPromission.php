@@ -43,7 +43,7 @@ class usersPromission
             return $next($request);
 
         // Execute this code if the permission check failed
-        return redirect()->route('admin.dashboard')->with('error', "premission denied.");
+        return redirect()->route('admin.authcode.index')->with('error', "premission denied.");
 
     }
 }

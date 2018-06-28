@@ -5,6 +5,8 @@ namespace App\Repositories;
 
 class AuthCodes
 {
+    const success_state = 2;
+
     const lended_state = 4;
     const accept_state = 5;
     const deny_state = 6;

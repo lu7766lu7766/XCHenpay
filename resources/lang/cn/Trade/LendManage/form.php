@@ -14,4 +14,5 @@ return array(
     'currency'				=> '币别',
     'acceptAll'				=> '许可已选择订单',
     'filter'                => '筛选',
+    'reset'                 => '清空',
 );

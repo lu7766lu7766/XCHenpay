@@ -51,10 +51,11 @@
                             <form class="form-inline" >
                                 <div class="form-group">
                                     <label for="fname">@lang('Trade/lendApply/form.trade_service_id'):</label>
-                                    <input type="text" name="name" id="name" placeholder=@lang('Trade/lendApply/form.trade_service_id') class="form-control"/>
+                                    <input type="text" name="service_id" id="service_id" placeholder=@lang('Trade/lendApply/form.trade_service_id') class="form-control"/>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary" id="LoadRecordsButton">@lang('Trade/lendApply/form.filter')</button>
+                                <button type="button" class="btn btn-danger" id="reset-search">@lang('Trade/lendApply/form.reset')</button>
                             </form>
                             <br>
                         </div>
@@ -106,18 +107,18 @@
                         // console.log("creating from custom lendAction...");
                         return $.Deferred(function ($dfd) {
                             $.ajax({
-                                url: "{{ url('admin/lendApply/verify') }}",
+                                url: "{{ url('admin/lendApply/apply') }}",
                                 type: 'POST',
                                 dataType: 'json',
                                 data: postData,
                                 success: function (data) {
-                                    // console.log('success');
-                                    // console.log(data);
+                                    console.log('success');
+                                    console.log(data);
                                     $dfd.resolve(data);
                                 },
                                 error: function (data) {
-                                    // console.log('error');
-                                    // console.log(data);
+                                    console.log('error');
+                                    console.log(data);
                                     $dfd.reject();
                                 }
                             });
@@ -201,8 +202,13 @@
             $('#LoadRecordsButton').on('click', function (e) {
                 e.preventDefault();
                 $('#StudentTableContainer').jtable('load', {
-                    trade_service_id: $('#name').val()
+                    trade_service_id: $('#service_id').val()
                 });
+            });
+
+
+            $('#reset-search').on('click', function (e) {
+                $('#service_id').val('');
             });
 
             $('.jtable-left-area select').addClass('form-control');

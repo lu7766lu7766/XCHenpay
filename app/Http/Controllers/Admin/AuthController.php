@@ -31,7 +31,7 @@ class AuthController extends JoshController
     {
         // Is the user logged in?
         if (Sentinel::check()) {
-            return Redirect::route('admin.dashboard');
+            return Redirect::route('admin.authcode.index');
         }
 
         // Show the page
@@ -57,7 +57,7 @@ class AuthController extends JoshController
                     ->log('登入');
                 //activity log ends
                 //return Redirect::route("admin.dashboard")->with('success', trans('auth/message.signin.success'));
-                return Redirect::route("admin.dashboard")->with('success', trans('auth/message.signin.success'));
+                return Redirect::route("admin.authcode.index")->with('success', trans('auth/message.signin.success'));
             }
 
             $this->messageBag->add('email', trans('auth/message.account_not_found'));

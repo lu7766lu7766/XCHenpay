@@ -51,10 +51,11 @@
                             <form class="form-inline" >
                                 <div class="form-group">
                                     <label for="fname">@lang('Trade/lendManage/form.trade_service_id'):</label>
-                                    <input type="text" name="name" id="name" placeholder=@lang('Trade/lendManage/form.trade_service_id') class="form-control"/>
+                                    <input type="text" name="service_id" id="service_id" placeholder=@lang('Trade/lendManage/form.trade_service_id') class="form-control"/>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary" id="LoadRecordsButton">@lang('Trade/lendManage/form.filter')</button>
+                                <button type="button" class="btn btn-danger" id="reset-search">@lang('Trade/lendManage/form.reset')</button>
                             </form>
                             <br>
                         </div>
@@ -179,8 +180,12 @@
             $('#LoadRecordsButton').on('click', function (e) {
                 e.preventDefault();
                 $('#StudentTableContainer').jtable('load', {
-                    trade_service_id: $('#name').val()
+                    trade_service_id: $('#service_id').val()
                 });
+            });
+
+            $('#reset-search').on('click', function (e) {
+                $('#service_id').val('');
             });
 
             $('.jtable-left-area select').addClass('form-control');

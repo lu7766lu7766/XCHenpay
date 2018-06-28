@@ -86,8 +86,8 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
     Route::post('lendApply/update', 'LendingController@update')->name('lendApply.update');
     Route::post('lendApply/delete', 'LendingController@destroy')->name('lendApply.delete');
     Route::post('lendApply/sendVerifyCode', 'LendingController@sendVerifyCode')->name('lendApply.sendCode');
-    Route::post('lendApply/verify', 'LendingController@verify')->name('lendApply.verify');
-    Route::get('lendApply/verify', 'LendingController@verify')->name('lendApply.verify');
+    Route::post('lendApply/apply', 'LendingController@store')->name('lendApply.apply');
+    Route::get('lendApply/apply', 'LendingController@store')->name('lendApply.apply');
 
     Route::get('lendManage', 'LendManageController@index')->name('lendManage.index');
     Route::get('lendManage/data', 'LendManageController@data')->name('lendManage.data');

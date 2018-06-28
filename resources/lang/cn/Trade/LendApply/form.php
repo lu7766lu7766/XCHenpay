@@ -14,5 +14,6 @@ return array(
     'currency'				=> '币别',
     'applyAll'				=> '下发已选择订单',
     'filter'                => '筛选',
+    'reset'                 => '清空',
 
 );

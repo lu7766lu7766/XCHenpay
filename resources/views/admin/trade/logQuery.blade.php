@@ -22,7 +22,7 @@
 
     <section class="content-header">
         <!--section starts-->
-        <h1>@lang('Trade/title.title')</h1>
+        <h1>@lang('Trade/LogQuery/title.title')</h1>
 
         <ol class="breadcrumb">
 

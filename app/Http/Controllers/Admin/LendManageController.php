@@ -25,13 +25,15 @@ class LendManageController extends Controller
         $order = explode(" ", $request->get('jtSorting'));
 
         if($request->trade_service_id){
-            $data = Authcode::where('trade_service_id',$request->trade_service_id)->orderBy($order[0], $order[1])
+            $data = Authcode::where('pay_state', AuthCodes::lended_state)
+                ->where('trade_service_id',$request->trade_service_id)->orderBy($order[0], $order[1])
                 ->take($request->get('jtPageSize'))
                 ->skip($request->get('jtStartIndex'))
                 ->get()->toArray();
         }
         else{
-            $data = Authcode::orderBy($order[0], $order[1])
+            $data = Authcode::where('pay_state', AuthCodes::lended_state)
+                ->orderBy($order[0], $order[1])
                 ->take($request->get('jtPageSize'))
                 ->skip($request->get('jtStartIndex'))
                 ->get()->toArray();

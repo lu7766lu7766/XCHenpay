@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Curl\Curl;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use function retry;
 use Validator;
 use Response;
 use Sentinel;
@@ -37,13 +38,15 @@ class LendingController extends Controller
         $order = explode(" ", $request->get('jtSorting'));
 
         if($request->trade_service_id){
-            $data = Authcode::where('trade_service_id',$request->trade_service_id)->orderBy($order[0], $order[1])
+            $data = Authcode::where('pay_state', AuthCodes::success_state)
+                ->where('trade_service_id',$request->trade_service_id)->orderBy($order[0], $order[1])
                 ->take($request->get('jtPageSize'))
                 ->skip($request->get('jtStartIndex'))
                 ->get()->toArray();
         }
         else{
-            $data = Authcode::orderBy($order[0], $order[1])
+            $data = Authcode::where('pay_state', AuthCodes::success_state)
+                ->orderBy($order[0], $order[1])
                 ->take($request->get('jtPageSize'))
                 ->skip($request->get('jtStartIndex'))
                 ->get()->toArray();
@@ -64,102 +67,130 @@ class LendingController extends Controller
         ));
     }
 
-    private function store(Authcode $authCode, $account)
+    public function store(Request $request)
     {
-        //只有完成交易可以下發
-        //if($authCode->pay_state != 2){
-        if($authCode->pay_state == 4){
-            $jTableResult = [];
-            $jTableResult['Result'] = "error";
-            $jTableResult['Message'] = "此订单已申请下发";
-            return $jTableResult;
-        }else{
-            $authCode->pay_state = AuthCodes::lended_state;
-            $authCode->pay_summary = AuthCodes::lended_summary;
-            $authCode->account = $account;
-        }
-
-        if($authCode->save() )
-        {
-            $jTableResult = [];
-            $jTableResult['Result'] = "OK";
-            $jTableResult['Record'] = $authCode;
-            return $jTableResult;
-        }
-    }
-
-    public function sendVerifyCode( Request $request, VerifyCodes $verifyCodes)
-    {
-        $validator = Validator::make( $request->toArray(), [
-            'mobile' => 'required'
-        ]);
-
-        if ($validator->fails())
-        {
-            return Response::json(array(
-                'Result' => 'error',
-                'Message'=> $validator->messages()
-            ));
-        }
-
-        $data = [
-            'mobile'=>$request->mobile,
-            'temp_id'=>$this->JIGUANG_tempId,
-            "temp_para"=> ["code"=>$randCode = $verifyCodes->generateCode() ]
+        $messages = [
+            'required' => ':attribute 是必填资讯.',
+            'exists'   => '此订单不存在，请刷新页面后重试.',
+            'integer'  => '请输入合法帐号，应由数字构成',
         ];
 
-        $sendCode = new Curl();
-        $sendCode->setBasicAuthentication($this->JIGUANG_appKey, $this->JIGUANG_masterSecret);
-        $sendCode->setHeader('Content-Type', 'application/json');
-        $sendCode->post('https://api.sms.jpush.cn/v1/messages', json_encode($data));
-        $response = $sendCode->response;
-//        $response = [];
-
-        if(array_key_exists('error', $response)){
-            return $result = ['Result'=>'error', 'Message'=>$response->error->message];
-        }else{
-            $verifyCode = $verifyCodes->createActiveCode($randCode);
-            foreach ($request->id as $id){
-                $authCode = Authcode::find($id);
-                $verifyCode->attachCode($authCode);
-            }
-
-            return $result = [
-                'Result'=>'OK',
-                'msg_id'=> $randCode
-            ];
-        }
-    }
-
-    public function verify(Request $request, VerifyCodes $verifyCodes)
-    {
         $validator = Validator::make( $request->toArray(), [
             'id' => 'required|exists:authcodes,id',
-            'code' => 'required',
-            'account' => 'required'
-        ]);
+            'account' => 'required|integer'
+        ], $messages);
 
         if ($validator->fails())
         {
+            $messages ="";
+
+            $errors = $validator->errors();
+            foreach ($errors->all('<li>:message</li>') as $message) {
+                //dd($message);
+                $messages .= $message;
+            }
+
             return Response::json(array(
                 'Result' => 'error',
-                'Message'=> $validator->messages()
+                'Message'=> $messages
             ));
         }
 
         $authCode = Authcode::find($request->id);
-        $verifyCode = $authCode->verifyCode;
 
-        if($status = $verifyCodes->isActived($verifyCode, $request->code, Carbon::now())){
-            $user = Sentinel::getUser();
-            activity($user->full_name)
-                ->causedBy($user)
-                ->log('申請下發订单'.$authCode->trade_seq);
+        //只有完成交易可以下發
+        if($authCode->pay_state != AuthCodes::success_state){
+            $jTableResult = [];
+            $jTableResult['Result'] = "error";
+            $jTableResult['Message'] = "<li>此订单非处于可下发状态<li>";
+            return $jTableResult;
+        }else{
+            $authCode->pay_state = AuthCodes::lended_state;
+            $authCode->pay_summary = AuthCodes::lended_summary;
+            $authCode->account = $request->account;
         }
 
-        if($status['Result'] == 'OK')       //申請下發
-            return $this::store($authCode, $request->account);
-        else
-            return $status;                 //回傳錯誤
+        if($authCode->save() )
+        {
+            return Response::json(array(
+                'Result' => 'OK',
+            ));
+        }
     }
+#send verifyCode to javascript
+//    public function sendVerifyCode( Request $request, VerifyCodes $verifyCodes)
+//    {
+//        $validator = Validator::make( $request->toArray(), [
+//            'mobile' => 'required'
+//        ]);
+//
+//        if ($validator->fails())
+//        {
+//            return Response::json(array(
+//                'Result' => 'error',
+//                'Message'=> $validator->messages()
+//            ));
+//        }
+//
+//        $data = [
+//            'mobile'=>$request->mobile,
+//            'temp_id'=>$this->JIGUANG_tempId,
+//            "temp_para"=> ["code"=>$randCode = $verifyCodes->generateCode() ]
+//        ];
+//
+//        $sendCode = new Curl();
+//        $sendCode->setBasicAuthentication($this->JIGUANG_appKey, $this->JIGUANG_masterSecret);
+//        $sendCode->setHeader('Content-Type', 'application/json');
+//        $sendCode->post('https://api.sms.jpush.cn/v1/messages', json_encode($data));
+//        $response = $sendCode->response;
+////        $response = [];
+//
+//        if(array_key_exists('error', $response)){
+//            return $result = ['Result'=>'error', 'Message'=>$response->error->message];
+//        }else{
+//            $verifyCode = $verifyCodes->createActiveCode($randCode);
+//            foreach ($request->id as $id){
+//                $authCode = Authcode::find($id);
+//                $verifyCode->attachCode($authCode);
+//            }
+//
+//            return $result = [
+//                'Result'=>'OK',
+//                'msg_id'=> $randCode
+//            ];
+//        }
+//    }
+
+#verify code for javascript
+//    public function verify(Request $request, VerifyCodes $verifyCodes)
+//    {
+//        $validator = Validator::make( $request->toArray(), [
+//            'id' => 'required|exists:authcodes,id',
+//            'code' => 'required',
+//            'account' => 'required'
+//        ]);
+//
+//        if ($validator->fails())
+//        {
+//            return Response::json(array(
+//                'Result' => 'error',
+//                'Message'=> $validator->messages()
+//            ));
+//        }
+//
+//        $authCode = Authcode::find($request->id);
+//        $verifyCode = $authCode->verifyCode;
+//
+//        if($status = $verifyCodes->isActived($verifyCode, $request->code, Carbon::now())){
+//            $user = Sentinel::getUser();
+//            activity($user->full_name)
+//                ->causedBy($user)
+//                ->log('申請下發订单'.$authCode->trade_seq);
+//        }
+//
+//        if($status['Result'] == 'OK')       //申請下發
+//            return $this::store($authCode, $request->account);
+//        else
+//            return $status;                 //回傳錯誤
+//    }
 }
