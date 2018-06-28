@@ -30,7 +30,7 @@
 
 <body class="skin-josh">
 <header class="header">
-    <a href="{{ route('admin.dashboard') }}" class="logo">
+    <a href="{{ route('admin.authcode.index') }}" class="logo">
         <img src="{{ asset('assets/img/3rdpay_logo.png') }}" alt="logo">
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
@@ -134,8 +134,8 @@
                 <div class="nav_icons">
                     <ul class="sidebar_threeicons">
                         <li>
-                            <a href="{{ route('admin.dashboard') }}">
-                                <i class="livicon" data-name="home" title="Dashboard" data-loop="true"
+                            <a href="{{ route('admin.authcode.index') }}">
+                                <i class="livicon" data-name="table" title="Dashboard" data-loop="true"
                                    data-color="#e9573f" data-hc="#e9573f" data-s="25"></i>
                             </a>
                         </li>
@@ -147,7 +147,7 @@
                         </li>
                         <li>
                             <a href="{{ URL::to('admin/logQuery') }}">
-                                <i class="livicon" data-name="table" title="Advanced tables" data-loop="true"
+                                <i class="livicon" data-name="balance" title="Advanced tables" data-loop="true"
                                    data-color="#418BCA" data-hc="#418BCA" data-s="25"></i>
                             </a>
                         </li>

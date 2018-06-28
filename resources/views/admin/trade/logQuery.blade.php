@@ -23,17 +23,14 @@
     <section class="content-header">
         <!--section starts-->
         <h1>@lang('Trade/title.title')</h1>
+
         <ol class="breadcrumb">
-            <li>
-                <a href="{{ route('admin.dashboard') }}">
-                    <i class="livicon" data-name="home" data-size="14" data-loop="true"></i>
-                    {{ trans('general.dashboard') }}
-                </a>
+
+            <i class="livicon" data-name="table" data-size="14" data-loop="true"></i>
+            <li class="active" >
+                @lang('Trade/LogQuery/title.title')
             </li>
-            <li>
-                <a href="#">@lang('Trade/title.title')</a>
-            </li>
-            <li class="active">@lang('Trade/LogQuery/title.title')</li>
+
         </ol>
     </section>
     <!--section ends-->
@@ -44,8 +41,7 @@
                     <div class="panel-heading clearfix  ">
                         <div class="panel-title pull-left">
                             <div class="caption">
-                                <i class="livicon" data-name="table" data-size="16" data-loop="true" data-c="#fff"
-                                   data-hc="white"></i>
+                                <i class="livicon" data-name="table" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
                                 @lang('Trade/LogQuery/title.title')
                             </div>
                         </div>

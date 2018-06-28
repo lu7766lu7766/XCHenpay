@@ -23,13 +23,8 @@
         <h1>@lang('users/ViewProfile/title.title')</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="{{ route('admin.dashboard') }}">
-                    <i class="livicon" data-name="home" data-size="14" data-loop="true"></i>
-                    @lang('general.dashboard')
-                </a>
-            </li>
-            <li>
-                <a href="#">@lang('users/title.title')</a>
+                <i class="livicon" data-name="user" data-size="14" data-loop="true"></i>
+                @lang('users/title.title')
             </li>
             <li class="active">@lang('users/ViewProfile/title.title')</li>
         </ol>
@@ -41,12 +36,12 @@
                 <ul class="nav  nav-tabs ">
                     <li class="active">
                         <a href="#tab1" data-toggle="tab">
-                            <i class="livicon" data-name="user" data-size="16" data-c="#000" data-hc="#000" data-loop="true"></i>
-                            @lang('users/ViewProfile/title.title')</a>
+                            <i class="livicon" data-name="notebook" data-size="16" data-c="#000" data-hc="#000" data-loop="true"></i>
+                            @lang('users/ViewProfile/title.information')</a>
                     </li>
                     <li>
                         <a href="#tab2" data-toggle="tab">
-                            <i class="livicon" data-name="notebook" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                            <i class="livicon" data-name="cellphone" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                             @lang('users/ViewProfile/title.contact_password')</a>
                     </li>
 

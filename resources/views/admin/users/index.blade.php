@@ -19,12 +19,9 @@
     <h1>{{ trans('users/title.title') }}</h1>
     <ol class="breadcrumb">
         <li>
-            <a href="{{ route('admin.dashboard') }}">
-                <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
-                {{ trans('general.dashboard') }}
-            </a>
+            <i class="livicon" data-name="user" data-size="14" data-loop="true"></i>
+            {{ trans('users/title.title') }}
         </li>
-        <li><a href="#">{{ trans('users/title.title') }}</a></li>
         <li class="active">{{ trans('users/UserList/title.title') }}</li>
     </ol>
 </section>

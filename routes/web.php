@@ -1,15 +1,5 @@
 <?php
 include_once 'web_builder.php';
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('setlocale/{locale}', function ($locale) {
     if (in_array($locale, \Config::get('app.locales'))) {
@@ -44,17 +34,6 @@ Route::group(['prefix' => 'admin', 'namespace'=>'Admin'], function () {
         return view('admin/login2');
     });
 
-
-    # Register2
-    Route::get('register2', function () {
-        return view('admin/register2');
-    });
-    Route::post('register2', 'AuthController@postRegister2')->name('register2');
-
-    # Forgot Password Confirmation
-    Route::get('forgot-password/{userId}/{passwordResetCode}', 'AuthController@getForgotPasswordConfirm')->name('forgot-password-confirm');
-    Route::post('forgot-password/{userId}/{passwordResetCode}', 'AuthController@getForgotPasswordConfirm');
-
     # Logout
     Route::get('logout', 'AuthController@getLogout')->name('logout');
 
@@ -64,20 +43,12 @@ Route::group(['prefix' => 'admin', 'namespace'=>'Admin'], function () {
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
-    # GUI Crud Generator
-    Route::get('generator_builder', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@builder')->name('generator_builder');
-    Route::get('field_template', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@fieldTemplate');
-    Route::post('generator_builder/generate', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@generate');
-    // Model checking
-    Route::post('modelCheck', 'ModelcheckController@modelCheck');
-
     # Dashboard / Index
-    Route::get('/', 'JoshController@showHome')->name('dashboard');
-
+//    Route::get('/', 'JoshController@showHome')->name('dashboard');
 
     # Activity log
+    Route::get('activity_log', 'JoshController@activityLog')->name('activity_log.data');
     Route::get('activity_log/data', 'JoshController@activityLogData')->name('activity_log.data');
-//    Route::get('/', 'JoshController@index')->name('index');
 });
 
 # User Management
@@ -104,28 +75,8 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
     });
 });
 
-
-
+#trade manage
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
-
-    # Company Management
-    Route::group([ 'prefix' => 'companies'], function () {
-        Route::get('data', 'CompanyController@data')->name('companies.data');
-        Route::get('{company}/delete', 'CompanyController@destroy')->name('companies.delete');
-        Route::get('{company}/confirm-delete', 'CompanyController@getModalDelete')->name('companies.confirm-delete');
-        Route::get('{company}/restore', 'CompanyController@getRestore')->name('restore.company');
-        Route::post('{company}/passwordreset', 'CompanyController@passwordreset')->name('company.passwordreset');
-    });
-    Route::resource('companies', 'CompanyController');
-//    Route::get('deleted_companies',['before' => 'Sentinel', 'companies' => 'CompanyController@getDeletedCompanies'])->name('deleted_companies');
-    Route::get('deleted_companies','CompanyController@getDeletedCompanies')->name('deleted_companies');
-
-    //tasks section
-    Route::post('task/create', 'TaskController@store')->name('store');
-    Route::get('task/data', 'TaskController@data')->name('data');
-    Route::post('task/{task}/edit', 'TaskController@update')->name('update');
-    Route::post('task/{task}/delete', 'TaskController@delete')->name('delete');
-
 
     Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
 
@@ -139,26 +90,32 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
     Route::get('lendApply/verify', 'LendingController@verify')->name('lendApply.verify');
 
     Route::get('lendManage', 'LendManageController@index')->name('lendManage.index');
-    Route::post('lendManage/data', 'LendManageController@data')->name('lendManage.data');
+    Route::get('lendManage/data', 'LendManageController@data')->name('lendManage.data');
     Route::post('lendManage', 'LendManageController@store')->name('lendManage.store');
 });
 
+#companies
+//Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
+//
+//    # Company Management
+//    Route::group([ 'prefix' => 'companies'], function () {
+//        Route::get('data', 'CompanyController@data')->name('companies.data');
+//        Route::get('{company}/delete', 'CompanyController@destroy')->name('companies.delete');
+//        Route::get('{company}/confirm-delete', 'CompanyController@getModalDelete')->name('companies.confirm-delete');
+//        Route::get('{company}/restore', 'CompanyController@getRestore')->name('restore.company');
+//        Route::post('{company}/passwordreset', 'CompanyController@passwordreset')->name('company.passwordreset');
+//    });
+//    Route::resource('companies', 'CompanyController');
+//    Route::get('deleted_companies','CompanyController@getDeletedCompanies')->name('deleted_companies');
+//
+//});
 
-
-# Remaining pages will be called from below controller method
-# in real world scenario, you may be required to define all routes manually
-
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-    Route::get('{name?}', 'JoshController@showView');
-});
-
-#frontend views
+#home
 Route::get('/', ['as' => 'home', 'middleware' => 'admin', function () {
-//    return view('index');
 
     // Is the user logged in?
     if (Sentinel::check()) {
-        return Redirect::route('admin.dashboard');
+        return Redirect::route('admin.authcode.index');
     }
 
     // Show the page

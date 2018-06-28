@@ -25,12 +25,9 @@
         <h1>@lang('users/AddUser/title.title')</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="{{ route('admin.dashboard') }}">
-                    <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
-                    @lang('general.dashboard')
-                </a>
+                <i class="livicon" data-name="user" data-size="14" data-loop="true"></i>
+                @lang('users/title.title')
             </li>
-            <li><a href="#"> @lang('users/title.title')</a></li>
             <li class="active">@lang('users/AddUser/title.title')</li>
         </ol>
     </section>

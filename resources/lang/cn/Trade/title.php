@@ -6,6 +6,6 @@
 
 return array(
 
-    'title'		=> '订单管理',
+    'title'		=> '财务管理',
 
 );

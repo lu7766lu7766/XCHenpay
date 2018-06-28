@@ -19,13 +19,7 @@
     <section class="content-header">
         <h1>{{ trans('ActivityLog/title.title') }}</h1>
         <ol class="breadcrumb">
-            <li>
-                <a href="{{ route('admin.dashboard') }}">
-                    <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
-                    {{ trans('general.dashboard') }}
-                </a>
-            </li>
-
+            <i class="livicon" data-name="eye-open" data-size="14" data-color="#000"></i>
             <li class="active">{{ trans('ActivityLog/title.title') }}</li>
         </ol>
     </section>
@@ -35,7 +29,7 @@
         <div class="row">
             <div class="panel panel-primary ">
                 <div class="panel-heading">
-                    <h4 class="panel-title"><i class="livicon" data-name="user" data-size="16" data-loop="true"
+                    <h4 class="panel-title"><i class="livicon" data-name="eye-open" data-size="16" data-loop="true"
                                                data-c="#fff" data-hc="white"></i>
                         {{ trans('ActivityLog/title.title') }}
                     </h4>

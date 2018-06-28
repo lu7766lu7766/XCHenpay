@@ -22,12 +22,9 @@
         <h1>@lang('Trade/title.title')</h1>
         <ol class="breadcrumb">
             <li>
-                <a href="index.html">
-                    <i class="livicon" data-name="home" data-size="14" data-color="#000"></i>
-                    @lang('general.dashboard')
-                </a>
+                <i class="livicon" data-name="balance" data-size="14" data-loop="true"></i>
+                @lang('Trade/title.title')
             </li>
-            <li>@lang('Trade/title.title')</li>
             <li class="active">@lang('Trade/lendApply/title.title')</li>
         </ol>
     </section>

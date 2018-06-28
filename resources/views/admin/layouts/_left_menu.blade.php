@@ -1,10 +1,16 @@
 <ul id="menu" class="page-sidebar-menu">
 
-    <li {!! (Request::is('admin') ? 'class="active"' : '') !!}>
-        <a href="{{ route('admin.dashboard') }}">
-            <i class="livicon" data-name="home" data-size="18" data-c="#e9573f" data-hc="#e9573f"
-               data-loop="true"></i>
-            <span class="title">{{ trans('general.dashboard') }}</span>
+    {{--<li {!! (Request::is('admin') ? 'class="active"' : '') !!}>--}}
+        {{--<a href="{{ route('admin.dashboard') }}">--}}
+            {{--<i class="livicon" data-name="home" data-size="18" data-c="#e9573f" data-hc="#e9573f" data-loop="true"></i>--}}
+            {{--<span class="title">{{ trans('general.dashboard') }}</span>--}}
+        {{--</a>--}}
+    {{--</li>--}}
+
+    <li {!! (Request::is('admin/logQuery') ? 'class="active"' : '') !!}>
+        <a href="{{ URL::to('admin/logQuery') }}">
+            <i class="livicon" data-name="table" data-size="18" data-c="#e9573f" data-hc="#e9573f" data-loop="true"></i>
+            <span class="title">{{ trans('Trade/LogQuery/title.title') }}</span>
         </a>
     </li>
 
@@ -79,9 +85,9 @@
         {{--</ul>--}}
     {{--</li>--}}
 
-    <li {!! (Request::is('admin/auth_code') || Request::is('admin/logQuery') || Request::is('admin/lendApply') || Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
+    <li {!! (Request::is('admin/lendApply') || Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
         <a href="{{ URL::to('admin/auth_code') }}">
-            <i class="livicon" data-name="table" data-c="#418bca" data-hc="#418bca" data-size="18"
+            <i class="livicon" data-name="balance" data-c="#418bca" data-hc="#418bca" data-size="18"
                data-loop="true"></i>
             <span class="title">
                 {{ trans('Trade/title.title') }}
@@ -89,14 +95,7 @@
             <span class="fa arrow"></span>
         </a>
 
-        <ul class="sub-menu">
-            <li {!! (Request::is('admin/logQuery') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('admin/logQuery') }}">
-                    <i class="fa fa-angle-double-right"></i>
-                    {{ trans('Trade/LogQuery/title.title') }}
-                </a>
-            </li>
-        </ul>
+
 
         <ul class="sub-menu">
             <li {!! (Request::is('admin/lendApply') ? 'class="active"' : '') !!}>

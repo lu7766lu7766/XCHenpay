@@ -323,6 +323,11 @@ class JoshController extends Controller {
         }
     }
 
+    public function activityLog()
+    {
+        return view('admin.activity_log');
+    }
+
     public function activityLogData()
     {
         $logs = Activity::get(['causer_id', 'log_name', 'description','created_at']);
