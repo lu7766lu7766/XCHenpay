@@ -112,13 +112,13 @@
                                 dataType: 'json',
                                 data: postData,
                                 success: function (data) {
-                                    console.log('success');
-                                    console.log(data);
+                                    // console.log('success');
+                                    // console.log(data);
                                     $dfd.resolve(data);
                                 },
                                 error: function (data) {
-                                    console.log('error');
-                                    console.log(data);
+                                    // console.log('error');
+                                    // console.log(data);
                                     $dfd.reject();
                                 }
                             });
@@ -143,7 +143,28 @@
                                 }
                             });
                         });
-                    }
+                    },
+                    getAccount: function (postData) {
+                        return $.Deferred(function ($dfd) {
+                            $.ajax({
+                                url: "{{ url('admin/lendApply/getAccount') }}",
+                                type: 'POST',
+                                dataType: 'json',
+                                data: postData,
+                                success: function (data) {
+                                    // console.log('success');
+                                    // console.log(data);
+                                    $dfd.resolve(data);
+                                },
+                                error: function (data) {
+                                    // console.log('error');
+                                    // console.log(data);
+                                    $dfd.reject();
+                                }
+                            });
+                        });
+                    },
+
 
                 },
                 fields: {

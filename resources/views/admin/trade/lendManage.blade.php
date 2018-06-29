@@ -112,13 +112,13 @@
                                 dataType: 'json',
                                 data: postData,
                                 success: function (data) {
-                                    // console.log('success');
-                                    // console.log(data);
+                                    console.log('success');
+                                    console.log(data);
                                     $dfd.resolve(data);
                                 },
                                 error: function (data) {
-                                    // console.log('error');
-                                    // console.log(data);
+                                    console.log('error');
+                                    console.log(data);
                                     $dfd.reject();
                                 }
                             });

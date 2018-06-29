@@ -56,16 +56,28 @@ class LendManageController extends Controller
 
     public function store(Request $request)
     {
+        $messages = [
+            'required' => ':attribute 不得为空.',
+            'exists'   => '此订单不存在，请刷新页面后重试.',
+        ];
+
         $validator = Validator::make( $request->toArray(), [
             'id' => 'required|exists:authcodes,id',
             'operation' => 'required|in:0,1',
-        ]);
+        ],$messages);
 
         if ($validator->fails())
         {
+            $messages ="";
+
+            $errors = $validator->errors();
+            foreach ($errors->all('<li>:message</li>') as $message) {
+                $messages .= $message;
+            }
+
             return Response::json(array(
                 'Result' => 'error',
-                'Message'=> $validator->messages()
+                'Message'=> $messages
             ));
         }
 

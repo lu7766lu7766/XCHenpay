@@ -71,13 +71,13 @@ class LendingController extends Controller
     {
         $messages = [
             'required' => ':attribute 是必填资讯.',
-            'exists'   => '此订单不存在，请刷新页面后重试.',
+            'exists'   => '此帐号不存在，请刷新页面后重试.',
             'integer'  => '请输入合法帐号，应由数字构成',
         ];
 
         $validator = Validator::make( $request->toArray(), [
-            'id' => 'required|exists:authcodes,id',
-            'account' => 'required|integer'
+            'id' => 'required',
+            'account' => 'required|exists:accounts,account'
         ], $messages);
 
         if ($validator->fails())
@@ -86,7 +86,6 @@ class LendingController extends Controller
 
             $errors = $validator->errors();
             foreach ($errors->all('<li>:message</li>') as $message) {
-                //dd($message);
                 $messages .= $message;
             }
 
@@ -117,6 +116,12 @@ class LendingController extends Controller
             ));
         }
     }
+
+    public function getAccount()
+    {
+        return Sentinel::getUser()->accounts->pluck('account');
+    }
+
 #send verifyCode to javascript
 //    public function sendVerifyCode( Request $request, VerifyCodes $verifyCodes)
 //    {
