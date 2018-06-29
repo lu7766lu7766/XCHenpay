@@ -108,7 +108,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ URL::route('lockscreen',Sentinel::getUser()->id) }}">
+                                <a href="{{ URL::route('admin.lockscreen',Sentinel::getUser()->id) }}">
                                     <i class="livicon" data-name="lock" data-size="16" data-c="#555555" data-hc="#555555" data-loop="true"></i>
                                     @lang('DefaultBlade/form.Lock')
                                 </a>

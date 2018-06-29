@@ -21,9 +21,7 @@ Route::group(['prefix' => 'admin', 'namespace'=>'Admin'], function () {
     Route::get('500', function () {
         return view('admin/500');
     });
-    # Lock screen
-    Route::get('{id}/lockscreen', 'UsersController@lockscreen')->name('lockscreen');
-    Route::post('{id}/lockscreen', 'UsersController@postLockscreen')->name('lockscreen');
+
     # All basic routes defined here
     Route::get('login', 'AuthController@getSignin')->name('login');
     Route::get('signin', 'AuthController@getSignin')->name('signin');
@@ -41,13 +39,9 @@ Route::group(['prefix' => 'admin', 'namespace'=>'Admin'], function () {
     Route::get('activate/{userId}/{activationCode}', 'AuthController@getActivate')->name('activate');
 });
 
-
+# Activity log
 Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
-    # Dashboard / Index
-//    Route::get('/', 'JoshController@showHome')->name('dashboard');
-
-    # Activity log
-    Route::get('activity_log', 'JoshController@activityLog')->name('activity_log.data');
+    Route::get('activity_log', 'JoshController@activityLog')->name('activity_log');
     Route::get('activity_log/data', 'JoshController@activityLogData')->name('activity_log.data');
 });
 
@@ -73,43 +67,31 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
         Route::get('{account}/confirm-delete', 'AccountController@getModalDelete')->name('account.confirm-delete');
         Route::get('{account}/delete', 'AccountController@destroy')->name('account.delete');
     });
+
+    # Lock screen
+    Route::get('{id}/lockscreen', 'UsersController@lockscreen')->name('lockscreen');
+    Route::post('{id}/lockscreen', 'UsersController@postLockscreen')->name('post-lockscreen');
 });
 
-#trade manage
+#tradeQuery  (index)
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
-
     Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
+});
 
+#lendApply
+Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'lendApply'], 'as' => 'admin.'], function () {
     Route::get('lendApply', 'LendingController@index')->name('lendApply.index');
     Route::get('lendApply/data', 'LendingController@data')->name('lendApply.data');
-    //Route::post('lendApply/store', 'LendingController@store')->name('lendApply.store');
-    Route::post('lendApply/update', 'LendingController@update')->name('lendApply.update');
-    Route::post('lendApply/delete', 'LendingController@destroy')->name('lendApply.delete');
-    Route::post('lendApply/sendVerifyCode', 'LendingController@sendVerifyCode')->name('lendApply.sendCode');
     Route::post('lendApply/apply', 'LendingController@store')->name('lendApply.apply');
     Route::post('lendApply/getAccount', 'LendingController@getAccount')->name('lendApply.getAccount');
-    Route::get('lendApply/getAccount', 'LendingController@getAccount')->name('lendApply.getAccount');
+});
 
+#lendManage
+Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'lendManage'], 'as' => 'admin.'], function () {
     Route::get('lendManage', 'LendManageController@index')->name('lendManage.index');
     Route::get('lendManage/data', 'LendManageController@data')->name('lendManage.data');
     Route::post('lendManage', 'LendManageController@store')->name('lendManage.store');
 });
-
-#companies
-//Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
-//
-//    # Company Management
-//    Route::group([ 'prefix' => 'companies'], function () {
-//        Route::get('data', 'CompanyController@data')->name('companies.data');
-//        Route::get('{company}/delete', 'CompanyController@destroy')->name('companies.delete');
-//        Route::get('{company}/confirm-delete', 'CompanyController@getModalDelete')->name('companies.confirm-delete');
-//        Route::get('{company}/restore', 'CompanyController@getRestore')->name('restore.company');
-//        Route::post('{company}/passwordreset', 'CompanyController@passwordreset')->name('company.passwordreset');
-//    });
-//    Route::resource('companies', 'CompanyController');
-//    Route::get('deleted_companies','CompanyController@getDeletedCompanies')->name('deleted_companies');
-//
-//});
 
 #home
 Route::get('/', ['as' => 'home', 'middleware' => 'admin', function () {

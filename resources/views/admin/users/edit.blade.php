@@ -187,14 +187,14 @@
                                                     {!! $errors->first('gender', '<span class="help-block">:message</span>') !!}
                                                 </div>
 
-                                                <div class="form-group required {{ $errors->first('country', 'has-error') }}">
-                                                    <label for="country" class="col-sm-2 control-label">@lang('users/EditProfile/form.country') </label>
-                                                    <div class="col-sm-10">
-                                                        {!! Form::select('country', $countries,old('country',$user->country),array('class' => 'country_field form-control')) !!}
+                                                {{--<div class="form-group required {{ $errors->first('country', 'has-error') }}">--}}
+                                                    {{--<label for="country" class="col-sm-2 control-label">@lang('users/EditProfile/form.country') </label>--}}
+                                                    {{--<div class="col-sm-10">--}}
+                                                        {{--{!! Form::select('country', $countries,old('country',$user->country),array('class' => 'country_field form-control')) !!}--}}
 
-                                                    </div>
-                                                    {!! $errors->first('country', '<span class="help-block">:message</span>') !!}
-                                                </div>
+                                                    {{--</div>--}}
+                                                    {{--{!! $errors->first('country', '<span class="help-block">:message</span>') !!}--}}
+                                                {{--</div>--}}
 
                                                 <div class="form-group {{ $errors->first('state', 'has-error') }}">
                                                     <label for="state" class="col-sm-2 control-label">@lang('users/EditProfile/form.state') </label>

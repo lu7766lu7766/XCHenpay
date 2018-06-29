@@ -20,11 +20,18 @@ class AdminSeeder extends DatabaseSeeder {
 			'last_name'   => 'Wang',
 		));
 
+        $fan = Sentinel::registerAndActivate(array(
+            'email'       => 'fan@fan.com',
+            'password'    => "fan",
+            'first_name'  => 'Fan',
+            'last_name'   => 'Liu',
+        ));
+
         $user = Sentinel::registerAndActivate(array(
-            'email'       => 'CCC@mail.com',
-            'password'    => "123",
-            'first_name'  => 'CCC',
-            'last_name'   => 'hen',
+            'email'       => 'user@user.com',
+            'password'    => "user",
+            'first_name'  => 'User',
+            'last_name'   => 'Chen',
         ));
 
         $adminRole = Sentinel::getRoleRepository()->createModel()->create([
@@ -33,10 +40,38 @@ class AdminSeeder extends DatabaseSeeder {
 			'permissions' => array(
                 'users' => true,
                 'companies' => true,
-                'auth_code' => true,
+                'lendApply' => true,
+                'lendManage' => true,
                 'activity_log' => true,
             ),
 		]);
+
+        $fanRole = Sentinel::getRoleRepository()->createModel()->create([
+            'name'  => 'Finance',
+            'slug'  => 'finance',
+            'permissions' => array(
+                'users.index' => false,
+                'users.data' => false,
+                'users.show' => false,
+                //'users.showProfile' => false,
+                'users.edit' => false,
+                //'users.editProfile' => false,
+                'users.update' => false,
+                'users.updateProfile' => false,
+                'users.create' => false,
+                'users.store' => false,
+                'users.getModalDelete' => false,
+                'users.destroy' => false,
+                'users.getDeletedUsers' => false,
+                'users.getRestore' => false,
+                'users.passwordreset' => false,
+//                'users.lockscreen' => false,
+//                'users.postLockscreen' => false,
+
+                'lendApply' => false,
+                'lendManage' => true,
+            ),
+        ]);
 
         $userRole = Sentinel::getRoleRepository()->createModel()->create([
 			'name'  => 'User',
@@ -45,30 +80,30 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.index' => false,
                 'users.data' => false,
                 'users.show' => false,
+                //'users.showProfile' => false,
                 'users.edit' => false,
+                //'users.editProfile' => false,
                 'users.update' => false,
+                'users.updateProfile' => false,
                 'users.create' => false,
                 'users.store' => false,
                 'users.getModalDelete' => false,
                 'users.destroy' => false,
                 'users.getDeletedUsers' => false,
+                'users.getRestore' => false,
+                'users.passwordreset' => false,
+//                'users.lockscreen' => false,
+//                'users.postLockscreen' => false,
 
-                'companies.index' => false,
-                'companies.data' => false,
-                'companies.show' => false,
-                'companies.edit' => false,
-                'companies.update' => false,
-                'companies.create' => false,
-                'companies.store' => false,
-                'companies.getModalDelete' => false,
-                'companies.destroy' => false,
-                'companies.getDeletedCompanies' => false,
+                'lendApply' => true,
+                'lendManage' => false,
             ),
 		]);
 
 
 		$admin->roles()->attach($adminRole);
         $user->roles()->attach($userRole);
+        $fan->roles()->attach($fanRole);
 
 		$this->command->info('Admin User created with username admin@admin.com and password admin');
 	}

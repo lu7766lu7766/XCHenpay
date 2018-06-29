@@ -23,69 +23,44 @@
             <span class="fa arrow"></span>
         </a>
         <ul class="sub-menu">
+            @if(Sentinel::getUser()->hasAccess('users.index') || Sentinel::getUser()->hasAccess('users'))
             <li {!! (Request::is('admin/users') ? 'class="active" id="active"' : '') !!}>
                 <a href="{{ URL::to('admin/users') }}">
                     <i class="fa fa-angle-double-right"></i>
                     {{ trans('users/title.users') }}
                 </a>
             </li>
+            @endif
+
+            @if(Sentinel::getUser()->hasAccess('users.create') || Sentinel::getUser()->hasAccess('users'))
             <li {!! (Request::is('admin/users/create') ? 'class="active" id="active"' : '') !!}>
                 <a href="{{ URL::to('admin/users/create') }}">
                     <i class="fa fa-angle-double-right"></i>
                     {{ trans('users/title.addUser') }}
                 </a>
             </li>
+            @endif
+
             <li {!! ((Request::is('admin/users/*')) && !(Request::is('admin/users/create')) ? 'class="active" id="active"' : '') !!}>
                 <a href="{{ URL::route('admin.users.showProfile') }}">
                     <i class="fa fa-angle-double-right"></i>
                     {{ trans('users/title.viewProfile') }}
                 </a>
             </li>
+
+            @if(Sentinel::getUser()->hasAccess('users.getDeletedUsers') || Sentinel::getUser()->hasAccess('users'))
             <li {!! (Request::is('admin/deleted_users') ? 'class="active" id="active"' : '') !!}>
                 <a href="{{ URL::to('admin/deleted_users') }}">
                     <i class="fa fa-angle-double-right"></i>
                     {{ trans('users/title.deletedUsers') }}
                 </a>
             </li>
+            @endif
         </ul>
     </li>
 
-    {{--<li {!! (Request::is('admin/companies') || Request::is('admin/companies/create') || Request::is('admin/companies_profile') || Request::is('admin/companies/*') || Request::is('admin/deleted_companies') ? 'class="active"' : '') !!}>--}}
-        {{--<a href="#">--}}
-            {{--<i class="livicon" data-name="users" data-size="18" data-c="#67C5DF" data-hc="#67C5DF"--}}
-               {{--data-loop="true"></i>--}}
-            {{--<span class="title">{{ trans('companies/title.title') }}</span>--}}
-            {{--<span class="fa arrow"></span>--}}
-        {{--</a>--}}
-        {{--<ul class="sub-menu">--}}
-            {{--<li {!! (Request::is('admin/companies') ? 'class="active" id="active"' : '') !!}>--}}
-                {{--<a href="{{ URL::to('admin/companies') }}">--}}
-                    {{--<i class="fa fa-angle-double-right"></i>--}}
-                    {{--{{ trans('companies/title.companies') }}--}}
-                {{--</a>--}}
-            {{--</li>--}}
-            {{--<li {!! (Request::is('admin/companies/create') ? 'class="active" id="active"' : '') !!}>--}}
-                {{--<a href="{{ URL::to('admin/companies/create') }}">--}}
-                    {{--<i class="fa fa-angle-double-right"></i>--}}
-                    {{--{{ trans('companies/title.addCompany') }}--}}
-                {{--</a>--}}
-            {{--</li>--}}
-            {{--<li {!! ((Request::is('admin/companies/*')) && !(Request::is('admin/companies/create')) ? 'class="active" id="active"' : '') !!}>--}}
-                {{--<a href="{{ URL::route('admin.companies.show',Sentinel::getUser()->id) }}">--}}
-                    {{--<i class="fa fa-angle-double-right"></i>--}}
-                    {{--{{ trans('companies/title.viewProfile') }}--}}
-                {{--</a>--}}
-            {{--</li>--}}
-            {{--<li {!! (Request::is('admin/deleted_companies') ? 'class="active" id="active"' : '') !!}>--}}
-                {{--<a href="{{ URL::to('admin/deleted_companies') }}">--}}
-                    {{--<i class="fa fa-angle-double-right"></i>--}}
-                    {{--{{ trans('companies/title.deletedCompanies') }}--}}
-                {{--</a>--}}
-            {{--</li>--}}
-        {{--</ul>--}}
-    {{--</li>--}}
-
     <li {!! (Request::is('admin/lendApply') || Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
+
         <a href="{{ URL::to('admin/auth_code') }}">
             <i class="livicon" data-name="balance" data-c="#418bca" data-hc="#418bca" data-size="18"
                data-loop="true"></i>
@@ -96,7 +71,7 @@
         </a>
 
 
-
+        @if(Sentinel::getUser()->hasAccess('lendApply.index') || Sentinel::getUser()->hasAccess('lendApply'))
         <ul class="sub-menu">
             <li {!! (Request::is('admin/lendApply') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('admin/lendApply') }}">
@@ -105,7 +80,9 @@
                 </a>
             </li>
         </ul>
+        @endif
 
+        @if(Sentinel::getUser()->hasAccess('lendManage.index') || Sentinel::getUser()->hasAccess('lendManage'))
         <ul class="sub-menu">
             <li {!! (Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
                 <a href="{{ URL::to('admin/lendManage') }}">
@@ -114,6 +91,7 @@
                 </a>
             </li>
         </ul>
+        @endif
     </li>
 
     {{--<li {!! (Request::is('admin/tasks') ? 'class="active"' : '') !!}>--}}

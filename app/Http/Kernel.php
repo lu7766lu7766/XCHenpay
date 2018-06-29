@@ -60,5 +60,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin' => \App\Http\Middleware\SentinelAdmin::class,
 	    'users' => \App\Http\Middleware\usersPromission::class,
+        'lendApply' => \App\Http\Middleware\lendApplyPromission::class,
+        'lendManage' => \App\Http\Middleware\lendManagePromission::class,
     ];
 }

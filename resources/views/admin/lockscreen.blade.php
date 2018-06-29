@@ -43,7 +43,7 @@
         <div class="form-box">
             <form method="POST" name="screen">
                 <div class="form">
-                    <p class="form-control-static user_name_max">{{Sentinel::getUser()->first_name}}</p>
+                    <p class="form-control-static user_name_max">{{Sentinel::getUser()->full_name}}</p>
                     <input type="password" name="user"  id="password" class="form-control" placeholder="Password">
                     <button class="btn btn-info btn-block login" id="index" type="submit">GO</button>
                 </div>
@@ -82,15 +82,15 @@
                     data: {password: $("#password").val(), _token: $('meta[name="_token"]').attr('content')},
                     success: function (result) {
                         if (result == 'error') {
-                            $("#output").addClass("alert alert-danger").text('You have entered a Wrong Password');
+                            $("#output").addClass("alert alert-danger").text('密码输入错误，请重新输入');
                             setTimeout(function() {
                                 $("#output").removeClass("alert alert-danger").text('');
                             },2500)
                         }
                         else {
-                            $("#output").addClass("alert alert-success animated fadeInUp user_name_max2").text('Welcome ' + '{!! Sentinel::getUser()->first_name !!}');
+                            $("#output").addClass("alert alert-success animated fadeInUp user_name_max2").text('欢迎 ' + '{!! Sentinel::getUser()->first_name !!}');
                             setTimeout(function(){
-                            window.location.href = '../../admin';
+                            window.location.href = '../../admin/logQuery';
                             },1000)
                         }
                     },

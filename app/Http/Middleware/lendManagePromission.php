@@ -5,28 +5,20 @@ namespace App\Http\Middleware;
 use Closure;
 use Sentinel;
 
-class usersPromission
+class lendManagePromission
 {
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \Closure $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         $openSource = array(
-            'showProfile',
-            'editProfile',
-            'passwordreset',
-            'lockscreen',
-            'postLockscreen',
         );
         $protectOthers = array(
-            'show',
-            'edit',
-            'update',
         );
 
         $method = $request->route()->getActionMethod();
@@ -35,17 +27,16 @@ class usersPromission
         if(in_array($method, $openSource))
             return $next($request);
 
-        if($user->hasAccess('users'))
+        if($user->hasAccess('lendManage'))
             return $next($request);
 
         if(in_array($method, $protectOthers) && $user->id == $request->route()->user->id)
             return $next($request);
 
-        if ($user->hasAccess('users.'.$method)|| $user->hasAccess('users'))
+        if ($user->hasAccess('lendManage.'.$method)|| $user->hasAccess('lendManage'))
             return $next($request);
 
         // Execute this code if the permission check failed
         return redirect()->route('admin.authcode.index')->with('error', "您所造访的页面不存在");
-
     }
 }
