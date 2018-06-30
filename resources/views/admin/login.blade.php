@@ -40,7 +40,7 @@
                                     <label style="margin-bottom:0px;" for="email" class="uname control-label"> <i class="livicon" data-name="mail" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
                                         @lang('SignIn/form.Email')
                                     </label>
-                                    <input id="email" name="email" type="email" placeholder="E-mail"
+                                    <input id="email" name="email" type="email" placeholder="@lang('SignIn/form.Email')"
                                            value="{!! old('email') !!}"/>
                                     <div class="col-sm-12">
                                         {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
@@ -50,7 +50,7 @@
                                     <label style="margin-bottom:0px;" for="password" class="youpasswd"> <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#3c8dbc" data-hc="#3c8dbc"></i>
                                         @lang('SignIn/form.Password')
                                     </label>
-                                    <input id="password" name="password" type="password" placeholder="Enter a password" />
+                                    <input id="password" name="password" type="password" placeholder="@lang('SignIn/form.Password')" />
                                     <div class="col-sm-12">
                                         {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
                                     </div>
@@ -63,7 +63,7 @@
                                     </label>
                                 </div>
                                 <p class="login button">
-                                    <input type="submit" value=@lang('SignIn/form.logIn') class="btn btn-success" />
+                                    <input type="submit" value="@lang('SignIn/form.logIn')" class="btn btn-success" />
                                 </p>
 
                                 {{--//todo 把這兩個導到我做的新稱使用者--}}

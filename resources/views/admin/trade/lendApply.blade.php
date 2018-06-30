@@ -25,7 +25,7 @@
                 <i class="livicon" data-name="balance" data-size="14" data-loop="true"></i>
                 @lang('Trade/title.title')
             </li>
-            <li class="active">@lang('Trade/lendApply/title.title')</li>
+            <li class="active">@lang('Trade/LendApply/title.title')</li>
         </ol>
     </section>
     <!-- Main content -->
@@ -37,7 +37,7 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <i class="livicon" data-name="barchart" data-size="18" data-c="#fff" data-hc="#fff" data-loop="true"></i>
-                            @lang('Trade/lendApply/title.title')
+                            @lang('Trade/LendApply/title.title')
                         </h4>
                         <span class="pull-right">
                                     <i class="fa fa-fw fa-chevron-up clickable"></i>
@@ -50,12 +50,12 @@
 
                             <form class="form-inline" >
                                 <div class="form-group">
-                                    <label for="fname">@lang('Trade/lendApply/form.trade_service_id'):</label>
-                                    <input type="text" name="service_id" id="service_id" placeholder=@lang('Trade/lendApply/form.trade_service_id') class="form-control"/>
+                                    <label for="fname">@lang('Trade/LendApply/form.trade_service_id'):</label>
+                                    <input type="text" name="service_id" id="service_id" placeholder=@lang('Trade/LendApply/form.trade_service_id') class="form-control"/>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary" id="LoadRecordsButton">@lang('Trade/lendApply/form.filter')</button>
-                                <button type="button" class="btn btn-danger" id="reset-search">@lang('Trade/lendApply/form.reset')</button>
+                                <button type="submit" class="btn btn-primary" id="LoadRecordsButton">@lang('Trade/LendApply/form.filter')</button>
+                                <button type="button" class="btn btn-danger" id="reset-search">@lang('Trade/LendApply/form.reset')</button>
                             </form>
                             <br>
                         </div>
@@ -65,7 +65,7 @@
                         </div>
                         <!-- An area to show selected rows (for demonstration) -->
                         <br>
-                        <button id="LendAllButton" class="btn btn-primary">@lang('Trade/lendApply/form.applyAll')</button>
+                        <button id="LendAllButton" class="btn btn-primary">@lang('Trade/LendApply/form.applyAll')</button>
                         {{--Selected rows (refreshed on <b>selectionChanged</b> event):--}}
                         {{--<div id="SelectedRowList">--}}
                         {{--No row selected! Select rows to see here...--}}

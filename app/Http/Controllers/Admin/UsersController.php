@@ -242,7 +242,7 @@ class UsersController extends JoshController
                 activity($user->full_name)
                     ->performedOn($user)
                     ->causedBy($user)
-                    ->log('User Updated by '.Sentinel::getUser()->full_name);
+                    ->log('更新了联络信息');
                 // Redirect to the user page
                 return Redirect::route('admin.users.edit', $user)->with('success', $success);
             }
