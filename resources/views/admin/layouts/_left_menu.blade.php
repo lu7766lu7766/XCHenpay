@@ -105,4 +105,12 @@
         </a>
     </li>
     @include('admin/layouts/menu')
+
+    {{--#Trade Query(index)--}}
+    <li>
+        <a href="http://103.242.110.1/3rdPartyPay_API_%E6%96%87%E6%8C%A1.pdf">
+            <i class="livicon" data-name="doc-portrait" data-size="18" data-c="#67C5DF" data-hc="#67C5DF" data-loop="true"></i>
+            <span class="title">{{ trans('general.document') }}</span>
+        </a>
+    </li>
 </ul>

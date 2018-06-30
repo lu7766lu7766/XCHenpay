@@ -19,4 +19,6 @@ return array(
     'weekly_users'  => '这周的用户',
     'recently_users'  => '最近的用户',
 
+    'document' => '开发文党'
+
 );
