@@ -208,21 +208,6 @@
                                 <form class="form-horizontal">
                                     <div class="form-body">
                                         <div class="form-group">
-                                            {{ csrf_field() }}
-                                            <label for="inputPhoneNum" class="col-md-3 control-label">
-                                                @lang('users/ViewProfile/form.inputPhoneNum')
-                                                <span class='require'>*</span>
-                                            </label>
-                                            <div class="col-md-9">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">
-                                                        <i class="livicon" data-name="cellphone" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                                                    </span>
-                                                    <input type="text" id="mobile" placeholder=@lang('users/ViewProfile/form.PhoneNumHolder') name="mobile" class="form-control"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="inputCode" class="col-md-3 control-label">
                                                 @lang('users/ViewProfile/form.inputVerifyCode')
                                                 <span class='require'>*</span>
@@ -353,40 +338,27 @@
             $('#send-VerifyCode').click(function (event) {
                 event.preventDefault();
 
-                if ($('#mobile').val() ===""){
-                    alert('请输入手机号码');
-                }
-                else if ($('#mobile').val().length != 11){
-                    alert('手机号码长度应为11码');
-                }
-                else if (isNaN($('#mobile').val())){
-                    alert('请输入有效手机号码');
-                }
-                else{
-                    var postData = {
-                        id: {{ $user->id }},
-                        mobile: $('#mobile').val()
-
-                        // timestamp: $.now()
-                    };
-                    //var path = "sendVerifyCode"
-                    $.ajax({
-                        url: "sendVerifyCode",
-                        type: "post",
-                        dataType: 'json',
-                        data: postData,
-                        success: function (data) {
-                            $('#mobile').val('');
-                            if (data.Result == 'OK')
-                                alert('发送验证码成功，请检查您的手机讯息');
-                            else
-                                alert('错误，' + data.Message);
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                            alert('发送验证码失败，与服务器沟通错误');
-                        }
-                    });
-                }
+                var postData = {
+                    id: {{ $user->id }},
+                    mobile: {{ $user->mobile }}
+                };
+                //var path = "sendVerifyCode"
+                $.ajax({
+                    url: "sendVerifyCode",
+                    type: "post",
+                    dataType: 'json',
+                    data: postData,
+                    success: function (data) {
+                        $('#mobile').val('');
+                        if (data.Result == 'OK')
+                            alert('已成功发送验证码至' + {{ $user->mobile }});
+                        else
+                            alert('错误，' + data.Message);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('发送验证码失败，与服务器沟通错误');
+                    }
+                });
             });
 
             $('#add-Account').click(function (e) {

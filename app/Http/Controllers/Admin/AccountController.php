@@ -73,9 +73,11 @@ class AccountController extends Controller
         $sendCode = new Curl();
         $sendCode->setBasicAuthentication($this->JIGUANG_appKey, $this->JIGUANG_masterSecret);
         $sendCode->setHeader('Content-Type', 'application/json');
-//        $sendCode->post('https://api.sms.jpush.cn/v1/messages', json_encode($data));
-//        $response = $sendCode->response;
-        $response = [];
+        $sendCode->post('https://api.sms.jpush.cn/v1/messages', json_encode($data));
+        $response = $sendCode->response;
+
+
+//        $response = [];
 
         if(array_key_exists('error', $response)){
             return $result = ['Result'=>'error', 'Message'=>$response->error->message];

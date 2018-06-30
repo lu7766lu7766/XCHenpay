@@ -1,12 +1,6 @@
 <ul id="menu" class="page-sidebar-menu">
 
-    {{--<li {!! (Request::is('admin') ? 'class="active"' : '') !!}>--}}
-        {{--<a href="{{ route('admin.dashboard') }}">--}}
-            {{--<i class="livicon" data-name="home" data-size="18" data-c="#e9573f" data-hc="#e9573f" data-loop="true"></i>--}}
-            {{--<span class="title">{{ trans('general.dashboard') }}</span>--}}
-        {{--</a>--}}
-    {{--</li>--}}
-
+    {{--#Trade Query(index)--}}
     <li {!! (Request::is('admin/logQuery') ? 'class="active"' : '') !!}>
         <a href="{{ URL::to('admin/logQuery') }}">
             <i class="livicon" data-name="table" data-size="18" data-c="#e9573f" data-hc="#e9573f" data-loop="true"></i>
@@ -14,7 +8,7 @@
         </a>
     </li>
 
-
+    {{--#User--}}
     <li {!! (Request::is('admin/users') || Request::is('admin/users/create') || Request::is('admin/user_profile') || Request::is('admin/users/*') || Request::is('admin/deleted_users') ? 'class="active"' : '') !!}>
         <a href="#">
             <i class="livicon" data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
@@ -41,10 +35,17 @@
             </li>
             @endif
 
-            <li {!! ((Request::is('admin/users/*')) && !(Request::is('admin/users/create')) ? 'class="active" id="active"' : '') !!}>
+            <li {!! ((Request::is('admin/users/showProfile')) ? 'class="active" id="active"' : '') !!}>
                 <a href="{{ URL::route('admin.users.showProfile') }}">
                     <i class="fa fa-angle-double-right"></i>
                     {{ trans('users/title.viewProfile') }}
+                </a>
+            </li>
+
+            <li {!! ((Request::is('admin/users/editProfile')) ? 'class="active" id="active"' : '') !!}>
+                <a href="{{ URL::route('admin.users.editProfile') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('users/title.editProfile') }}
                 </a>
             </li>
 
@@ -59,6 +60,7 @@
         </ul>
     </li>
 
+    {{--#Lend Manage--}}
     <li {!! (Request::is('admin/lendApply') || Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
 
         <a href="{{ URL::to('admin/auth_code') }}">
@@ -94,15 +96,7 @@
         @endif
     </li>
 
-    {{--<li {!! (Request::is('admin/tasks') ? 'class="active"' : '') !!}>--}}
-        {{--<a href="{{ URL::to('admin/tasks') }}">--}}
-            {{--<i class="livicon" data-c="#EF6F6C" data-hc="#EF6F6C" data-name="list-ul" data-size="18"--}}
-               {{--data-loop="true"></i>--}}
-            {{--Tasks--}}
-            {{--<span class="badge badge-danger" id="taskcount">{{ Request::get('tasks_count') }}</span>--}}
-        {{--</a>--}}
-    {{--</li>--}}
-
+    {{--#Activity Log--}}
     <li {!! (Request::is('admin/activity_log') ? 'class="active"' : '') !!}>
         <a href="{{  URL::to('admin/activity_log') }}">
             <i class="livicon" data-name="eye-open" data-size="18" data-c="#F89A14" data-hc="#F89A14"

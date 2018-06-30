@@ -58,6 +58,7 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
         Route::post('passwordreset', 'UsersController@passwordreset')->name('passwordreset');
 
         Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
+        Route::get('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
         Route::post('addAccount', 'AccountController@verify')->name('account.addAccount');
     });
     Route::resource('users', 'UsersController');

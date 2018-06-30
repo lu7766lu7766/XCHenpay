@@ -9,6 +9,7 @@ return array(
     'users' => '商户列表',
 	'addUser' => '新增商户',
 	'viewProfile' => '商户资料',
+    'editProfile' => '资料修改',
 	'deletedUsers' => '被删除的商户',
 
 

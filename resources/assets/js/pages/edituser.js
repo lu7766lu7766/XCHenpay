@@ -22,7 +22,7 @@ $("#commentForm").bootstrapValidator({
         first_name: {
             validators: {
                 notEmpty: {
-                    message: 'The fisrt name is required'
+                    message: 'The fisrt name is required123213'
                 }
             },
             required: true,

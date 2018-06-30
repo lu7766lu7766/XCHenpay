@@ -5,6 +5,7 @@ use App\Authcode;
 use Carbon\Carbon;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use App\Http\Controllers\JoshController;
+use Google_Service_Compute_NetworkInterface;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\UserRequest;
 use App\Repositories\VerifyCodes;
@@ -109,13 +110,8 @@ class UsersController extends JoshController
     public function store(UserRequest $request)
     {
 
-
-        //check whether use should be activated by default or not
-
-//        $activate = true;
-
         try {
-            $activate = $request->get('activate') ? true : false;
+            $activate = true;
 
             $data = $request->except('_token', 'group', 'activate');
             $data['password'] = strtolower(str_random(8));
@@ -133,14 +129,14 @@ class UsersController extends JoshController
             }
 
             //check for activation and send activation mail if not activated by default
-            if (!$activate) {
+            if ($activate) {
                 $mail = new stdClass();
 
                 // Data to be used on the email view
                 $mail->full_name = $user->last_name .' '. $user->first_name;
                 $mail->username = $user->email;
                 $mail->password = $data['password'];
-                $mail->activationUrl = URL::route('activate', [$user->id, Activation::create($user)->code]);
+                $mail->activationUrl = URL::route('signin');
 
                 // Send the activation code through email
                 Mail::to($user->email)
@@ -206,34 +202,18 @@ class UsersController extends JoshController
         $data = new stdClass();
 
         try {
-            $user->update($request->except('pic_file','password','password_confirm','groups','activate'));
+//            dd($request->toArray());
+
+            $user->update($request->except('password','password_confirm','groups','activate'));
 
             if ( !empty($request->password)) {
                 $user->password = Hash::make($request->password);
             }
 
-            // is new image uploaded?
-            if ($file = $request->file('pic_file')) {
-                $extension = $file->extension()?: 'png';
-                $destinationPath = public_path() . '/uploads/users/';
-                $safeName = str_random(10) . '.' . $extension;
-                $file->move($destinationPath, $safeName);
-                //delete old pic if exists
-                if (File::exists($destinationPath . $user->pic)) {
-                    File::delete($destinationPath . $user->pic);
-                }
-                //save new file path into db
-                $user->pic = $safeName;
-            }
-
-            //save record
-            $user->save();
-
             // Get the current user groups
             $userRoles = $user->roles()->pluck('id')->all();
 
             // Get the selected groups
-
             $selectedRoles = $request->get('groups');
 
             // Groups comparison between the groups the user currently
@@ -252,31 +232,6 @@ class UsersController extends JoshController
             foreach ($rolesToRemove as $roleId) {
                 $role = Sentinel::findRoleById($roleId);
                 $role->users()->detach($user);
-            }
-
-            // Activate / De-activate user
-
-            $status = $activation = Activation::completed($user);
-
-            if ($request->get('activate') != $status) {
-                if ($request->get('activate')) {
-                    $activation = Activation::exists($user);
-                    if ($activation) {
-                        Activation::complete($user, $activation->code);
-                    }
-                } else {
-                    //remove existing activation record
-                    Activation::remove($user);
-                    //add new record
-                    Activation::create($user);
-                    //send activation mail
-                    $data->user_name =$user->first_name .' '. $user->last_name;
-                    $data->activationUrl = URL::route('activate', [$user->id, Activation::exists($user)->code]);
-                    // Send the activation code through email
-                    Mail::to($user->email)
-                        ->send(new Restore($data));
-
-                }
             }
 
             // Was the user updated?

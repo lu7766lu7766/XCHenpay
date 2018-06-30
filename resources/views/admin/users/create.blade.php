@@ -84,8 +84,8 @@
                                                    class="col-sm-2 control-label">@lang('users/AddUser/form.last_name')
                                                 *</label>
                                             <div class="col-sm-10">
-                                                <input id="last_name" name="last_name" type="text"
-                                                       placeholder="Last Name"
+                                                <input id="last_name" name="last_name"
+                                                       placeholder=@lang('users/AddUser/form.last_name') type="text"
                                                        class="form-control required" value="{!! old('last_name') !!}"/>
 
                                                 {!! $errors->first('last_name', '<span class="help-block">:message</span>') !!}
@@ -97,8 +97,9 @@
                                                    class="col-sm-2 control-label">@lang('users/AddUser/form.first_name')
                                                 *</label>
                                             <div class="col-sm-10">
-                                                <input id="first_name" name="first_name" type="text"
-                                                       placeholder="First Name" class="form-control required"
+                                                <input id="first_name" name="first_name"
+                                                       placeholder=@lang('users/AddUser/form.first_name') type="text"
+                                                       class="form-control required"
                                                        value="{!! old('first_name') !!}"/>
 
                                                 {!! $errors->first('first_name', '<span class="help-block">:message</span>') !!}
@@ -111,7 +112,7 @@
                                                 *</label>
                                             <div class="col-sm-10">
                                                 <input id="mobile" name="mobile" type="tel"
-                                                       placeholder="mobile"
+                                                       placeholder=@lang('users/AddUser/form.mobile')  type="tel"
                                                        class="form-control required" value="{!! old('mobile') !!}"/>
                                                 {!! $errors->first('mobile', '<span class="help-block">:message</span>') !!}
                                             </div>
@@ -122,7 +123,8 @@
                                                    class="col-sm-2 control-label">@lang('users/AddUser/form.user_email')
                                                 *</label>
                                             <div class="col-sm-10">
-                                                <input id="email" name="email" placeholder=@lang('users/AddUser/form.user_email') type="text"
+                                                <input id="email" name="email"
+                                                       placeholder=@lang('users/AddUser/form.user_email') type="text"
                                                        class="form-control required email"
                                                        value="{!! old('email') !!}"/>
                                                 {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
@@ -151,9 +153,7 @@
                                                    class="col-sm-2 control-label">@lang('users/AddUser/form.group')
                                                 *</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control required" title="Select group..."
-                                                        name="group"
-                                                        id="group">
+                                                <select class="form-control required" title="Select group..." name="group" id="group">
                                                     <option value="">Select</option>
                                                     @foreach($groups as $group)
                                                         <option value="{{ $group->id }}"
@@ -163,17 +163,6 @@
                                                 {!! $errors->first('group', '<span class="help-block">:message</span>') !!}
                                             </div>
                                             <span class="help-block">{{ $errors->first('group', ':message') }}</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="activate"
-                                                   class="col-sm-2 control-label">@lang('users/AddUser/form.activate')
-                                                *</label>
-                                            <div class="col-sm-10">
-                                                <input id="activate" name="activate" type="checkbox"
-                                                       class="pos-rel p-l-30 custom-checkbox"
-                                                       value="1" @if(old('activate')) checked="checked" @endif >
-                                                <span>@lang('users/AddUser/form.activate_message')</span></div>
-
                                         </div>
                                     </div>
                                     <ul class="pager wizard">

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>
         @section('title')
-            | 3rd Party Pay
+            | @lang('general.app_name')
         @show
     </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -95,14 +95,14 @@
                         <li>
                             <a href="{{ URL::route('admin.users.showProfile') }}">
                                 <i class="livicon" data-name="user" data-s="18"></i>
-                                @lang('DefaultBlade/form.MyProfile')
+                                @lang('users/title.viewProfile')
                             </a>
                         </li>
                         <li role="presentation"></li>
                         <li>
                             <a href="{{ route('admin.users.editProfile') }}">
                                 <i class="livicon" data-name="gears" data-s="18"></i>
-                                @lang('DefaultBlade/form.AccountSettings')
+                                @lang('users/title.editProfile')
                             </a>
                         </li>
                         <!-- Menu Footer-->
