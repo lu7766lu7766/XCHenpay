@@ -6,7 +6,7 @@
 return array(
 
     'company_name'       => '商戶名稱',
-    'company_service_id' => '商戶名稱',
+    'company_service_id' => 'company_service_id',
     'sceret_key'         => 'sceret_key',
 
     'full_name'  => '联络人姓名',

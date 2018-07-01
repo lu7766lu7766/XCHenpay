@@ -34,18 +34,20 @@ class LendingController extends Controller
 
     public function data(Request $request)
     {
-        $count = Authcode::all()->count();
+        $count = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)->count();
         $order = explode(" ", $request->get('jtSorting'));
 
         if($request->trade_service_id){
-            $data = Authcode::where('pay_state', AuthCodes::success_state)
+            $data = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)
+                ->where('pay_state', AuthCodes::success_state)
                 ->where('trade_service_id',$request->trade_service_id)->orderBy($order[0], $order[1])
                 ->take($request->get('jtPageSize'))
                 ->skip($request->get('jtStartIndex'))
                 ->get()->toArray();
         }
         else{
-            $data = Authcode::where('pay_state', AuthCodes::success_state)
+            $data = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)
+                ->where('pay_state', AuthCodes::success_state)
                 ->orderBy($order[0], $order[1])
                 ->take($request->get('jtPageSize'))
                 ->skip($request->get('jtStartIndex'))
@@ -107,6 +109,11 @@ class LendingController extends Controller
             $authCode->pay_state = AuthCodes::lended_state;
             $authCode->pay_summary = AuthCodes::lended_summary;
             $authCode->account = $request->account;
+
+            $user = Sentinel::getUser();
+            activity($user->full_name)
+                ->causedBy($user)
+                ->log('申請了下發订单'.$authCode->trade_seq);
         }
 
         if($authCode->save() )
