@@ -10,7 +10,14 @@ use App\Http\Controllers\Controller;
 class AuthcodeController extends Controller
 {
     public function index(){
-        $authCodes = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)->get();
+
+        $user = Sentinel::getUser();
+        $userRoles = $user->roles()->pluck('id')->first();
+
+        if($userRoles == 1)     //admin
+            $authCodes = Authcode::all();
+        else                    //other roles
+            $authCodes = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)->get();
 
         foreach($authCodes as $key => $log){
             $paymentName = DB::table('payments')->where('i6pay_id', $log['payment_type'])->value('name');
