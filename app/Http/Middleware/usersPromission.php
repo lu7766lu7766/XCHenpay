@@ -22,6 +22,8 @@ class usersPromission
             'passwordreset',
             'lockscreen',
             'postLockscreen',
+            'sendVerifyCode',
+            'verify'
         );
         $protectOthers = array(
             'show',

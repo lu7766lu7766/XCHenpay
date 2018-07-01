@@ -50,7 +50,6 @@ class AccountController extends Controller
 
     public function sendVerifyCode( Request $request, VerifyCodes $verifyCodes)
     {
-
         $validator = Validator::make( $request->toArray(), [
             'id'     => 'required|exists:users,id',
             'mobile' => 'required'
@@ -75,8 +74,6 @@ class AccountController extends Controller
         $sendCode->setHeader('Content-Type', 'application/json');
         $sendCode->post('https://api.sms.jpush.cn/v1/messages', json_encode($data));
         $response = $sendCode->response;
-
-
 //        $response = [];
 
         if(array_key_exists('error', $response)){

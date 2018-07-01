@@ -337,18 +337,17 @@
 
             $('#send-VerifyCode').click(function (event) {
                 event.preventDefault();
-
                 var postData = {
                     id: {{ $user->id }},
                     mobile: {{ $user->mobile }}
                 };
-                //var path = "sendVerifyCode"
                 $.ajax({
                     url: "sendVerifyCode",
                     type: "post",
                     dataType: 'json',
                     data: postData,
                     success: function (data) {
+
                         $('#mobile').val('');
                         if (data.Result == 'OK')
                             alert('已成功发送验证码至' + {{ $user->mobile }});
@@ -357,6 +356,7 @@
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         alert('发送验证码失败，与服务器沟通错误');
+                        console.log(this.url);
                     }
                 });
             });

@@ -58,7 +58,6 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
         Route::post('passwordreset', 'UsersController@passwordreset')->name('passwordreset');
 
         Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
-        Route::get('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
         Route::post('addAccount', 'AccountController@verify')->name('account.addAccount');
     });
     Route::resource('users', 'UsersController');
@@ -73,6 +72,16 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
     Route::get('{id}/lockscreen', 'UsersController@lockscreen')->name('lockscreen');
     Route::post('{id}/lockscreen', 'UsersController@postLockscreen')->name('post-lockscreen');
 });
+//Route::get('sendVerifyCode', 'Admin\AccountController@sendVerifyCode')->name('account.sendVerifyCode');
+//
+////Route::get('users/sendVerifyCode', 'Admin\AccountController@sendVerifyCode')->name('account.sendVerifyCode');
+//
+//
+//Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin'], function () {
+//    Route::group(['prefix' => 'users'], function () {
+//        Route::get('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
+//    });
+//});
 
 #tradeQuery  (index)
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
