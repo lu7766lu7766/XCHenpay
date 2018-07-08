@@ -112,7 +112,13 @@ class AccountController extends Controller
 
         if ($result['Result'] == 'OK') {    //綁定帳號
             if($user->accounts->count() < 10){
-                $user->addAccount(new Account(['account' => $request->account]));
+                $user->addAccount(new Account([
+//                    $request->get('name' ,'account' ,'bank_name' ,'bank_branch')
+                    'name' => $request->name,
+                    'account' => $request->account,
+                    'bank_name' => $request->bank_name,
+                    'bank_branch' => $request->bank_branch
+                ]));
 
                 activity($user->full_name)->causedBy($user)->log('绑订了一笔帐号');
 

@@ -22,10 +22,12 @@ return array(
 
     'inputPhoneNum'     => '手机号码',
     'PhoneNumHolder'    => '接收验证码的手机号码',
-    'inputVerifyCode'   => '验证码',
+    'VerifyCode'   => '验证码',
     'verifyCodeHolder'  => '收到的验证码',
-    'inputAccount'      => '帐号',
-    'accountHolder'     => '绑订的帐号',
+    'AccountName'       => '开户名',
+    'Account'           => '银行卡号',
+    'BankName'          => '银行名',
+    'BankBranchName'    => '开户支行',
 
     'submit'  => '提交',
     'reset'   => '重设',

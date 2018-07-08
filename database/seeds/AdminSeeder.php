@@ -53,9 +53,7 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.index' => false,
                 'users.data' => false,
                 'users.show' => false,
-                //'users.showProfile' => false,
                 'users.edit' => false,
-                //'users.editProfile' => false,
                 'users.update' => false,
                 'users.updateProfile' => false,
                 'users.create' => false,
@@ -65,8 +63,6 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.getDeletedUsers' => false,
                 'users.getRestore' => false,
                 'users.passwordreset' => false,
-//                'users.lockscreen' => false,
-//                'users.postLockscreen' => false,
 
                 'lendApply' => false,
                 'lendManage' => true,

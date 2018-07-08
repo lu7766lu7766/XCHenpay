@@ -36,26 +36,27 @@
                 <ul class="nav  nav-tabs ">
                     <li class="active">
                         <a href="#tab1" data-toggle="tab">
+                            <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                            @lang('users/ViewProfile/title.add_account')</a>
+                    </li>
+
+                    <li>
+                        <a href="#tab2" data-toggle="tab">
                             <i class="livicon" data-name="notebook" data-size="16" data-c="#000" data-hc="#000" data-loop="true"></i>
                             @lang('users/ViewProfile/title.information')</a>
                     </li>
                     <li>
-                        <a href="#tab2" data-toggle="tab">
+                        <a href="#tab3" data-toggle="tab">
                             <i class="livicon" data-name="cellphone" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                             @lang('users/ViewProfile/title.contact_password')</a>
                     </li>
 
                     <li>
-                        <a href="#tab3" data-toggle="tab">
+                        <a href="#tab4" data-toggle="tab">
                             <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                             @lang('users/ViewProfile/title.change_password')</a>
                     </li>
 
-                    <li>
-                        <a href="#tab4" data-toggle="tab">
-                            <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                            @lang('users/ViewProfile/title.add_account')</a>
-                    </li>
 
 
 
@@ -63,6 +64,143 @@
                 <div  class="tab-content mar-top">
 
                     <div id="tab1" class="tab-pane fade active in">
+                        <div class="row">
+                            <div class="col-md-12 pd-top">
+                                <form id="commentForm" class="form-horizontal">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <label for="inputCode" class="col-md-3 control-label">
+                                                @lang('users/ViewProfile/form.VerifyCode')
+                                                <span class='require'>*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                            </span>
+                                                    <input type="text" id="verifyCode" placeholder=@lang('users/ViewProfile/form.verifyCodeHolder') name="verifyCode" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputAccount" class="col-md-3 control-label">
+                                                @lang('users/ViewProfile/form.AccountName')
+                                                <span class='require'>*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                            </span>
+                                                    <input type="text" id="AccountName" placeholder=@lang('users/ViewProfile/form.AccountName') name="AccountName" class="form-control required"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputAccount" class="col-md-3 control-label">
+                                                @lang('users/ViewProfile/form.Account')
+                                                <span class='require'>*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                            </span>
+                                                    <input type="text" id="Account" placeholder=@lang('users/ViewProfile/form.Account') name="Account" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputAccount" class="col-md-3 control-label">
+                                                @lang('users/ViewProfile/form.BankName')
+                                                <span class='require'>*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                            </span>
+                                                    <input type="text" id="BankName" placeholder=@lang('users/ViewProfile/form.BankName') name="BankName" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="inputAccount" class="col-md-3 control-label">
+                                                @lang('users/ViewProfile/form.BankBranchName')
+                                                <span class='require'>*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                            </span>
+                                                    <input type="text" id="BankBranchName" placeholder=@lang('users/ViewProfile/form.BankBranchName') name="BankBranchName" class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="col-md-offset-3 col-md-6">
+                                            <button type="submit" class="btn btn-primary" id="add-Account" >@lang('users/ViewProfile/form.submit')</button>
+                                            <button type="send" class="btn btn-danger" id="send-VerifyCode" >@lang('users/ViewProfile/form.send')</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- BEGIN SAMPLE TABLE PORTLET-->
+                        <div class="portlet box primary">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                                    @lang('users/ViewProfile/title.account_list')
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="table-scrollable">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>@lang('users/ViewProfile/form.id')</th>
+                                            <th>@lang('users/ViewProfile/form.AccountName')</th>
+                                            <th>@lang('users/ViewProfile/form.Account')</th>
+                                            <th>@lang('users/ViewProfile/form.BankName')</th>
+                                            <th>@lang('users/ViewProfile/form.BankBranchName')</th>
+                                            <th>@lang('users/ViewProfile/form.created_at')</th>
+                                            <th>@lang('users/ViewProfile/form.operation')</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        @foreach($user->accounts as $account)
+                                            <tr>
+                                                <td>{{ $account->id }}</td>
+                                                <td>{{ $account->name }}</td>
+                                                <td>{{ $account->account }}</td>
+                                                <td>{{ $account->bank_name }}</td>
+                                                <td>{{ $account->bank_branch }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($account->created_at)->diffForHumans() }}</td>
+                                                <td>
+                                                    <a href={{ route('admin.account.confirm-delete', $account->id) }} data-toggle="modal" data-target="#delete_confirm">
+                                                        <i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=@lang('users/ViewProfile/form.deleteAccount') >
+                                                        </i></a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab2" class="tab-pane fade">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel">
@@ -104,7 +242,7 @@
                         </div>
                     </div>
 
-                    <div id="tab2" class="tab-pane fade">
+                    <div id="tab3" class="tab-pane fade">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel">
@@ -153,7 +291,7 @@
                         </div>
                     </div>
 
-                    <div id="tab3" class="tab-pane fade">
+                    <div id="tab4" class="tab-pane fade">
                         <div class="row">
                             <div class="col-md-12 pd-top">
                                 <form class="form-horizontal">
@@ -201,93 +339,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="tab4" class="tab-pane fade">
-                        <div class="row">
-                            <div class="col-md-12 pd-top">
-                                <form class="form-horizontal">
-                                    <div class="form-body">
-                                        <div class="form-group">
-                                            <label for="inputCode" class="col-md-3 control-label">
-                                                @lang('users/ViewProfile/form.inputVerifyCode')
-                                                <span class='require'>*</span>
-                                            </label>
-                                            <div class="col-md-9">
-                                                <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                                                            </span>
-                                                    <input type="text" id="verifyCode" placeholder=@lang('users/ViewProfile/form.verifyCodeHolder') name="verifyCode" class="form-control"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputAccount" class="col-md-3 control-label">
-                                                @lang('users/ViewProfile/form.inputAccount')
-                                                <span class='require'>*</span>
-                                            </label>
-                                            <div class="col-md-9">
-                                                <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                                                            </span>
-                                                    <input type="text" id="account" placeholder=@lang('users/ViewProfile/form.accountHolder') name="account" class="form-control"/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-actions">
-                                        <div class="col-md-offset-3 col-md-6">
-                                            <button type="submit" class="btn btn-primary" id="add-Account" >@lang('users/ViewProfile/form.submit')</button>
-                                            <button type="send" class="btn btn-danger" id="send-VerifyCode" >@lang('users/ViewProfile/form.send')</button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-                        <hr>
-                            <!-- BEGIN SAMPLE TABLE PORTLET-->
-                            <div class="portlet box primary">
-                                <div class="portlet-title">
-                                    <div class="caption">
-                                        <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                                        @lang('users/ViewProfile/title.account_list')
-                                    </div>
-                                </div>
-                                <div class="portlet-body">
-                                    <div class="table-scrollable">
-                                        <table class="table table-hover">
-                                            <thead>
-                                            <tr>
-                                                <th>@lang('users/ViewProfile/form.id')</th>
-                                                <th>@lang('users/ViewProfile/form.inputAccount')</th>
-                                                <th>@lang('users/ViewProfile/form.created_at')</th>
-                                                <th>@lang('users/ViewProfile/form.operation')</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            @foreach($user->accounts as $account)
-                                                <tr>
-                                                    <td>{{ $account->id }}</td>
-                                                    <td>{{ $account->account }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($account->created_at)->diffForHumans() }}</td>
-                                                    <td>
-                                                        <a href={{ route('admin.account.confirm-delete', $account->id) }} data-toggle="modal" data-target="#delete_confirm">
-                                                            <i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=@lang('users/ViewProfile/form.deleteAccount') >
-                                                        </i></a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- END SAMPLE TABLE PORTLET-->
-                    </div>
                 </div>
             </div>
         </div>
@@ -298,9 +350,66 @@
 @section('footer_scripts')
     <!-- Bootstrap WYSIHTML5 -->
     <script  src="{{ asset('assets/vendors/jasny-bootstrap/js/jasny-bootstrap.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}"type="text/javascript"></script>
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        $("#commentForm").bootstrapValidator({
+            fields: {
+                verifyCode: {
+                    validators: {
+                        notEmpty: {
+                            message: '@lang('users/ViewProfile/form.VerifyCode')是必须的'
+                        },
+                        integer: {
+                            message: '@lang('users/ViewProfile/form.VerifyCode')必须为数字',
+                        },
+                        stringLength: {
+                            max: 6,
+                            message: '@lang('users/ViewProfile/form.VerifyCode')必少于6个数字'
+                        }
+                    },
+                    required: true,
+                },
+                AccountName: {
+                    validators: {
+                        notEmpty: {
+                            message: '@lang('users/ViewProfile/form.AccountName')是必须的'
+                        }
+                    },
+                    required: true,
+                },
+                Account: {
+                    validators: {
+                        notEmpty: {
+                            message: '@lang('users/ViewProfile/form.Account')是必须的'
+                        },
+                        integer: {
+                            message: '@lang('users/ViewProfile/form.Account')必须为数字',
+                        }
+                    },
+                    required: true,
+                },
+                BankName: {
+                    validators: {
+                        notEmpty: {
+                            message: '@lang('users/ViewProfile/form.BankName')是必须的'
+                        }
+                    },
+                    required: true,
+                },
+                BankBranchName: {
+                    validators: {
+                        notEmpty: {
+                            message: '@lang('users/ViewProfile/form.BankBranchName')是必须的'
+                        }
+                    },
+                    required: true,
+                }
+            }
+        });
+    </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
             $('#change-password').click(function (e) {
                 e.preventDefault();
                 var check = false;
@@ -364,20 +473,15 @@
             $('#add-Account').click(function (e) {
                 event.preventDefault();
 
-                if ($('#verifyCode').val() ==="" || $('#account').val() ===""){
-                    alert('请填齐『验证码』及『帐号』');
-                }
-                else if (isNaN($('#verifyCode').val())){
-                    alert('请输入有效验证码');
-                }
-                else if (isNaN($('#account').val())){
-                    alert('请输入有效帐号');
-                }
-                else {
+                var $validator = $('#commentForm').data('bootstrapValidator').validate();
+                if ($validator.isValid()) {
                     var postData = {
                         id: {{ $user->id }},
                         code: $('#verifyCode').val(),
-                        account: $('#account').val()
+                        name: $('#AccountName').val(),
+                        account: $('#Account').val(),
+                        bank_name: $('#BankName').val(),
+                        bank_branch: $('#BankBranchName').val()
                     };
 
                     $.ajax({
