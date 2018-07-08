@@ -90,7 +90,7 @@
                                             <div class="col-md-9">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                                <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                             </span>
                                                     <input type="text" id="AccountName" placeholder=@lang('users/ViewProfile/form.AccountName') name="AccountName" class="form-control required"/>
                                                 </div>
@@ -120,7 +120,7 @@
                                             <div class="col-md-9">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                                <i class="livicon" data-name="piggybank" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                             </span>
                                                     <input type="text" id="BankName" placeholder=@lang('users/ViewProfile/form.BankName') name="BankName" class="form-control"/>
                                                 </div>
@@ -135,7 +135,7 @@
                                             <div class="col-md-9">
                                                 <div class="input-group">
                                                             <span class="input-group-addon">
-                                                                <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                                <i class="livicon" data-name="tree" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                             </span>
                                                     <input type="text" id="BankBranchName" placeholder=@lang('users/ViewProfile/form.BankBranchName') name="BankBranchName" class="form-control"/>
                                                 </div>
