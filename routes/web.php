@@ -60,6 +60,7 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
         Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
         Route::get('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
         Route::post('addAccount', 'AccountController@verify')->name('account.addAccount');
+        Route::get('{user}/data', 'AccountController@data')->name('account.data');
     });
     Route::resource('users', 'UsersController');
     Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('users.deleted_users');
@@ -73,20 +74,12 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
     Route::get('{id}/lockscreen', 'UsersController@lockscreen')->name('lockscreen');
     Route::post('{id}/lockscreen', 'UsersController@postLockscreen')->name('post-lockscreen');
 });
-//Route::get('sendVerifyCode', 'Admin\AccountController@sendVerifyCode')->name('account.sendVerifyCode');
-//
-////Route::get('users/sendVerifyCode', 'Admin\AccountController@sendVerifyCode')->name('account.sendVerifyCode');
-//
-//
-//Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin'], function () {
-//    Route::group(['prefix' => 'users'], function () {
-//        Route::get('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
-//    });
-//});
 
 #tradeQuery  (index)
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
     Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
+    Route::post('data', 'AuthcodeController@data')->name('authcode.data');
+    Route::get('data', 'AuthcodeController@data')->name('authcode.data');
 });
 
 #lendApply

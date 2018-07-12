@@ -83,19 +83,7 @@ class LendingController extends Controller
         ], $messages);
 
         if ($validator->fails())
-        {
-            $messages ="";
-
-            $errors = $validator->errors();
-            foreach ($errors->all('<li>:message</li>') as $message) {
-                $messages .= $message;
-            }
-
-            return Response::json(array(
-                'Result' => 'error',
-                'Message'=> $messages
-            ));
-        }
+            return $this->validateErrorResponseInJsonWithLi($validator);
 
         $authCode = Authcode::find($request->id);
 

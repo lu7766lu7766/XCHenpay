@@ -22,7 +22,7 @@ return array(
 
     'inputPhoneNum'     => '手机号码',
     'PhoneNumHolder'    => '接收验证码的手机号码',
-    'VerifyCode'   => '验证码',
+    'VerifyCode'        => '验证码',
     'verifyCodeHolder'  => '收到的验证码',
     'AccountName'       => '开户名',
     'Account'           => '银行卡号',

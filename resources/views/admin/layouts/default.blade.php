@@ -140,7 +140,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ URL::to('admin/users') }}">
+                            <a href="{{ URL::to('admin/users/showProfile') }}">
                                 <i class="livicon" data-name="user" title="Users" data-loop="true"
                                    data-color="#6CC66C" data-hc="#6CC66C" data-s="25"></i>
                             </a>

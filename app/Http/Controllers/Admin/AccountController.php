@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\VerifyCodes;
-use Carbon\Carbon;
+use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Account;
 use Curl\Curl;
-use App\User;
 use Validator;
+use App\User;
 use Sentinel;
 use Response;
 
@@ -22,6 +23,22 @@ class AccountController extends Controller
         $this->JIGUANG_appKey = '84f050f8af5e75229f6045f8';
         $this->JIGUANG_masterSecret = 'bc51f1100c3a6491384b913b';
         $this->JIGUANG_tempId = '1';
+    }
+
+    public function data(User $user)
+    {
+        $accounts = $user->accounts;
+
+        return DataTables::of($accounts)
+            ->editColumn('created_at',function(Account $account) {
+                return $account->created_at->diffForHumans();
+            })
+            ->addColumn('actions',function($account) {
+                $deleteLink = '<a href='. route('admin.account.confirm-delete', $account->id) .' data-toggle="modal" data-target="#delete_confirm"><i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=' . trans('users/ViewProfile/form.deleteAccount') . '></i></a>';
+                return $deleteLink;
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
     }
 
     public function getModalDelete(Account $account)
@@ -92,18 +109,24 @@ class AccountController extends Controller
 
     public function verify(Request $request, VerifyCodes $verifyCodes)
     {
-        $validator = Validator::make($request->toArray(), [
-            'id' => 'required|exists:users,id',
-            'code' => 'required',
-            'account' => 'required'
-        ]);
+        $messages = [
+            'required' => ':attribute 是必填资讯.',
+            'exists'   => '此验证码不存在，请重新尝试或获取新的验证码.',
+            'integer'  => '请输入合法帐号，应由数字构成',
+            'string'   => '请输入符合格式的 :attribute'
+        ];
 
-        if ($validator->fails()) {
-            return Response::json(array(
-                'Result' => 'error',
-                'Message' => $validator->messages()
-            ));
-        }
+        $validator = Validator::make($request->toArray(), [
+            'id' => 'required',
+            'code' => 'required|integer|exists:verify_codes,code',
+            'name' => 'required|string',
+            'account' => 'required',
+            'bank_name' => 'required|string',
+            'bank_branch' => 'required|string',
+        ],$messages);
+
+        if ($validator->fails())
+            return $this->validateErrorResponseInJson($validator);
 
         $user = User::find($request->id);
         $verifyCode = $user->verifyCodes()->where('code', $request->code)->first();
@@ -113,7 +136,6 @@ class AccountController extends Controller
         if ($result['Result'] == 'OK') {    //綁定帳號
             if($user->accounts->count() < 10){
                 $user->addAccount(new Account([
-//                    $request->get('name' ,'account' ,'bank_name' ,'bank_branch')
                     'name' => $request->name,
                     'account' => $request->account,
                     'bank_name' => $request->bank_name,
@@ -124,10 +146,7 @@ class AccountController extends Controller
 
                 return $result;
             }else{
-                return Response::json(array(
-                    'Result' => 'error',
-                    'Message' => '此商户已绑订10组帐号，请删除就有帐号后重试'
-                ));
+                return $this->errorResponse('此商户已绑订10组帐号，请删除就有帐号后重试');
             }
         }
         else

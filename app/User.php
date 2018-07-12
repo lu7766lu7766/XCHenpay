@@ -55,10 +55,6 @@ class User extends EloquentUser {
         $this->accounts()->save($account);
     }
 
-    public function country() {
-        return $this->belongsTo( Country::class );
-    }
-
     public function verifyCodes()
     {
         return $this->hasMany(verifyCode::class, 'user_id', 'id');
@@ -67,6 +63,11 @@ class User extends EloquentUser {
     public function accounts()
     {
         return $this->hasMany(Account::class, 'user_id', 'id');
+    }
+
+    public function tradeLogs()
+    {
+        return $this->hasMany(Authcode::class, 'company_service_id', 'company_service_id');
     }
 
 

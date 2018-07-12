@@ -10,4 +10,5 @@ class Company extends Model
     protected $guarded = [];
 
     use SoftDeletes;
+
 }

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use Sentinel;
+use App\User;
 use App\Authcode;
-use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 
 class AuthcodeController extends Controller
@@ -12,21 +13,65 @@ class AuthcodeController extends Controller
     public function index(){
 
         $user = Sentinel::getUser();
-        $userRoles = $user->roles()->pluck('id')->first();
 
-        if($userRoles == 1)     //admin
-            $authCodes = Authcode::all();
-        else                    //other roles
-            $authCodes = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)->get();
+        $switchPromission = $user->hasAccess('users.dataSwitch');
 
-        foreach($authCodes as $key => $log){
-            $paymentName = DB::table('payments')->where('i6pay_id', $log['payment_type'])->value('name');
-            $authCodes[$key]['payment_type'] = $paymentName;
+        if($switchPromission)
+            $companies = User::all()->where('company_service_id', '<>', null);
 
-            $currencyName = DB::table('currencies')->where('id', $log['currency_id'])->value('name');
-            $authCodes[$key]['currency'] = $currencyName;
-        }
+        return view('admin.trade.logQuery', compact('companies', 'switchPromission'));
+    }
 
-        return view('admin.trade.logQuery', compact('authCodes'));
+    public function data()
+    {
+        $user = Sentinel::getUser();
+        $company = User::find(request()->company);
+
+        $getData = array(
+            'pay_summary',
+            'trade_seq',
+            'company_service_id',
+//            'company_name',
+            'amount',
+            'currency_id',
+            'payment_type',
+//            'fee',
+            'created_at',
+            'pay_start_time',
+            'pay_end_time');
+
+        if($user->hasAccess('users.dataSwitch')){
+            if(isset(request()->company)){
+                $authCodes = Authcode::where('company_service_id', '=', $company->company_service_id)->get($getData);
+            }else
+                $authCodes = Authcode::get($getData)->all();
+        }else
+            $authCodes = Authcode::where('company_service_id', '=', $user->company_service_id)->get($getData);
+
+
+        //dd($authCodes[1]->company);
+//
+//        if($userRoles != 3)     //admin
+//            $authCodes = Authcode::get($getData)->all();
+//        else                    //other roles
+//            $authCodes = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)
+//                ->get($getData);
+
+//        dd($authCodes);
+
+        return DataTables::of($authCodes)
+            ->addColumn('payment_name',function($authCode){
+                return $authCode->i6payment->name;
+            })
+            ->addColumn('currency_name',function($authCode){
+                return $authCode->currency->name;
+            })
+            ->addColumn('company_name',function($authCode){
+                return $authCode->company->company_name;
+            })
+            ->addColumn('payment_fee',function($authCode){
+                return $authCode->i6payment->fee;
+            })
+            ->make(true);
     }
 }
