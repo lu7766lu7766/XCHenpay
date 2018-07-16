@@ -96,8 +96,6 @@ class MigrationCartalystSentinel extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('QQ_id');
-//            $table->string('first_name');
-//            $table->string('last_name');
             $table->string('company_name');
             $table->string('mobile');
             $table->string('company_service_id');

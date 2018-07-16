@@ -99,7 +99,7 @@ class LendingController extends Controller
             $authCode->account = $request->account;
 
             $user = Sentinel::getUser();
-            activity($user->full_name)
+            activity($user->email)
                 ->causedBy($user)
                 ->log('申請了下發订单'.$authCode->trade_seq);
         }

@@ -9,10 +9,9 @@ return array(
     'company_service_id' => 'company_service_id',
     'sceret_key'         => 'sceret_key',
 
-    'full_name'  => '联络人姓名',
     'mobile'     => '联络电话',
     'email'      => '电子邮箱',
-    'address'    => '地址',
+    'QQ_id'    => 'QQ号',
 
     'newPassword'	   => '新密码',
     'confirmPassword'  => '密码确认',

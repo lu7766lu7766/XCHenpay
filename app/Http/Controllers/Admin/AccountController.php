@@ -57,7 +57,7 @@ class AccountController extends Controller
         $account->delete();
 
         $user = Sentinel::getUser();
-        activity($user->full_name)
+        activity($user->email)
             ->performedOn($user)
             ->causedBy($user)
             ->log('取消绑订了一笔帐户');
@@ -142,7 +142,7 @@ class AccountController extends Controller
                     'bank_branch' => $request->bank_branch
                 ]));
 
-                activity($user->full_name)->causedBy($user)->log('绑订了一笔帐号');
+                activity($user->email)->causedBy($user)->log('绑订了一笔帐号');
 
                 return $result;
             }else{

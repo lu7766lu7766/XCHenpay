@@ -44,7 +44,6 @@
                     <tr class="filters">
                         <th>@lang('users/DeletedUsers/form.ID')</th>
                         <th>@lang('users/DeletedUsers/form.company_name')</th>
-                        <th>@lang('users/DeletedUsers/form.full_name')</th>
                         <th>@lang('users/DeletedUsers/form.User_Email')</th>
                         <th>@lang('users/DeletedUsers/form.Deleted_At')</th>
                         <th>@lang('users/DeletedUsers/form.Actions')</th>
@@ -55,7 +54,6 @@
                         <tr>
                             <td>{!! $user->id !!}</td>
                             <td>{!! $user->company_name !!}</td>
-                            <td>{!! $user->last_name . ' ' . $user->first_name !!}</td>
                             <td>{!! $user->email !!}</td>
                             <td>{!! \Carbon\Carbon::parse($user->deleted_at)->diffForHumans() !!}</td>
                             <td>

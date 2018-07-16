@@ -46,16 +46,16 @@
                 {{--@include('admin.layouts._notifications')--}}
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            @if(Sentinel::getUser()->pic)
-                                <img src="{!! url('/').'/uploads/users/'.Sentinel::getUser()->pic !!}" alt="img" height="35px" width="35px"
+                            @if(Sentinel::getUser()->roles()->first()->slug === "admin")
+                                <img src="{{ asset('assets/images/authors/admin_avatar.png') }}" alt="img" height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
 
-                            @elseif(Sentinel::getUser()->gender === "male")
-                                <img src="{{ asset('assets/images/authors/avatar3.png') }}" alt="img" height="35px" width="35px"
+                            @elseif(Sentinel::getUser()->roles()->first()->slug === "finance")
+                                <img src="{{ asset('assets/images/authors/finance_avatar.png') }}" alt="img" height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
 
-                            @elseif(Sentinel::getUser()->gender === "female")
-                                <img src="{{ asset('assets/images/authors/avatar5.png') }}" alt="img" height="35px" width="35px"
+                            @elseif(Sentinel::getUser()->roles()->first()->slug === "user")
+                                <img src="{{ asset('assets/images/authors/user_avatar.png') }}" alt="img" height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
 
                             @else
@@ -64,7 +64,7 @@
                             @endif
                         <div class="riot">
                             <div>
-                                <p class="user_name_max">{{ Sentinel::getUser()->first_name }} {{ Sentinel::getUser()->last_name }}</p>
+                                <p class="user_name_max">{{ Sentinel::getUser()->email }}</p>
                                 <span>
                                         <i class="caret"></i>
                                     </span>
@@ -74,22 +74,22 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
-                            @if(Sentinel::getUser()->pic)
-                                <img src="{!! url('/').'/uploads/users/'.Sentinel::getUser()->pic !!}" alt="img" height="35px" width="35px"
+                            @if(Sentinel::getUser()->roles()->first()->slug === "admin")
+                                <img src="{{ asset('assets/images/authors/admin_avatar.png') }}" alt="img" height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
 
-                            @elseif(Sentinel::getUser()->gender === "male")
-                                <img src="{{ asset('assets/images/authors/avatar3.png') }}" alt="img" height="35px" width="35px"
+                            @elseif(Sentinel::getUser()->roles()->first()->slug === "finance")
+                                <img src="{{ asset('assets/images/authors/finance_avatar.png') }}" alt="img" height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
 
-                            @elseif(Sentinel::getUser()->gender === "female")
-                                <img src="{{ asset('assets/images/authors/avatar5.png') }}" alt="img" height="35px" width="35px"
+                            @elseif(Sentinel::getUser()->gender === "user")
+                                <img src="{{ asset('assets/images/authors/user_avatar.png') }}" alt="img" height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
                             @else
                                 <img src="{{ asset('assets/images/authors/no_avatar.jpg') }}" alt="img" height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
                             @endif
-                            <p class="topprofiletext">{{ Sentinel::getUser()->first_name }} {{ Sentinel::getUser()->last_name }}</p>
+                            <p class="topprofiletext">{{ Sentinel::getUser()->email }}</p>
                         </li>
                         <!-- Menu Body -->
                         <li>

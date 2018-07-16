@@ -35,8 +35,9 @@ class UsersController extends JoshController
 
     public function index()
     {
+
         // Show the page
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index');
     }
 
     /*
@@ -47,19 +48,9 @@ class UsersController extends JoshController
      */
     public function data()
     {
-        $users = User::get(['id', 'first_name', 'last_name', 'company_name', 'email','created_at']);
+        $users = User::get(['id', 'company_name', 'email', 'QQ_id','created_at']);
 
         return DataTables::of($users)
-            ->addColumn('full_name',function($user){
-                return $user->last_name . ' ' . $user->first_name;
-            })
-            ->addColumn('status',function($user){
-
-                if($activation = Activation::completed($user))
-                    return 'Activated';
-                else
-                    return 'Pending';
-            })
             ->addColumn('actions',function($user) {
                 $showLink = '<a href='. route('admin.users.show', $user->id) .'><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>';
                 $showSelfLink = '<a href='. route('admin.users.showProfile') .'><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>';
@@ -133,7 +124,6 @@ class UsersController extends JoshController
                 $mail = new stdClass();
 
                 // Data to be used on the email view
-                $mail->full_name = $user->last_name .' '. $user->first_name;
                 $mail->username = $user->email;
                 $mail->password = $data['password'];
                 $mail->activationUrl = URL::route('signin');
@@ -143,10 +133,10 @@ class UsersController extends JoshController
                     ->send(new Activate($mail));
             }
             // Activity log for New user create
-            activity($user->full_name)
+            activity($user->email)
                 ->performedOn($user)
                 ->causedBy($user)
-                ->log('New User Created by '.Sentinel::getUser()->full_name);
+                ->log('New User Created by '.Sentinel::getUser()->email);
             // Redirect to the home page with success menu
             return Redirect::route('admin.users.index')->with('success', trans('users/message.success.create'));
 
@@ -239,7 +229,7 @@ class UsersController extends JoshController
                 // Prepare the success message
                 $success = trans('users/message.success.update');
                //Activity log for user update
-                activity($user->full_name)
+                activity($user->email)
                     ->performedOn($user)
                     ->causedBy($user)
                     ->log('更新了联络信息');
@@ -337,10 +327,10 @@ class UsersController extends JoshController
             // Prepare the success message
             $success = trans('users/message.success.delete');
             //Activity log for user delete
-            activity($user->full_name)
+            activity($user->email)
                 ->performedOn($user)
                 ->causedBy($user)
-                ->log('User deleted by '.Sentinel::getUser()->full_name);
+                ->log('User deleted by '.Sentinel::getUser()->email);
             // Redirect to the user management page
             return Redirect::route('admin.users.index')->with('success', $success);
         } catch (UserNotFoundException $e) {
@@ -368,7 +358,6 @@ class UsersController extends JoshController
             // Restore the user
             $user->restore();
             // create activation record for user and send mail with activation link
-            $data->user_name = $user->first_name .' '. $user->last_name;
             $data->activationUrl = URL::route('activate', [$user->id, Activation::create($user)->code]);
 
             //todo Send the activation code through email
@@ -377,10 +366,10 @@ class UsersController extends JoshController
 
             // Prepare the success message
             $success = trans('users/message.success.restored');
-            activity($user->full_name)
+            activity($user->email)
                 ->performedOn($user)
                 ->causedBy($user)
-                ->log('User restored by '.Sentinel::getUser()->full_name);
+                ->log('User restored by '.Sentinel::getUser()->email);
             // Redirect to the user management page
             return Redirect::route('admin.deleted_users')->with('success', $success);
         } catch (UserNotFoundException $e) {
@@ -430,7 +419,7 @@ class UsersController extends JoshController
         $user->password = Hash::make($password);
         $user->save();
 
-        activity($user->full_name)
+        activity($user->email)
             ->performedOn($user)
             ->causedBy($user)
             ->log('修改了密码');

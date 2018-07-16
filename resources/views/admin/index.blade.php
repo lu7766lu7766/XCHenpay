@@ -131,7 +131,7 @@
                                             @endif
                                         </div>
                                         <div class="media-body">
-                                            <h5 class="media-heading">{{ $user->full_name }}</h5>
+                                            <h5 class="media-heading">{{ $user->email }}</h5>
                                             <p>{{ $user->email }} <span
                                                         class="user_create_date pull-right">{{ $user->created_at->format('d M') }} </span>
                                             </p>
@@ -165,7 +165,7 @@
                                             @endif
                                         </div>
                                         <div class="media-body">
-                                            <h5 class="media-heading">{{ $user->full_name }}</h5>
+                                            <h5 class="media-heading">{{ $user->email }}</h5>
                                             <p>{{ $user->email }} <span
                                                         class="user_create_date pull-right">{{ $user->created_at->format('d M') }} </span>
                                             </p>
@@ -180,37 +180,6 @@
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-4 col-sm-5">
-
-
-                {{--<div class="panel panel-border">--}}
-                {{--<div class="panel-heading border-light">--}}
-                {{--<h3 class="panel-title">--}}
-                {{--<i class="livicon" data-name="pen" data-size="16" data-color="#00bc8c" data-hc="#00bc8c"--}}
-                {{--data-l="true"></i>--}}
-                {{--Recent Blogs--}}
-                {{--</h3>--}}
-                {{--</div>--}}
-                {{--<div class="panel-body nopadmar blogs">--}}
-                {{--@foreach($blogs as $blog )--}}
-                {{--<div class="media">--}}
-                {{--<div class="media-left">--}}
-                {{--@if($blog->author->pic)--}}
-                {{--<img src="{!! url('/').'/uploads/users/'.$blog->author->pic !!}" class="media-object img-circle" >--}}
-                {{--@else--}}
-                {{--<img src="{{ asset('assets/images/authors/no_avatar.jpg') }}" class="media-object img-circle" >--}}
-                {{--@endif--}}
-                {{--</div>--}}
-                {{--<div class="media-body">--}}
-                {{--<h5 class="media-heading">{{ $blog->title }}</h5>--}}
-
-                {{--<p>category:  {{ $blog->category->title }} <span class="user_create_date pull-right">by  {{ $blog->author->full_name }} </span></p>--}}
-                {{--</div>--}}
-                {{--</div>--}}
-                {{--@endforeach--}}
-
-                {{--</div>--}}
-            </div>
         </div>
         </div>
     </section>

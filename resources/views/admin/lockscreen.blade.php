@@ -43,7 +43,7 @@
         <div class="form-box">
             <form method="POST" name="screen">
                 <div class="form">
-                    <p class="form-control-static user_name_max">{{Sentinel::getUser()->full_name}}</p>
+                    <p class="form-control-static user_name_max">{{Sentinel::getUser()->email}}</p>
                     <input type="password" name="user"  id="password" class="form-control" placeholder="Password">
                     <button class="btn btn-info btn-block login" id="index" type="submit">GO</button>
                 </div>
@@ -88,7 +88,7 @@
                             },2500)
                         }
                         else {
-                            $("#output").addClass("alert alert-success animated fadeInUp user_name_max2").text('欢迎 ' + '{!! Sentinel::getUser()->first_name !!}');
+                            $("#output").addClass("alert alert-success animated fadeInUp user_name_max2").text('欢迎 ' + '{!! Sentinel::getUser()->email !!}');
                             setTimeout(function(){
                             window.location.href = '../../admin/logQuery';
                             },1000)

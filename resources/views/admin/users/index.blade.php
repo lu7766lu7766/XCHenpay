@@ -43,9 +43,8 @@
                         <tr class="filters">
                             <th>{{ trans('users/UserList/form.ID') }}</th>
                             <th>{{ trans('users/UserList/form.company_name') }}</th>
-                            <th>{{ trans('users/UserList/form.full_name') }}</th>
                             <th>{{ trans('users/UserList/form.User_Email') }}</th>
-                            <th>{{ trans('users/UserList/form.Status') }}</th>
+                            <th>{{ trans('users/UserList/form.QQ_id') }}</th>
                             <th>{{ trans('users/UserList/form.Actions') }}</th>
                         </tr>
                     </thead>
@@ -75,9 +74,8 @@
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'company_name', name: 'company_name' },
-                { data: 'full_name', name: 'first_name' },
                 { data: 'email', name: 'email' },
-                { data: 'status', name: 'status'},
+                { data: 'QQ_id', name: 'QQ_id'},
                 { data: 'actions', name: 'actions', orderable: false, searchable: false }
             ]
         });

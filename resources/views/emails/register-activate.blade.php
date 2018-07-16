@@ -6,7 +6,7 @@
 @endcomponent
 @endslot
 
-# {!! $user->full_name !!} 您好：<br>
+# {!! $user->email !!} 您好：<br>
 
 欢迎来到 @lang('general.app_name')！<br>
 

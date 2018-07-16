@@ -38,7 +38,7 @@
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title"> <i class="livicon" data-name="users" data-size="16" data-c="#fff" data-hc="#fff" data-loop="true"></i>
-                            @lang('users/EditProfile/form.Editing')<p class="user_name_max">{!! $user->first_name!!} {!! $user->last_name!!}</p>
+                            @lang('users/EditProfile/form.Editing')<p class="user_name_max">{!! $user->email!!}</p>
                         </h3>
                     <span class="pull-right clickable">
                         <i class="glyphicon glyphicon-chevron-up"></i>
@@ -75,26 +75,6 @@
                                                     {!! $errors->first('company_name', '<span class="help-block">:message</span>') !!}
                                                 </div>
 
-                                                <div class="form-group {{ $errors->first('last_name', 'has-error') }}">
-                                                    <label for="last_name" class="col-sm-2 control-label">@lang('users/EditProfile/form.last_name') *</label>
-                                                    <div class="col-sm-10">
-                                                        <input id="last_name" name="last_name" type="text" placeholder="@lang('users/EditProfile/form.last_name')"
-                                                               class="form-control required"
-                                                               value="{!! old('last_name', $user->last_name) !!}"/>
-                                                    </div>
-                                                    {!! $errors->first('last_name', '<span class="help-block">:message</span>') !!}
-                                                </div>
-
-                                                <div class="form-group {{ $errors->first('first_name', 'has-error') }}">
-                                                    <label for="first_name" class="col-sm-2 control-label">@lang('users/EditProfile/form.first_name') *</label>
-                                                    <div class="col-sm-10">
-                                                        <input id="first_name" name="first_name" type="text"
-                                                               placeholder="@lang('users/EditProfile/form.first_name')" class="form-control required"
-                                                               value="{!! old('first_name', $user->first_name) !!}"/>
-                                                    </div>
-                                                    {!! $errors->first('first_name', '<span class="help-block">:message</span>') !!}
-                                                </div>
-
                                                 <div class="form-group {{ $errors->first('mobile', 'has-error') }}">
                                                     <label for="mobile" class="col-sm-2 control-label">@lang('users/EditProfile/form.mobile') *</label>
                                                     <div class="col-sm-10">
@@ -116,14 +96,14 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group {{ $errors->first('address', 'has-error') }}">
-                                                    <label for="address" class="col-sm-2 control-label">@lang('users/EditProfile/form.address')</label>
+                                                <div class="form-group {{ $errors->first('QQ_id', 'has-error') }}">
+                                                    <label for="QQ_id" class="col-sm-2 control-label">@lang('users/EditProfile/form.QQ_id') *</label>
                                                     <div class="col-sm-10">
-                                                        <input id="address" name="address" type="text"
-                                                               placeholder="@lang('users/EditProfile/form.address')" class="form-control required"
-                                                               value="{!! old('address', $user->address) !!}"/>
+                                                        <input id="QQ_id" name="QQ_id" type="text"
+                                                               placeholder="@lang('users/EditProfile/form.QQ_id')" class="form-control required"
+                                                               value="{!! old('QQ_id', $user->QQ_id) !!}"/>
                                                     </div>
-                                                    {!! $errors->first('address', '<span class="help-block">:message</span>') !!}
+                                                    {!! $errors->first('QQ_id', '<span class="help-block">:message</span>') !!}
                                                 </div>
 
                                                 <div class="form-group {{ $errors->first('password', 'has-error') }}">
@@ -203,22 +183,4 @@
     <script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/pages/edituser.js') }}"></script>
-    <script>
-        function formatState (state) {
-            if (!state.id) { return state.text; }
-            var $state = $(
-                '<span><img src="{{asset('assets/img/countries_flags')}}/'+ state.element.value.toLowerCase() + '.png" class="img-flag" width="20px" height="20px" /> ' + state.text + '</span>'
-            );
-            return $state;
-
-}
-$(".country_field").select2({
-    templateResult: formatState,
-    templateSelection: formatState,
-    placeholder: "select a country",
-    theme:"bootstrap"
-});
-
-
-</script>
 @stop

@@ -9,11 +9,9 @@ return array(
     'Editing'           => '修改用戶: ',
 
     'company_name'      => '商户名称',
-    'last_name'         => '联络人姓氏',
-    'first_name'	    => '联络人名字',
     'mobile'	        => '联络电话',
     'email'	            => '电子邮箱',
-    'address'           => '地址',
+    'QQ_id'             => 'QQ号',
 
     'password_message'  => '如果您不想更改密码...请将它们留空',
     'password'          => '密码',

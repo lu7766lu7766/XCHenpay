@@ -11,8 +11,6 @@ return array(
 
     'company_name'   => '商户名称',
 
-    'last_name'         => '联络人姓氏',
-    'first_name'	    => '联络人名字',
     'mobile'	        => '联络电话',
     'user_email'	    => '电子邮箱',
     'address'           => '地址',

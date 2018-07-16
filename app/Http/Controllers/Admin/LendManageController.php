@@ -96,14 +96,14 @@ class LendManageController extends Controller
         if($request->operation){
             $authCode->update(['pay_state' => AuthCodes::accept_state, 'pay_summary' => AuthCodes::accept_summary]);
 
-            activity($user->full_name)
+            activity($user->email)
                 ->causedBy($user)
                 ->log('准許下发了订单'.$authCode->trade_seq);
         }
         else{
             $authCode->update(['pay_state' => AuthCodes::deny_state, 'pay_summary' => AuthCodes::deny_summary]);
 
-            activity($user->full_name)
+            activity($user->email)
                 ->causedBy($user)
                 ->log('拒絕下發了订单'.$authCode->trade_seq);
         }

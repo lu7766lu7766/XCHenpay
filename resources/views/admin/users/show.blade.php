@@ -116,14 +116,6 @@
                                                     <table class="table table-bordered table-striped" id="users">
 
                                                         <tr>
-                                                            <td>@lang('users/ViewProfile/form.full_name')</td>
-                                                            <td>
-                                                                {{  $user->last_name . ' ' . $user->first_name }}
-                                                            </td>
-
-                                                        </tr>
-
-                                                        <tr>
                                                             <td>@lang('users/ViewProfile/form.mobile')</td>
                                                             <td>
                                                                 {{ $user->mobile }}
@@ -138,9 +130,9 @@
                                                         </tr>
 
                                                         <tr>
-                                                            <td>@lang('users/ViewProfile/form.address')</td>
+                                                            <td>@lang('users/ViewProfile/form.QQ_id')</td>
                                                             <td>
-                                                                {{ $user->address }}
+                                                                {{ $user->QQ_id }}
                                                             </td>
                                                         </tr>
 

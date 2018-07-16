@@ -79,32 +79,6 @@
 
                                     <div class="tab-pane" id="tab2" disabled="disabled">
                                         <h2 class="hidden">&nbsp;</h2>
-                                        <div class="form-group {{ $errors->first('last_name', 'has-error') }}">
-                                            <label for="last_name"
-                                                   class="col-sm-2 control-label">@lang('users/AddUser/form.last_name')
-                                                *</label>
-                                            <div class="col-sm-10">
-                                                <input id="last_name" name="last_name"
-                                                       placeholder=@lang('users/AddUser/form.last_name') type="text"
-                                                       class="form-control required" value="{!! old('last_name') !!}"/>
-
-                                                {!! $errors->first('last_name', '<span class="help-block">:message</span>') !!}
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group {{ $errors->first('first_name', 'has-error') }}">
-                                            <label for="first_name"
-                                                   class="col-sm-2 control-label">@lang('users/AddUser/form.first_name')
-                                                *</label>
-                                            <div class="col-sm-10">
-                                                <input id="first_name" name="first_name"
-                                                       placeholder=@lang('users/AddUser/form.first_name') type="text"
-                                                       class="form-control required"
-                                                       value="{!! old('first_name') !!}"/>
-
-                                                {!! $errors->first('first_name', '<span class="help-block">:message</span>') !!}
-                                            </div>
-                                        </div>
 
                                         <div class="form-group {{ $errors->first('mobile', 'has-error') }}">
                                             <label for="mobile"

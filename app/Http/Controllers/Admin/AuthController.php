@@ -51,7 +51,7 @@ class AuthController extends JoshController
             if ($user = Sentinel::authenticate($request->only(['email', 'password']), $request->get('remember-me', false))) {
                 // Redirect to the dashboard page
                 //Activity log
-                activity($user->full_name)
+                activity($user->email)
                     ->performedOn($user)
                     ->causedBy($user)
                     ->log('登入');
@@ -84,8 +84,6 @@ class AuthController extends JoshController
         try {
             // Register the user
             $user = Sentinel::registerAndActivate([
-                'first_name' => $request->get('first_name'),
-                'last_name' => $request->get('last_name'),
                 'email' => $request->get('email'),
                 'password' => $request->get('password'),
             ]);
@@ -99,7 +97,7 @@ class AuthController extends JoshController
             $name = Sentinel::login($user, false);
             //Activity log
 
-            activity($name->full_name)
+            activity($name->email)
                 ->performedOn($user)
                 ->causedBy($user)
                 ->log('Registered');
@@ -168,7 +166,6 @@ class AuthController extends JoshController
             $reminder = Reminder::exists($user) ?: Reminder::create($user);
             // Data to be used on the email view
 
-            $data->user_name = $user->first_name .' ' .$user->last_name;
             $data->forgotPasswordUrl = URL::route('forgot-password-confirm', [$user->id, $reminder->code]);
 
             // Send the activation code through email
@@ -247,7 +244,7 @@ class AuthController extends JoshController
         if (Sentinel::check()) {
             //Activity log
             $user = Sentinel::getuser();
-            activity($user->full_name)
+            activity($user->email)
                 ->performedOn($user)
                 ->causedBy($user)
                 ->log('登出');
@@ -273,8 +270,6 @@ class AuthController extends JoshController
         try {
             // Register the user
             $user = Sentinel::registerAndActivate(array(
-                'first_name' => $request->get('first_name'),
-                'last_name' => $request->get('last_name'),
                 'email' => $request->get('email'),
                 'password' => $request->get('password'),
             ));
