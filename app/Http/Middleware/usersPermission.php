@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Sentinel;
 
-class usersPromission
+class usersPermission
 {
     /**
      * Handle an incoming request.

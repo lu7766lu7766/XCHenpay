@@ -20,5 +20,6 @@ return array(
     'company_please'        => '請選擇商戶',
     'allCompanies'          => '所有商戶',
     'filter'                => '筛选',
+    'cancel'                => '取消'
 
 );

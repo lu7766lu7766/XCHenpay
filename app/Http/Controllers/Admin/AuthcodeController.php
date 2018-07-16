@@ -24,6 +24,12 @@ class AuthcodeController extends Controller
 
     public function data()
     {
+        $dateFilter = explode(' - ',request()->dateFilter);
+        $startDate = $dateFilter[0];
+        $endDate = $dateFilter[1];
+
+//        dd($startDate . ' ' . $endDate);
+
         $user = Sentinel::getUser();
         $company = User::find(request()->company);
 
@@ -42,11 +48,16 @@ class AuthcodeController extends Controller
 
         if($user->hasAccess('users.dataSwitch')){
             if(isset(request()->company)){
-                $authCodes = Authcode::where('company_service_id', '=', $company->company_service_id)->get($getData);
+                $authCodes = Authcode::whereBetween('created_at',[$startDate, $endDate])
+                    ->where('company_service_id', '=', $company->company_service_id)->get($getData);
             }else
-                $authCodes = Authcode::get($getData)->all();
+                $authCodes = Authcode::whereBetween('created_at',[$startDate, $endDate])
+                    ->get($getData)
+                    ->all();
         }else
-            $authCodes = Authcode::where('company_service_id', '=', $user->company_service_id)->get($getData);
+            $authCodes = Authcode::whereBetween('created_at',[$startDate, $endDate])
+                ->where('company_service_id', '=', $user->company_service_id)
+                ->get($getData);
 
 
         //dd($authCodes[1]->company);

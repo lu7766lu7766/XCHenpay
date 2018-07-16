@@ -16,15 +16,15 @@ class AdminSeeder extends DatabaseSeeder {
 		$admin = Sentinel::registerAndActivate(array(
 			'email'       => 'admin@admin.com',
 			'password'    => "admin",
-			'first_name'  => 'Admin',
-			'last_name'   => 'Wang',
+//			'first_name'  => 'Admin',
+//			'last_name'   => 'Wang',
 		));
 
         $fan = Sentinel::registerAndActivate(array(
             'email'       => 'fan@fan.com',
             'password'    => "fan",
-            'first_name'  => 'Fan',
-            'last_name'   => 'Liu',
+//            'first_name'  => 'Fan',
+//            'last_name'   => 'Liu',
         ));
 
 //        $user = Sentinel::registerAndActivate(array(
