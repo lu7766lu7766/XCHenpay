@@ -139,6 +139,18 @@
         });
 
         var table = $('#table').DataTable({
+            language: {
+                search: "@lang('ActivityLog/form.search')",
+                lengthMenu: "@lang('ActivityLog/form.lengthMenu')",
+                zeroRecords: "@lang('ActivityLog/form.noData')",
+                info: "@lang('ActivityLog/form.pageInfo')",
+                infoEmpty: "@lang('ActivityLog/form.noData')",
+                infoFiltered: "@lang('ActivityLog/form.infoFiltered')",
+                paginate: {
+                    "next":       "下一頁",
+                    "previous":   "上一頁"
+                }
+            },
             processing: true,
             serverSide: true,
             ajax: {

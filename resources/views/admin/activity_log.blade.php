@@ -40,8 +40,7 @@
                         <table class="table table-bordered width100" id="table" >
                             <thead>
                             <tr class="filters">
-                                <th>{{ trans('ActivityLog/form.UserID') }}</th>
-                                <th>{{ trans('ActivityLog/form.UserName') }}</th>
+                                <th>{{ trans('ActivityLog/form.CompanyName') }}</th>
                                 <th>{{ trans('ActivityLog/form.Description') }}</th>
                                 <th>{{ trans('ActivityLog/form.CreatedAt') }}</th>
                             </tr>
@@ -63,15 +62,25 @@
     <script>
 $(function() {
     var table = $('#table').DataTable({
-        "order": [[3, "desc"]],
+        language: {
+            search: "@lang('ActivityLog/form.search')",
+            lengthMenu: "@lang('ActivityLog/form.lengthMenu')",
+            zeroRecords: "@lang('ActivityLog/form.noData')",
+            info: "@lang('ActivityLog/form.pageInfo')",
+            infoEmpty: "@lang('ActivityLog/form.noData')",
+            infoFiltered: "@lang('ActivityLog/form.infoFiltered')",
+            paginate: {
+                "next":       "下一頁",
+                "previous":   "上一頁"
+            }
+        },
         processing: true,
         serverSide: true,
         ajax: '{!! route('admin.activity_log.data') !!}',
         columns: [
-            { data: 'causer_id', name: 'causer_id' },
-            { data: 'log_name', name: 'log_name' },
-            { data: 'description', name: 'description' },
-            { data: 'created_at', name:'created_at'}
+            { data: 'log_name', name: 'log_name', width: '25%'},
+            { data: 'description', name: 'description', width: '50%' },
+            { data: 'created_at', name:'created_at', width: '25%'}
         ]
     });
 });
