@@ -9,11 +9,11 @@ return array(
     'UserContact'       => '联系讯息',
     'UserGroup'         => '权限设置',
 
-    'company_name'   => '商户名称',
+    'company_name'      => '商户名称',
 
     'mobile'	        => '联络电话',
     'user_email'	    => '电子邮箱',
-    'address'           => '地址',
+    'QQ_id'             => 'QQ号',
 
     'group'             => '权限',
     'group_warning'     => '请小心使用权限选择，如果您授予管理员访问权限，他们可以访问管理员部分。',

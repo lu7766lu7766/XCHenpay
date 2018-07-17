@@ -98,22 +98,22 @@
                                                 *</label>
                                             <div class="col-sm-10">
                                                 <input id="email" name="email"
-                                                       placeholder=@lang('users/AddUser/form.user_email') type="text"
+                                                       placeholder="@lang('users/AddUser/form.user_email')" type="text"
                                                        class="form-control required email"
                                                        value="{!! old('email') !!}"/>
                                                 {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
                                             </div>
                                         </div>
 
-                                        <div class="form-group {{ $errors->first('address', 'has-error') }}">
-                                            <label for="address"
-                                                   class="col-sm-2 control-label">@lang('users/AddUser/form.address')
-                                                </label>
+                                        <div class="form-group {{ $errors->first('QQ_id', 'has-error') }}">
+                                            <label for="QQ_id"
+                                                   class="col-sm-2 control-label">@lang('users/AddUser/form.QQ_id')
+                                                *</label>
                                             <div class="col-sm-10">
-                                                <input id="address" name="address"
-                                                       placeholder=@lang('users/AddUser/form.address')
+                                                <input id="QQ_id" name="QQ_id"
+                                                       placeholder="@lang('users/AddUser/form.QQ_id')"
                                                        type="text" class="form-control required"/>
-                                                {!! $errors->first('address', '<span class="help-block">:message</span>') !!}
+                                                {!! $errors->first('QQ_id', '<span class="help-block">:message</span>') !!}
                                             </div>
                                         </div>
                                     </div>
