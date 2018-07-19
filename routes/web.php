@@ -85,9 +85,10 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
 #lendApply
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'lendApply'], 'as' => 'admin.'], function () {
     Route::get('lendApply', 'LendingController@index')->name('lendApply.index');
+    Route::post('lendApply/data', 'LendingController@data')->name('lendApply.data');
     Route::get('lendApply/data', 'LendingController@data')->name('lendApply.data');
-    Route::post('lendApply/apply', 'LendingController@store')->name('lendApply.apply');
-    Route::post('lendApply/getAccount', 'LendingController@getAccount')->name('lendApply.getAccount');
+    Route::get('lendApply/{authcode}/selectAccount', 'LendingController@showApplyDialog')->name('lendApply.selectAccount');
+    Route::post('lendApply/apply', 'LendingController@apply')->name('lendApply.apply');
 });
 
 #lendManage

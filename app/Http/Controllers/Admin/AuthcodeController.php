@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Repositories\AuthCodes;
 use Sentinel;
 use App\User;
-use App\Authcode;
-use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 
 class AuthcodeController extends Controller
@@ -22,67 +21,25 @@ class AuthcodeController extends Controller
         return view('admin.trade.logQuery', compact('companies', 'switchPromission'));
     }
 
-    public function data()
+    public function data(AuthCodes $authCodes)
     {
-        $dateFilter = explode(' - ',request()->dateFilter);
-        $startDate = $dateFilter[0];
-        $endDate = $dateFilter[1];
-
-//        dd($startDate . ' ' . $endDate);
+        $startDate = request()->startDate . ' 00:00:00';
+        $endDate = request()->endDate . ' 23:59:59';
 
         $user = Sentinel::getUser();
-        $company = User::find(request()->company);
-
-        $getData = array(
-            'pay_summary',
-            'trade_seq',
-            'company_service_id',
-//            'company_name',
-            'amount',
-            'currency_id',
-            'payment_type',
-//            'fee',
-            'created_at',
-            'pay_start_time',
-            'pay_end_time');
 
         if($user->hasAccess('users.dataSwitch')){
             if(isset(request()->company)){
-                $authCodes = Authcode::whereBetween('created_at',[$startDate, $endDate])
-                    ->where('company_service_id', '=', $company->company_service_id)->get($getData);
-            }else
-                $authCodes = Authcode::whereBetween('created_at',[$startDate, $endDate])
-                    ->get($getData)
-                    ->all();
-        }else
-            $authCodes = Authcode::whereBetween('created_at',[$startDate, $endDate])
-                ->where('company_service_id', '=', $user->company_service_id)
-                ->get($getData);
+                $company = User::find(request()->company);
 
+                $authCode = $authCodes->companyData($company->company_service_id, $startDate, $endDate);
+            }else{
+                $authCode = $authCodes->allData($startDate, $endDate);
+            }
+        }else{
+            $authCode = $authCodes->companyData($user->company_service_id, $startDate, $endDate);
+        }
 
-        //dd($authCodes[1]->company);
-//
-//        if($userRoles != 3)     //admin
-//            $authCodes = Authcode::get($getData)->all();
-//        else                    //other roles
-//            $authCodes = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)
-//                ->get($getData);
-
-//        dd($authCodes);
-
-        return DataTables::of($authCodes)
-            ->addColumn('payment_name',function($authCode){
-                return $authCode->i6payment->name;
-            })
-            ->addColumn('currency_name',function($authCode){
-                return $authCode->currency->name;
-            })
-            ->addColumn('company_name',function($authCode){
-                return $authCode->company->company_name;
-            })
-            ->addColumn('payment_fee',function($authCode){
-                return $authCode->i6payment->fee;
-            })
-            ->make(true);
+        return $authCodes->makeSimpleDatatable($authCode);
     }
 }

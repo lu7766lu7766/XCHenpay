@@ -112,7 +112,7 @@
                                             <div class="col-sm-10">
                                                 <input id="QQ_id" name="QQ_id"
                                                        placeholder="@lang('users/AddUser/form.QQ_id')"
-                                                       type="text" class="form-control required"/>
+                                                       type="text" class="form-control required" value="{!! old('QQ_id') !!}"/>
                                                 {!! $errors->first('QQ_id', '<span class="help-block">:message</span>') !!}
                                             </div>
                                         </div>

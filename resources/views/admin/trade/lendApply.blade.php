@@ -9,10 +9,13 @@
 {{-- page level styles --}}
 @section('header_styles')
 
-    <link rel="stylesheet" href="{{ asset('assets/vendors/jtable/themes/metro/blue/jtable.css') }}"/>
-    <link href="{{ asset('assets/css/pages/jtablemetroblue_jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/vendors/iCheck/css/all.css') }}"  rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/pages/jtable.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/tables.css') }}"/>
+    <link href="{{ asset('assets/css/pages/transitions.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('assets/vendors/daterangepicker/css/daterangepicker.css') }}"/>
+    <link href="{{ asset('assets/vendors/jquery-datatables-checkboxes/css/dataTables.checkboxes.css') }}" rel="stylesheet"/>
 
 @stop
 
@@ -29,215 +32,184 @@
         </ol>
     </section>
     <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-lg-12">
-                <!-- Basic charts strats here-->
-                <div class="panel panel-primary ">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <i class="livicon" data-name="barchart" data-size="18" data-c="#fff" data-hc="#fff" data-loop="true"></i>
-                            @lang('Trade/LendApply/title.title')
-                        </h4>
-                        <span class="pull-right">
-                                    <i class="fa fa-fw fa-chevron-up clickable"></i>
-                                    <i class="fa fa-fw fa-times removepanel clickable"></i>
+    <section class="content paddingleft_right15">
+        @if($switchPromission)
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <i class="livicon" data-name="stopwatch" data-size="16" data-loop="true" data-c="#fff"
+                           data-hc="white"></i>
+                        @lang('Trade/LendApply/form.company_switch')
+                    </h3>
+                    <span class="pull-right clickable">
+                                    <i class="glyphicon glyphicon-chevron-up"></i>
                                 </span>
+                </div>
+                <div class="panel-body text-center">
+                    <!--content starts-->
+                    <div class="warp">
+                        <p>
+                            <select id="company_selection" name="company_selection" class="js--animations form-control"
+                                    onchange="companyFilter(this.value);">
+                                <optgroup label="@lang('Trade/LendApply/form.company_please')">
+                                    <option value="">@lang('Trade/LendApply/form.allCompanies')</option>
+                                    @foreach($companies as $company)
+                                        <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                                    @endforeach
+                                </optgroup>
+                            </select>
+                        </p>
                     </div>
-                    <br />
-                    <div class="panel-body">
-                        <div class="filtering">
+                    <!--content ends-->
+                </div>
+            </div>
+        @endif
 
-                            <form class="form-inline" >
-                                <div class="form-group">
-                                    <label for="fname">@lang('Trade/LendApply/form.trade_service_id'):</label>
-                                    <input type="text" name="service_id" id="service_id" placeholder=@lang('Trade/LendApply/form.trade_service_id') class="form-control"/>
-                                </div>
+        <div class="row">
+            <div class="panel panel-primary ">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="livicon" data-name="user" data-size="16" data-loop="true"
+                                               data-c="#fff" data-hc="white"></i>
+                        @lang('Trade/LendApply/title.title')
+                    </h4>
+                </div>
+                <br/>
+                <div class="panel-body">
 
-                                <button type="submit" class="btn btn-primary" id="LoadRecordsButton">@lang('Trade/LendApply/form.filter')</button>
-                                <button type="button" class="btn btn-danger" id="reset-search">@lang('Trade/LendApply/form.reset')</button>
-                            </form>
-                            <br>
+                    <div class="form-group">
+                        <div class="col-lg-4 input-group">
+                            <div class="input-group-addon">
+                                <i class="livicon" data-name="calendar" data-size="16" data-c="#555555"
+                                   data-hc="#555555" data-loop="true"></i>
+                            </div>
+                            <input type="text" class="form-control" id="daterange1"/>
                         </div>
+                        <!-- /.input group -->
+                    </div>
 
-                        <!-- Container for jTable -->
-                        <div id="StudentTableContainer">
-                        </div>
-                        <!-- An area to show selected rows (for demonstration) -->
-                        <br>
-                        <button id="LendAllButton" class="btn btn-primary">@lang('Trade/LendApply/form.applyAll')</button>
-                        {{--Selected rows (refreshed on <b>selectionChanged</b> event):--}}
-                        {{--<div id="SelectedRowList">--}}
-                        {{--No row selected! Select rows to see here...--}}
-                        {{--</div>--}}
-
+                    <div class="table-responsive">
+                        <table class="table table-bordered width100" id="table">
+                            <thead>
+                            <tr class="filters">
+                                <th></th>
+                                <th>@lang('Trade/LendApply/form.pay_summary')</th>
+                                <th>@lang('Trade/LendApply/form.trade_seq')</th>
+                                <th>@lang('Trade/LendApply/form.company_name')</th>
+                                <th>@lang('Trade/LendApply/form.amount')</th>
+                                <th>@lang('Trade/LendApply/form.payment_type')</th>
+                                <th>@lang('Trade/LendApply/form.fee')</th>
+                                <th>@lang('Trade/LendApply/form.apply_time')</th>
+                                <th>@lang('Trade/LendApply/form.operation')</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
-
-        </div>
-
+        </div>    <!-- row-->
     </section>
 @stop
 {{-- page level scripts --}}
 @section('footer_scripts')
-    <script src="{{ asset('assets/vendors/jtable/js/jquery.jtable.js') }}"></script>
-    <script src="{{ asset('assets/vendors/iCheck/js/icheck.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
+    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}" ></script>
+    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 
-            //Prepare jtable plugin
-            $('#StudentTableContainer').jtable({
-                title: '订单列表',
-                paging: true, //Enable paging
-                pageSize: 10, //Set page size (default: 10)
-                sorting: true, //Enable sorting
-                defaultSorting: 'id ASC', //Set default sorting
-                selecting: true, //Enable selecting
-                multiselect: true, //Allow multiple selecting
-                selectingCheckboxes: true,
-                //selectOnRowClick: false, //Enable this to only select using checkboxes
-                ajaxSettings: {
-                    type: 'GET',
-                    dataType: 'json'
-                },
-                actions: {
-                    listAction:  "{{ url('admin/lendApply/data') }}",
-                    lendAction: function (postData) {
-                        // console.log("creating from custom lendAction...");
-                        return $.Deferred(function ($dfd) {
-                            $.ajax({
-                                url: "{{ url('admin/lendApply/apply') }}",
-                                type: 'POST',
-                                dataType: 'json',
-                                data: postData,
-                                success: function (data) {
-                                    // console.log('success');
-                                    // console.log(data);
-                                    $dfd.resolve(data);
-                                },
-                                error: function (data) {
-                                    // console.log('error');
-                                    // console.log(data);
-                                    $dfd.reject();
-                                }
-                            });
-                        });
-                    },
-                    verificationAction: function (postData) {
-                        return $.Deferred(function ($dfd) {
-                            $.ajax({
-                                url: "{{ url('admin/lendApply/sendVerifyCode') }}",
-                                type: 'POST',
-                                dataType: 'json',
-                                data: postData,
-                                success: function (data) {
-                                    // console.log('success');
-                                    // console.log(data);
-                                    $dfd.resolve(data);
-                                },
-                                error: function (data) {
-                                    // console.log('error');
-                                    // console.log(data);
-                                    $dfd.reject();
-                                }
-                            });
-                        });
-                    },
-                    getAccount: function (postData) {
-                        return $.Deferred(function ($dfd) {
-                            $.ajax({
-                                url: "{{ url('admin/lendApply/getAccount') }}",
-                                type: 'POST',
-                                dataType: 'json',
-                                data: postData,
-                                success: function (data) {
-                                    // console.log('success');
-                                    // console.log(data);
-                                    $dfd.resolve(data);
-                                },
-                                error: function (data) {
-                                    // console.log('error');
-                                    // console.log(data);
-                                    $dfd.reject();
-                                }
-                            });
-                        });
-                    },
+    <script type="text/javascript" src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js') }}" ></script>
 
+    <div class="modal fade" id="delete_confirm" tabindex="-1" role="dialog" aria-labelledby="user_delete_confirm_title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
 
-                },
-                fields: {
-                    id: {
-                        key: true,
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    pay_summary: {
-                        title: '交易状态',{{--@lang('Trade/landApply/form.pay_summary')--}}
-                        width: '20%',
-                        inputClass: 'validate[required], form-control'
-                    },
-                    trade_service_id: {
-                        title: '交易服务编号',
-                        width: '20%',
-                        inputClass: 'validate[required], form-control'
-                    },
-                    item_code: {
-                        title: '产品编号',
-                        width: '20%',
-                        inputClass: 'validate[required], form-control'
-                    },
-                    payment_type: {
-                        title: '交易方式',
-                        width: '15%',
-                        inputClass: 'validate[required], form-control'
-                    },
-                    amount: {
-                        title: '金额',
-                        width: '10%',
-                        inputClass: 'validate[required], form-control'
-                    },
-                    currency: {
-                        title: '币别',
-                        width: '20%',
-                        inputClass: 'validate[required,custom[email]], form-control'
-                    }
+    <script>
+        $("#daterange1").daterangepicker({
+            locale: {
+            startDate: moment(),
+            endDate: moment(),
+            format: 'YYYY/MM/DD',
+            applyLabel: '@lang('Trade/LendApply/form.filter')',
+            cancelLabel: '@lang('Trade/LendApply/form.cancel')',
+            daysOfWeek: ["日","一","二","三","四","五","六"],
+            monthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+            }
+        });
 
+        var table = $('#table').DataTable({
+            processing: true,
+            serverSide: true,
+            language: {
+                search: "@lang('Trade/LendApply/form.search')",
+                lengthMenu: "@lang('Trade/LendApply/form.lengthMenu')",
+                zeroRecords: "@lang('Trade/LendApply/form.noData')",
+                info: "@lang('Trade/LendApply/form.pageInfo')",
+                infoEmpty: "@lang('Trade/LendApply/form.noData')",
+                infoFiltered: "@lang('Trade/LendApply/form.infoFiltered')",
+                paginate: {
+                    "next": "@lang('Trade/LendApply/form.next')",
+                    "previous": "@lang('Trade/LendApply/form.previous')"
                 }
-            });
+            },
+            ajax: {
+                "url": "{!! route('admin.lendApply.data') !!}",
+                "type": "post",
+                "data": function (d) {
+                    @if( $switchPromission )
+                    if ($('#company_selection').val() !== '')
+                        d.company = $('#company_selection').val();
+                    @endif
 
-            //Load student list from server
-            $('#StudentTableContainer').jtable('load');
+                    d.startDate = $('#daterange1').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                    d.endDate = $('#daterange1').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                }
+            },
+            columnDefs: [
+                {'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                }
+            ],
+            columns: [
+                {data: 'id',name: 'select'},
+                {data: 'pay_summary', name: 'pay_summary'},
+                {data: 'short_trade_seq', name: 'trade_seq'},
+                {data: 'company_name', name: 'company_name'},
+                {data: 'amount', name: 'amount'},
+                {data: 'payment_name', name: 'payment_name'},
+                {data: 'payment_fee', name: 'payment_fee'},
+                {data: 'created_at', name: 'created_at'},
+                { data: 'actions', name: 'actions', orderable: false, searchable: false }
+            ],
+            order: [[7, 'desc']]
+        });
 
-            //Delete selected students
-            // $('#LendAllButton').button().click(function () {
-            $('#LendAllButton').on('click', function () {
-                var $selectedRows = $('#StudentTableContainer').jtable('selectedRows');
-
-                $('#StudentTableContainer').jtable('lendButtonClickedForRows', $selectedRows);
-            });
-
-            //Re-load records when user click 'load records' button.
-            $('#LoadRecordsButton').on('click', function (e) {
-                e.preventDefault();
-                $('#StudentTableContainer').jtable('load', {
-                    trade_service_id: $('#service_id').val()
+        $(document).ready(function () {
+            table.on('draw', function () {
+                $('.livicon').each(function () {
+                    $(this).updateLivicon();
                 });
             });
 
-
-            $('#reset-search').on('click', function (e) {
-                $('#service_id').val('');
+            //clear the data in hidden modal
+            $('body').on('hidden.bs.modal', '.modal', function () {
+                $(this).removeData('bs.modal');
             });
-
-            $('.jtable-left-area select').addClass('form-control');
-            // $('button').addClass('btn btn-default');
-            // $('#AddRecordDialogSaveButton, #EditDialogSaveButton').removeClass('btn-default').addClass('btn-primary');
-            // $('#DeleteDialogButton').removeClass('btn-default').addClass('btn-danger');
-            // $('#DeleteAllButton,#LoadRecordsButton').removeClass('btn-default');
         });
+
+        $('#daterange1').on('apply.daterangepicker', function(ev, picker) {
+            console.log(picker.startDate.format('YYYY-MM-DD'));
+            console.log(picker.endDate.format('YYYY-MM-DD'));
+            table.ajax.reload();
+        });
+
+        function companyFilter() {
+            table.ajax.reload();
+        }
 
     </script>
 

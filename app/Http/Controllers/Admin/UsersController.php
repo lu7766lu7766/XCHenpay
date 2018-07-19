@@ -124,7 +124,7 @@ class UsersController extends JoshController
                 $mail = new stdClass();
 
                 // Data to be used on the email view
-                $mail->username = $user->email;
+                $mail->email = $user->email;
                 $mail->password = $data['password'];
                 $mail->activationUrl = URL::route('signin');
 

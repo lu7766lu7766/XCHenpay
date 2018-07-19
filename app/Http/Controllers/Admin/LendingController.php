@@ -2,74 +2,57 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Authcode;
-use App\Repositories\AuthCodes;
-use App\Repositories\VerifyCodes;
-use Carbon\Carbon;
-use Curl\Curl;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use function retry;
+use Yajra\DataTables\DataTables;
+use App\Repositories\AuthCodes;
+use Illuminate\Http\Request;
+use App\Authcode;
 use Validator;
+use App\User;
 use Response;
 use Sentinel;
-use Illuminate\Support\Facades\DB;
 
 class LendingController extends Controller
 {
-    private $JIGUANG_appKey, $JIGUANG_masterSecret, $JIGUANG_tempId;
-
-    public function __construct()
-    {
-        $this->JIGUANG_appKey = '84f050f8af5e75229f6045f8';
-        $this->JIGUANG_masterSecret = 'bc51f1100c3a6491384b913b';
-        $this->JIGUANG_tempId = '1';
-    }
 
     public function index()
     {
+        $user = Sentinel::getUser();
+
+        $switchPromission = $user->hasAccess('users.dataSwitch');
+
+        if($switchPromission)
+            $companies = User::all()->where('company_service_id', '<>', null);
+
         // Show the page
-        return view('admin.trade.lendApply');
+        return view('admin.trade.lendApply', compact('companies', 'switchPromission'));
     }
 
-    public function data(Request $request)
+    public function data(AuthCodes $AuthCodes)
     {
-        $count = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)->count();
-        $order = explode(" ", $request->get('jtSorting'));
+        $startDate = request()->startDate . ' 00:00:00';
+        $endDate = request()->endDate . ' 23:59:59';
 
-        if($request->trade_service_id){
-            $data = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)
-                ->where('pay_state', AuthCodes::success_state)
-                ->where('trade_service_id',$request->trade_service_id)->orderBy($order[0], $order[1])
-                ->take($request->get('jtPageSize'))
-                ->skip($request->get('jtStartIndex'))
-                ->get()->toArray();
-        }
-        else{
-            $data = Authcode::where('company_service_id', '=', Sentinel::getUser()->company_service_id)
-                ->where('pay_state', AuthCodes::success_state)
-                ->orderBy($order[0], $order[1])
-                ->take($request->get('jtPageSize'))
-                ->skip($request->get('jtStartIndex'))
-                ->get()->toArray();
+        if(isset(request()->company)){
+            $company = User::find(request()->company);
+
+            $authCodes = $AuthCodes->companyLendData($company->company_service_id, $startDate, $endDate, $AuthCodes::success_state);
+        }else{
+            $authCodes = $AuthCodes->allLendData($startDate, $endDate, $AuthCodes::success_state);
         }
 
-        foreach($data as $key => $log){
-            $paymentName = DB::table('payments')->where('i6pay_id', $log['payment_type'])->value('name');
-            $data[$key]['payment_type'] = $paymentName;
-
-            $currencyName = DB::table('currencies')->where('id', $log['currency_id'])->value('name');
-            $data[$key]['currency'] = $currencyName;
-        }
-
-        return Response::json(array(
-            'Result' => 'OK',
-            'TotalRecordCount' => $count,
-            'Records' => $data
-        ));
+        return $this->makeOpertionDatatable($authCodes);
     }
 
-    public function store(Request $request)
+    public function showApplyDialog(Authcode $authcode)
+    {
+        $accounts = User::where('company_service_id', '=', $authcode->company_service_id)
+            ->first()->accounts->pluck('account');
+
+        return view('admin.trade.selectAccountModel', compact('accounts', 'authcode'));
+    }
+
+    public function apply(Request $request)
     {
         $messages = [
             'required' => ':attribute 是必填资讯.',
@@ -91,7 +74,7 @@ class LendingController extends Controller
         if($authCode->pay_state != AuthCodes::success_state){
             $jTableResult = [];
             $jTableResult['Result'] = "error";
-            $jTableResult['Message'] = "<li>此订单非处于可下发状态<li>";
+            $jTableResult['Message'] = "此订单非处于可下发状态";//"<li>此订单非处于可下发状态<li>";
             return $jTableResult;
         }else{
             $authCode->pay_state = AuthCodes::lended_state;
@@ -112,9 +95,31 @@ class LendingController extends Controller
         }
     }
 
-    public function getAccount()
+    private function makeOpertionDatatable($authCodes)
     {
-        return Sentinel::getUser()->accounts->pluck('account');
-    }
+        return DataTables::of($authCodes)
+            ->addColumn('short_trade_seq',function($authCode){
+                return substr($authCode->trade_seq, 0, 10) . '...';
+            })
+            ->addColumn('payment_name',function($authCode){
+                return $authCode->i6payment->name;
+            })
+            ->addColumn('currency_name',function($authCode){
+                return $authCode->currency->name;
+            })
+            ->addColumn('company_name',function($authCode){
+                return $authCode->company->company_name;
+            })
+            ->addColumn('payment_fee',function($authCode){
+                return $authCode->i6payment->fee;
+            })
+            ->addColumn('actions',function($authCode){
+                $lendLink = '<a href='. route('admin.lendApply.selectAccount', ['authcode' => $authCode->id]) .' data-toggle="modal" data-target="#delete_confirm">
+                <i class="livicon" data-name="rocket" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=' . trans('Trade/LendApply/form.lendApply') . '></i></a>';
 
+                return $lendLink;
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
+    }
 }

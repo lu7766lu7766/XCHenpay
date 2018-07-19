@@ -461,8 +461,8 @@
                 $('#send-VerifyCode').click(function (event) {
                     event.preventDefault();
                     var postData = {
-                        id: {{ $user->id }},
-                        mobile: {{ $user->mobile }}
+                        id: '{{ $user->id }}',
+                        mobile: '{{ $user->mobile }}'
                     };
                     $.ajax({
                         url: "sendVerifyCode",
@@ -473,7 +473,7 @@
 
                             $('#mobile').val('');
                             if (data.Result == 'OK')
-                                alert('已成功发送验证码至' + {{ $user->mobile }});
+                                alert('已成功发送验证码至' + '{{ $user->mobile }}');
                             else
                                 alert('错误，' + data.Message);
                         },

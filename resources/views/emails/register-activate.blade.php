@@ -14,7 +14,7 @@
 
 这里是您的登入资讯，，登入后请您尽快更改您的登入密码<br>
 
-- 帐号: {!! $user->username !!}
+- 帐号: {!! $user->email !!}
 - 密码: {!! $user->password !!}
 
 @component('mail::button', ['url' =>  $user->activationUrl])

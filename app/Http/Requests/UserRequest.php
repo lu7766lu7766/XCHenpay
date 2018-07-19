@@ -51,6 +51,18 @@ class UserRequest extends FormRequest
         ];
     }
 
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'email.unique' => '此电子邮箱已被注册',
+        ];
+    }
+
 
 }
 

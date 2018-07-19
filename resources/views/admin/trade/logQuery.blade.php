@@ -94,12 +94,9 @@
                                 <th>{{ trans('Trade/LogQuery/form.trade_seq') }}</th>
                                 <th>{{ trans('Trade/LogQuery/form.company_name') }}</th>
                                 <th>{{ trans('Trade/LogQuery/form.amount') }}</th>
-                                <th>{{ trans('Trade/LogQuery/form.currency') }}</th>
                                 <th>{{ trans('Trade/LogQuery/form.payment_type') }}</th>
                                 <th>{{ trans('Trade/LogQuery/form.fee') }}</th>
                                 <th>{{ trans('Trade/LogQuery/form.apply_time') }}</th>
-                                <th>{{ trans('Trade/LogQuery/form.pay_start_time') }}</th>
-                                <th>{{ trans('Trade/LogQuery/form.pay_end_time') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -161,27 +158,20 @@
                     if ($('#company_selection').val() !== '')
                         d.company = $('#company_selection').val();
                     @endif
-                        // console.log($('#daterange1').val());
-                    // console.log(moment().format("YYYY-MM-DD"));
-
-                    d.dateFilter = $('#daterange1').val();
-
-                    // d.startDate = picker.startDate.format('YYYY-MM-DD');
-                    // d.endDate = picker.endDate.format('YYYY-MM-DD');
+                    d.startDate = $('#daterange1').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                    d.endDate = $('#daterange1').data('daterangepicker').endDate.format('YYYY-MM-DD');
                 }
             },
             columns: [
                 {data: 'pay_summary', name: 'pay_summary'},
-                {data: 'trade_seq', name: 'trade_seq'},
+                {data: 'short_trade_seq', name: 'trade_seq'},
                 {data: 'company_name', name: 'company_name'},
                 {data: 'amount', name: 'amount'},
-                {data: 'currency_name', name: 'currency_name'},
                 {data: 'payment_name', name: 'payment_name'},
                 {data: 'payment_fee', name: 'payment_fee'},
-                {data: 'created_at', name: 'created_at'},
-                {data: 'pay_start_time', name: 'pay_start_time'},
-                {data: 'pay_end_time', name: 'pay_end_time'}
-            ]
+                {data: 'created_at', name: 'created_at'}
+            ],
+            order: [[6, 'desc']]
         });
 
         $(document).ready(function () {
