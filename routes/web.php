@@ -79,16 +79,16 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
     Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
     Route::post('data', 'AuthcodeController@data')->name('authcode.data');
-    Route::get('data', 'AuthcodeController@data')->name('authcode.data');
 });
 
 #lendApply
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'lendApply'], 'as' => 'admin.'], function () {
     Route::get('lendApply', 'LendingController@index')->name('lendApply.index');
     Route::post('lendApply/data', 'LendingController@data')->name('lendApply.data');
-    Route::get('lendApply/data', 'LendingController@data')->name('lendApply.data');
-    Route::get('lendApply/{authcode}/selectAccount', 'LendingController@showApplyDialog')->name('lendApply.selectAccount');
+    Route::get('lendApply/data', 'LendingController@data')->name('lendApply.data');     //todo for test
+    Route::post('lendApply/getLendInfo', 'LendingController@getLendInfo')->name('lendApply.getLendInfo');
     Route::post('lendApply/apply', 'LendingController@apply')->name('lendApply.apply');
+    Route::get('lendApply/apply', 'LendingController@apply')->name('lendApply.apply');
 });
 
 #lendManage

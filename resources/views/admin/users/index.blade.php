@@ -30,10 +30,14 @@
 <section class="content paddingleft_right15">
     <div class="row">
         <div class="panel panel-primary ">
-            <div class="panel-heading">
-                <h4 class="panel-title"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title  pull-left"> <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
                     {{ trans('users/UserList/title.title') }}
                 </h4>
+                <div class="pull-right">
+                    <button class="btn btn-warning btn-sm" onclick="document.location.href=this.getAttribute('href');" href="{{ route('admin.users.create') }}">
+                        <i class="livicon" data-name="user-add" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i></button>
+                </div>
             </div>
             <br />
             <div class="panel-body">

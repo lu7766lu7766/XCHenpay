@@ -9,10 +9,13 @@
 {{-- page level styles --}}
 @section('header_styles')
 
-    <link rel="stylesheet" href="{{ asset('assets/vendors/jtable/themes/metro/blue/jtable.css') }}"/>
-    <link href="{{ asset('assets/css/pages/jtablemetroblue_jquery-ui.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/vendors/iCheck/css/all.css') }}"  rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/css/pages/jtable.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/tables.css') }}"/>
+    <link href="{{ asset('assets/css/pages/transitions.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('assets/vendors/daterangepicker/css/daterangepicker.css') }}"/>
+    <link href="{{ asset('assets/vendors/jquery-datatables-checkboxes/css/dataTables.checkboxes.css') }}" rel="stylesheet"/>
 
 @stop
 
@@ -30,59 +33,101 @@
     </section>
     <!-- Main content -->
     <section class="content">
+        {{--商戶篩選--}}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="livicon" data-name="filter" data-size="16" data-loop="true" data-c="#fff"
+                       data-hc="white"></i>
+                    @lang('Trade/LendApply/form.company_switch')
+                </h3>
+                <span class="pull-right clickable">
+                                <i class="glyphicon glyphicon-chevron-up"></i>
+                            </span>
+            </div>
+            <div class="panel-body text-center">
+                <!--content starts-->
+                <div class="warp">
+                    <p>
+                        <select id="company_selection" name="company_selection" class="js--animations form-control"
+                                onchange="companyFilter(this.value);">
+                            <optgroup label="@lang('Trade/LendApply/form.company_please')">
+                                <option value="">@lang('Trade/LendApply/form.allCompanies')</option>
+                                {{--@foreach($companies as $company)--}}
+                                {{--<option value="{{ $company->id }}">{{ $company->company_name }}</option>--}}
+                                {{--@endforeach--}}
+                            </optgroup>
+                        </select>
+                    </p>
+                </div>
+                <!--content ends-->
+            </div>
+        </div>
+
+        {{--申請列表--}}
         <div class="row">
-            <div class="col-lg-12">
-                <!-- Basic charts strats here-->
-                <div class="panel panel-primary ">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <i class="livicon" data-name="barchart" data-size="18" data-c="#fff" data-hc="#fff" data-loop="true"></i>
-                            @lang('Trade/LendManage/title.title')
-                        </h4>
-                        <span class="pull-right">
-                                    <i class="fa fa-fw fa-chevron-up clickable"></i>
-                                    <i class="fa fa-fw fa-times removepanel clickable"></i>
+            <div class="panel panel-primary ">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="livicon" data-name="table" data-size="16" data-loop="true"
+                                               data-c="#fff" data-hc="white"></i>
+                        @lang('Trade/LendApply/title.list')
+                    </h4>
+                    <span class="pull-right clickable">
+                                    <i class="glyphicon glyphicon-chevron-up"></i>
                                 </span>
+                </div>
+                <br/>
+                <div class="panel-body">
+
+                    <div class="form-group">
+                        <div class="col-lg-4 input-group">
+                            <div class="input-group-addon">
+                                <i class="livicon" data-name="calendar" data-size="16" data-c="#555555"
+                                   data-hc="#555555" data-loop="true"></i>
+                            </div>
+                            <input type="text" class="form-control" id="daterange1"/>
+                        </div>
+                        <!-- /.input group -->
                     </div>
-                    <br />
-                    <div class="panel-body">
-                        <div class="filtering">
 
-                            <form class="form-inline" >
-                                <div class="form-group">
-                                    <label for="fname">@lang('Trade/LendManage/form.trade_service_id'):</label>
-                                    <input type="text" name="service_id" id="service_id" placeholder="@lang('Trade/LendManage/form.trade_service_id')" class="form-control"/>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary" id="LoadRecordsButton">@lang('Trade/LendManage/form.filter')</button>
-                                <button type="button" class="btn btn-danger" id="reset-search">@lang('Trade/LendManage/form.reset')</button>
-                            </form>
-                            <br>
-                        </div>
-
-                        <!-- Container for jTable -->
-                        <div id="StudentTableContainer">
-                        </div>
-                        <!-- An area to show selected rows (for demonstration) -->
-                        <br>
-                        <button id="LendAllButton" class="btn btn-primary">@lang('Trade/LendManage/form.acceptAll')</button>
-                        {{--Selected rows (refreshed on <b>selectionChanged</b> event):--}}
-                        {{--<div id="SelectedRowList">--}}
-                        {{--No row selected! Select rows to see here...--}}
-                        {{--</div>--}}
-
+                    <div class="table-responsive">
+                        <table class="table table-bordered width100" id="table">
+                            <thead>
+                            <tr class="filters">
+                                <th></th>
+                                <th>@lang('Trade/LendApply/form.pay_summary')</th>
+                                <th>@lang('Trade/LendApply/form.trade_seq')</th>
+                                <th>@lang('Trade/LendApply/form.company_name')</th>
+                                <th>@lang('Trade/LendApply/form.amount')</th>
+                                <th>@lang('Trade/LendApply/form.payment_type')</th>
+                                <th>@lang('Trade/LendApply/form.fee')</th>
+                                <th>@lang('Trade/LendApply/form.apply_time')</th>
+                                <th>@lang('Trade/LendApply/form.operation')</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </section>
 @stop
 {{-- page level scripts --}}
 @section('footer_scripts')
-    <script src="{{ asset('assets/vendors/jtable/js/jquery.jtable.js') }}"></script>
-    <script src="{{ asset('assets/vendors/iCheck/js/icheck.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}" ></script>
+    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+
+    <script type="text/javascript" src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js') }}" ></script>
+
+    <div class="modal fade" id="delete_confirm" tabindex="-1" role="dialog" aria-labelledby="user_delete_confirm_title" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
     <script type="text/javascript">
         $(document).ready(function () {
 

@@ -3,21 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Account extends Model
+class LendRecord extends Model
 {
     protected $guarded = [];
-
-    use SoftDeletes;
 
     public function user()
     {
         return $this->belongsTo(User::class, 'id', 'user_id');
     }
 
-    public function lendRecords()
+    public function account()
     {
-        return $this->hasMany(LendRecord::class, 'account_id', 'id');
+        return $this->hasOne(Account::class, 'id', 'account_id');
     }
 }

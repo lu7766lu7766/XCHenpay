@@ -3,15 +3,16 @@
 namespace App\Repositories;
 
 use App\Authcode;
+use App\User;
 use Yajra\DataTables\DataTables;
 
 class AuthCodes
 {
-    const success_state = 2;
+    const allDone_state = 3;
 
-    const lended_state = 4;
-    const accept_state = 5;
-    const deny_state = 6;
+    const lended_state = 5;
+    const accept_state = 6;
+    const deny_state = 7;
 
     const lended_summary = '申请下发中';
     const accept_summary = '下发完成';
@@ -42,21 +43,6 @@ class AuthCodes
             ->get($this->getCol);
     }
 
-    public function companyLendData($company_service_id, $startDate, $endDate, $statFilter)
-    {
-        return Authcode::where('company_service_id', '=', $company_service_id)
-            ->whereBetween('created_at',array($startDate, $endDate))
-            ->where('pay_state', '=', $statFilter)
-            ->get($this->getCol);
-    }
-
-    public function allLendData($startDate, $endDate, $statFilter)
-    {
-        return Authcode::whereBetween('created_at',array($startDate, $endDate))
-            ->where('pay_state', '=', $statFilter)
-            ->get($this->getCol);
-    }
-
     public function makeSimpleDatatable($authCodes)
     {
         return DataTables::of($authCodes)
@@ -76,5 +62,34 @@ class AuthCodes
                 return $authCode->i6payment->fee;
             })
             ->make(true);
+    }
+
+    public function getMoneyRecord(User $user){
+        $authCodes = $user->tradeLogs;
+        $lendRecords = $user->lendRecords;// == $user->accounts()->with('lendRecords')->get()->pluck('lendRecords');
+        $data = array();
+
+        if($authCodes == null)
+            return $data['Result'] = 'error';
+
+        $totalLended = 0;
+        $totalMoney = 0;
+        $totalFee = 0;
+
+        foreach($lendRecords as $lendRecord)
+            $totalLended += $lendRecord->amount;
+
+        foreach($authCodes as $authCode)
+        {
+            $totalMoney += $authCode->amount;
+            $totalFee += $authCode->fee;
+        }
+
+        $data += ['totalMoney' => number_format($totalMoney,3,".",",")];
+        $data += ['totalFee' => number_format($totalFee,3,".",",")];
+        $data += ['totalLended' => number_format($totalLended,3,".",",")];
+        $data += ['totalIncome' => number_format($totalMoney-$totalFee-$totalLended,3,".",",")];
+
+        return $data;
     }
 }

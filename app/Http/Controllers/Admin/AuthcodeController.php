@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Authcode;
 use App\Repositories\AuthCodes;
-use Sentinel;
 use App\User;
 use App\Http\Controllers\Controller;
+use Sentinel;
 
 class AuthcodeController extends Controller
 {
     public function index(){
+        $authCode = Authcode::all();
 
         $user = Sentinel::getUser();
 
         $switchPromission = $user->hasAccess('users.dataSwitch');
 
         if($switchPromission)
-            $companies = User::all()->where('company_service_id', '<>', null);
+            $companies = User::All()->where('company_service_id', '<>', null);
 
         return view('admin.trade.logQuery', compact('companies', 'switchPromission'));
     }

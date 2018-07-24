@@ -1,21 +1,15 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\account;
-use App\Authcode;
-use Carbon\Carbon;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use App\Http\Controllers\JoshController;
-use Google_Service_Compute_NetworkInterface;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\UserRequest;
-use App\Repositories\VerifyCodes;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 Use App\Mail\Activate;
-Use Curl\Curl;
+use Validator;
 use App\User;
 use Response;
-use Validator;
 use Redirect;
 use Sentinel;
 use stdClass;

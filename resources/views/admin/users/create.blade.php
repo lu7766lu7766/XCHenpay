@@ -41,9 +41,6 @@
                                data-loop="true"></i>
                             @lang('users/AddUser/title.title')
                         </h3>
-                        <span class="pull-right clickable">
-                                    <i class="glyphicon glyphicon-chevron-up"></i>
-                                </span>
                     </div>
                     <div class="panel-body">
                         <!--main content-->

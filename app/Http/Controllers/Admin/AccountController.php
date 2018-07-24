@@ -67,17 +67,19 @@ class AccountController extends Controller
 
     public function sendVerifyCode( Request $request, VerifyCodes $verifyCodes)
     {
+        $messages = [
+            'mobile.required' => '此帐户未绑定联络电话',
+            'exists'   => '此帐号不存在，请刷新页面后重试.',
+        ];
+
         $validator = Validator::make( $request->toArray(), [
             'id'     => 'required|exists:users,id',
             'mobile' => 'required'
-        ]);
+        ],$messages);
 
         if ($validator->fails())
         {
-            return Response::json(array(
-                'Result' => 'error',
-                'Message'=> $validator->messages()
-            ));
+            return $this->validateErrorResponseInJson($validator);
         }
 
         $data = [

@@ -221,9 +221,9 @@
                                             </label>
                                             <div class="col-md-9">
                                                 <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                                                            </span>
+                                                        <span class="input-group-addon">
+                                                            <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                        </span>
                                                     <input type="text" id="AccountName" placeholder=@lang('users/ViewProfile/form.AccountName') name="AccountName" class="form-control required"/>
                                                 </div>
                                             </div>
@@ -395,70 +395,70 @@
             }
         });
     </script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                var table = $('#table').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    searching: false,
-                    paginate: false,
-                    info: false,
-                    ajax: '{!! route('admin.account.data',['user' => $user->id]) !!}',
-                    columns: [
-                        { data: 'id', name: 'id' },
-                        { data: 'name', name: 'name' },
-                        { data: 'account', name: 'account' },
-                        { data: 'bank_name', name: 'bank_name' },
-                        { data: 'bank_branch', name: 'bank_branch'},
-                        { data: 'created_at', name: 'created_at'},
-                        { data: 'actions', name: 'actions', orderable: false, searchable: false }
-                    ]
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#table').DataTable({
+                processing: true,
+                serverSide: true,
+                searching: false,
+                paginate: false,
+                info: false,
+                ajax: '{!! route('admin.account.data',['user' => $user->id]) !!}',
+                columns: [
+                    { data: 'id', name: 'id' },
+                    { data: 'name', name: 'name' },
+                    { data: 'account', name: 'account' },
+                    { data: 'bank_name', name: 'bank_name' },
+                    { data: 'bank_branch', name: 'bank_branch'},
+                    { data: 'created_at', name: 'created_at'},
+                    { data: 'actions', name: 'actions', orderable: false, searchable: false }
+                ]
+            });
+            table.on( 'draw', function () {
+                $('.livicon').each(function(){
+                    $(this).updateLivicon();
                 });
-                table.on( 'draw', function () {
-                    $('.livicon').each(function(){
-                        $(this).updateLivicon();
+            } );
+
+            $('#refreshButton').click(function (e) {
+                table.ajax.reload();
+            });
+
+            $('#change-password').click(function (e) {
+                e.preventDefault();
+                var check = false;
+                if ($('#password').val() ===""){
+                    alert('请输入密码');
+                }
+                else if  ($('#password').val() !== $('#password-confirm').val()) {
+                    alert("密码确认与新密码不符合");
+                }
+                else if  ($('#password').val() === $('#password-confirm').val()) {
+                    check = true;
+                }
+
+                if(check == true){
+                    var sendData =  '_token=' + $("input[name='_token']").val() +'&password=' + $('#password').val() +'&id=' + {{ $user->id }};
+                    var path = "passwordreset";
+                    $.ajax({
+                        url: path,
+                        type: "post",
+                        data: sendData,
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                        },
+                        success: function (data) {
+                            $('#password, #password-confirm').val('');
+                            alert('password reset successful');
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                            alert('error in password reset');
+                        }
                     });
-                } );
+                }
+            });
 
-                $('#refreshButton').click(function (e) {
-                    table.ajax.reload();
-                });
-
-                $('#change-password').click(function (e) {
-                    e.preventDefault();
-                    var check = false;
-                    if ($('#password').val() ===""){
-                        alert('请输入密码');
-                    }
-                    else if  ($('#password').val() !== $('#password-confirm').val()) {
-                        alert("密码确认与新密码不符合");
-                    }
-                    else if  ($('#password').val() === $('#password-confirm').val()) {
-                        check = true;
-                    }
-
-                    if(check == true){
-                        var sendData =  '_token=' + $("input[name='_token']").val() +'&password=' + $('#password').val() +'&id=' + {{ $user->id }};
-                        var path = "passwordreset";
-                        $.ajax({
-                            url: path,
-                            type: "post",
-                            data: sendData,
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
-                            },
-                            success: function (data) {
-                                $('#password, #password-confirm').val('');
-                                alert('password reset successful');
-                            },
-                            error: function (xhr, ajaxOptions, thrownError) {
-                                alert('error in password reset');
-                            }
-                        });
-                    }
-                });
-
-                $('#send-VerifyCode').click(function (event) {
+            $('#send-VerifyCode').click(function (event) {
                     event.preventDefault();
                     var postData = {
                         id: '{{ $user->id }}',
@@ -484,7 +484,7 @@
                     });
                 });
 
-                $('#add-Account').click(function (e) {
+            $('#add-Account').click(function (e) {
                 event.preventDefault();
 
                 var $validator = $('#commentForm').data('bootstrapValidator').validate();
