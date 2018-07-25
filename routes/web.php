@@ -85,15 +85,14 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'lendApply'], 'as' => 'admin.'], function () {
     Route::get('lendApply', 'LendingController@index')->name('lendApply.index');
     Route::post('lendApply/data', 'LendingController@data')->name('lendApply.data');
-    Route::get('lendApply/data', 'LendingController@data')->name('lendApply.data');     //todo for test
     Route::post('lendApply/getLendInfo', 'LendingController@getLendInfo')->name('lendApply.getLendInfo');
     Route::post('lendApply/apply', 'LendingController@apply')->name('lendApply.apply');
-    Route::get('lendApply/apply', 'LendingController@apply')->name('lendApply.apply');
 });
 
 #lendManage
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'lendManage'], 'as' => 'admin.'], function () {
     Route::get('lendManage', 'LendManageController@index')->name('lendManage.index');
+    Route::post('lendManage/data', 'LendManageController@data')->name('lendManage.data');
     Route::get('lendManage/data', 'LendManageController@data')->name('lendManage.data');
     Route::post('lendManage', 'LendManageController@store')->name('lendManage.store');
 });

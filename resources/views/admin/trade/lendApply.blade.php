@@ -193,7 +193,6 @@
                     <table class="table table-bordered width100" id="table">
                         <thead>
                         <tr class="filters">
-                            <th></th>
                             <th>@lang('Trade/LendApply/form.lend_summary')</th>
                             <th>@lang('Trade/LendApply/form.account_name')</th>
                             <th>@lang('Trade/LendApply/form.account_seq')</th>
@@ -221,15 +220,11 @@
     <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}" ></script>
     <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 
-    <script type="text/javascript" src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js') }}" ></script>
-
     <script type="text/javascript">
 
     </script>
 
     <script type="text/javascript">
-        var lendLimit;
         $("#applyForm").bootstrapValidator({
             fields: {
                 money: {
@@ -281,6 +276,7 @@
         var table = $('#table').DataTable({
             processing: true,
             serverSide: true,
+            order: [[7, 'desc']],
             language: {
                 search: "@lang('Trade/LendApply/form.search')",
                 lengthMenu: "@lang('Trade/LendApply/form.lengthMenu')",
@@ -302,26 +298,16 @@
                     d.endDate = $('#daterange1').data('daterangepicker').endDate.format('YYYY-MM-DD');
                 }
             },
-            columnDefs: [
-                {'targets': 0,
-                    'checkboxes': {
-                        'selectRow': true
-                    }
-                }
-            ],
             columns: [
-                {data: 'id',name: 'select'},
                 {data: 'lend_summary', name: 'lend_summary'},
                 {data: 'account_name', name: 'account_name'},
                 {data: 'account_seq', name: 'account_seq'},
                 {data: 'bank_name', name: 'bank_name'},
                 {data: 'account_branch', name: 'account_branch'},
                 {data: 'amount', name: 'amount'},
-                {data: 'fee', name: 'amount'},
-                {data: 'created_at', name: 'lend_fee'},
-                // { data: 'actions', name: 'actions', orderable: false, searchable: false }
-            ],
-            order: [[7, 'desc']]
+                {data: 'fee', name: 'lend_fee'},
+                {data: 'created_at', name: 'created_at'}
+            ]
         });
 
         $(document).ready(function () {

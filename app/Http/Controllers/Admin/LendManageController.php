@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\LendRecord;
 use App\Repositories\AuthCodes;
+use App\Repositories\LendRecords;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Authcode;
@@ -19,42 +22,38 @@ class LendManageController extends Controller
         return view('admin.trade.lendManage');
     }
 
-    public function data(Request $request)
+    public function data(LendRecords $lendRecords)
     {
-        $count = Authcode::all()->count();
-        $order = explode(" ", $request->get('jtSorting'));
+        $user = User::find(request()->companyId);
 
-        if($request->trade_service_id){
-            $data = Authcode::where('pay_state', AuthCodes::lended_state)
-                ->where('trade_service_id',$request->trade_service_id)->orderBy($order[0], $order[1])
-                ->take($request->get('jtPageSize'))
-                ->skip($request->get('jtStartIndex'))
-                ->get()->toArray();
-        }
-        else{
-            $data = Authcode::where('pay_state', AuthCodes::lended_state)
-                ->orderBy($order[0], $order[1])
-                ->take($request->get('jtPageSize'))
-                ->skip($request->get('jtStartIndex'))
-                ->get()->toArray();
-        }
+        $lendRecords = $lendRecords->getUserRecords($user, request()->startDate, request()->endDate);
 
-        foreach($data as $key => $log){
-            $paymentName = DB::table('payments')->where('i6pay_id', $log['payment_type'])->value('name');
-            $data[$key]['payment_type'] = $paymentName;
-
-            $currencyName = DB::table('currencies')->where('id', $log['currency_id'])->value('name');
-            $data[$key]['currency'] = $currencyName;
-        }
-
-        return Response::json(array(
-            'Result' => 'OK',
-            'TotalRecordCount' => $count,
-            'Records' => $data
-        ));
+        dd($lendRecords);
+        return $this->makeDataTable($lendRecords);
     }
 
-    public function store(Request $request)
+    private function makeDataTable($lendRecords)
+    {
+        return DataTables::of($lendRecords)
+            ->addColumn('account_name',function($lendRecord){
+                return $lendRecord->account->name;
+            })
+            ->addColumn('account_seq',function($lendRecord){
+                return $lendRecord->account->account;
+            })
+            ->addColumn('bank_name',function($lendRecord){
+                return $lendRecord->account->bank_name;
+            })
+            ->addColumn('account_branch',function($lendRecord){
+                return $lendRecord->account->bank_branch;
+            })
+            ->addColumn('account_branch',function($lendRecord){
+                return $lendRecord->account->bank_branch;
+            })
+            ->make(true);
+    }
+
+    public function update(Request $request)
     {
         $messages = [
             'required' => ':attribute 不得为空.',

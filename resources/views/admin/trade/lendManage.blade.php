@@ -95,14 +95,15 @@
                             <thead>
                             <tr class="filters">
                                 <th></th>
-                                <th>@lang('Trade/LendApply/form.pay_summary')</th>
-                                <th>@lang('Trade/LendApply/form.trade_seq')</th>
-                                <th>@lang('Trade/LendApply/form.company_name')</th>
-                                <th>@lang('Trade/LendApply/form.amount')</th>
-                                <th>@lang('Trade/LendApply/form.payment_type')</th>
-                                <th>@lang('Trade/LendApply/form.fee')</th>
-                                <th>@lang('Trade/LendApply/form.apply_time')</th>
-                                <th>@lang('Trade/LendApply/form.operation')</th>
+                                <th>@lang('Trade/LendManage/form.lend_summary')</th>
+                                <th>@lang('Trade/LendManage/form.account_name')</th>
+                                <th>@lang('Trade/LendManage/form.account_seq')</th>
+                                <th>@lang('Trade/LendManage/form.bank_name')</th>
+                                <th>@lang('Trade/LendManage/form.account_branch')</th>
+                                <th>@lang('Trade/LendManage/form.amount')</th>
+                                <th>@lang('Trade/LendManage/form.lend_fee')</th>
+                                <th>@lang('Trade/LendManage/form.apply_time')</th>
+                                <th>@lang('Trade/LendManage/form.action')</th>
                             </tr>
                             </thead>
                         </table>
@@ -129,90 +130,65 @@
         </div>
     </div>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $("#daterange1").daterangepicker({
+            locale: {
+                startDate: moment(),
+                endDate: moment(),
+                format: 'YYYY/MM/DD',
+                applyLabel: '@lang('Trade/LogQuery/form.filter')',
+                cancelLabel: '@lang('Trade/LogQuery/form.cancel')',
+                daysOfWeek: ["日","一","二","三","四","五","六"],
+                monthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+            }
+        });
 
-            //Prepare jtable plugin
-            $('#StudentTableContainer').jtable({
-                title: '订单列表',
-                paging: true, //Enable paging
-                pageSize: 10, //Set page size (default: 10)
-                sorting: true, //Enable sorting
-                defaultSorting: 'id ASC', //Set default sorting
-                selecting: true, //Enable selecting
-                multiselect: true, //Allow multiple selecting
-                selectingCheckboxes: true,
-                //selectOnRowClick: false, //Enable this to only select using checkboxes
-                ajaxSettings: {
-                    type: 'GET',
-                    dataType: 'json'
-                },
-                actions: {
-                    listAction:  "{{ url('admin/lendManage/data') }}",
-                    manageAction: function (postData) {
-                        // console.log("creating from custom lendAction...");
-                        return $.Deferred(function ($dfd) {
-                            $.ajax({
-                                url: "{{ url('admin/lendManage') }}",
-                                type: 'POST',
-                                dataType: 'json',
-                                data: postData,
-                                success: function (data) {
-                                    console.log('success');
-                                    console.log(data);
-                                    $dfd.resolve(data);
-                                },
-                                error: function (data) {
-                                    console.log('error');
-                                    console.log(data);
-                                    $dfd.reject();
-                                }
-                            });
-                        });
-                    }
-                },
-                fields: {
-                    id: {
-                        key: true,
-                        create: false,
-                        edit: false,
-                        list: false
-                    },
-                    pay_summary: {
-                        title: '交易状态',{{--@lang('Trade/landApply/form.pay_summary')--}}
-                        width: '20%',
-                        inputClass: 'validate[required], form-control'
-                    },
-                    trade_service_id: {
-                        title: '交易服务编号',
-                        width: '20%',
-                        inputClass: 'validate[required], form-control'
-                    },
-                    item_code: {
-                        title: '产品编号',
-                        width: '20%',
-                        inputClass: 'validate[required], form-control'
-                    },
-                    payment_type: {
-                        title: '交易方式',
-                        width: '15%',
-                        inputClass: 'validate[required], form-control'
-                    },
-                    amount: {
-                        title: '金额',
-                        width: '10%',
-                        inputClass: 'validate[required], form-control'
-                    },
-                    currency: {
-                        title: '币别',
-                        width: '20%',
-                        inputClass: 'validate[required,custom[email]], form-control'
-                    }
-
+        var table = $('#table').DataTable({
+            processing: true,
+            serverSide: true,
+            language: {
+                search: "@lang('Trade/LendManage/form.search')",
+                lengthMenu: "@lang('Trade/LendManage/form.lengthMenu')",
+                zeroRecords: "@lang('Trade/LendManage/form.noData')",
+                info: "@lang('Trade/LendManage/form.pageInfo')",
+                infoEmpty: "@lang('Trade/LendManage/form.noData')",
+                infoFiltered: "@lang('Trade/LendManage/form.infoFiltered')",
+                paginate: {
+                    "next": "@lang('Trade/LendManage/form.next')",
+                    "previous": "@lang('Trade/LendManage/form.previous')"
                 }
-            });
+            },
+            ajax: {
+                "url": "{!! route('admin.lendApply.data') !!}",
+                "type": "post",
+                "data": function (d) {
+                    d.companyId = $('#company_selection').val();
+                    d.startDate = $('#daterange1').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                    d.endDate = $('#daterange1').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                }
+            },
+            columnDefs: [
+                {'targets': 0,
+                    'checkboxes': {
+                        'selectRow': true
+                    }
+                }
+            ],
+            columns: [
+                {data: 'id',name: 'select'},
+                {data: 'lend_summary', name: 'lend_summary'},
+                {data: 'account_name', name: 'account_name'},
+                {data: 'account_seq', name: 'account_seq'},
+                {data: 'bank_name', name: 'bank_name'},
+                {data: 'account_branch', name: 'account_branch'},
+                {data: 'amount', name: 'amount'},
+                {data: 'fee', name: 'amount'},
+                {data: 'created_at', name: 'lend_fee'},
+                { data: 'actions', name: 'actions', orderable: false, searchable: false }
+            ],
+            order: [[8, 'desc']]
+        });
 
-            //Load student list from server
-            $('#StudentTableContainer').jtable('load');
+        $(document).ready(function () {
 
             //Delete selected students
             $('#LendAllButton').on('click', function () {
@@ -228,16 +204,6 @@
                     trade_service_id: $('#service_id').val()
                 });
             });
-
-            $('#reset-search').on('click', function (e) {
-                $('#service_id').val('');
-            });
-
-            $('.jtable-left-area select').addClass('form-control');
-            // $('button').addClass('btn btn-default');
-            // $('#AddRecordDialogSaveButton, #EditDialogSaveButton').removeClass('btn-default').addClass('btn-primary');
-            // $('#DeleteDialogButton').removeClass('btn-default').addClass('btn-danger');
-            // $('#DeleteAllButton,#LoadRecordsButton').removeClass('btn-default');
         });
 
     </script>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Account;
 use App\Http\Controllers\Controller;
 use App\LendRecord;
+use App\Repositories\LendRecords;
 use Yajra\DataTables\DataTables;
 use App\Repositories\AuthCodes;
 use Illuminate\Http\Request;
@@ -86,20 +87,16 @@ class LendingController extends Controller
         return array('Result' => 'OK');
     }
 
-    public function data()
+    public function data(LendRecords $lendRecords)
     {
-        $startDate = request()->startDate . ' 00:00:00';
-        $endDate = request()->endDate . ' 23:59:59';
+        $user = User::find(request()->companyId);
 
-        $lendRecords = LendRecord::where('user_id', '=', request()->companyId)
-            ->whereBetween('created_at', [$startDate, $endDate])
-            ->with('account')
-            ->get();
+        $lendRecords = $lendRecords->getUserRecords($user, request()->startDate, request()->endDate);
 
-        return $this->makeatatable($lendRecords);
+        return $this->makeDataTable($lendRecords);
     }
 
-    private function makeatatable($lendRecords)
+    private function makeDataTable($lendRecords)
     {
         return DataTables::of($lendRecords)
             ->addColumn('account_name',function($lendRecord){

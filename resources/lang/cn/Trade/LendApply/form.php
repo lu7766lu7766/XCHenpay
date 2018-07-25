@@ -12,7 +12,7 @@ return array(
     'bank_name'     => '银行名',
     'account_branch'=> '开户支行',
     'amount'		=> '金额',
-    'lend_fee'       => '下发手续费',
+    'lend_fee'      => '下发手续费',
     'apply_time'	=> '申请时间',
 
     'totalMoney'    => '总金额',
