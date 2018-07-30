@@ -39,7 +39,7 @@
                 <h3 class="panel-title">
                     <i class="livicon" data-name="filter" data-size="16" data-loop="true" data-c="#fff"
                        data-hc="white"></i>
-                    @lang('Trade/LendApply/form.company_switch')
+                    @lang('Trade/LendManage/form.company_switch')
                 </h3>
                 <span class="pull-right clickable">
                                 <i class="glyphicon glyphicon-chevron-up"></i>
@@ -49,14 +49,11 @@
                 <!--content starts-->
                 <div class="warp">
                     <p>
-                        <select id="company_selection" name="company_selection" class="js--animations form-control"
-                                onchange="companyFilter(this.value);">
-                            <optgroup label="@lang('Trade/LendApply/form.company_please')">
-                                <option value="">@lang('Trade/LendApply/form.allCompanies')</option>
-                                {{--@foreach($companies as $company)--}}
-                                {{--<option value="{{ $company->id }}">{{ $company->company_name }}</option>--}}
-                                {{--@endforeach--}}
-                            </optgroup>
+                        <select id="company_selection" name="company_selection" class="js--animations form-control" onchange="companyFilter(this.value);">
+                            <option value="">@lang('Trade/LendManage/form.company_please')</option>
+                            @foreach($companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                            @endforeach
                         </select>
                     </p>
                 </div>
@@ -65,18 +62,17 @@
         </div>
 
         {{--申請列表--}}
-        <div class="row">
-            <div class="panel panel-primary ">
+        <div class="panel panel-primary hidden" id="hidepanel1">
                 <div class="panel-heading">
                     <h4 class="panel-title"><i class="livicon" data-name="table" data-size="16" data-loop="true"
                                                data-c="#fff" data-hc="white"></i>
-                        @lang('Trade/LendApply/title.list')
+                        @lang('Trade/LendManage/title.list'): <i id="lendTitle"></i>
                     </h4>
                     <span class="pull-right clickable">
                                     <i class="glyphicon glyphicon-chevron-up"></i>
                                 </span>
                 </div>
-                <br/>
+
                 <div class="panel-body">
 
                     <div class="form-group">
@@ -94,23 +90,24 @@
                         <table class="table table-bordered width100" id="table">
                             <thead>
                             <tr class="filters">
-                                <th></th>
+                                {{--<th></th>--}}
                                 <th>@lang('Trade/LendManage/form.lend_summary')</th>
+                                <th>@lang('Trade/LendManage/form.record_seq')</th>
                                 <th>@lang('Trade/LendManage/form.account_name')</th>
-                                <th>@lang('Trade/LendManage/form.account_seq')</th>
-                                <th>@lang('Trade/LendManage/form.bank_name')</th>
-                                <th>@lang('Trade/LendManage/form.account_branch')</th>
-                                <th>@lang('Trade/LendManage/form.amount')</th>
-                                <th>@lang('Trade/LendManage/form.lend_fee')</th>
+                                <th>@lang('Trade/LendManage/form.account')</th>
+                                {{--<th>@lang('Trade/LendManage/form.bank_name')</th>--}}
+                                {{--<th>@lang('Trade/LendManage/form.account_branch')</th>--}}
+                                <th>@lang('Trade/LendManage/form.total_amount')</th>
+                                {{--<th>@lang('Trade/LendManage/form.lend_fee')</th>--}}
                                 <th>@lang('Trade/LendManage/form.apply_time')</th>
                                 <th>@lang('Trade/LendManage/form.action')</th>
                             </tr>
                             </thead>
                         </table>
                     </div>
+                    {{--<button id="ManageAllButton" class="btn btn-primary">@lang('Trade/LendManage/form.lendAll')</button>--}}
                 </div>
             </div>
-        </div>
     </section>
 @stop
 {{-- page level scripts --}}
@@ -124,19 +121,26 @@
     <script type="text/javascript" src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.js') }}" ></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js') }}" ></script>
 
-    <div class="modal fade" id="delete_confirm" tabindex="-1" role="dialog" aria-labelledby="user_delete_confirm_title" aria-hidden="true">
+    <div class="modal fade" id="lend_manage" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content"></div>
         </div>
     </div>
+
+    <div class="modal fade" id="lend_info" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
     <script type="text/javascript">
         $("#daterange1").daterangepicker({
             locale: {
                 startDate: moment(),
                 endDate: moment(),
                 format: 'YYYY/MM/DD',
-                applyLabel: '@lang('Trade/LogQuery/form.filter')',
-                cancelLabel: '@lang('Trade/LogQuery/form.cancel')',
+                applyLabel: '@lang('Trade/LendManage/form.filter')',
+                cancelLabel: '@lang('Trade/LendManage/form.cancel')',
                 daysOfWeek: ["日","一","二","三","四","五","六"],
                 monthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
             }
@@ -158,7 +162,7 @@
                 }
             },
             ajax: {
-                "url": "{!! route('admin.lendApply.data') !!}",
+                "url": "{!! route('admin.lendManage.data') !!}",
                 "type": "post",
                 "data": function (d) {
                     d.companyId = $('#company_selection').val();
@@ -166,45 +170,79 @@
                     d.endDate = $('#daterange1').data('daterangepicker').endDate.format('YYYY-MM-DD');
                 }
             },
-            columnDefs: [
-                {'targets': 0,
-                    'checkboxes': {
-                        'selectRow': true
-                    }
-                }
-            ],
             columns: [
-                {data: 'id',name: 'select'},
                 {data: 'lend_summary', name: 'lend_summary'},
+                {data: 'record_seq', name: 'record_seq'},
                 {data: 'account_name', name: 'account_name'},
-                {data: 'account_seq', name: 'account_seq'},
-                {data: 'bank_name', name: 'bank_name'},
-                {data: 'account_branch', name: 'account_branch'},
-                {data: 'amount', name: 'amount'},
-                {data: 'fee', name: 'amount'},
-                {data: 'created_at', name: 'lend_fee'},
+                {data: 'account', name: 'account'},
+                // {data: 'bank_name', name: 'bank_name'},//
+                // {data: 'account_branch', name: 'account_branch'},//
+                {data: 'tatol_amount', name: 'amount'},
+                // {data: 'fee', name: 'lend_fee'},//
+                {data: 'created_at', name: 'created_at'},
                 { data: 'actions', name: 'actions', orderable: false, searchable: false }
             ],
-            order: [[8, 'desc']]
+            order: [[5, 'desc']]
+        });
+
+        $('#daterange1').on('apply.daterangepicker', function(ev, picker) {
+            table.ajax.reload();
         });
 
         $(document).ready(function () {
-
-            //Delete selected students
-            $('#LendAllButton').on('click', function () {
-                var $selectedRows = $('#StudentTableContainer').jtable('selectedRows');
-
-                $('#StudentTableContainer').jtable('manageButtonClickedForRows', $selectedRows);
-            });
-
-            //Re-load records when user click 'load records' button.
-            $('#LoadRecordsButton').on('click', function (e) {
-                e.preventDefault();
-                $('#StudentTableContainer').jtable('load', {
-                    trade_service_id: $('#service_id').val()
+            table.on('draw', function () {
+                $('.livicon').each(function () {
+                    $(this).updateLivicon();
                 });
             });
+
+            //clear the data in hidden modal
+            $('body').on('hidden.bs.modal', '.modal', function () {
+                $(this).removeData('bs.modal');
+            });
         });
+
+        //Manage selected students
+        $('#ManageAllButton').on('click', function () {
+            console.log("asdfsad");
+        });
+
+        function companyFilter() {
+            if($('#company_selection').val() !== ''){
+
+                var data = {
+                    id: $("#company_selection :selected").val()
+                };
+
+                $.ajax({
+                    url: "{{ route('admin.lendManage.getLendInfo') }}",
+                    type: "post",
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                    },
+                    success: function (data) {
+                        complete(data);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert('错误，与服务器沟通失败');
+                    }
+                });
+
+                var complete = function (data) {
+                    document.getElementById("lendTitle").innerHTML = $("#company_selection :selected").text();
+
+                    table.ajax.reload();
+                    $('#hidepanel1').removeClass("hidden");
+
+                    return;
+                };
+
+            }else {
+                $('#hidepanel1').addClass("hidden");
+            }
+
+        }
 
     </script>
 

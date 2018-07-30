@@ -8,5 +8,6 @@ return array(
 
     'title'		=> '下发管理',
 
+    'list'      => '申请列表',
 
 );

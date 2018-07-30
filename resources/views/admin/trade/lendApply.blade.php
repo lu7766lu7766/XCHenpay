@@ -311,14 +311,8 @@
         });
 
         $(document).ready(function () {
-            table.on('draw', function () {
-                $('.livicon').each(function () {
-                    $(this).updateLivicon();
-                });
-            });
-
             $('#lendApply').click(function (e){
-                if($('#money').val() > $('#td_totalIncome').text()){
+                if($('#money').val() > Number($('#td_totalIncome').text())){
                     alert("@lang('Trade/LendApply/form.lendMoney')必需小于@lang('Trade/LendApply/form.totalIncome')");
                     return;
                 }
@@ -398,7 +392,7 @@
                 });
 
                 var complete = function (data) {
-                    document.getElementById("lendTitle").innerHTML += $("#company_selection :selected").text();
+                    document.getElementById("lendTitle").innerHTML = $("#company_selection :selected").text();
 
                     document.getElementById("td_totalMoney").innerHTML = data.totalMoney;
                     document.getElementById("td_totalFee").innerHTML = data.totalFee;
@@ -410,7 +404,7 @@
                         document.getElementById("account_selections").innerHTML += '<option value=' + account.id + '>' + account.account + '</option>';
                     });
 
-                    // table.ajax.reload();
+                    table.ajax.reload();
                     $('#hidepanel1').removeClass("hidden");
                     $('#hidepanel2').removeClass("hidden");
 

@@ -101,7 +101,7 @@ class MigrationCartalystSentinel extends Migration
             $table->string('company_service_id');
             $table->string('sceret_key');
             $table->string('account_id')->nullable();
-//            $table->string('address')->nullable();
+            $table->float('lend_fee', 50,6);
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->timestamps();

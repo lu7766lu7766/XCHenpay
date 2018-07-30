@@ -6,6 +6,7 @@ use App\Account;
 use App\Http\Controllers\Controller;
 use App\LendRecord;
 use App\Repositories\LendRecords;
+use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use App\Repositories\AuthCodes;
 use Illuminate\Http\Request;
@@ -71,27 +72,32 @@ class LendingController extends Controller
             ));
 
         $client->addLendRecord(new LendRecord([
+            'record_seq' => $seq = Carbon::now('Asia/Taipei')->format('YmdHis'),
             'account_id' => $request->account,
             'amount' => $request->amount,
-            'fee'    => 0,
-            'lend_state' => 0,
-            'lend_summary' => '下发中',
+            'fee'    => $request->amount * $client->lend_fee,
+            'lend_state' => LendRecords::APPLY_STATE,
+            'lend_summary' => LendRecords::APPLY_SUMMARY,
             'description' => $request->description
         ]));
 
         $user = Sentinel::getUser();
         activity($user->email)
             ->causedBy($user)
-            ->log('申请下发'.$request->amount.'元入'.$request->account);
+            ->log('提交一笔下发申请，单号：'. $seq);
 
         return array('Result' => 'OK');
     }
 
     public function data(LendRecords $lendRecords)
     {
-        $user = User::find(request()->companyId);
+        if(isset(request()->companyId)){
+            $user = User::find(request()->companyId);
 
-        $lendRecords = $lendRecords->getUserRecords($user, request()->startDate, request()->endDate);
+            $lendRecords = $lendRecords->getUserRecords($user, request()->startDate, request()->endDate);
+        }else{
+            $lendRecords = [];
+        }
 
         return $this->makeDataTable($lendRecords);
     }

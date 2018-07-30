@@ -15,6 +15,7 @@ class CreateLendRecordsTable extends Migration
     {
         Schema::create('lend_records', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('record_seq')->unique();
             $table->integer('user_id');
             $table->integer('account_id');
             $table->float('amount', 50,6);

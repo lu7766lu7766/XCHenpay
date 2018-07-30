@@ -7,6 +7,14 @@ use App\User;
 
 class LendRecords
 {
+    const APPLY_STATE = 0;
+    const ACCEPT_STATE = 1;
+    const DENY_STATE = 2;
+
+    const APPLY_SUMMARY = '下发中';
+    const ACCEPT_SUMMARY = '予许下发';
+    const DENY_SUMMARY = '拒绝下发';
+
     public function getUserRecords(User $user, $start, $end)
     {
         $startDate = $start . ' 00:00:00';
@@ -15,6 +23,15 @@ class LendRecords
         return $lendRecords = $user->LendRecords()
             ->whereBetween('created_at', [$startDate, $endDate])
             ->with('account')
-            ->get();
+            ->get([
+                'id',
+                'record_seq',
+                'amount',
+                'fee',
+                'lend_summary',
+                'account_id',
+                'created_at',
+                'lend_state'
+            ]);
     }
 }

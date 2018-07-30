@@ -101,8 +101,8 @@ class UsersController extends JoshController
             $data = $request->except('_token', 'group', 'activate');
             $data['password'] = strtolower(str_random(8));
             $data['company_service_id'] = md5(str_random(32));
+            $data['lend_fee'] = 0.0002;     //固定的手續費
             $data['sceret_key'] = md5(str_random(32));
-            //dd($request->toArray());
 
             // Register the user
             $user = Sentinel::register($data, $activate);

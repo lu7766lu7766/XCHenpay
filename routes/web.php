@@ -92,9 +92,11 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
 #lendManage
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'lendManage'], 'as' => 'admin.'], function () {
     Route::get('lendManage', 'LendManageController@index')->name('lendManage.index');
+    Route::post('lendManage/getLendInfo', 'LendingController@getLendInfo')->name('lendManage.getLendInfo');
     Route::post('lendManage/data', 'LendManageController@data')->name('lendManage.data');
-    Route::get('lendManage/data', 'LendManageController@data')->name('lendManage.data');
-    Route::post('lendManage', 'LendManageController@store')->name('lendManage.store');
+    Route::get('lendManage/manageRecord/{lendRecord}', 'LendManageController@showManageDialog')->name('lendManage.manageRecord');
+    Route::get('lendManage/showRecord/{lendRecord}', 'LendManageController@showRecordDialog')->name('lendManage.showRecord');
+    Route::post('lendManage', 'LendManageController@update')->name('lendManage.Manage');
 });
 
 #home
