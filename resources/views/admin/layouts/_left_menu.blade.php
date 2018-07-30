@@ -62,7 +62,7 @@
     </li>
 
     {{--#Lend Manage--}}
-    <li {!! (Request::is('admin/lendApply') || Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
+    <li {!! (Request::is('admin/showLending') || Request::is('admin/lendApply') || Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
 
         <a href="{{ URL::to('admin/auth_code') }}">
             <i class="livicon" data-name="balance" data-c="#418bca" data-hc="#418bca" data-size="18"
@@ -73,28 +73,37 @@
             <span class="fa arrow"></span>
         </a>
 
+        <ul class="sub-menu">
+
+        @if(Sentinel::getUser()->hasAccess('showLending.index') || Sentinel::getUser()->hasAccess('showLending'))
+            <li {!! (Request::is('admin/showLending') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('admin/showLending') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('Trade/showLending/title.title') }}
+                </a>
+            </li>
+        @endif
 
         @if(Sentinel::getUser()->hasAccess('lendApply.index') || Sentinel::getUser()->hasAccess('lendApply'))
-            <ul class="sub-menu">
-                <li {!! (Request::is('admin/lendApply') ? 'class="active"' : '') !!}>
-                    <a href="{{ URL::to('admin/lendApply') }}">
-                        <i class="fa fa-angle-double-right"></i>
-                        {{ trans('Trade/LendApply/title.title') }}
-                    </a>
-                </li>
-            </ul>
+            <li {!! (Request::is('admin/lendApply') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('admin/lendApply') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('Trade/LendApply/title.title') }}
+                </a>
+            </li>
         @endif
 
         @if(Sentinel::getUser()->hasAccess('lendManage.index') || Sentinel::getUser()->hasAccess('lendManage'))
-            <ul class="sub-menu">
-                <li {!! (Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
-                    <a href="{{ URL::to('admin/lendManage') }}">
-                        <i class="fa fa-angle-double-right"></i>
-                        {{ trans('Trade/LendManage/title.title') }}
-                    </a>
-                </li>
-            </ul>
+            <li {!! (Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
+                <a href="{{ URL::to('admin/lendManage') }}">
+                    <i class="fa fa-angle-double-right"></i>
+                    {{ trans('Trade/LendManage/title.title') }}
+                </a>
+            </li>
         @endif
+
+
+        </ul>
     </li>
 
     {{--#Activity Log--}}

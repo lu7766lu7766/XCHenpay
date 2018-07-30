@@ -32,7 +32,7 @@
         </ol>
     </section>
     <!-- Main content -->
-    <section class="content">
+    <section class="content paddingleft_right15">
         {{--商戶篩選--}}
         <div class="panel panel-primary">
             <div class="panel-heading">

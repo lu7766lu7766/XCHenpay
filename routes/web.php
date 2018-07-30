@@ -81,19 +81,26 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
     Route::post('data', 'AuthcodeController@data')->name('authcode.data');
 });
 
+Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
+    Route::get('showLending', 'LendingController@index')->name('showLending.index');
+    Route::post('showLending/getInfo', 'LendingController@getInfo')->name('showLending.getInfo');
+    Route::post('showLending/data', 'LendingController@data')->name('showLending.data');
+    Route::get('showLending/showRecord/{lendRecord}', 'LendingController@showRecordDialog')->name('showLending.showRecord');
+});
+
 #lendApply
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'lendApply'], 'as' => 'admin.'], function () {
-    Route::get('lendApply', 'LendingController@index')->name('lendApply.index');
-    Route::post('lendApply/getLendInfo', 'LendingController@getLendInfo')->name('lendApply.getLendInfo');
-    Route::post('lendApply/apply', 'LendingController@apply')->name('lendApply.apply');
-    Route::post('lendApply/data', 'LendingController@data')->name('lendApply.data');
-    Route::get('lendApply/showRecord/{lendRecord}', 'LendManageController@showRecordDialog')->name('lendApply.showRecord');
+    Route::get('lendApply', 'LendApplyController@index')->name('lendApply.index');
+    Route::post('lendApply/getLendInfo', 'LendApplyController@getLendInfo')->name('lendApply.getLendInfo');
+    Route::post('lendApply/apply', 'LendApplyController@apply')->name('lendApply.apply');
+    Route::post('lendApply/data', 'LendApplyController@data')->name('lendApply.data');
+    Route::get('lendApply/showRecord/{lendRecord}', 'LendApplyController@showRecordDialog')->name('lendApply.showRecord');
 });
 
 #lendManage
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'lendManage'], 'as' => 'admin.'], function () {
     Route::get('lendManage', 'LendManageController@index')->name('lendManage.index');
-    Route::post('lendManage/getLendInfo', 'LendingController@getLendInfo')->name('lendManage.getLendInfo');
+    Route::post('lendManage/getLendInfo', 'LendManageController@getLendInfo')->name('lendManage.getLendInfo');
     Route::post('lendManage/data', 'LendManageController@data')->name('lendManage.data');
     Route::get('lendManage/manageRecord/{lendRecord}', 'LendManageController@showManageDialog')->name('lendManage.manageRecord');
     Route::get('lendManage/showRecord/{lendRecord}', 'LendManageController@showRecordDialog')->name('lendManage.showRecord');

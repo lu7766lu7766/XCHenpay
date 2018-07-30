@@ -95,7 +95,8 @@ class AdminSeeder extends DatabaseSeeder {
 //                'users.lockscreen' => false,
 //                'users.postLockscreen' => false,
 
-                'lendApply' => true,
+                'showLending' => true,
+                'lendApply' => false,
                 'lendManage' => false,
             ),
 		]);
