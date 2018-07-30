@@ -22,7 +22,6 @@ class CreateLendRecordsTable extends Migration
             $table->float('fee', 50,6);
             $table->integer('lend_state');
             $table->string('lend_summary');
-            $table->string('description');
             $table->timestamps();
         });
     }

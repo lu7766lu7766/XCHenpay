@@ -22,7 +22,7 @@
 {{-- Page content --}}
 @section('content')
     <section class="content-header">
-        <h1>@lang('Trade/title.title')</h1>
+        <h1>@lang('Trade/LendManage/title.title')</h1>
         <ol class="breadcrumb">
             <li>
                 <i class="livicon" data-name="balance" data-size="14" data-loop="true"></i>
@@ -95,10 +95,7 @@
                                 <th>@lang('Trade/LendManage/form.record_seq')</th>
                                 <th>@lang('Trade/LendManage/form.account_name')</th>
                                 <th>@lang('Trade/LendManage/form.account')</th>
-                                {{--<th>@lang('Trade/LendManage/form.bank_name')</th>--}}
-                                {{--<th>@lang('Trade/LendManage/form.account_branch')</th>--}}
                                 <th>@lang('Trade/LendManage/form.total_amount')</th>
-                                {{--<th>@lang('Trade/LendManage/form.lend_fee')</th>--}}
                                 <th>@lang('Trade/LendManage/form.apply_time')</th>
                                 <th>@lang('Trade/LendManage/form.action')</th>
                             </tr>
@@ -175,10 +172,7 @@
                 {data: 'record_seq', name: 'record_seq'},
                 {data: 'account_name', name: 'account_name'},
                 {data: 'account', name: 'account'},
-                // {data: 'bank_name', name: 'bank_name'},//
-                // {data: 'account_branch', name: 'account_branch'},//
                 {data: 'tatol_amount', name: 'amount'},
-                // {data: 'fee', name: 'lend_fee'},//
                 {data: 'created_at', name: 'created_at'},
                 { data: 'actions', name: 'actions', orderable: false, searchable: false }
             ],
@@ -204,7 +198,7 @@
 
         //Manage selected students
         $('#ManageAllButton').on('click', function () {
-            console.log("asdfsad");
+            console.log("todo");
         });
 
         function companyFilter() {

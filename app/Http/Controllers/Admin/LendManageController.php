@@ -67,8 +67,8 @@ class LendManageController extends Controller
                 $action = '';
 
                 if($lendRecord->lend_state == LendRecords::APPLY_STATE){
-                    $action .= $lendLink;
                     $action .= $infoLink;
+                    $action .= $lendLink;
                 }
                 else
                     $action .= $infoLink;

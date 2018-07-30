@@ -78,7 +78,7 @@ class LendingController extends Controller
             'fee'    => $request->amount * $client->lend_fee,
             'lend_state' => LendRecords::APPLY_STATE,
             'lend_summary' => LendRecords::APPLY_SUMMARY,
-            'description' => $request->description
+            'description' => (isset($request->description)) ? $request->description : ""
         ]));
 
         $user = Sentinel::getUser();
@@ -108,15 +108,18 @@ class LendingController extends Controller
             ->addColumn('account_name',function($lendRecord){
                 return $lendRecord->account->name;
             })
-            ->addColumn('account_seq',function($lendRecord){
+            ->addColumn('account',function($lendRecord){
                 return $lendRecord->account->account;
             })
-            ->addColumn('bank_name',function($lendRecord){
-                return $lendRecord->account->bank_name;
+            ->addColumn('tatol_amount',function($lendRecord){
+                return $lendRecord->amount - $lendRecord->fee;
             })
-            ->addColumn('account_branch',function($lendRecord){
-                return $lendRecord->account->bank_branch;
+            ->addColumn('actions',function($lendRecord){
+                $infoLink = '<a href='. route('admin.lendApply.showRecord', ['lendRecord' => $lendRecord->id]) .' data-toggle="modal" data-target="#lend_info"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('Trade/LendManage/form.manage') . '></i></a>';
+
+                return $infoLink;
             })
+            ->rawColumns(['actions'])
             ->make(true);
     }
 }

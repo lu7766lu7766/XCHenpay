@@ -13,7 +13,7 @@ return array(
     'lend_summary'  => '下发状态',
     'record_seq'    => '单号',
     'account_name'  => '户名',
-    'account'   => '银行卡号',
+    'account'       => '银行卡号',
     'total_amount'  => '下发金额',
     'apply_time'	=> '申请时间',
     'action'        => '操作',
