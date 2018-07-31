@@ -83,6 +83,10 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
     Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
     Route::post('data', 'AuthcodeController@data')->name('authcode.data');
+    Route::get('logQuery/feeData', 'AuthcodeController@feeData')->name('authcode.feeData');
+    Route::get('logQuery/showFeeInfo/{payment}', 'AuthcodeController@showFeeInfo')->name('authcode.showFeeInfo');
+    Route::get('logQuery/editFeeInfo/{payment}', 'AuthcodeController@editFeeInfo')->name('authcode.editFeeInfo');
+    Route::post('logQuery/updateFeeInfo', 'AuthcodeController@updateFeeInfo')->name('authcode.updateFeeInfo');
 });
 
 #lending

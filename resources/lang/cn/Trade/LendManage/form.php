@@ -25,4 +25,9 @@ return array(
 
     'acceptAll'		=> '许可已选择订单',
     'manage'        => '管理',
+
+    'API_id'        => 'API 代号',
+    'payment_name'  => '通道名称',
+    'fee'           => '手续费',
+    'actions'       => '操作',
 );

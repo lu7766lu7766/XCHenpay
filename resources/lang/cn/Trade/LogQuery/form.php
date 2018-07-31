@@ -16,7 +16,6 @@ return array(
     'pay_start_time'		=> '支付时间',
     'pay_end_time'			=> '完成时间',
 
-    'company_switch'        => '商户筛选',
     'company_please'        => '請選擇商戶',
     'allCompanies'          => '所有商戶',
 );

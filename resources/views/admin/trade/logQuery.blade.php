@@ -38,7 +38,7 @@
                     <h3 class="panel-title">
                         <i class="livicon" data-name="stopwatch" data-size="16" data-loop="true" data-c="#fff"
                            data-hc="white"></i>
-                        @lang('Trade/LogQuery/form.company_switch')
+                        @lang('Trade/LogQuery/title.form1')
                     </h3>
                     <span class="pull-right clickable">
                                     <i class="glyphicon glyphicon-chevron-up"></i>
@@ -69,8 +69,11 @@
                 <div class="panel-heading">
                     <h4 class="panel-title"><i class="livicon" data-name="user" data-size="16" data-loop="true"
                                                data-c="#fff" data-hc="white"></i>
-                        @lang('Trade/LogQuery/title.title')
+                        @lang('Trade/LogQuery/title.form2')
                     </h4>
+                    <span class="pull-right clickable">
+                                <i class="glyphicon glyphicon-chevron-up"></i>
+                            </span>
                 </div>
                 <br/>
                 <div class="panel-body">
@@ -106,6 +109,35 @@
                 </div>
             </div>
         </div>    <!-- row-->
+
+        <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><i class="livicon" data-name="settings" data-size="16" data-loop="true"
+                                               data-c="#fff" data-hc="white"></i>
+                        @lang('Trade/LogQuery/title.form3')
+                    </h4>
+                    <span class="pull-right clickable">
+                                <i class="glyphicon glyphicon-chevron-up"></i>
+                            </span>
+                </div>
+
+                <div class="panel-body">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered width100" id="fee_table">
+                            <thead>
+                            <tr class="filters">
+                                <th>@lang('Trade/LendManage/form.API_id')</th>
+                                <th>@lang('Trade/LendManage/form.payment_name')</th>
+                                <th>@lang('Trade/LendManage/form.fee')</th>
+                                <th>@lang('Trade/LendManage/form.actions')</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    {{--<button id="ManageAllButton" class="btn btn-primary">@lang('Trade/LendManage/form.lendAll')</button>--}}
+                </div>
+            </div>
     </section>
     <!-- content -->
 
@@ -118,6 +150,18 @@
     <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}" ></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}" ></script>
     <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+
+    <div class="modal fade" id="show_FeeInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit_FeeInfo" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+    </div>
 
     <script>
         $("#daterange1").daterangepicker({
@@ -186,17 +230,50 @@
                 {data: 'company_name', name: 'company_name'},
                 {data: 'amount', name: 'amount'},
                 {data: 'payment_name', name: 'payment_name'},
-                {data: 'payment_fee', name: 'payment_fee'},
+                {data: 'fee', name: 'fee'},
                 {data: 'created_at', name: 'created_at'}
             ],
             order: [[6, 'desc']]
         });
 
+        var fee_table = $('#fee_table').DataTable({
+            language: {
+                search: "@lang('dataTable.search')",
+                lengthMenu: "@lang('dataTable.lengthMenu')",
+                zeroRecords: "@lang('dataTable.noData')",
+                info: "@lang('dataTable.pageInfo')",
+                infoEmpty: "@lang('dataTable.noData')",
+                infoFiltered: "@lang('dataTable.infoFiltered')",
+                paginate: {
+                    "next": "@lang('dataTable.next')",
+                    "previous": "@lang('dataTable.previous')"
+                }
+            },
+            processing: true,
+            serverSide: true,
+            searching: false,
+            paginate: false,
+            info: false,
+            ajax: "{!! route('admin.authcode.feeData') !!}",
+            columns: [
+                {data: 'i6pay_id', name: 'id'},
+                {data: 'name', name: 'payment_name'},
+                {data: 'fee', name: 'fee'},
+                { data: 'actions', name: 'actions', orderable: false, searchable: false }
+            ],
+            order: [[0, 'asc']]
+        });
+
         $(document).ready(function () {
-            table.on('draw', function () {
+            fee_table.on('draw', function () {
                 $('.livicon').each(function () {
                     $(this).updateLivicon();
                 });
+            });
+
+            //clear the data in hidden modal
+            $('body').on('hidden.bs.modal', '.modal', function () {
+                $(this).removeData('bs.modal');
             });
         });
 

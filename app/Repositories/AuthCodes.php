@@ -26,6 +26,7 @@ class AuthCodes
         'amount',
         'currency_id',
         'payment_type',
+        'fee',
         'created_at',
         'pay_start_time',
         'pay_end_time');
@@ -57,9 +58,6 @@ class AuthCodes
             })
             ->addColumn('company_name',function($authCode){
                 return $authCode->company->company_name;
-            })
-            ->addColumn('payment_fee',function($authCode){
-                return $authCode->i6payment->fee;
             })
             ->make(true);
     }

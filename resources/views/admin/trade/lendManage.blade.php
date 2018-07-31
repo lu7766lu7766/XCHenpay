@@ -62,48 +62,48 @@
 
         {{--申請列表--}}
         <div class="panel panel-primary hidden" id="hidepanel1">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><i class="livicon" data-name="table" data-size="16" data-loop="true"
-                                               data-c="#fff" data-hc="white"></i>
-                        @lang('Trade/LendManage/title.list'): <i id="lendTitle"></i>
-                    </h4>
-                    <span class="pull-right clickable">
-                                    <i class="glyphicon glyphicon-chevron-up"></i>
-                                </span>
-                </div>
-
-                <div class="panel-body">
-
-                    <div class="form-group">
-                        <div class="col-lg-4 input-group">
-                            <div class="input-group-addon">
-                                <i class="livicon" data-name="calendar" data-size="16" data-c="#555555"
-                                   data-hc="#555555" data-loop="true"></i>
-                            </div>
-                            <input type="text" class="form-control" id="daterange1"/>
-                        </div>
-                        <!-- /.input group -->
-                    </div>
-
-                    <div class="table-responsive">
-                        <table class="table table-bordered width100" id="table">
-                            <thead>
-                            <tr class="filters">
-                                {{--<th></th>--}}
-                                <th>@lang('Trade/LendManage/form.lend_summary')</th>
-                                <th>@lang('Trade/LendManage/form.record_seq')</th>
-                                <th>@lang('Trade/LendManage/form.account_name')</th>
-                                <th>@lang('Trade/LendManage/form.account')</th>
-                                <th>@lang('Trade/LendManage/form.total_amount')</th>
-                                <th>@lang('Trade/LendManage/form.apply_time')</th>
-                                <th>@lang('Trade/LendManage/form.action')</th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    {{--<button id="ManageAllButton" class="btn btn-primary">@lang('Trade/LendManage/form.lendAll')</button>--}}
-                </div>
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="livicon" data-name="table" data-size="16" data-loop="true"
+                                           data-c="#fff" data-hc="white"></i>
+                    @lang('Trade/LendManage/title.list'): <i id="lendTitle"></i>
+                </h4>
+                <span class="pull-right clickable">
+                                <i class="glyphicon glyphicon-chevron-up"></i>
+                            </span>
             </div>
+
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <div class="col-lg-4 input-group">
+                        <div class="input-group-addon">
+                            <i class="livicon" data-name="calendar" data-size="16" data-c="#555555"
+                               data-hc="#555555" data-loop="true"></i>
+                        </div>
+                        <input type="text" class="form-control" id="daterange1"/>
+                    </div>
+                    <!-- /.input group -->
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered width100" id="table">
+                        <thead>
+                        <tr class="filters">
+                            {{--<th></th>--}}
+                            <th>@lang('Trade/LendManage/form.lend_summary')</th>
+                            <th>@lang('Trade/LendManage/form.record_seq')</th>
+                            <th>@lang('Trade/LendManage/form.account_name')</th>
+                            <th>@lang('Trade/LendManage/form.account')</th>
+                            <th>@lang('Trade/LendManage/form.total_amount')</th>
+                            <th>@lang('Trade/LendManage/form.apply_time')</th>
+                            <th>@lang('Trade/LendManage/form.action')</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                {{--<button id="ManageAllButton" class="btn btn-primary">@lang('Trade/LendManage/form.lendAll')</button>--}}
+            </div>
+        </div>
     </section>
 @stop
 {{-- page level scripts --}}
