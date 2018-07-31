@@ -27,29 +27,29 @@
                 <i class="livicon" data-name="balance" data-size="14" data-loop="true"></i>
                 @lang('Trade/title.title')
             </li>
-            <li class="active">@lang('Trade/LendApply/title.title')</li>
+            <li class="active">@lang('Trade/showLending/title.title')</li>
         </ol>
     </section>
     <!-- Main content -->
     <section class="content paddingleft_right15">
 
-        <!-- 下發申請 -->
+        <!-- 下發資訊 -->
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">
-                    <i class="livicon" data-name="mail" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    @lang('Trade/LendApply/title.title')</i>
-                </h3>
+                <h4 class="panel-title"><i class="livicon" data-name="mail" data-size="16" data-loop="true"
+                                           data-c="#fff" data-hc="white"></i>
+                    @lang('Trade/showLending/title.form1')
+                </h4>
                 <span class="pull-right clickable">
-                    <i class="glyphicon glyphicon-chevron-up"></i>
-                </span>
+                                <i class="glyphicon glyphicon-chevron-up"></i>
+                            </span>
             </div>
             <div class="panel-body">
 
                 <div class="panel-body border">
                     <form  enctype="multipart/form-data" class="form-horizontal form-bordered">
                         <div class="form-group striped-col">
-                            <label class="col-md-2 control-label">@lang('Trade/LendApply/form.totalMoney')</label>
+                            <label class="col-md-2 control-label">@lang('Trade/showLending/form.totalMoney')</label>
                             <div class="col-md-9">
                                 <p class="form-control-static" id="td_totalMoney">
                                 </p>
@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="form-group striped-col">
-                            <label class="col-md-2 control-label">@lang('Trade/LendApply/form.totalFee')</label>
+                            <label class="col-md-2 control-label">@lang('Trade/showLending/form.totalFee')</label>
                             <div class="col-md-9">
                                 <p class="form-control-static" id="td_totalFee">
                                 </p>
@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="form-group striped-col">
-                            <label class="col-md-2 control-label">@lang('Trade/LendApply/form.totalLended')</label>
+                            <label class="col-md-2 control-label">@lang('Trade/showLending/form.totalLended')</label>
                             <div class="col-md-9">
                                 <p class="form-control-static" id="td_totalLended">
                                 </p>
@@ -73,7 +73,7 @@
                         </div>
 
                         <div class="form-group striped-col">
-                            <label class="col-md-2 control-label">@lang('Trade/LendApply/form.totalIncome')</label>
+                            <label class="col-md-2 control-label">@lang('Trade/showLending/form.totalIncome')</label>
                             <div class="col-md-9">
                                 <p class="form-control-static" id="td_totalIncome">
                                 </p>
@@ -91,7 +91,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title"><i class="livicon" data-name="table" data-size="16" data-loop="true"
                                            data-c="#fff" data-hc="white"></i>
-                    @lang('Trade/LendApply/title.list')
+                    @lang('Trade/showLending/title.form2')
                 </h4>
                 <span class="pull-right clickable">
                                 <i class="glyphicon glyphicon-chevron-up"></i>
@@ -114,13 +114,13 @@
                     <table class="table table-bordered width100" id="table">
                         <thead>
                         <tr class="filters">
-                            <th>@lang('Trade/LendApply/form.lend_summary')</th>
-                            <th>@lang('Trade/LendApply/form.record_seq')</th>
-                            <th>@lang('Trade/LendApply/form.account_name')</th>
-                            <th>@lang('Trade/LendApply/form.account')</th>
-                            <th>@lang('Trade/LendApply/form.total_amount')</th>
-                            <th>@lang('Trade/LendApply/form.apply_time')</th>
-                            <th>@lang('Trade/LendApply/form.action')</th>
+                            <th>@lang('Trade/showLending/form.lend_summary')</th>
+                            <th>@lang('Trade/showLending/form.record_seq')</th>
+                            <th>@lang('Trade/showLending/form.account_name')</th>
+                            <th>@lang('Trade/showLending/form.account')</th>
+                            <th>@lang('Trade/showLending/form.total_amount')</th>
+                            <th>@lang('Trade/showLending/form.apply_time')</th>
+                            <th>@lang('Trade/showLending/form.action')</th>
                         </tr>
                         </thead>
                     </table>
@@ -150,10 +150,32 @@
                 startDate: moment(),
                 endDate: moment(),
                 format: 'YYYY/MM/DD',
-                applyLabel: '@lang('Trade/LogQuery/form.filter')',
-                cancelLabel: '@lang('Trade/LogQuery/form.cancel')',
-                daysOfWeek: ["日","一","二","三","四","五","六"],
-                monthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+                applyLabel: '@lang('dateRangePicker.filter')',
+                cancelLabel: '@lang('dateRangePicker.cancel')',
+                daysOfWeek: [
+                    '@lang('dateRangePicker.SUN')',
+                    '@lang('dateRangePicker.MON')',
+                    '@lang('dateRangePicker.TUE')',
+                    '@lang('dateRangePicker.WED')',
+                    '@lang('dateRangePicker.THU')',
+                    '@lang('dateRangePicker.FRI')',
+                    '@lang('dateRangePicker.SAT')'
+                ],
+                monthNames: [
+                    '@lang('dateRangePicker.JAN')',
+                    '@lang('dateRangePicker.FEB')',
+                    '@lang('dateRangePicker.MAR')',
+                    '@lang('dateRangePicker.APR')',
+                    '@lang('dateRangePicker.MAY')',
+                    '@lang('dateRangePicker.JUN')',
+                    '@lang('dateRangePicker.JUL')',
+                    '@lang('dateRangePicker.AUG')',
+                    '@lang('dateRangePicker.SEP')',
+                    '@lang('dateRangePicker.OCT')',
+                    '@lang('dateRangePicker.NOV')',
+                    '@lang('dateRangePicker.DEC')'
+
+                ]
             }
         });
 
@@ -162,16 +184,17 @@
             serverSide: true,
             order: [[5, 'desc']],
             language: {
-                search: "@lang('Trade/LendApply/form.search')",
-                lengthMenu: "@lang('Trade/LendApply/form.lengthMenu')",
-                zeroRecords: "@lang('Trade/LendApply/form.noData')",
-                info: "@lang('Trade/LendApply/form.pageInfo')",
-                infoEmpty: "@lang('Trade/LendApply/form.noData')",
-                infoFiltered: "@lang('Trade/LendApply/form.infoFiltered')",
+                search: "@lang('dataTable.search')",
+                lengthMenu: "@lang('dataTable.lengthMenu')",
+                zeroRecords: "@lang('dataTable.noData')",
+                info: "@lang('dataTable.pageInfo')",
+                infoEmpty: "@lang('dataTable.noData')",
+                infoFiltered: "@lang('dataTable.infoFiltered')",
                 paginate: {
-                    "next": "@lang('Trade/LendApply/form.next')",
-                    "previous": "@lang('Trade/LendApply/form.previous')"
-                }
+                    "next": "@lang('dataTable.next')",
+                    "previous": "@lang('dataTable.previous')"
+                },
+                processing: "@lang('dataTable.processing')"
             },
             ajax: {
                 "url": "{!! route('admin.showLending.data') !!}",

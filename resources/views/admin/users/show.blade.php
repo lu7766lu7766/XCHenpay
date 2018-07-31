@@ -404,6 +404,19 @@
                 paginate: false,
                 info: false,
                 ajax: '{!! route('admin.account.data',['user' => $user->id]) !!}',
+                language: {
+                    search: "@lang('dataTable.search')",
+                    lengthMenu: "@lang('dataTable.lengthMenu')",
+                    zeroRecords: "@lang('dataTable.noData')",
+                    info: "@lang('dataTable.pageInfo')",
+                    infoEmpty: "@lang('dataTable.noData')",
+                    infoFiltered: "@lang('dataTable.infoFiltered')",
+                    paginate: {
+                        "next": "@lang('dataTable.next')",
+                        "previous": "@lang('dataTable.previous')"
+                    },
+                    processing: "@lang('dataTable.processing')"
+                },
                 columns: [
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },

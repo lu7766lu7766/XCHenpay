@@ -60,7 +60,7 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
         Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
         Route::get('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
         Route::post('addAccount', 'AccountController@verify')->name('account.addAccount');
-        Route::get('{user}/data', 'AccountController@data')->name('account.data');
+        Route::get('{user}/accountData', 'AccountController@accountData')->name('account.data');
     });
     Route::resource('users', 'UsersController');
     Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('users.deleted_users');

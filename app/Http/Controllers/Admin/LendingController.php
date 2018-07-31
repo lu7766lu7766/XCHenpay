@@ -15,7 +15,7 @@ class LendingController extends Controller
 {
     public function index()
     {
-        return view('admin.trade.show');
+        return view('admin.trade.showLending');
     }
 
     public function getInfo(AuthCodes $authCodes)

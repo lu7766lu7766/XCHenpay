@@ -63,16 +63,17 @@
 $(function() {
     var table = $('#table').DataTable({
         language: {
-            search: "@lang('ActivityLog/form.search')",
-            lengthMenu: "@lang('ActivityLog/form.lengthMenu')",
-            zeroRecords: "@lang('ActivityLog/form.noData')",
-            info: "@lang('ActivityLog/form.pageInfo')",
-            infoEmpty: "@lang('ActivityLog/form.noData')",
-            infoFiltered: "@lang('ActivityLog/form.infoFiltered')",
+            search: "@lang('dataTable.search')",
+            lengthMenu: "@lang('dataTable.lengthMenu')",
+            zeroRecords: "@lang('dataTable.noData')",
+            info: "@lang('dataTable.pageInfo')",
+            infoEmpty: "@lang('dataTable.noData')",
+            infoFiltered: "@lang('dataTable.infoFiltered')",
             paginate: {
-                "next":       "下一頁",
-                "previous":   "上一頁"
-            }
+                "next": "@lang('dataTable.next')",
+                "previous": "@lang('dataTable.previous')"
+            },
+            processing: "@lang('dataTable.processing')"
         },
         processing: true,
         serverSide: true,

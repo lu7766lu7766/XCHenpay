@@ -25,7 +25,7 @@ class AccountController extends Controller
         $this->JIGUANG_tempId = '1';
     }
 
-    public function data(User $user)
+    public function accountData(User $user)
     {
         $accounts = $user->accounts;
 

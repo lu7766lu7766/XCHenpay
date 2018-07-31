@@ -5,6 +5,11 @@
 */
 
 return array(
+    'totalMoney'    => '总金额',
+    'totalFee'      => '总手续费',
+    'totalLended'   => '已提现金額',
+    'totalIncome'   => '可提現金額',
+
     'pay_summary'			=> '交易狀態',
     'trade_seq'				=> '交易序號',
     'company_name'  		=> '商戶名稱',

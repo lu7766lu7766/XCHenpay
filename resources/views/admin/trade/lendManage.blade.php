@@ -136,10 +136,32 @@
                 startDate: moment(),
                 endDate: moment(),
                 format: 'YYYY/MM/DD',
-                applyLabel: '@lang('Trade/LendManage/form.filter')',
-                cancelLabel: '@lang('Trade/LendManage/form.cancel')',
-                daysOfWeek: ["日","一","二","三","四","五","六"],
-                monthNames: ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"]
+                applyLabel: '@lang('dateRangePicker.filter')',
+                cancelLabel: '@lang('dateRangePicker.cancel')',
+                daysOfWeek: [
+                    '@lang('dateRangePicker.SUN')',
+                    '@lang('dateRangePicker.MON')',
+                    '@lang('dateRangePicker.TUE')',
+                    '@lang('dateRangePicker.WED')',
+                    '@lang('dateRangePicker.THU')',
+                    '@lang('dateRangePicker.FRI')',
+                    '@lang('dateRangePicker.SAT')'
+                ],
+                monthNames: [
+                    '@lang('dateRangePicker.JAN')',
+                    '@lang('dateRangePicker.FEB')',
+                    '@lang('dateRangePicker.MAR')',
+                    '@lang('dateRangePicker.APR')',
+                    '@lang('dateRangePicker.MAY')',
+                    '@lang('dateRangePicker.JUN')',
+                    '@lang('dateRangePicker.JUL')',
+                    '@lang('dateRangePicker.AUG')',
+                    '@lang('dateRangePicker.SEP')',
+                    '@lang('dateRangePicker.OCT')',
+                    '@lang('dateRangePicker.NOV')',
+                    '@lang('dateRangePicker.DEC')'
+
+                ]
             }
         });
 
@@ -147,16 +169,17 @@
             processing: true,
             serverSide: true,
             language: {
-                search: "@lang('Trade/LendManage/form.search')",
-                lengthMenu: "@lang('Trade/LendManage/form.lengthMenu')",
-                zeroRecords: "@lang('Trade/LendManage/form.noData')",
-                info: "@lang('Trade/LendManage/form.pageInfo')",
-                infoEmpty: "@lang('Trade/LendManage/form.noData')",
-                infoFiltered: "@lang('Trade/LendManage/form.infoFiltered')",
+                search: "@lang('dataTable.search')",
+                lengthMenu: "@lang('dataTable.lengthMenu')",
+                zeroRecords: "@lang('dataTable.noData')",
+                info: "@lang('dataTable.pageInfo')",
+                infoEmpty: "@lang('dataTable.noData')",
+                infoFiltered: "@lang('dataTable.infoFiltered')",
                 paginate: {
-                    "next": "@lang('Trade/LendManage/form.next')",
-                    "previous": "@lang('Trade/LendManage/form.previous')"
-                }
+                    "next": "@lang('dataTable.next')",
+                    "previous": "@lang('dataTable.previous')"
+                },
+                processing: "@lang('dataTable.processing')"
             },
             ajax: {
                 "url": "{!! route('admin.lendManage.data') !!}",

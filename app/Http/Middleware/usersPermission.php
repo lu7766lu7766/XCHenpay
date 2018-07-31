@@ -23,7 +23,8 @@ class usersPermission
             'lockscreen',
             'postLockscreen',
             'sendVerifyCode',
-            'verify'
+            'verify',
+            'accountData'
         );
         $protectOthers = array(
             'show',

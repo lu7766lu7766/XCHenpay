@@ -7,6 +7,4 @@
 return array(
 
     'title'		=> '订单查询',
-
-
 );
