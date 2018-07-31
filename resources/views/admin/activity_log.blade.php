@@ -34,7 +34,6 @@
                         {{ trans('ActivityLog/title.title') }}
                     </h4>
                 </div>
-                <br/>
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-bordered width100" id="table" >

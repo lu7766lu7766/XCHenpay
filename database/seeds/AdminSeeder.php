@@ -49,6 +49,31 @@ class AdminSeeder extends DatabaseSeeder {
             ),
 		]);
 
+        $ServiceRole = Sentinel::getRoleRepository()->createModel()->create([
+            'name'  => 'Customer service',
+            'slug'  => 'customer_service',
+            'permissions' => array(
+                'users.index' => false,
+                'users.data' => false,
+                'users.show' => false,
+                'users.edit' => false,
+                'users.update' => false,
+                'users.updateProfile' => false,
+                'users.create' => false,
+                'users.store' => false,
+                'users.getModalDelete' => false,
+                'users.destroy' => false,
+                'users.getDeletedUsers' => false,
+                'users.getRestore' => false,
+                'users.passwordreset' => false,
+                'users.dataSwitch' => true,
+
+                'showLending' => false,
+                'lendApply' => true,
+                'lendManage' => false,
+            ),
+        ]);
+
         $fanRole = Sentinel::getRoleRepository()->createModel()->create([
             'name'  => 'Finance',
             'slug'  => 'finance',
@@ -68,6 +93,7 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.passwordreset' => false,
                 'users.dataSwitch' => true,
 
+                'showLending' => false,
                 'lendApply' => false,
                 'lendManage' => true,
             ),
@@ -80,9 +106,7 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.index' => false,
                 'users.data' => false,
                 'users.show' => false,
-                //'users.showProfile' => false,
                 'users.edit' => false,
-                //'users.editProfile' => false,
                 'users.update' => false,
                 'users.updateProfile' => false,
                 'users.create' => false,
@@ -92,8 +116,6 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.getDeletedUsers' => false,
                 'users.getRestore' => false,
                 'users.passwordreset' => false,
-//                'users.lockscreen' => false,
-//                'users.postLockscreen' => false,
 
                 'showLending' => true,
                 'lendApply' => false,

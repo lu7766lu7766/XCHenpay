@@ -18,7 +18,6 @@ class usersPermission
     {
         $openSource = array(
             'showProfile',
-            'editProfile',
             'passwordreset',
             'lockscreen',
             'postLockscreen',

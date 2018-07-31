@@ -99,12 +99,6 @@
                             </a>
                         </li>
                         <li role="presentation"></li>
-                        <li>
-                            <a href="{{ route('admin.users.editProfile') }}">
-                                <i class="livicon" data-name="gears" data-s="18"></i>
-                                @lang('users/title.editProfile')
-                            </a>
-                        </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">

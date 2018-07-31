@@ -25,13 +25,6 @@
                 </a>
             </li>
 
-            <li {!! ((Request::is('admin/users/editProfile')) ? 'class="active" id="active"' : '') !!}>
-                <a href="{{ URL::route('admin.users.editProfile') }}">
-                    <i class="fa fa-angle-double-right"></i>
-                    {{ trans('users/title.editProfile') }}
-                </a>
-            </li>
-
             @if(Sentinel::getUser()->hasAccess('users.index') || Sentinel::getUser()->hasAccess('users'))
                 <li {!! (Request::is('admin/users') ? 'class="active" id="active"' : '') !!}>
                     <a href="{{ URL::to('admin/users') }}">

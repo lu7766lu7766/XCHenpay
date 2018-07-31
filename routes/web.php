@@ -50,7 +50,6 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
     Route::group([ 'prefix' => 'users'], function () {
         Route::get('data', 'UsersController@data')->name('users.data');
         Route::get('showProfile', 'UsersController@showProfile')->name('users.showProfile');
-        Route::get('editProfile', 'UsersController@editProfile')->name('users.editProfile');
         Route::get('updateProfile', 'UsersController@updateProfile')->name('users.updateProfile');
         Route::get('{user}/delete', 'UsersController@destroy')->name('users.delete');
         Route::get('{user}/confirm-delete', 'UsersController@getModalDelete')->name('users.confirm-delete');
