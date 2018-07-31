@@ -25,6 +25,13 @@ class AccountController extends Controller
         $this->JIGUANG_tempId = '1';
     }
 
+    public function index()
+    {
+        $user = Sentinel::getUser();
+
+        return view('admin.users.addAccount', compact('user'));
+    }
+
     public function accountData(User $user)
     {
         $accounts = $user->accounts;
@@ -41,7 +48,7 @@ class AccountController extends Controller
             ->make(true);
     }
 
-    public function getModalDelete(Account $account)
+    public function getAccountDelete(Account $account)
     {
         $model = 'account';
 

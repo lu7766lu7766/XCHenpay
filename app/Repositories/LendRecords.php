@@ -12,7 +12,7 @@ class LendRecords
     const DENY_STATE = 2;
 
     const APPLY_SUMMARY = '下发中';
-    const ACCEPT_SUMMARY = '予许下发';
+    const ACCEPT_SUMMARY = '完成下发';
     const DENY_SUMMARY = '拒绝下发';
 
     public function getUserRecords(User $user, $start, $end)

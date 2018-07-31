@@ -120,4 +120,10 @@ class LendApplyController extends Controller
             ->rawColumns(['actions'])
             ->make(true);
     }
+
+    public function showRecordDialog(LendRecord $lendRecord){
+        $account = $lendRecord->account;
+
+        return view('admin.trade.showRecordModal', compact('lendRecord', 'account'));
+    }
 }

@@ -56,23 +56,28 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
         Route::get('{user}/restore', 'UsersController@getRestore')->name('restore.user');
         Route::post('passwordreset', 'UsersController@passwordreset')->name('passwordreset');
 
-        Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
-        Route::get('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
-        Route::post('addAccount', 'AccountController@verify')->name('account.addAccount');
-        Route::get('{user}/accountData', 'AccountController@accountData')->name('account.data');
+
     });
     Route::resource('users', 'UsersController');
     Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('users.deleted_users');
 
-    Route::group([ 'prefix' => 'account'], function () {
-        Route::get('{account}/confirm-delete', 'AccountController@getModalDelete')->name('account.confirm-delete');
-        Route::get('{account}/delete', 'AccountController@destroy')->name('account.delete');
-    });
 
     # Lock screen
     Route::get('{id}/lockscreen', 'UsersController@lockscreen')->name('lockscreen');
     Route::post('{id}/lockscreen', 'UsersController@postLockscreen')->name('post-lockscreen');
 });
+
+Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
+    Route::group([ 'prefix' => 'account'], function () {
+        Route::get('/', 'AccountController@index')->name('account.index');
+        Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
+        Route::post('addAccount', 'AccountController@verify')->name('account.addAccount');
+        Route::get('{user}/accountData', 'AccountController@accountData')->name('account.data');
+        Route::get('{account}/confirm-delete', 'AccountController@getAccountDelete')->name('account.confirm-delete');
+        Route::get('{account}/delete', 'AccountController@destroy')->name('account.delete');
+    });
+});
+
 
 #tradeQuery  (index)
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
@@ -80,6 +85,7 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin',
     Route::post('data', 'AuthcodeController@data')->name('authcode.data');
 });
 
+#lending
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
     Route::get('showLending', 'LendingController@index')->name('showLending.index');
     Route::post('showLending/getInfo', 'LendingController@getInfo')->name('showLending.getInfo');
@@ -90,9 +96,10 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
 #lendApply
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'lendApply'], 'as' => 'admin.'], function () {
     Route::get('lendApply', 'LendApplyController@index')->name('lendApply.index');
-    Route::post('lendApply/getLendInfo', 'LendApplyController@getLendInfo')->name('lendApply.getLendInfo');
     Route::post('lendApply/apply', 'LendApplyController@apply')->name('lendApply.apply');
     Route::post('lendApply/data', 'LendApplyController@data')->name('lendApply.data');
+    Route::post('lendApply/getLendInfo', 'LendApplyController@getLendInfo')->name('lendApply.getLendInfo');
+    Route::get('lendApply/showRecord/{lendRecord}', 'LendApplyController@showRecordDialog')->name('lendManage.showRecord');
     Route::get('lendApply/showRecord/{lendRecord}', 'LendApplyController@showRecordDialog')->name('lendApply.showRecord');
 });
 

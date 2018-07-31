@@ -144,13 +144,6 @@
                                                             {!! $errors->first('group', '<span class="help-block">:message</span>') !!}>
                                                 </div>
 
-                                                {{--<div class="form-group">--}}
-                                                    {{--<label for="activate" class="col-sm-2 control-label">@lang('users/EditProfile/form.activate')</label>--}}
-                                                    {{--<div class="col-sm-10">--}}
-                                                        {{--<input id="activate" name="activate" type="checkbox" class="pos-rel p-l-30 custom-checkbox" value="1" @if($status) checked="checked" @endif  >--}}
-                                                        {{--<span>@lang('users/EditProfile/form.activate_message')</span>--}}
-                                                    {{--</div>--}}
-                                                {{--</div>--}}
                                             </div>
 
                                             <ul class="pager wizard">

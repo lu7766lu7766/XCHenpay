@@ -61,6 +61,10 @@
     <script>
 $(function() {
     var table = $('#table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{!! route('admin.activity_log.data') !!}',
+        order: [[2, 'desc']],
         language: {
             search: "@lang('dataTable.search')",
             lengthMenu: "@lang('dataTable.lengthMenu')",
@@ -74,9 +78,6 @@ $(function() {
             },
             processing: "@lang('dataTable.processing')"
         },
-        processing: true,
-        serverSide: true,
-        ajax: '{!! route('admin.activity_log.data') !!}',
         columns: [
             { data: 'log_name', name: 'log_name', width: '25%'},
             { data: 'description', name: 'description', width: '50%' },

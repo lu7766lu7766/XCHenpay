@@ -16,15 +16,16 @@ class AdminSeeder extends DatabaseSeeder {
 		$admin = Sentinel::registerAndActivate(array(
 			'email'       => 'admin@admin.com',
 			'password'    => "admin",
-//			'first_name'  => 'Admin',
-//			'last_name'   => 'Wang',
 		));
+
+        $ser = Sentinel::registerAndActivate(array(
+            'email'       => 'ser@ser.com',
+            'password'    => "ser",
+        ));
 
         $fan = Sentinel::registerAndActivate(array(
             'email'       => 'fan@fan.com',
             'password'    => "fan",
-//            'first_name'  => 'Fan',
-//            'last_name'   => 'Liu',
         ));
 
         $testUser = Sentinel::registerAndActivate(array(
@@ -68,6 +69,8 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.passwordreset' => false,
                 'users.dataSwitch' => true,
 
+                'users.account'  => false,
+
                 'showLending' => false,
                 'lendApply' => true,
                 'lendManage' => false,
@@ -93,6 +96,8 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.passwordreset' => false,
                 'users.dataSwitch' => true,
 
+                'users.account'  => false,
+
                 'showLending' => false,
                 'lendApply' => false,
                 'lendManage' => true,
@@ -116,6 +121,7 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.getDeletedUsers' => false,
                 'users.getRestore' => false,
                 'users.passwordreset' => false,
+                'users.account'  => true,
 
                 'showLending' => true,
                 'lendApply' => false,
@@ -125,6 +131,7 @@ class AdminSeeder extends DatabaseSeeder {
 
 
 		$admin->roles()->attach($adminRole);
+        $ser->roles()->attach($ServiceRole);
         $fan->roles()->attach($fanRole);
         $testUser->roles()->attach($userRole);
 

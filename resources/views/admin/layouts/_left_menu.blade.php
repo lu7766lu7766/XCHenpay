@@ -9,7 +9,7 @@
     </li>
 
     {{--#User--}}
-    <li {!! (Request::is('admin/users') || Request::is('admin/users/create') || Request::is('admin/user_profile') || Request::is('admin/users/*') || Request::is('admin/deleted_users') ? 'class="active"' : '') !!}>
+    <li {!! (Request::is('admin/users') || Request::is('admin/account') || Request::is('admin/users/create') || Request::is('admin/user_profile') || Request::is('admin/users/*') || Request::is('admin/deleted_users') ? 'class="active"' : '') !!}>
         <a href="#">
             <i class="livicon" data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
@@ -24,6 +24,15 @@
                     {{ trans('users/title.viewProfile') }}
                 </a>
             </li>
+
+            @if(Sentinel::getUser()->hasAccess('users.account') || Sentinel::getUser()->hasAccess('users'))
+                <li {!! (Request::is('admin/account') ? 'class="active" id="active"' : '') !!}>
+                    <a href="{{ URL::to('admin/account') }}">
+                        <i class="fa fa-angle-double-right"></i>
+                        {{ trans('users/title.account') }}
+                    </a>
+                </li>
+            @endif
 
             @if(Sentinel::getUser()->hasAccess('users.index') || Sentinel::getUser()->hasAccess('users'))
                 <li {!! (Request::is('admin/users') ? 'class="active" id="active"' : '') !!}>

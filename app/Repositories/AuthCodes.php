@@ -65,7 +65,7 @@ class AuthCodes
     }
 
     public function getMoneyRecord(User $user){
-        $authCodes = $user->tradeLogs;
+        $authCodes = $user->tradeLogs()->where('pay_state', '=', $this::allDone_state)->get();
         $lendRecords = $user->lendRecords;// == $user->accounts()->with('lendRecords')->get()->pluck('lendRecords');
         $data = array();
 

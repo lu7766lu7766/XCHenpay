@@ -126,9 +126,14 @@
                                 <span class="input-group-addon">
                                     <i class="livicon" data-name="piggybank" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                 </span>
-                                <input id="money" name="money" type="text" class="form-control"></div>
+                                <input id="money" name="money" type="text" class="form-control">
+                            </div>
+                                <p class="text-warning">@lang('Trade/LendApply/form.lendMoney')最少填入1000</p>
                         </div>
                     </div>
+
+
+
                     <!-- Account input-->
                     <div class="form-group">
                         <label class="col-md-2 control-label" for="account">@lang('Trade/LendApply/form.lendAccount') *</label>
@@ -236,6 +241,11 @@
                         integer: {
                             message: '@lang('Trade/LendApply/form.lendMoney')必须为整数字'
                         }
+                        {{--greaterThan: {--}}
+                            {{--message: '@lang('Trade/LendApply/form.lendMoney')最少填入1000',--}}
+                            {{--inclusive: true,--}}
+                            {{--min: 1000--}}
+                        {{--}--}}
                         {{--lessThan: {     //todo 一直沒有過這裡--}}
                             {{--max: 10,--}}
                             {{--message: '@lang('Trade/LendApply/form.lendMoney')必需少于@lang('Trade/LendApply/form.totalIncome')'--}}
@@ -335,6 +345,11 @@
 
         $(document).ready(function () {
             $('#lendApply').click(function (e){
+                if($('#money').val() < 1000){
+                    alert('@lang('Trade/LendApply/form.lendMoney')最少填入1000');
+                    return;
+                }
+
                 if($('#money').val() > Number($('#td_totalIncome').text())){
                     alert("@lang('Trade/LendApply/form.lendMoney')必需小于@lang('Trade/LendApply/form.totalIncome')");
                     return;
@@ -355,8 +370,6 @@
                         account: $('#account_selections').val(),
                         description: $('#description').val()
                     };
-
-                    console.log(postData);
 
                     $.ajax({
                         url: "{{ route('admin.lendApply.apply') }}",
@@ -383,6 +396,7 @@
                         alert("成功申请下发，详见下方下发列表");
                         $('#description').val('');
                         $('#money').val('');
+                        $validator.resetForm();
 
                         //refresh 商戶資料
                         var data = {id: $("#company_selection :selected").val()};
