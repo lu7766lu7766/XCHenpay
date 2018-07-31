@@ -15,7 +15,6 @@
     <link href="{{ asset('assets/css/pages/transitions.css') }}" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css"
           href="{{ asset('assets/vendors/daterangepicker/css/daterangepicker.css') }}"/>
-    <link href="{{ asset('assets/vendors/jquery-datatables-checkboxes/css/dataTables.checkboxes.css') }}" rel="stylesheet"/>
 
 @stop
 

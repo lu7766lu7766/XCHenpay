@@ -119,16 +119,37 @@
     <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}" ></script>
     <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
 
-{{--    <script src="{{ asset('assets/vendors/clockface/js/clockface.js') }}" type="text/javascript"></script>--}}
-{{--    <script src="{{ asset('assets/vendors/jasny-bootstrap/js/jasny-bootstrap.js') }}" type="text/javascript"></script>--}}
-{{--    <script src="{{ asset('assets/js/pages/datepicker.js') }}" type="text/javascript"></script>--}}
     <script>
         $("#daterange1").daterangepicker({
             locale: {
                 startDate: moment(),
                 endDate: moment(),
                 format: 'YYYY/MM/DD',
-
+                applyLabel: '@lang('dateRangePicker.filter')',
+                cancelLabel: '@lang('dateRangePicker.cancel')',
+                daysOfWeek: [
+                    '@lang('dateRangePicker.SUN')',
+                    '@lang('dateRangePicker.MON')',
+                    '@lang('dateRangePicker.TUE')',
+                    '@lang('dateRangePicker.WED')',
+                    '@lang('dateRangePicker.THU')',
+                    '@lang('dateRangePicker.FRI')',
+                    '@lang('dateRangePicker.SAT')'
+                ],
+                monthNames: [
+                    '@lang('dateRangePicker.JAN')',
+                    '@lang('dateRangePicker.FEB')',
+                    '@lang('dateRangePicker.MAR')',
+                    '@lang('dateRangePicker.APR')',
+                    '@lang('dateRangePicker.MAY')',
+                    '@lang('dateRangePicker.JUN')',
+                    '@lang('dateRangePicker.JUL')',
+                    '@lang('dateRangePicker.AUG')',
+                    '@lang('dateRangePicker.SEP')',
+                    '@lang('dateRangePicker.OCT')',
+                    '@lang('dateRangePicker.NOV')',
+                    '@lang('dateRangePicker.DEC')'
+                ]
             }
         });
 
