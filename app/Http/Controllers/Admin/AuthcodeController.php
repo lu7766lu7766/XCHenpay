@@ -67,7 +67,8 @@ class AuthcodeController extends Controller
                 $editLink = '<a href='. route('admin.authcode.editFeeInfo', ['payment' => $payment->id]) .' data-toggle="modal" data-target="#edit_FeeInfo"><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="编辑通道"></i></a>';
                 $action = $infoLink;
 
-                if(1)
+                $user = Sentinel::getUser();
+                if( $user->hasAccess('logQuery') || ($user->hasAccess('logQuery.editFeeInfo') && $user->hasAccess('logQuery.updateFeeInfo')))
                     $action .= $editLink;
 
                 return $action;

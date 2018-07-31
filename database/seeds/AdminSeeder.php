@@ -41,6 +41,7 @@ class AdminSeeder extends DatabaseSeeder {
 			'name' => 'Admin',
 			'slug' => 'admin',
 			'permissions' => array(
+                'logQuery' => true,
                 'users' => true,
                 'lendApply' => true,
                 'lendManage' => true,

@@ -62,5 +62,7 @@ class Kernel extends HttpKernel
 	    'users' => \App\Http\Middleware\usersPermission::class,
         'lendApply' => \App\Http\Middleware\lendApplyPermission::class,
         'lendManage' => \App\Http\Middleware\lendManagePermission::class,
+        'account' => \App\Http\Middleware\accountPermission::class,
+        'tradeLog' => \App\Http\Middleware\tradeLogPermission::class,
     ];
 }

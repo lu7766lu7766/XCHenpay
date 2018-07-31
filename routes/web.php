@@ -67,7 +67,8 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
     Route::post('{id}/lockscreen', 'UsersController@postLockscreen')->name('post-lockscreen');
 });
 
-Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
+#Account
+Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'account'], 'as' => 'admin.'], function () {
     Route::group([ 'prefix' => 'account'], function () {
         Route::get('/', 'AccountController@index')->name('account.index');
         Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
@@ -80,7 +81,7 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
 
 
 #tradeQuery  (index)
-Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'tradeLog'], 'as' => 'admin.'], function () {
     Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
     Route::post('data', 'AuthcodeController@data')->name('authcode.data');
     Route::get('logQuery/feeData', 'AuthcodeController@feeData')->name('authcode.feeData');
@@ -103,7 +104,6 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
     Route::post('lendApply/apply', 'LendApplyController@apply')->name('lendApply.apply');
     Route::post('lendApply/data', 'LendApplyController@data')->name('lendApply.data');
     Route::post('lendApply/getLendInfo', 'LendApplyController@getLendInfo')->name('lendApply.getLendInfo');
-    Route::get('lendApply/showRecord/{lendRecord}', 'LendApplyController@showRecordDialog')->name('lendManage.showRecord');
     Route::get('lendApply/showRecord/{lendRecord}', 'LendApplyController@showRecordDialog')->name('lendApply.showRecord');
 });
 

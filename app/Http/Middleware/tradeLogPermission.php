@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Sentinel;
 
-class accountPermission
+class tradeLogPermission
 {
     /**
      * Handle an incoming request.
@@ -17,6 +17,10 @@ class accountPermission
     public function handle($request, Closure $next)
     {
         $openSource = array(
+            'index',
+            'data',
+            'feeData',
+            'showFeeInfo',
         );
         $protectOthers = array(
         );
@@ -27,19 +31,17 @@ class accountPermission
         if(in_array($method, $openSource))
             return $next($request);
 
-        if($user->hasAccess('users'))
+        if($user->hasAccess('logQuery'))
             return $next($request);
 
         if(in_array($method, $protectOthers) && $user->id == $request->route()->user->id)
             return $next($request);
 
-        if ($user->hasAccess('users.'.$method))
-            return $next($request);
-
-        if ($user->hasAccess('users.account'))
+        if ($user->hasAccess('logQuery.'.$method))
             return $next($request);
 
         // Execute this code if the permission check failed
         return redirect()->route('admin.authcode.index')->with('error', "您所造访的页面不存在");
+
     }
 }
