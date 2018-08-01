@@ -326,7 +326,7 @@
                 };
 
                 $.ajax({
-                    url: "{{ route('admin.account.AddAccount') }}",
+                    url: "{{ route('admin.account.addAccount') }}",
                     type: "post",
                     dataType: 'json',
                     data: postData,
