@@ -208,7 +208,8 @@
                 paginate: {
                     "next": "@lang('dataTable.next')",
                     "previous": "@lang('dataTable.previous')"
-                }
+                },
+                processing: "@lang('dataTable.processing')"
             },
             processing: true,
             serverSide: true,

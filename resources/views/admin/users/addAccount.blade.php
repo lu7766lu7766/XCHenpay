@@ -17,10 +17,10 @@
 {{-- Page content --}}
 @section('content')
 <section class="content-header">
-    <h1>@lang('users/addAccount/title.title')</h1>
+    <h1>@lang('users/AddAccount/title.title')</h1>
     <ol class="breadcrumb">
         <i class="livicon" data-name="eye-open" data-size="14" data-color="#000"></i>
-        <li class="active">@lang('users/addAccount/title.title')</li>
+        <li class="active">@lang('users/AddAccount/title.title')</li>
     </ol>
 </section>
 
@@ -31,7 +31,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title"><i class="livicon" data-name="eye-open" data-size="16" data-loop="true"
                                            data-c="#fff" data-hc="white"></i>
-                    @lang('users/addAccount/title.account_form')
+                    @lang('users/AddAccount/title.account_form')
                 </h4>
             </div>
             <div class="panel-body">
@@ -41,7 +41,7 @@
                             <div class="form-body">
                                 <div class="form-group">
                                     <label for="inputCode" class="col-md-3 control-label">
-                                        @lang('users/addAccount/form.VerifyCode')
+                                        @lang('users/AddAccount/form.VerifyCode')
                                         <span class='require'>*</span>
                                     </label>
                                     <div class="col-md-9">
@@ -49,13 +49,13 @@
                                                         <span class="input-group-addon">
                                                             <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                         </span>
-                                            <input type="text" id="verifyCode" placeholder=@lang('users/addAccount/form.verifyCodeHolder') name="verifyCode" class="form-control"/>
+                                            <input type="text" id="verifyCode" placeholder=@lang('users/AddAccount/form.verifyCodeHolder') name="verifyCode" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputAccount" class="col-md-3 control-label">
-                                        @lang('users/addAccount/form.AccountName')
+                                        @lang('users/AddAccount/form.AccountName')
                                         <span class='require'>*</span>
                                     </label>
                                     <div class="col-md-9">
@@ -63,14 +63,14 @@
                                                     <span class="input-group-addon">
                                                         <i class="livicon" data-name="user" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                     </span>
-                                            <input type="text" id="AccountName" placeholder=@lang('users/addAccount/form.AccountName') name="AccountName" class="form-control required"/>
+                                            <input type="text" id="AccountName" placeholder=@lang('users/AddAccount/form.AccountName') name="AccountName" class="form-control required"/>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputAccount" class="col-md-3 control-label">
-                                        @lang('users/addAccount/form.Account')
+                                        @lang('users/AddAccount/form.Account')
                                         <span class='require'>*</span>
                                     </label>
                                     <div class="col-md-9">
@@ -78,14 +78,14 @@
                                                         <span class="input-group-addon">
                                                             <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                         </span>
-                                            <input type="text" id="Account" placeholder=@lang('users/addAccount/form.Account') name="Account" class="form-control"/>
+                                            <input type="text" id="Account" placeholder=@lang('users/AddAccount/form.Account') name="Account" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputAccount" class="col-md-3 control-label">
-                                        @lang('users/addAccount/form.BankName')
+                                        @lang('users/AddAccount/form.BankName')
                                         <span class='require'>*</span>
                                     </label>
                                     <div class="col-md-9">
@@ -93,14 +93,14 @@
                                                         <span class="input-group-addon">
                                                             <i class="livicon" data-name="piggybank" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                         </span>
-                                            <input type="text" id="BankName" placeholder=@lang('users/addAccount/form.BankName') name="BankName" class="form-control"/>
+                                            <input type="text" id="BankName" placeholder=@lang('users/AddAccount/form.BankName') name="BankName" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputAccount" class="col-md-3 control-label">
-                                        @lang('users/addAccount/form.BankBranchName')
+                                        @lang('users/AddAccount/form.BankBranchName')
                                         <span class='require'>*</span>
                                     </label>
                                     <div class="col-md-9">
@@ -108,15 +108,15 @@
                                                         <span class="input-group-addon">
                                                             <i class="livicon" data-name="tree" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
                                                         </span>
-                                            <input type="text" id="BankBranchName" placeholder=@lang('users/addAccount/form.BankBranchName') name="BankBranchName" class="form-control"/>
+                                            <input type="text" id="BankBranchName" placeholder=@lang('users/AddAccount/form.BankBranchName') name="BankBranchName" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-actions">
                                 <div class="col-md-offset-3 col-md-6">
-                                    <button type="button" class="btn btn-primary" id="add-Account" >@lang('users/addAccount/form.submit')</button>
-                                    <button type="button" class="btn btn-danger" id="send-VerifyCode" >@lang('users/addAccount/form.send')</button>
+                                    <button type="button" class="btn btn-primary" id="add-Account" >@lang('users/AddAccount/form.submit')</button>
+                                    <button type="button" class="btn btn-danger" id="send-VerifyCode" >@lang('users/AddAccount/form.send')</button>
                                 </div>
                             </div>
                         </form>
@@ -131,7 +131,7 @@
             <div class="panel-heading clearfix">
                 <h4 class="panel-title pull-left">
                     <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                    @lang('users/addAccount/title.account_list')
+                    @lang('users/AddAccount/title.account_list')
                 </h4>
                 <div class="pull-right">
                     <button type="button" class="btn btn-warning btn-sm" id="refreshButton" name="refreshButton">
@@ -144,13 +144,13 @@
                     <table class="table table-bordered width100" id="table">
                         <thead>
                         <tr class="filters">
-                            <th>@lang('users/addAccount/form.id')</th>
-                            <th>@lang('users/addAccount/form.AccountName')</th>
-                            <th>@lang('users/addAccount/form.Account')</th>
-                            <th>@lang('users/addAccount/form.BankName')</th>
-                            <th>@lang('users/addAccount/form.BankBranchName')</th>
-                            <th>@lang('users/addAccount/form.created_at')</th>
-                            <th>@lang('users/addAccount/form.operation')</th>
+                            <th>@lang('users/AddAccount/form.id')</th>
+                            <th>@lang('users/AddAccount/form.AccountName')</th>
+                            <th>@lang('users/AddAccount/form.Account')</th>
+                            <th>@lang('users/AddAccount/form.BankName')</th>
+                            <th>@lang('users/AddAccount/form.BankBranchName')</th>
+                            <th>@lang('users/AddAccount/form.created_at')</th>
+                            <th>@lang('users/AddAccount/form.operation')</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -190,14 +190,14 @@
             verifyCode: {
                 validators: {
                     notEmpty: {
-                        message: '@lang('users/addAccount/form.VerifyCode')是必须的'
+                        message: '@lang('users/AddAccount/form.VerifyCode')是必须的'
                     },
                     integer: {
-                        message: '@lang('users/addAccount/form.VerifyCode')必须为数字'
+                        message: '@lang('users/AddAccount/form.VerifyCode')必须为数字'
                     },
                     stringLength: {
                         max: 6,
-                        message: '@lang('users/addAccount/form.VerifyCode')必少于6个数字'
+                        message: '@lang('users/AddAccount/form.VerifyCode')必少于6个数字'
                     }
                 },
                 required: true
@@ -205,7 +205,7 @@
             AccountName: {
                 validators: {
                     notEmpty: {
-                        message: '@lang('users/addAccount/form.AccountName')是必须的'
+                        message: '@lang('users/AddAccount/form.AccountName')是必须的'
                     }
                 },
                 required: true
@@ -213,10 +213,10 @@
             Account: {
                 validators: {
                     notEmpty: {
-                        message: '@lang('users/addAccount/form.Account')是必须的'
+                        message: '@lang('users/AddAccount/form.Account')是必须的'
                     },
                     integer: {
-                        message: '@lang('users/addAccount/form.Account')必须为数字'
+                        message: '@lang('users/AddAccount/form.Account')必须为数字'
                     }
                 },
                 required: true
@@ -224,7 +224,7 @@
             BankName: {
                 validators: {
                     notEmpty: {
-                        message: '@lang('users/addAccount/form.BankName')是必须的'
+                        message: '@lang('users/AddAccount/form.BankName')是必须的'
                     }
                 },
                 required: true
@@ -232,7 +232,7 @@
             BankBranchName: {
                 validators: {
                     notEmpty: {
-                        message: '@lang('users/addAccount/form.BankBranchName')是必须的'
+                        message: '@lang('users/AddAccount/form.BankBranchName')是必须的'
                     }
                 },
                 required: true
@@ -326,7 +326,7 @@
                 };
 
                 $.ajax({
-                    url: "{{ route('admin.account.addAccount') }}",
+                    url: "{{ route('admin.account.AddAccount') }}",
                     type: "post",
                     dataType: 'json',
                     data: postData,
