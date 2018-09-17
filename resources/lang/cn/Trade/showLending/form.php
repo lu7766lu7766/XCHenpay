@@ -7,6 +7,7 @@
 return array(
     'totalMoney'    => '总金额',
     'totalFee'      => '总手续费',
+    'totalLending'  => '申请中金额',
     'totalLended'   => '已提现金額',
     'totalIncome'   => '可提現金額',
 

@@ -23,10 +23,11 @@
 
             <div class="form-group striped-col">
                 <label class="col-md-3 control-label">手续费率</label>
-                <div class="col-sm-9">
+                <div class="col-sm-4 form-group input-group">
                     <input id="fee" name="password_confirm" type="text"
                            placeholder="请输入手续费率" class="form-control"
                            value="{!! old('fee', $payment->fee) !!}"/>
+                    <span class="input-group-addon">%</span>
                 </div>
             </div>
 
@@ -42,7 +43,7 @@
 
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" style="">取消</button>
     <button type="button" class="btn btn-primary" id="edit_btn" data-dismiss="modal">修改</button>
 </div>
 
@@ -52,8 +53,6 @@
             id: '{{ $payment->id }}',
             fee: $('#fee').val()
         };
-
-        console.log(data);
 
         $.ajax({
             url: "{{ route('admin.authcode.updateFeeInfo') }}",

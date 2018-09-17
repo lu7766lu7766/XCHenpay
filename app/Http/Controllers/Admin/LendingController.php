@@ -29,9 +29,9 @@ class LendingController extends Controller
 
     public function data(LendRecords $lendRecords)
     {
-        $user = Sentinel::getUser();
+        $user_id = Sentinel::getUser()->id;
 
-        $lendRecords = $lendRecords->getUserRecords($user, request()->startDate, request()->endDate);
+        $lendRecords = $lendRecords->getUserRecords($user_id, request()->startDate, request()->endDate);
 
         return $this->makeDataTable($lendRecords);
     }

@@ -27,15 +27,31 @@ class AccountController extends Controller
 
     public function index()
     {
+        $companies = User::All()->where('company_service_id', '<>', null);
+
+        return view('admin.users.accountList', compact('companies'));
+    }
+
+    public function createAccount()
+    {
         $user = Sentinel::getUser();
 
         return view('admin.users.addAccount', compact('user'));
     }
 
-    public function accountData(User $user)
+    public function accountData()
     {
+        if(!isset(request()->id) || request()->id == null)
+            return $this->makeAccountTable([]);;
+
+        $user = User::find(request()->id);
         $accounts = $user->accounts;
 
+        return $this->makeAccountTable($accounts);
+    }
+
+    private function makeAccountTable($accounts)
+    {
         return DataTables::of($accounts)
             ->editColumn('created_at',function(Account $account) {
                 return $account->created_at->diffForHumans();
@@ -116,7 +132,7 @@ class AccountController extends Controller
         }
     }
 
-    public function verify(Request $request, VerifyCodes $verifyCodes)
+    public function addAccount(Request $request, VerifyCodes $verifyCodes)
     {
         $messages = [
             'required' => ':attribute 是必填资讯.',

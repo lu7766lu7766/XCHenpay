@@ -44,7 +44,7 @@
                     <li>
                         <a href="#tab2" data-toggle="tab">
                             <i class="livicon" data-name="cellphone" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                            @lang('users/ViewProfile/title.contact_password')</a>
+                            @lang('users/ViewProfile/title.contact_information')</a>
                     </li>
 
                     <li>
@@ -145,6 +145,24 @@
                             <div class="col-md-12 pd-top">
                                 <form class="form-horizontal" id="commentForm">
                                     <div class="form-body">
+
+                                        <div class="form-group">
+                                            {{ csrf_field() }}
+                                            <label for="inputoldpassword" class="col-md-3 control-label">
+                                                @lang('users/ViewProfile/form.oldPassword')
+                                                <span class='require'>*</span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                        <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                    </span>
+                                                    <input type="password" id="oldPassword" placeholder=@lang('users/ViewProfile/form.oldPasswordHolder') name="oldPassword"
+                                                           class="form-control"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             {{ csrf_field() }}
                                             <label for="inputpassword" class="col-md-3 control-label">
@@ -153,14 +171,15 @@
                                             </label>
                                             <div class="col-md-9">
                                                 <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                                                            </span>
+                                                    <span class="input-group-addon">
+                                                        <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                    </span>
                                                     <input type="password" id="password" placeholder=@lang('users/ViewProfile/form.PasswordHolder') name="password"
                                                            class="form-control"/>
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="inputnumber" class="col-md-3 control-label">
                                                 @lang('users/ViewProfile/form.confirmPassword')
@@ -168,9 +187,9 @@
                                             </label>
                                             <div class="col-md-9">
                                                 <div class="input-group">
-                                                            <span class="input-group-addon">
-                                                                <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
-                                                            </span>
+                                                    <span class="input-group-addon">
+                                                        <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                    </span>
                                                     <input type="password" id="password_confirm" placeholder=@lang('users/ViewProfile/form.confirmPasswordHolder') name="password_confirm"
                                                            class="form-control"/>
                                                 </div>
@@ -205,6 +224,13 @@
     <script type="text/javascript">
         $("#commentForm").bootstrapValidator({
             fields: {
+                oldPassword: {
+                    validators: {
+                        notEmpty: {
+                            message: '@lang('users/ViewProfile/form.oldPassword')是必须的'
+                        },
+                    }
+                },
                 password: {
                     validators: {
                         notEmpty: {
@@ -236,7 +262,7 @@
                 console.log($('#password').val());
 
                 if ($validator.isValid()) {
-                    var sendData =  '_token=' + $("input[name='_token']").val() +'&password=' + $('#password').val() +'&id=' + {{ $user->id }};
+                    var sendData =  '_token=' + $("input[name='_token']").val() + '&oldPassword=' + $('#oldPassword').val() +'&password=' + $('#password').val() +'&id=' + {{ $user->id }};
                     var path = "passwordreset";
                     $.ajax({
                         url: path,
@@ -246,8 +272,13 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
                         },
                         success: function (data) {
-                            $('#password, #password_confirm').val('');
+                            $('#oldPassword, #password, #password_confirm').val('');
                             $validator.resetForm();
+
+                            if(data.Result == 'error'){
+                                alert(data.Message);
+                                return;
+                            }
                             alert('密码已成功设定');
                         },
                         error: function (xhr, ajaxOptions, thrownError) {

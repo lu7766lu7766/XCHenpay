@@ -23,9 +23,7 @@ class usersPermission
             'postLockscreen'
         );
         $protectOthers = array(
-            'show',
-            'edit',
-            'update',
+            'show'
         );
 
         $method = $request->route()->getActionMethod();

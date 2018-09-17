@@ -13,9 +13,11 @@ return array(
     'email'      => '电子邮箱',
     'QQ_id'    => 'QQ号',
 
+    'oldPassword'	   => '旧密码',
     'newPassword'	   => '新密码',
     'confirmPassword'  => '密码确认',
 
+    'oldPasswordHolder'		=> '请输入旧密码',
     'PasswordHolder'		=> '请输入密码',
     'confirmPasswordHolder'	=> '请确认密码',
 

@@ -9,7 +9,7 @@
     </li>
 
     {{--#User--}}
-    <li {!! (Request::is('admin/users') || Request::is('admin/account') || Request::is('admin/users/create') || Request::is('admin/user_profile') || Request::is('admin/users/*') || Request::is('admin/deleted_users') ? 'class="active"' : '') !!}>
+    <li {!! (Request::is('admin/users') || Request::is('admin/account') || Request::is('admin/account/createAccount') || Request::is('admin/users/create') || Request::is('admin/user_profile') || Request::is('admin/users/*') || Request::is('admin/deleted_users') ? 'class="active"' : '') !!}>
         <a href="#">
             <i class="livicon" data-name="user" data-size="18" data-c="#6CC66C" data-hc="#6CC66C"
                data-loop="true"></i>
@@ -25,11 +25,20 @@
                 </a>
             </li>
 
-            @if(Sentinel::getUser()->hasAccess('users.account') || Sentinel::getUser()->hasAccess('users'))
+            @if(Sentinel::getUser()->hasAccess('account.index') || Sentinel::getUser()->hasAccess('account'))
                 <li {!! (Request::is('admin/account') ? 'class="active" id="active"' : '') !!}>
                     <a href="{{ URL::to('admin/account') }}">
                         <i class="fa fa-angle-double-right"></i>
-                        {{ trans('users/title.account') }}
+                        {{ trans('users/title.accountList') }}
+                    </a>
+                </li>
+            @endif
+
+            @if(Sentinel::getUser()->hasAccess('account.createAccount') || Sentinel::getUser()->hasAccess('account'))
+                <li {!! (Request::is('admin/account/createAccount') ? 'class="active" id="active"' : '') !!}>
+                    <a href="{{ URL::to('admin/account/createAccount') }}">
+                        <i class="fa fa-angle-double-right"></i>
+                        {{ trans('users/title.createAccount') }}
                     </a>
                 </li>
             @endif
@@ -116,11 +125,41 @@
             {{ trans('ActivityLog/title.title') }}
         </a>
     </li>
+
+    @if(Sentinel::getUser()->hasAccess('permission'))
+        <li>
+            <a href="#">
+                <i class="livicon" data-name="gear" data-c="#e9573f" data-hc="#e9573f" data-size="18"
+                   data-loop="true"></i>
+                <span class="title">
+                    权限管理
+                </span>
+                <span class="fa arrow"></span>
+            </a>
+
+            <ul class="sub-menu">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-angle-double-right"></i>
+                        权限群组
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.permission.switch') }}">
+                        <i class="fa fa-angle-double-right"></i>
+                        权限设置
+                    </a>
+                </li>
+            </ul>
+        </li>
+    @endif
+
     @include('admin/layouts/menu')
 
     {{--#Trade Query(index)--}}
     <li>
-        <a href="http://103.242.110.1/3rdPartyPay_API_%E6%96%87%E6%8C%A1.pdf">
+        <a href="https://doc.166ok.com/3rdPartyPay_API_%E6%96%87%E6%8C%A1.pdf">
             <i class="livicon" data-name="doc-portrait" data-size="18" data-c="#67C5DF" data-hc="#67C5DF"
                data-loop="true"></i>
             <span class="title">{{ trans('general.document') }}</span>

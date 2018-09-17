@@ -130,7 +130,7 @@
                         <li>
                             <a href="{{ route('admin.authcode.index') }}">
                                 <i class="livicon" data-name="table" title="Dashboard" data-loop="true"
-                                   data-color="#e9573f" data-hc="#e9573f" data-s="25"></i>
+                                   data-color="#e9573f" data-hc="#\" data-s="25"></i>
                             </a>
                         </li>
                         <li>

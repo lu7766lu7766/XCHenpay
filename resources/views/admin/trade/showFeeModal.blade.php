@@ -10,7 +10,7 @@
             <div class="form-group striped-col">
                 <label class="col-md-3 control-label">API编号</label>
                 <div class="col-md-9">
-                    <p class="form-control-static">{{ $payment->ipay6_id }}</p>
+                    <p class="form-control-static">{{ $payment->i6pay_id }}</p>
                 </div>
             </div>
 

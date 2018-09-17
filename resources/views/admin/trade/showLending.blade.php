@@ -65,6 +65,14 @@
                         </div>
 
                         <div class="form-group striped-col">
+                            <label class="col-md-2 control-label">@lang('Trade/showLending/form.totalLending')</label>
+                            <div class="col-md-9">
+                                <p class="form-control-static" id="td_totalLending">
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group striped-col">
                             <label class="col-md-2 control-label">@lang('Trade/showLending/form.totalLended')</label>
                             <div class="col-md-9">
                                 <p class="form-control-static" id="td_totalLended">
@@ -254,6 +262,7 @@
             var complete = function (data) {
                 document.getElementById("td_totalMoney").innerHTML = data.totalMoney;
                 document.getElementById("td_totalFee").innerHTML = data.totalFee;
+                document.getElementById("td_totalLending").innerHTML = data.totalLending;
                 document.getElementById("td_totalLended").innerHTML = data.totalLended;
                 document.getElementById("td_totalIncome").innerHTML = data.totalIncome;
 

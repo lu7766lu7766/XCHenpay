@@ -330,7 +330,12 @@ class JoshController extends Controller {
 
     public function activityLogData()
     {
-        $logs = Activity::get(['causer_id', 'log_name', 'description','created_at']);
+        $user = Sentinel::getUser();
+        $logs = Activity::query();
+        if (!$user->hasAccess('activity_log')) {
+            $logs->where('causer_id', $user->id);
+        }
+        $logs->get(['causer_id', 'log_name', 'description','created_at']);
         return DataTables::of($logs)
             ->make(true);
     }

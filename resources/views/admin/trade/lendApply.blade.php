@@ -95,6 +95,14 @@
                         </div>
 
                         <div class="form-group striped-col">
+                            <label class="col-md-2 control-label">@lang('Trade/LendApply/form.totalLending')</label>
+                            <div class="col-md-9">
+                                <p class="form-control-static" id="td_totalLending">
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="form-group striped-col">
                             <label class="col-md-2 control-label">@lang('Trade/LendApply/form.totalLended')</label>
                             <div class="col-md-9">
                                 <p class="form-control-static" id="td_totalLended">
@@ -161,6 +169,7 @@
                     <!-- Form actions -->
                     <div class="form-position">
                         <div class="col-md-12 text-center">
+                            <p class="text-danger">申请金额将自动加上 0.02% 的申请手续费</p>
                             <button id="lendApply" type="button" class="btn btn-responsive btn-primary btn-sm">@lang('Trade/LendApply/form.lendApply')</button>
                         </div>
                     </div>
@@ -458,12 +467,13 @@
 
                 document.getElementById("td_totalMoney").innerHTML = data.totalMoney;
                 document.getElementById("td_totalFee").innerHTML = data.totalFee;
+                document.getElementById("td_totalLending").innerHTML = data.totalLending;
                 document.getElementById("td_totalLended").innerHTML = data.totalLended;
                 document.getElementById("td_totalIncome").innerHTML = data.totalIncome;
 
                 document.getElementById("account_selections").innerHTML = '<option>' + '@lang('Trade/LendApply/form.pleaseSelect')' + '</option>';
                 data.accounts.forEach(function(account, index){
-                    document.getElementById("account_selections").innerHTML += '<option value=' + account.id + '>' + account.account + '</option>';
+                    document.getElementById("account_selections").innerHTML += '<option value=' + account.id + '>' + account.name + '/' + account.account + '/' + account.bank_name + '</option>';
                 });
 
                 table.ajax.reload();

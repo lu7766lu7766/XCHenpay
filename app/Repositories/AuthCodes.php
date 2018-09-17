@@ -4,13 +4,16 @@ namespace App\Repositories;
 
 use App\Authcode;
 use App\User;
+use function trans;
 use Yajra\DataTables\DataTables;
+use Sentinel;
 
 class AuthCodes
 {
+    const success_state = 2;
     const allDone_state = 3;
 
-    const lended_state = 5;
+    const pending_state = 5;
     const accept_state = 6;
     const deny_state = 7;
 
@@ -20,9 +23,11 @@ class AuthCodes
 
     private $getCol = array(
         'id',
+        'pay_state',
         'pay_summary',
         'trade_seq',
         'company_service_id',
+        'trade_service_id',
         'amount',
         'currency_id',
         'payment_type',
@@ -31,25 +36,23 @@ class AuthCodes
         'pay_start_time',
         'pay_end_time');
 
-    public function companyData($company_service_id, $startDate, $endDate)
+    public function companyData(User $user, $startDate, $endDate, $payState = null)
     {
-        return Authcode::where('company_service_id', '=', $company_service_id)
-            ->whereBetween('created_at',array($startDate, $endDate))
-            ->get($this->getCol);
-    }
-
-    public function allData($startDate, $endDate)
-    {
-        return Authcode::whereBetween('created_at',array($startDate, $endDate))
-            ->get($this->getCol);
+        if (isset($payState)) {
+            return $user->tradeLogs()
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->where('pay_state', $payState)
+                ->get($this->getCol);
+        } else {
+            return $user->tradeLogs()
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->get($this->getCol);
+        }
     }
 
     public function makeSimpleDatatable($authCodes)
     {
         return DataTables::of($authCodes)
-            ->addColumn('short_trade_seq',function($authCode){
-                return substr($authCode->trade_seq, 0, 10) . '...';
-            })
             ->addColumn('payment_name',function($authCode){
                 return $authCode->i6payment->name;
             })
@@ -59,34 +62,69 @@ class AuthCodes
             ->addColumn('company_name',function($authCode){
                 return $authCode->company->company_name;
             })
+            ->addColumn('actions',function($authCode) {
+                $callBackLink = '<a href="javascript: void(0);" data-callUrl="' . $authCode->id . '" class="notifyBtn"><i class="livicon" data-name="rocket" data-size="18" data-loop="true" data-c="#e9573f" data-hc="#e9573f" title='. trans('Trade/LogQuery/form.callBackTitle') . '></i></a>';
+                $infoLink = '<a href='. route('admin.authcode.showInfo', ['authcode' => $authCode->id]) .' data-toggle="modal" data-target="#show_Info"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title='. trans('Trade/LogQuery/form.showModalTitle') . '></i></a>';
+                $editLink = '<a href='. route('admin.authcode.showState', ['authcode' => $authCode->id]) .' data-toggle="modal" data-target="#stateEditModal"><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="订单状态修改"></i></a>';
+
+                $action = $infoLink;
+
+                $user = Sentinel::getUser();
+                if($user->hasAccess('logQuery'))
+                    $action .= $editLink;
+
+                if($authCode->pay_state == $this::success_state)
+                    $action .= $callBackLink;
+
+                return $action;
+            })
+            ->rawColumns(['actions'])
             ->make(true);
     }
 
     public function getMoneyRecord(User $user){
-        $authCodes = $user->tradeLogs()->where('pay_state', '=', $this::allDone_state)->get();
-        $lendRecords = $user->lendRecords;// == $user->accounts()->with('lendRecords')->get()->pluck('lendRecords');
-        $data = array();
+        $filterState = [
+            $this::allDone_state,
+            $this::accept_state,
+            $this::deny_state
+        ];
 
-        if($authCodes == null)
+        $authCodes = $user->tradeLogs()
+            ->whereIn('pay_state', $filterState)
+            ->get();
+        if(!$authCodes)
             return $data['Result'] = 'error';
 
+        $lendRecords = $user->lendRecords;
+
+        $totalLending = 0;
         $totalLended = 0;
         $totalMoney = 0;
         $totalFee = 0;
 
-        foreach($lendRecords as $lendRecord)
-            $totalLended += $lendRecord->amount;
+        $lendKeys = $lendRecords->groupBy('lend_state');
 
-        foreach($authCodes as $authCode)
-        {
+        $pendingRecords = $lendKeys->get(0);
+        if($pendingRecords)
+            $totalLending = $pendingRecords->sum('amount');
+
+        $acceptRecords = $lendKeys->get(1);
+        if($acceptRecords) {
+            $totalLended = $acceptRecords->sum('amount');
+        }
+
+        foreach($authCodes as $authCode) {
             $totalMoney += $authCode->amount;
             $totalFee += $authCode->fee;
         }
 
-        $data += ['totalMoney' => number_format($totalMoney,3,".",",")];
-        $data += ['totalFee' => number_format($totalFee,3,".",",")];
-        $data += ['totalLended' => number_format($totalLended,3,".",",")];
-        $data += ['totalIncome' => number_format($totalMoney-$totalFee-$totalLended,3,".",",")];
+        $data = [
+            'totalMoney'   => number_format($totalMoney,3,".",","),
+            'totalFee'     => number_format($totalFee,3,".",","),
+            'totalLending' => number_format($totalLending,3,".",","),
+            'totalLended'  => number_format($totalLended,3,".",","),
+            'totalIncome'  => number_format($totalMoney-$totalFee-$totalLending-$totalLended,3,".",","),
+        ];
 
         return $data;
     }

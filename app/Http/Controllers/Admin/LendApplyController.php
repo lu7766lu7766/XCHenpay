@@ -63,7 +63,10 @@ class LendApplyController extends Controller
 
         $data = $authCodes->getMoneyRecord($client);
 
-        if($request->amount > $data['totalIncome'])
+        $fee = $request->amount * $client->lend_fee;
+        $applyAmount = $request->amount + $fee;
+
+        if($applyAmount > filter_var($data['totalIncome'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION))
             return Response::json(array(
                 'Result' => 'error',
                 'Message'=> '申请金额超过可下发馀额，请联络客服人员'
@@ -72,7 +75,7 @@ class LendApplyController extends Controller
         $client->addLendRecord(new LendRecord([
             'record_seq' => $seq = Carbon::now('Asia/Taipei')->format('YmdHis'),
             'account_id' => $request->account,
-            'amount' => $request->amount,
+            'amount' => $applyAmount,
             'fee'    => $request->amount * $client->lend_fee,
             'lend_state' => LendRecords::APPLY_STATE,
             'lend_summary' => LendRecords::APPLY_SUMMARY,
@@ -90,9 +93,7 @@ class LendApplyController extends Controller
     public function data(LendRecords $lendRecords)
     {
         if(isset(request()->companyId)){
-            $user = User::find(request()->companyId);
-
-            $lendRecords = $lendRecords->getUserRecords($user, request()->startDate, request()->endDate);
+            $lendRecords = $lendRecords->getUserRecords(request()->companyId, request()->startDate, request()->endDate);
         }else{
             $lendRecords = [];
         }

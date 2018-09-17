@@ -50,6 +50,7 @@
                     <p>
                         <select id="company_selection" name="company_selection" class="js--animations form-control" onchange="companyFilter(this.value);">
                             <option value="">@lang('Trade/LendManage/form.company_please')</option>
+                            <option value="-1">@lang('Trade/LendManage/form.allCompanies')</option>
                             @foreach($companies as $company)
                                 <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                             @endforeach
@@ -61,7 +62,7 @@
         </div>
 
         {{--申請列表--}}
-        <div class="panel panel-primary hidden" id="hidepanel1">
+        <div class="panel panel-primary hidden" id="lendList">
             <div class="panel-heading">
                 <h4 class="panel-title"><i class="livicon" data-name="table" data-size="16" data-loop="true"
                                            data-c="#fff" data-hc="white"></i>
@@ -91,6 +92,7 @@
                         <tr class="filters">
                             {{--<th></th>--}}
                             <th>@lang('Trade/LendManage/form.lend_summary')</th>
+                            <th>@lang('Trade/LendManage/form.company_name')</th>
                             <th>@lang('Trade/LendManage/form.record_seq')</th>
                             <th>@lang('Trade/LendManage/form.account_name')</th>
                             <th>@lang('Trade/LendManage/form.account')</th>
@@ -191,6 +193,7 @@
             },
             columns: [
                 {data: 'lend_summary', name: 'lend_summary'},
+                {data: 'company_name', name: 'company_name'},
                 {data: 'record_seq', name: 'record_seq'},
                 {data: 'account_name', name: 'account_name'},
                 {data: 'account', name: 'account'},
@@ -224,40 +227,15 @@
         });
 
         function companyFilter() {
-            if($('#company_selection').val() !== ''){
-
-                var data = {
-                    id: $("#company_selection :selected").val()
-                };
-
-                $.ajax({
-                    url: "{{ route('admin.lendManage.getLendInfo') }}",
-                    type: "post",
-                    data: data,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
-                    },
-                    success: function (data) {
-                        complete(data);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert('错误，与服务器沟通失败');
-                    }
-                });
-
-                var complete = function (data) {
-                    document.getElementById("lendTitle").innerHTML = $("#company_selection :selected").text();
-
-                    table.ajax.reload();
-                    $('#hidepanel1').removeClass("hidden");
-
-                    return;
-                };
-
-            }else {
-                $('#hidepanel1').addClass("hidden");
+            if($('#company_selection').val() == '') {
+                $('#lendList').addClass("hidden");
+                return;
             }
 
+            document.getElementById("lendTitle").innerHTML = $("#company_selection :selected").text();
+
+            table.ajax.reload();
+            $('#lendList').removeClass("hidden");
         }
 
     </script>

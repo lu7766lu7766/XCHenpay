@@ -12,6 +12,7 @@ class AdminSeeder extends DatabaseSeeder {
 		DB::table('roles')->truncate();
 		DB::table('role_users')->truncate();
 		DB::table('activations')->truncate();
+        DB::table('payment_fees')->truncate();
 
 		$admin = Sentinel::registerAndActivate(array(
 			'email'       => 'admin@admin.com',
@@ -38,7 +39,7 @@ class AdminSeeder extends DatabaseSeeder {
         ));
 
         $adminRole = Sentinel::getRoleRepository()->createModel()->create([
-			'name' => 'Admin',
+			'name' => '管理者',
 			'slug' => 'admin',
 			'permissions' => array(
                 'logQuery' => true,
@@ -46,13 +47,14 @@ class AdminSeeder extends DatabaseSeeder {
                 'lendApply' => true,
                 'lendManage' => true,
                 'activity_log' => true,
+                'account' => true,
 
                 'users.dataSwitch' => true,
             ),
 		]);
 
         $ServiceRole = Sentinel::getRoleRepository()->createModel()->create([
-            'name'  => 'Customer service',
+            'name'  => '客服',
             'slug'  => 'customer_service',
             'permissions' => array(
                 'users.index' => false,
@@ -70,7 +72,13 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.passwordreset' => false,
                 'users.dataSwitch' => true,
 
-                'users.account'  => false,
+                'account.index'            => true,
+                'account.accountData'      => true,
+                'account.getAccountDelete' => true,
+                'account.destroy'          => true,
+                'account.createAccount'    => false,
+                'account.sendVerifyCode'   => false,
+                'account.addAccount'       => false,
 
                 'showLending' => false,
                 'lendApply' => true,
@@ -79,7 +87,7 @@ class AdminSeeder extends DatabaseSeeder {
         ]);
 
         $fanRole = Sentinel::getRoleRepository()->createModel()->create([
-            'name'  => 'Finance',
+            'name'  => '财务',
             'slug'  => 'finance',
             'permissions' => array(
                 'users.index' => false,
@@ -97,7 +105,13 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.passwordreset' => false,
                 'users.dataSwitch' => true,
 
-                'users.account'  => false,
+                'account.index'            => true,
+                'account.accountData'      => true,
+                'account.getAccountDelete' => true,
+                'account.destroy'          => true,
+                'account.createAccount'    => false,
+                'account.sendVerifyCode'   => false,
+                'account.addAccount'       => false,
 
                 'showLending' => false,
                 'lendApply' => false,
@@ -106,7 +120,7 @@ class AdminSeeder extends DatabaseSeeder {
         ]);
 
         $userRole = Sentinel::getRoleRepository()->createModel()->create([
-			'name'  => 'User',
+			'name'  => '商户',
 			'slug'  => 'user',
             'permissions' => array(
                 'users.index' => false,
@@ -122,7 +136,14 @@ class AdminSeeder extends DatabaseSeeder {
                 'users.getDeletedUsers' => false,
                 'users.getRestore' => false,
                 'users.passwordreset' => false,
-                'users.account'  => true,
+
+                'account.index'            => false,
+                'account.accountData'      => true,
+                'account.getAccountDelete' => true,
+                'account.destroy'          => true,
+                'account.createAccount'    => true,
+                'account.sendVerifyCode'   => true,
+                'account.addAccount'       => true,
 
                 'showLending' => true,
                 'lendApply' => false,

@@ -120,7 +120,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -249,7 +248,13 @@
             searching: false,
             paginate: false,
             info: false,
-            ajax: '{!! route('admin.account.data',['user' => $user->id]) !!}',
+            ajax: {
+                "url": "{{ route('admin.account.data') }}",
+                "type": "post",
+                "data": function (d) {
+                    d.id = '{{ $user->id }}';
+                }
+            },
             language: {
                 search: "@lang('dataTable.search')",
                 lengthMenu: "@lang('dataTable.lengthMenu')",

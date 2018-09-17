@@ -7,7 +7,8 @@
 return array(
     'title' => '商户',
     'users' => '商户列表',
-    'account' => '行卡绑定',
+    'createAccount' => '行卡绑定',
+    'accountList' => '行卡列表',
 	'addUser' => '新增商户',
 	'viewProfile' => '商户资料',
 	'deletedUsers' => '被删除的商户',

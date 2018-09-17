@@ -55,8 +55,6 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
         Route::get('{user}/confirm-delete', 'UsersController@getModalDelete')->name('users.confirm-delete');
         Route::get('{user}/restore', 'UsersController@getRestore')->name('restore.user');
         Route::post('passwordreset', 'UsersController@passwordreset')->name('passwordreset');
-
-
     });
     Route::resource('users', 'UsersController');
     Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('users.deleted_users');
@@ -71,9 +69,10 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'account'], 'as' => 'admin.'], function () {
     Route::group([ 'prefix' => 'account'], function () {
         Route::get('/', 'AccountController@index')->name('account.index');
+        Route::get('createAccount', 'AccountController@createAccount')->name('account.createAccount');
         Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
-        Route::post('addAccount', 'AccountController@verify')->name('account.addAccount');
-        Route::get('{user}/accountData', 'AccountController@accountData')->name('account.data');
+        Route::post('addAccount', 'AccountController@addAccount')->name('account.addAccount');
+        Route::post('accountData', 'AccountController@accountData')->name('account.data');
         Route::get('{account}/confirm-delete', 'AccountController@getAccountDelete')->name('account.confirm-delete');
         Route::get('{account}/delete', 'AccountController@destroy')->name('account.delete');
     });
@@ -84,10 +83,15 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin', 'tradeLog'], 'as' => 'admin.'], function () {
     Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
     Route::post('data', 'AuthcodeController@data')->name('authcode.data');
-    Route::get('logQuery/feeData', 'AuthcodeController@feeData')->name('authcode.feeData');
+    Route::get('logQuery/showInfo/{authcode}', 'AuthcodeController@showInfo')->name('authcode.showInfo');
+    Route::get('logQuery/showState/{authcode}', 'AuthcodeController@showState')->name('authcode.showState');
+    Route::post('logQuery/updateState', 'AuthcodeController@updateState')->name('authcode.stateUpdate');
+
+    Route::post('logQuery/feeData', 'AuthcodeController@feeData')->name('authcode.feeData');
     Route::get('logQuery/showFeeInfo/{payment}', 'AuthcodeController@showFeeInfo')->name('authcode.showFeeInfo');
     Route::get('logQuery/editFeeInfo/{payment}', 'AuthcodeController@editFeeInfo')->name('authcode.editFeeInfo');
     Route::post('logQuery/updateFeeInfo', 'AuthcodeController@updateFeeInfo')->name('authcode.updateFeeInfo');
+    Route::post('logQuery/callNotify', 'AuthcodeController@callNotify')->name('authcode.callNotify');
 });
 
 #lending
@@ -115,6 +119,12 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
     Route::get('lendManage/manageRecord/{lendRecord}', 'LendManageController@showManageDialog')->name('lendManage.manageRecord');
     Route::get('lendManage/showRecord/{lendRecord}', 'LendManageController@showRecordDialog')->name('lendManage.showRecord');
     Route::post('lendManage', 'LendManageController@update')->name('lendManage.Manage');
+});
+
+#permission
+Route::group(['prefix' => 'admin','namespace'=>'Admin', 'as' => 'admin.'], function () {
+    Route::get('permissionSwitch', 'PermissionController@permissionSwitch')->name('permission.switch');
+    Route::post('permissionSwitch', 'PermissionController@update')->name('permission.update');
 });
 
 #home

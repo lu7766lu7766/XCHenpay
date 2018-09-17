@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Repositories\LendRecords;
 use Yajra\DataTables\DataTables;
-use App\Repositories\AuthCodes;
 use Illuminate\Http\Request;
 use App\LendRecord;
-use App\Authcode;
 use Validator;
 use App\User;
 use Sentinel;
@@ -16,6 +14,8 @@ use Response;
 
 class LendManageController extends Controller
 {
+    const ALLCOMPANIES = -1;
+
     public function index()
     {
         $companies = User::all()->where('company_service_id', '<>', null);
@@ -24,33 +24,30 @@ class LendManageController extends Controller
         return view('admin.trade.lendManage', compact('companies'));
     }
 
-    public function getLendInfo(AuthCodes $authCodes)
-    {
-        $user = User::find(request()->id);
-
-        $data = $authCodes->getMoneyRecord($user);
-
-        $data += ['accounts' => $user->accounts->toArray()];
-
-        return $data;
-    }
-
     public function data(LendRecords $lendRecords)
     {
-        if(isset(request()->companyId)) {
-            $user = User::find(request()->companyId);
+        $records = collect();
 
-            $lendRecords = $lendRecords->getUserRecords($user, request()->startDate, request()->endDate);
-        }else{
-            $lendRecords = [];
+        if(!isset(request()->companyId)) {
+            return $this->makeDataTable($records);
         }
-//        dd($lendRecords);
-        return $this->makeDataTable($lendRecords);
+
+        if(request()->companyId == $this::ALLCOMPANIES) {
+            $records = $lendRecords->getAllRecords(request()->startDate, request()->endDate);
+        }
+        else {
+            $records = $lendRecords->getUserRecords(request()->companyId, request()->startDate, request()->endDate);
+        }
+
+        return $this->makeDataTable($records);
     }
 
     private function makeDataTable($lendRecords)
     {
         return DataTables::of($lendRecords)
+            ->addColumn('company_name',function($lendRecord){
+                return $lendRecord->user->company_name;
+            })
             ->addColumn('account_name',function($lendRecord){
                 return $lendRecord->account->name;
             })
@@ -61,17 +58,11 @@ class LendManageController extends Controller
                 return $lendRecord->amount - $lendRecord->fee;
             })
             ->addColumn('actions',function($lendRecord){
-                $lendLink = '<a href='. route('admin.lendManage.manageRecord', ['lendRecord' => $lendRecord->id]) .' data-toggle="modal" data-target="#lend_manage"><i class="livicon" data-name="rocket" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=' . trans('Trade/LendManage/form.manage') . '></i></a>';
+                $lendLink = '<a href='. route('admin.lendManage.manageRecord', ['lendRecord' => $lendRecord->id]) .' data-toggle="modal" data-target="#lend_manage"><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=' . trans('Trade/LendManage/form.manage') . '></i></a>';
                 $infoLink = '<a href='. route('admin.lendManage.showRecord', ['lendRecord' => $lendRecord->id]) .' data-toggle="modal" data-target="#lend_info"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('Trade/LendManage/form.manage') . '></i></a>';
 
-                $action = '';
-
-                if($lendRecord->lend_state == LendRecords::APPLY_STATE){
-                    $action .= $infoLink;
-                    $action .= $lendLink;
-                }
-                else
-                    $action .= $infoLink;
+                $action = $infoLink;
+                $action .= $lendLink;
 
                 return $action;
             })
@@ -106,14 +97,6 @@ class LendManageController extends Controller
             return $this->validateErrorResponseInJson($validator);
 
         $record = LendRecord::find($request->id);
-
-        //訂單下申請狀態不能作管理
-        if($record->lend_state != LendRecords::APPLY_STATE){
-            return Response::json(array(
-                'Result' => 'error',
-                'Message'=> '此单非申请下发状态，请重新整理后再次尝试'
-            ));
-        }
 
         $user = Sentinel::getUser();
 

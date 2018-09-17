@@ -2,13 +2,13 @@
 
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use App\Http\Controllers\JoshController;
-use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\UserRequest;
+use App\Repositories\LendRecords;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
-Use App\Mail\Activate;
-use Validator;
+use App\Models\Payment;
 use App\User;
+use Validator;
 use Response;
 use Redirect;
 use Sentinel;
@@ -20,26 +20,11 @@ use URL;
 
 class UsersController extends JoshController
 {
-
-    /**
-     * Show a list of all the users.
-     *
-     * @return View
-     */
-
     public function index()
     {
-
-        // Show the page
         return view('admin.users.index');
     }
 
-    /*
-     * Pass data through ajax call
-     */
-    /**
-     * @return mixed
-     */
     public function data()
     {
         $users = User::get(['id', 'company_name', 'email', 'QQ_id','created_at']);
@@ -90,14 +75,13 @@ class UsersController extends JoshController
      */
     public function store(UserRequest $request)
     {
-
         try {
             $activate = true;
 
             $data = $request->except('_token', 'group', 'activate');
-            $data['password'] = strtolower(str_random(8));
+            $data['password'] = $pwd = strtolower(str_random(8));
             $data['company_service_id'] = md5(str_random(32));
-            $data['lend_fee'] = 0.0002;     //固定的手續費
+            $data['lend_fee'] = LendRecords::FEE;     //固定的手續費
             $data['sceret_key'] = md5(str_random(32));
 
             // Register the user
@@ -107,28 +91,23 @@ class UsersController extends JoshController
             $role = Sentinel::findRoleById($request->get('group'));
             if ($role) {
                 $role->users()->attach($user);
+                if ($request->get('group') == 4) {
+                    $payments = Payment::select('id as payment_id', 'fee')
+                        ->where('id', '>', 1)
+                        ->get()
+                        ->toArray();
+                    $user = User::find($user->id);
+                    $user->fees()->createMany($payments);
+                }
             }
 
-            //check for activation and send activation mail if not activated by default
-            if ($activate) {
-                $mail = new stdClass();
-
-                // Data to be used on the email view
-                $mail->email = $user->email;
-                $mail->password = $data['password'];
-                $mail->activationUrl = URL::route('signin');
-
-                // Send the activation code through email
-                Mail::to($user->email)
-                    ->send(new Activate($mail));
-            }
             // Activity log for New user create
             activity($user->email)
                 ->performedOn($user)
                 ->causedBy($user)
-                ->log('New User Created by '.Sentinel::getUser()->email);
+                ->log(Sentinel::getUser()->email . '建立新的商户');
             // Redirect to the home page with success menu
-            return Redirect::route('admin.users.index')->with('success', trans('users/message.success.create'));
+            return view('admin.users.created_user', compact(['user', 'pwd', 'role']))->with('success', trans('users/message.success.create'));
 
         } catch (LoginRequiredException $e) {
             $error = trans('admin/users/message.user_login_required');
@@ -399,13 +378,19 @@ class UsersController extends JoshController
         $id = $request->id;
         $user = Sentinel::findUserById($id);
         $password = $request->get('password');
+
+        if(!Sentinel::validateCredentials($user, ['password' => $request->get('oldPassword')]))
+            return $this->errorResponse('修正失败，旧密码不正确');
+
         $user->password = Hash::make($password);
         $user->save();
 
         activity($user->email)
             ->performedOn($user)
             ->causedBy($user)
-            ->log('修改了密码');
+            ->log('修改了密碼');
+
+        return $this->okayResponse();
     }
 
     public function lockscreen($id){

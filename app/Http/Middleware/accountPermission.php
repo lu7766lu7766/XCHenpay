@@ -27,16 +27,13 @@ class accountPermission
         if(in_array($method, $openSource))
             return $next($request);
 
-        if($user->hasAccess('users'))
+        if($user->hasAccess('account'))
             return $next($request);
 
         if(in_array($method, $protectOthers) && $user->id == $request->route()->user->id)
             return $next($request);
 
-        if ($user->hasAccess('users.'.$method))
-            return $next($request);
-
-        if ($user->hasAccess('users.account'))
+        if ($user->hasAccess('account.'.$method))
             return $next($request);
 
         // Execute this code if the permission check failed

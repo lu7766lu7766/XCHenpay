@@ -7,10 +7,11 @@
 return array(
     'company_switch' => '商户筛选',
     'company_please' => '請選擇商戶',
+    'allCompanies'   => '全部',
 
     'title'         => '申请列表',
-
     'lend_summary'  => '下发状态',
+    'company_name'  => '商户名称',
     'record_seq'    => '单号',
     'account_name'  => '户名',
     'account'       => '银行卡号',

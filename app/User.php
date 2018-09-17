@@ -2,7 +2,7 @@
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Cviebrock\EloquentTaggable\Taggable;
-
+use App\Models\PaymentFees;
 
 class User extends EloquentUser {
 
@@ -38,6 +38,11 @@ class User extends EloquentUser {
 	use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+
+    public function fees()
+    {
+        return $this->hasMany(PaymentFees::class);
+    }
 
     public function attachCode(verifyCode $code)
     {

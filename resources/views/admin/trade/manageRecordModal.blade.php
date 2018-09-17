@@ -7,11 +7,11 @@
 
     <form id="myForm">
         <label class="radio-inline">
-            <input type="radio" name="radios"  value="1">完成下发
+            <input type="radio" name="radios"  value="1" @if($lendRecord->lend_state == 1) checked @endif>完成下发
         </label>
 
         <label class="radio-inline">
-            <input type="radio" name="radios"  value="0">拒绝下发
+            <input type="radio" name="radios"  value="0" @if($lendRecord->lend_state == 2) checked @endif>拒绝下发
         </label>
     </form>
 </div>
@@ -26,8 +26,6 @@
             id: "{{ $lendRecord->id }}",
             operation: $('input[name=radios]:checked', '#myForm').val()
         };
-
-        console.log(data);
 
         $.ajax({
             url: "{{ route('admin.lendManage.Manage') }}",

@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\ErrorLog;
 use Validator;
 use Redirect;
 use Response;
@@ -47,10 +48,22 @@ trait ControllerResponse
         ));
     }
 
+    protected function okayResponse($message = null){
+        return Response::json(array(
+            'Result' => 'OK',
+            'Message' => $message
+        ));
+    }
+
     protected function errorResponse($message){
         return Response::json(array(
             'Result' => 'error',
             'Message' => $message
         ));
+    }
+
+    protected function errorLog( $message)
+    {
+        ErrorLog::create(['log' => $message]);
     }
 }
