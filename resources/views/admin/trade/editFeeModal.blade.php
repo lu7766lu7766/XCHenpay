@@ -32,6 +32,14 @@
             </div>
 
             <div class="form-group striped-col">
+                <label class="col-md-3 control-label">@lang('Trade/LendManage/form.status')</label>
+                <div class="col-sm-4 form-group input-group">
+                    <label class="radio-inline"><input name="status" type="radio"  value="1" {!! $payment->status == '1' ? 'checked' : '' !!}>@lang('Trade/LendManage/form.status_enable')</label>
+                    <label class="radio-inline"><input name="status" type="radio" value="0" {!! $payment->status == '0' ? 'checked' : '' !!}>@lang('Trade/LendManage/form.status_disable')</label>
+                </div>
+            </div>
+
+            <div class="form-group striped-col">
                 <label class="col-md-3 control-label">描述</label>
                 <div class="col-md-9">
                     <p class="form-control-static">{{ $payment->description }}</p>
@@ -51,7 +59,8 @@
     $('#edit_btn').on('click', function (e) {
        var data = {
             id: '{{ $payment->id }}',
-            fee: $('#fee').val()
+            fee: $('#fee').val(),
+            status: $("input[name=status]:checked").val()
         };
 
         $.ajax({
