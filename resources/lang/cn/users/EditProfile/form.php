@@ -11,7 +11,12 @@ return array(
     'company_name'      => '商户名称',
     'mobile'	        => '联络电话',
     'email'	            => '电子邮箱',
+    'status'            => '状态',
+    'apply_status'      => '下发申请',
     'QQ_id'             => 'QQ号',
+	
+	'open' 				=> '开启',
+	'close' 			=> '关闭',
 
     'password_message'  => '如果您不想更改密码...请将它们留空',
     'password'          => '密码',

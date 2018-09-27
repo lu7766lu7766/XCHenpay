@@ -12,8 +12,9 @@
     <link href="{{ asset('assets/vendors/jasny-bootstrap/css/jasny-bootstrap.css') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/vendors/x-editable/css/bootstrap-editable.css') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/css/pages/user_profile.css') }}" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
-    <link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}"/>
+    <link href="{{ asset('assets/css/pages/tables.css') }}" rel="stylesheet" type="text/css"/>
 @stop
 
 
@@ -38,23 +39,26 @@
 
                     <li class="active">
                         <a href="#tab1" data-toggle="tab">
-                            <i class="livicon" data-name="notebook" data-size="16" data-c="#000" data-hc="#000" data-loop="true"></i>
+                            <i class="livicon" data-name="notebook" data-size="16" data-c="#000" data-hc="#000"
+                               data-loop="true"></i>
                             @lang('users/ViewProfile/title.information')</a>
                     </li>
                     <li>
                         <a href="#tab2" data-toggle="tab">
-                            <i class="livicon" data-name="cellphone" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                            <i class="livicon" data-name="cellphone" data-size="16" data-loop="true" data-c="#000"
+                               data-hc="#000"></i>
                             @lang('users/ViewProfile/title.contact_information')</a>
                     </li>
 
                     <li>
                         <a href="#tab3" data-toggle="tab">
-                            <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                            <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000"
+                               data-hc="#000"></i>
                             @lang('users/ViewProfile/title.change_password')</a>
                     </li>
 
                 </ul>
-                <div  class="tab-content mar-top">
+                <div class="tab-content mar-top">
 
 
                     <div id="tab1" class="tab-pane fade active in">
@@ -70,7 +74,7 @@
                                                         <tr>
                                                             <td>@lang('users/ViewProfile/form.company_name')</td>
                                                             <td>
-                                                                {{  $user->company_name }}
+                                                                {{ $user->company_name }}
                                                             </td>
 
                                                         </tr>
@@ -88,6 +92,21 @@
                                                                 {{ $user->sceret_key }}
                                                             </td>
                                                         </tr>
+
+                                                        <tr>
+                                                            <td>@lang('users/ViewProfile/form.status')</td>
+                                                            <td>
+                                                                {{ $user->status == 'on' ? trans('users/ViewProfile/form.open') : trans('users/ViewProfile/form.close') }}
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>@lang('users/ViewProfile/form.apply_status')</td>
+                                                            <td>
+                                                                {{ $user->apply_status == 'on' ? trans('users/ViewProfile/form.open') : trans('users/ViewProfile/form.close') }}
+                                                            </td>
+                                                        </tr>
+
 
                                                     </table>
                                                 </div>
@@ -155,9 +174,11 @@
                                             <div class="col-md-9">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                        <i class="livicon" data-name="key" data-size="16"
+                                                           data-loop="true" data-c="#000" data-hc="#000"></i>
                                                     </span>
-                                                    <input type="password" id="oldPassword" placeholder=@lang('users/ViewProfile/form.oldPasswordHolder') name="oldPassword"
+                                                    <input type="password" id="oldPassword"
+                                                           placeholder=@lang('users/ViewProfile/form.oldPasswordHolder') name="oldPassword"
                                                            class="form-control"/>
                                                 </div>
                                             </div>
@@ -172,9 +193,11 @@
                                             <div class="col-md-9">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                        <i class="livicon" data-name="key" data-size="16"
+                                                           data-loop="true" data-c="#000" data-hc="#000"></i>
                                                     </span>
-                                                    <input type="password" id="password" placeholder=@lang('users/ViewProfile/form.PasswordHolder') name="password"
+                                                    <input type="password" id="password"
+                                                           placeholder=@lang('users/ViewProfile/form.PasswordHolder') name="password"
                                                            class="form-control"/>
                                                 </div>
                                             </div>
@@ -188,9 +211,11 @@
                                             <div class="col-md-9">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="livicon" data-name="key" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                                        <i class="livicon" data-name="key" data-size="16"
+                                                           data-loop="true" data-c="#000" data-hc="#000"></i>
                                                     </span>
-                                                    <input type="password" id="password_confirm" placeholder=@lang('users/ViewProfile/form.confirmPasswordHolder') name="password_confirm"
+                                                    <input type="password" id="password_confirm"
+                                                           placeholder=@lang('users/ViewProfile/form.confirmPasswordHolder') name="password_confirm"
                                                            class="form-control"/>
                                                 </div>
                                             </div>
@@ -198,8 +223,10 @@
                                     </div>
                                     <div class="form-actions">
                                         <div class="col-md-offset-3 col-md-9">
-                                            <button type="button" class="btn btn-primary" id="change-password">@lang('users/ViewProfile/form.submit')</button>
-                                            <input type="reset" class="btn btn-default" value=@lang('users/ViewProfile/form.reset')>
+                                            <button type="button" class="btn btn-primary"
+                                                    id="change-password">@lang('users/ViewProfile/form.submit')</button>
+                                            <input type="reset" class="btn btn-default"
+                                                   value=@lang('users/ViewProfile/form.reset')>
                                         </div>
                                     </div>
                                 </form>
@@ -217,7 +244,8 @@
 @section('footer_scripts')
     <!-- Bootstrap WYSIHTML5 -->
     <script src="{{ asset('assets/vendors/jasny-bootstrap/js/jasny-bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}"
+            type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}" type="text/javascript"></script>
 
@@ -262,7 +290,7 @@
                 console.log($('#password').val());
 
                 if ($validator.isValid()) {
-                    var sendData =  '_token=' + $("input[name='_token']").val() + '&oldPassword=' + $('#oldPassword').val() +'&password=' + $('#password').val() +'&id=' + {{ $user->id }};
+                    var sendData = '_token=' + $("input[name='_token']").val() + '&oldPassword=' + $('#oldPassword').val() + '&password=' + $('#password').val() + '&id=' + {{ $user->id }};
                     var path = "passwordreset";
                     $.ajax({
                         url: path,
@@ -275,7 +303,7 @@
                             $('#oldPassword, #password, #password_confirm').val('');
                             $validator.resetForm();
 
-                            if(data.Result == 'error'){
+                            if (data.Result == 'error') {
                                 alert(data.Message);
                                 return;
                             }

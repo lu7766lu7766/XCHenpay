@@ -45,31 +45,33 @@ class AuthController extends JoshController
      */
     public function postSignin(Request $request)
     {
-
         try {
             // Try to log the user in
+            //Sentinel::disableCheckpoints();
             if ($user = Sentinel::authenticate($request->only(['email', 'password']), $request->get('remember-me', false))) {
-                // Redirect to the dashboard page
-                //Activity log
-                activity($user->email)
-                    ->performedOn($user)
-                    ->causedBy($user)
-                    ->log('登入');
-                //activity log ends
-                //return Redirect::route("admin.dashboard")->with('success', trans('auth/message.signin.success'));
-                return Redirect::route("admin.authcode.index")->with('success', trans('auth/message.signin.success'));
+                if ($user->status == 'on') {
+                    //Activity log
+                    activity($user->email)
+                        ->performedOn($user)
+                        ->causedBy($user)
+                        ->log('登入');
+                    //activity log ends
+                    // Redirect to the dashboard page
+                    //return Redirect::route("admin.dashboard")->with('success', trans('auth/message.signin.success'));
+                    return Redirect::route("admin.authcode.index")->with('success', trans('auth/message.signin.success'));
+                }
+
+                Sentinel::logout($user);
             }
-
             $this->messageBag->add('email', trans('auth/message.account_not_found'));
-
         } catch (NotActivatedException $e) {
             $this->messageBag->add('email', trans('auth/message.account_not_activated'));
         } catch (ThrottlingException $e) {
             $delay = $e->getDelay();
             $this->messageBag->add('email', trans('auth/message.account_suspended', compact('delay')));
         }
-
         // Ooops.. something went wrong
+
         return Redirect::back()->withInput()->withErrors($this->messageBag);
     }
 

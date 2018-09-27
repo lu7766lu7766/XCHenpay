@@ -55,6 +55,7 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
         Route::get('{user}/confirm-delete', 'UsersController@getModalDelete')->name('users.confirm-delete');
         Route::get('{user}/restore', 'UsersController@getRestore')->name('restore.user');
         Route::post('passwordreset', 'UsersController@passwordreset')->name('passwordreset');
+        Route::get('getUserInfo', 'UsersController@getUserInfo')->name('users.getUserInfo');
     });
     Route::resource('users', 'UsersController');
     Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('users.deleted_users');

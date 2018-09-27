@@ -27,9 +27,15 @@ class UsersController extends JoshController
 
     public function data()
     {
-        $users = User::get(['id', 'company_name', 'email', 'QQ_id','created_at']);
+        $users = User::get(['id', 'company_name', 'email', 'status', 'apply_status', 'QQ_id','created_at']);
 
         return DataTables::of($users)
+            ->editColumn('status',function($users){
+                return ($users->status == 'on') ? trans('users/UserList/form.open') : trans('users/UserList/form.close');
+            })
+            ->editColumn('apply_status',function($users){
+                return ($users->apply_status == 'on') ? trans('users/UserList/form.open') : trans('users/UserList/form.close');
+            })
             ->addColumn('actions',function($user) {
                 $showLink = '<a href='. route('admin.users.show', $user->id) .'><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>';
                 $showSelfLink = '<a href='. route('admin.users.showProfile') .'><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>';
@@ -409,6 +415,12 @@ class UsersController extends JoshController
         } else{
             return 'error';
         }
+    }
+
+    public function getUserInfo (Request $request) {
+        $id = $request->id;
+        $user = Sentinel::findUserById($id);
+        return $user;
     }
 
 }

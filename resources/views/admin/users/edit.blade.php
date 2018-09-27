@@ -96,6 +96,24 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="form-group {{ $errors->first('status', 'has-error') }}">
+                                                    <label for="status" class="col-sm-2 control-label">@lang('users/EditProfile/form.status') *</label>
+                                                    <div class="col-sm-10">
+														<label class="radio-inline"><input id="status" name="status" type="radio"  value="on" {!! $user->status == 'on' ? 'checked' : '' !!}>@lang('users/EditProfile/form.open')</label>
+														<label class="radio-inline"><input id="status" name="status" type="radio" value="off" {!! $user->status == 'off' ? 'checked' : '' !!}>@lang('users/EditProfile/form.close')</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group {{ $errors->first('apply_status', 'has-error') }}">
+                                                    <label for="apply_status" class="col-sm-2 control-label">@lang('users/EditProfile/form.apply_status') *</label>
+                                                    <div class="col-sm-10">
+														<label class="radio-inline"><input id="apply_status" name="apply_status" type="radio" value="on" {!! $user->apply_status == 'on' ? 'checked' : '' !!}>@lang('users/EditProfile/form.open')</label>
+														<label class="radio-inline"><input id="apply_status" name="apply_status" type="radio" value="off" {!! $user->apply_status == 'off' ? 'checked' : '' !!}>@lang('users/EditProfile/form.close')</label>
+                                                    </div>
+                                                </div>
+
+
+
                                                 <div class="form-group {{ $errors->first('QQ_id', 'has-error') }}">
                                                     <label for="QQ_id" class="col-sm-2 control-label">@lang('users/EditProfile/form.QQ_id') *</label>
                                                     <div class="col-sm-10">

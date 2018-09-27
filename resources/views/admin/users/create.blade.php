@@ -51,8 +51,10 @@
 
                             <div id="rootwizard">
                                 <ul>
-                                    <li><a href="#tab1" data-toggle="tab">@lang('users/AddUser/form.UserProfile')</a></li>
-                                    <li><a href="#tab2" data-toggle="tab">@lang('users/AddUser/form.UserContact')</a></li>
+                                    <li><a href="#tab1" data-toggle="tab">@lang('users/AddUser/form.UserProfile')</a>
+                                    </li>
+                                    <li><a href="#tab2" data-toggle="tab">@lang('users/AddUser/form.UserContact')</a>
+                                    </li>
                                     <li><a href="#tab3" data-toggle="tab">@lang('users/AddUser/form.UserGroup')</a></li>
                                 </ul>
                                 <div class="tab-content">
@@ -72,6 +74,41 @@
                                                 {!! $errors->first('company_name', '<span class="help-block">:message</span>') !!}
                                             </div>
                                         </div>
+
+                                        <div class="form-group {{ $errors->first('status', 'has-error') }}">
+                                            <label for="status"
+                                                   class="col-sm-2 control-label">@lang('users/AddUser/form.status')
+                                                *</label>
+
+                                                <div class="col-sm-10">
+                                                    <label class="radio-inline"><input id="status" name="status"
+                                                                                       type="radio" value="on"
+                                                                                       checked>@lang('users/AddUser/form.open')
+                                                    </label>
+                                                    <label class="radio-inline"><input id="status" name="status"
+                                                                                       type="radio"
+                                                                                       value="off">@lang('users/AddUser/form.close')
+                                                    </label>
+                                                </div>
+                                        </div>
+
+                                        <div class="form-group {{ $errors->first('apply_status', 'has-error') }}">
+                                            <label for="status"
+                                                   class="col-sm-2 control-label">@lang('users/AddUser/form.apply_status')
+                                                *</label>
+                                                <div class="col-sm-10">
+                                                    <label class="radio-inline"><input id="apply_status1" name="apply_status"
+                                                                                       type="radio" value="on"
+                                                                                       checked>@lang('users/AddUser/form.open')
+                                                    </label>
+                                                    <label class="radio-inline"><input id="apply_status2" name="apply_status"
+                                                                                       type="radio"
+                                                                                       value="off">@lang('users/AddUser/form.close')
+                                                    </label>
+                                                </div>
+                                        </div>
+
+
                                     </div>
 
                                     <div class="tab-pane" id="tab2" disabled="disabled">
@@ -109,7 +146,8 @@
                                             <div class="col-sm-10">
                                                 <input id="QQ_id" name="QQ_id"
                                                        placeholder="@lang('users/AddUser/form.QQ_id')"
-                                                       type="text" class="form-control required" value="{!! old('QQ_id') !!}"/>
+                                                       type="text" class="form-control required"
+                                                       value="{!! old('QQ_id') !!}"/>
                                                 {!! $errors->first('QQ_id', '<span class="help-block">:message</span>') !!}
                                             </div>
                                         </div>
@@ -124,7 +162,8 @@
                                                    class="col-sm-2 control-label">@lang('users/AddUser/form.group')
                                                 *</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control required" title="Select group..." name="group" id="group">
+                                                <select class="form-control required" title="Select group..."
+                                                        name="group" id="group">
                                                     <option value="">Select</option>
                                                     @foreach($groups as $group)
                                                         <option value="{{ $group->id }}"
@@ -139,7 +178,8 @@
                                     <ul class="pager wizard">
                                         <li class="previous"><a href="#">@lang('users/AddUser/form.previous')</a></li>
                                         <li class="next"><a href="#">@lang('users/AddUser/form.next')</a></li>
-                                        <li class="next finish" style="display:none;"><a href="javascript:;">@lang('users/AddUser/form.finish')</a></li>
+                                        <li class="next finish" style="display:none;"><a
+                                                    href="javascript:;">@lang('users/AddUser/form.finish')</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -158,8 +198,11 @@
     <script src="{{ asset('assets/vendors/moment/js/moment.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/jasny-bootstrap/js/jasny-bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/select2/js/select2.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/vendors/bootstrapwizard/jquery.bootstrap.wizard.js') }}"type="text/javascript"></script>
-    <script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}"type="text/javascript"></script>
-    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/bootstrapwizard/jquery.bootstrap.wizard.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"
+            type="text/javascript"></script>
     <script src="{{ asset('assets/js/pages/adduser.js') }}"></script>
 @stop

@@ -51,11 +51,11 @@
                     <p>
                         <select id="company_selection" name="company_selection" class="js--animations form-control"
                                 onchange="companyFilter(this.value);">
-                                <option value="">@lang('Trade/LendApply/form.company_please')</option>
-                                @foreach($companies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                            <option value="">@lang('Trade/LendApply/form.company_please')</option>
+                            @foreach($companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                                 @endforeach
-                            </optgroup>
+                                </optgroup>
                         </select>
                     </p>
                 </div>
@@ -67,7 +67,8 @@
         <div class="panel panel-primary hidden" id="hidepanel1">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                    <i class="livicon" data-name="mail" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                    <i class="livicon" data-name="mail" data-size="16" data-loop="true" data-c="#fff"
+                       data-hc="white"></i>
                     @lang('Trade/LendApply/title.title'): <i id="lendTitle"></i>
                 </h3>
                 <span class="pull-right clickable">
@@ -77,7 +78,7 @@
             <div class="panel-body">
 
                 <div class="panel-body border">
-                    <form  enctype="multipart/form-data" class="form-horizontal form-bordered">
+                    <form enctype="multipart/form-data" class="form-horizontal form-bordered">
                         <div class="form-group striped-col">
                             <label class="col-md-2 control-label">@lang('Trade/LendApply/form.totalMoney')</label>
                             <div class="col-md-9">
@@ -120,49 +121,55 @@
 
                     </form>
                 </div>
-
+                
+                
                 <hr>
 
                 <form id="applyForm" class="form-horizontal">
                     <!-- CSRF Token -->
                     <!-- Money input-->
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="money">@lang('Trade/LendApply/form.lendMoney') *</label>
+                        <label class="col-md-2 control-label" for="money">@lang('Trade/LendApply/form.lendMoney')
+                            *</label>
                         <div class="col-md-9">
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    <i class="livicon" data-name="piggybank" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                    <i class="livicon" data-name="piggybank" data-size="16" data-loop="true"
+                                       data-c="#000" data-hc="#000"></i>
                                 </span>
                                 <input id="money" name="money" type="text" class="form-control">
                             </div>
-                                <p class="text-warning">@lang('Trade/LendApply/form.lendMoney')最少填入1000</p>
+                            <p class="text-warning">@lang('Trade/LendApply/form.lendMoney')最少填入1000</p>
                         </div>
                     </div>
 
 
-
                     <!-- Account input-->
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="account">@lang('Trade/LendApply/form.lendAccount') *</label>
+                        <label class="col-md-2 control-label" for="account">@lang('Trade/LendApply/form.lendAccount')
+                            *</label>
                         <div class="col-md-9">
 
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    <i class="livicon" data-name="credit-card" data-size="16" data-loop="true" data-c="#000" data-hc="#000"></i>
+                                    <i class="livicon" data-name="credit-card" data-size="16" data-loop="true"
+                                       data-c="#000" data-hc="#000"></i>
                                 </span>
 
                                 <select id="account_selections" class="form-control">
                                 </select>
-                           </div>
+                            </div>
 
                         </div>
                     </div>
 
                     <!-- Description body -->
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="description">@lang('Trade/LendApply/form.description')</label>
+                        <label class="col-md-2 control-label"
+                               for="description">@lang('Trade/LendApply/form.description')</label>
                         <div class="col-md-9">
-                            <textarea class="form-control resize_vertical" id="description" name="description" rows="5"></textarea>
+                            <textarea class="form-control resize_vertical" id="description" name="description"
+                                      rows="5"></textarea>
                         </div>
                     </div>
 
@@ -170,10 +177,13 @@
                     <div class="form-position">
                         <div class="col-md-12 text-center">
                             <p class="text-danger">申请金额将自动加上 0.02% 的申请手续费</p>
-                            <button id="lendApply" type="button" class="btn btn-responsive btn-primary btn-sm">@lang('Trade/LendApply/form.lendApply')</button>
+                            <button id="lendApply" type="button"
+                                    class="btn btn-responsive btn-primary btn-sm">@lang('Trade/LendApply/form.lendApply')</button>
                         </div>
                     </div>
                 </form>
+                
+
             </div>
         </div>
 
@@ -224,13 +234,15 @@
 {{-- page level scripts --}}
 @section('footer_scripts')
     <script src="{{ asset('assets/vendors/jasny-bootstrap/js/jasny-bootstrap.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}"type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}"
+            type="text/javascript"></script>
 
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}" ></script>
-    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"
+            type="text/javascript"></script>
 
     <div class="modal fade" id="lend_info" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -250,13 +262,13 @@
                             message: '@lang('Trade/LendApply/form.lendMoney')必须为整数字'
                         }
                         {{--greaterThan: {--}}
-                            {{--message: '@lang('Trade/LendApply/form.lendMoney')最少填入1000',--}}
-                            {{--inclusive: true,--}}
-                            {{--min: 1000--}}
+                        {{--message: '@lang('Trade/LendApply/form.lendMoney')最少填入1000',--}}
+                        {{--inclusive: true,--}}
+                        {{--min: 1000--}}
                         {{--}--}}
                         {{--lessThan: {     //todo 一直沒有過這裡--}}
-                            {{--max: 10,--}}
-                            {{--message: '@lang('Trade/LendApply/form.lendMoney')必需少于@lang('Trade/LendApply/form.totalIncome')'--}}
+                        {{--max: 10,--}}
+                        {{--message: '@lang('Trade/LendApply/form.lendMoney')必需少于@lang('Trade/LendApply/form.totalIncome')'--}}
                         {{--}--}}
                     },
                     required: true
@@ -347,23 +359,23 @@
                 {data: 'account', name: 'account'},
                 {data: 'tatol_amount', name: 'amount'},
                 {data: 'created_at', name: 'created_at'},
-                { data: 'actions', name: 'actions', orderable: false, searchable: false }
+                {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ]
         });
 
         $(document).ready(function () {
-            $('#lendApply').click(function (e){
-                if($('#money').val() < 1000){
+            $('#lendApply').click(function (e) {
+                if ($('#money').val() < 1000) {
                     alert('@lang('Trade/LendApply/form.lendMoney')最少填入1000');
                     return;
                 }
 
-                if($('#money').val() > Number($('#td_totalIncome').text())){
+                if ($('#money').val() > Number($('#td_totalIncome').text())) {
                     alert("@lang('Trade/LendApply/form.lendMoney')必需小于@lang('Trade/LendApply/form.totalIncome')");
                     return;
                 }
 
-                if($('#account_selections').val() == "@lang('Trade/LendApply/form.pleaseSelect')"){
+                if ($('#account_selections').val() == "@lang('Trade/LendApply/form.pleaseSelect')") {
                     alert("請選擇銀行卡");
                     return;
                 }
@@ -394,9 +406,9 @@
                         }
                     });
 
-                    var complete = function (data){
+                    var complete = function (data) {
                         console.log(data);
-                        if(data.Result == 'error'){
+                        if (data.Result == 'error') {
                             alert(data.Message);
                             return;
                         }
@@ -427,12 +439,12 @@
             });
         });
 
-        $('#daterange1').on('apply.daterangepicker', function(ev, picker) {
+        $('#daterange1').on('apply.daterangepicker', function (ev, picker) {
             table.ajax.reload();
         });
 
         function companyFilter() {
-            if($('#company_selection').val() !== ''){
+            if ($('#company_selection').val() !== '') {
 
                 var data = {
                     id: $("#company_selection :selected").val()
@@ -440,13 +452,13 @@
 
                 refreshMoneyInfo(data);
 
-            }else {
+            } else {
                 $('#hidepanel1').addClass("hidden");
                 $('#hidepanel2').addClass("hidden");
             }
         }
 
-        function refreshMoneyInfo(postdata){
+        function refreshMoneyInfo(postdata) {
             $.ajax({
                 url: "{{ route('admin.lendApply.getLendInfo') }}",
                 type: "post",
@@ -455,6 +467,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
                 },
                 success: function (data) {
+                    applyInfo(postdata);
                     complete(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -472,7 +485,7 @@
                 document.getElementById("td_totalIncome").innerHTML = data.totalIncome;
 
                 document.getElementById("account_selections").innerHTML = '<option>' + '@lang('Trade/LendApply/form.pleaseSelect')' + '</option>';
-                data.accounts.forEach(function(account, index){
+                data.accounts.forEach(function (account, index) {
                     document.getElementById("account_selections").innerHTML += '<option value=' + account.id + '>' + account.name + '/' + account.account + '/' + account.bank_name + '</option>';
                 });
 
@@ -482,6 +495,22 @@
 
                 return;
             };
+        }
+
+        function applyInfo (postData) {
+            $.ajax({
+                url: "{{ route('admin.users.getUserInfo') }}",
+                type: "get",
+                data: postData,
+                success: function (data) {
+                    if (data.apply_status == 'off') $('#applyForm').addClass("hidden");
+                    else $('#applyForm').removeClass("hidden")
+                    return;
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('错误，与服务器沟通失败1111');
+                }
+            })
         }
 
     </script>

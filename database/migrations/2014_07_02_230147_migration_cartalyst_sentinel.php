@@ -95,6 +95,8 @@ class MigrationCartalystSentinel extends Migration
             $table->increments('id');
             $table->string('email');
             $table->string('password');
+            $table->enum('status', ['on', 'off'])->default('on')->comment('状态');
+            $table->enum('apply_status', ['on', 'off'])->default('on')->comment('下发申请');
             $table->string('QQ_id');
             $table->string('company_name');
             $table->string('mobile');
