@@ -82,6 +82,7 @@
                             <th>@lang('Trade/LendManage/form.API_id')</th>
                             <th>@lang('Trade/LendManage/form.payment_name')</th>
                             <th>@lang('Trade/LendManage/form.fee')</th>
+                            <th>@lang('Trade/LendManage/form.status')</th>
                             <th>@lang('Trade/LendManage/form.actions')</th>
                         </tr>
                         </thead>
@@ -357,6 +358,7 @@
                 {data: 'i6pay_id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'fee', name: 'fee'},
+                {data: 'status', name: 'status'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false }
             ],
             order: [[0, 'asc']]

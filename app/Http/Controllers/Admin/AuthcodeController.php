@@ -60,7 +60,7 @@ class AuthcodeController extends Controller
             $id = request()->company;
             $paysCount = Payment::where('id', '>', 1)->count();
             $paymentsSQL = PaymentFees::from('payment_fees as f')
-                ->select('f.id', 'p.i6pay_id', 'p.name', 'f.fee', 'p.id as pid')
+                ->select('f.id', 'p.i6pay_id', 'p.name', 'f.fee', 'f.status', 'p.id as pid')
                 ->join('payments as p', 'p.id', '=', 'f.payment_id')
                 ->where('f.user_id', $id);
             $payments = $paymentsSQL->get();
@@ -95,6 +95,9 @@ class AuthcodeController extends Controller
             ->editColumn('fee',function($payment){
                 return $payment->fee . '%';
             })
+            ->editColumn('status',function($payment){
+                return ($payment->status == 1) ? trans('Trade/LendManage/form.status_enable') : trans('Trade/LendManage/form.status_disable');
+            })
             ->addColumn('actions',function($payment) {
                 $infoLink = '<a href='. route('admin.authcode.showFeeInfo', ['payment' => $payment->id]) .' data-toggle="modal" data-target="#show_FeeInfo"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="通道讯息"></i></a>';
                 $editLink = '<a href='. route('admin.authcode.editFeeInfo', ['payment' => $payment->id]) .' data-toggle="modal" data-target="#edit_FeeInfo"><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="编辑通道"></i></a>';
@@ -112,7 +115,7 @@ class AuthcodeController extends Controller
 
     public function showFeeInfo($id){
         $payment = PaymentFees::from('payment_fees as f')
-            ->select('f.id', 'p.i6pay_id', 'p.name', 'f.fee')
+            ->select('f.id', 'p.i6pay_id', 'p.name', 'f.fee', 'f.status')
             ->join('payments as p', 'p.id', '=', 'f.payment_id')
             ->where('f.id', $id)
             ->first();
@@ -121,7 +124,7 @@ class AuthcodeController extends Controller
 
     public function editFeeInfo($id){
         $payment = PaymentFees::from('payment_fees as f')
-            ->select('f.id', 'p.i6pay_id', 'p.name', 'f.fee')
+            ->select('f.id', 'p.i6pay_id', 'p.name', 'f.status', 'f.fee')
             ->join('payments as p', 'p.id', '=', 'f.payment_id')
             ->where('f.id', $id)
             ->first();
@@ -133,11 +136,13 @@ class AuthcodeController extends Controller
         $paymentFee = PaymentFees::find(request()->id);
 
         $paymentFee->fee = request()->fee;
-        if ($paymentFee->isDirty('fee')) {
+        $paymentFee->status = request()->status;
+        
+        if ($paymentFee->isDirty('fee')||$paymentFee->isDirty('status')) {
             activity($user->email)
                 ->performedOn($paymentFee)
                 ->causedBy($user)
-                ->log( '修改' . $paymentFee->payment->name . ':' . $paymentFee->getOriginal('fee') .  ' > ' . $paymentFee->fee);
+                ->log( '修改' . $paymentFee->payment->name . ':' . $paymentFee->getOriginal('fee') .  ' > ' . $paymentFee->fee. ', '.  $paymentFee->getOriginal('status').  ' > ' . $paymentFee->status);
         }
         $paymentFee->save();
     }

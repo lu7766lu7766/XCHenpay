@@ -6,7 +6,7 @@
 
     <!-- Money input-->
     <div class="panel-body border">
-        <form  enctype="multipart/form-data" class="form-horizontal form-bordered">
+        <form enctype="multipart/form-data" class="form-horizontal form-bordered">
             <div class="form-group striped-col">
                 <label class="col-md-3 control-label">API编号</label>
                 <div class="col-md-9">
@@ -29,12 +29,24 @@
             </div>
 
             <div class="form-group striped-col">
+                <label class="col-md-3 control-label">@lang('Trade/LendManage/form.status')</label>
+                <div class="col-md-9">
+                    <p class="form-control-static">
+                        @if( $payment->status == 1)
+                            @lang('Trade/LendManage/form.status_enable')
+                        @else
+                            @lang('Trade/LendManage/form.status_disable')
+                        @endif
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group striped-col">
                 <label class="col-md-3 control-label">描述</label>
                 <div class="col-md-9">
                     <p class="form-control-static">{{ $payment->description }}</p>
                 </div>
             </div>
-
 
 
         </form>

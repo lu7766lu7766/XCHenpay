@@ -48,7 +48,8 @@
                 <!--content starts-->
                 <div class="warp">
                     <p>
-                        <select id="company_selection" name="company_selection" class="js--animations form-control" onchange="companyFilter(this.value);">
+                        <select id="company_selection" name="company_selection" class="js--animations form-control"
+                                onchange="companyFilter(this.value);">
                             <option value="">@lang('Trade/LendManage/form.company_please')</option>
                             <option value="-1">@lang('Trade/LendManage/form.allCompanies')</option>
                             @foreach($companies as $company)
@@ -75,15 +76,26 @@
 
             <div class="panel-body">
 
-                <div class="form-group">
-                    <div class="col-lg-4 input-group">
-                        <div class="input-group-addon">
-                            <i class="livicon" data-name="calendar" data-size="16" data-c="#555555"
-                               data-hc="#555555" data-loop="true"></i>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="livicon" data-name="calendar" data-size="16" data-c="#555555"
+                                   data-hc="#555555" data-loop="true"></i>
+                            </div>
+                            <input type="text" class="form-control" id="daterange1"/>
                         </div>
-                        <input type="text" class="form-control" id="daterange1"/>
                     </div>
-                    <!-- /.input group -->
+
+                    <div class="col-lg-5 form-horizontal">
+                        <label class="col-md-6 control-label text-center">小计</label>
+                        <p class="form-control-static col-md-6 " id="subTotal" style="font-weight: bold;">0</p>
+                    </div>
+
+                    <div class="col-lg-3 form-horizontal">
+                        <label class="col-md-6 control-label text-center">总计</label>
+                        <p class="form-control-static col-md-6" id="totalAmount" style="font-weight: bold;">0</p>
+                    </div>
                 </div>
 
                 <div class="table-responsive">
@@ -112,12 +124,15 @@
 @section('footer_scripts')
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}" ></script>
-    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"
+            type="text/javascript"></script>
 
-    <script type="text/javascript" src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js') }}" ></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js') }}"></script>
 
     <div class="modal fade" id="lend_manage" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -197,15 +212,17 @@
                 {data: 'record_seq', name: 'record_seq'},
                 {data: 'account_name', name: 'account_name'},
                 {data: 'account', name: 'account'},
-                {data: 'tatol_amount', name: 'amount'},
+                {data: 'tatol_amount', name: 'amount', class: 'sub_total'},
                 {data: 'created_at', name: 'created_at'},
-                { data: 'actions', name: 'actions', orderable: false, searchable: false }
+                {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ],
             order: [[5, 'desc']]
         });
 
-        $('#daterange1').on('apply.daterangepicker', function(ev, picker) {
+        $('#daterange1').on('apply.daterangepicker', function (ev, picker) {
             table.ajax.reload();
+            total();
+            setTimeout('subTotal()', 500);
         });
 
         $(document).ready(function () {
@@ -213,6 +230,7 @@
                 $('.livicon').each(function () {
                     $(this).updateLivicon();
                 });
+                setTimeout('subTotal()', 500);
             });
 
             //clear the data in hidden modal
@@ -226,16 +244,49 @@
             console.log("todo");
         });
 
+
         function companyFilter() {
-            if($('#company_selection').val() == '') {
+            if ($('#company_selection').val() == '') {
                 $('#lendList').addClass("hidden");
                 return;
             }
 
             document.getElementById("lendTitle").innerHTML = $("#company_selection :selected").text();
-
             table.ajax.reload();
+            total();
+            setTimeout('subTotal()', 500);
             $('#lendList').removeClass("hidden");
+        }
+
+        {{--計算總額--}}
+        function total() {
+            $.ajax({
+                url: "{!! route('admin.lendManage.total') !!}",
+                type: "post",
+                data: {
+                    userId: $('#company_selection').val(),
+                    startDate: $('#daterange1').data('daterangepicker').startDate.format('YYYY-MM-DD'),
+                    endDate: $('#daterange1').data('daterangepicker').endDate.format('YYYY-MM-DD'),
+                },
+                success: function (data) {
+                    var totalAmount = data.total;
+                    if (totalAmount == null) {
+                        totalAmount = 0;
+                    }
+                    $('#totalAmount').text(totalAmount);
+                }
+            });
+        }
+
+        {{--計算小計--}}
+        function subTotal() {
+            var subTotal = 0;
+            $(".sub_total").each(function () {
+                if (!isNaN($(this).text())) {
+                    subTotal += Number($(this).text());
+                }
+            });
+            $('#subTotal').text(subTotal);
         }
 
     </script>
