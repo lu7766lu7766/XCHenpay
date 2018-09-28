@@ -415,7 +415,7 @@
                     }
                 });
             });
-
+            autoRefresh();
         });
 
         $('#daterange1').on('apply.daterangepicker', function(ev, picker) {
