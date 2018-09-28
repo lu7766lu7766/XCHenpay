@@ -55,6 +55,13 @@ class LendApplyController extends Controller
 
         $client = User::find($request->client);
         $account = Account::find($request->account);
+
+        if ($client->apply_status != 'on')
+            return Response::json(array(
+                'Result' => 'error',
+                'Message'=> '您无下发申请之权限，请联络客服人员'
+            ));
+
         if($account->user_id != $client->id)
             return Response::json(array(
                 'Result' => 'error',
