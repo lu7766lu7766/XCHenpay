@@ -77,7 +77,7 @@
             <div class="panel-body">
 
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <i class="livicon" data-name="calendar" data-size="16" data-c="#555555"
@@ -87,7 +87,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-5 form-horizontal">
+                    <div class="col-lg-3 form-horizontal">
                         <label class="col-md-6 control-label text-center">小计</label>
                         <p class="form-control-static col-md-6 " id="subTotal" style="font-weight: bold;">0</p>
                     </div>
@@ -95,6 +95,13 @@
                     <div class="col-lg-3 form-horizontal">
                         <label class="col-md-6 control-label text-center">总计</label>
                         <p class="form-control-static col-md-6" id="totalAmount" style="font-weight: bold;">0</p>
+                    </div>
+                    <div class="col-lg-3 form-horizontal" style="text-align: right">
+                        <label class="control-label text-center" id="auto_refresh">10s</label>
+                        <button type="button" class="btn btn-success btn-sm" id="refresh_button">
+                            <i class="livicon" data-name="refresh" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                            <span class="label-text">刷新</span>
+                        </button>
                     </div>
                 </div>
 
@@ -147,6 +154,7 @@
     </div>
 
     <script type="text/javascript">
+
         $("#daterange1").daterangepicker({
             locale: {
                 startDate: moment(),
@@ -255,6 +263,7 @@
             table.ajax.reload();
             total();
             setTimeout('subTotal()', 500);
+            autoRefresh();
             $('#lendList').removeClass("hidden");
         }
 
@@ -287,6 +296,27 @@
                 }
             });
             $('#subTotal').text(subTotal);
+        }
+
+        {{--重新整理--}}
+        $("#refresh_button").click(function () {
+            companyFilter();
+        });
+
+        {{--自動整理--}}
+        var timer = null;
+
+        function autoRefresh() {
+            var seconds = 10;
+            $('#auto_refresh').text(--seconds + 's');
+            clearInterval(timer);
+            timer = setInterval(function () {
+                $('#auto_refresh').text(--seconds + 's');
+                if (seconds == 0) {
+                    clearInterval(timer);
+                    companyFilter();
+                }
+            }, 1000)
         }
 
     </script>
