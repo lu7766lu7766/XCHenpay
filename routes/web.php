@@ -99,6 +99,8 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
     Route::get('showLending', 'LendingController@index')->name('showLending.index');
     Route::post('showLending/getInfo', 'LendingController@getInfo')->name('showLending.getInfo');
+    Route::get('showLending/getUserInfo', 'LendingController@getUserInfo')->name('showLending.getUserInfo');
+    Route::post('showLending/apply', 'LendingController@apply')->name('showLending.apply');
     Route::post('showLending/data', 'LendingController@data')->name('showLending.data');
     Route::get('showLending/showRecord/{lendRecord}', 'LendingController@showRecordDialog')->name('showLending.showRecord');
 });

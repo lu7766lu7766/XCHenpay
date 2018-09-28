@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Account;
 use App\LendRecord;
 use App\Repositories\AuthCodes;
 use App\Repositories\LendRecords;
+use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 use Validator;
 use Response;
@@ -24,7 +27,76 @@ class LendingController extends Controller
 
         $data = $authCodes->getMoneyRecord($user);
 
+        $data += ['accounts' => $user->accounts->toArray()];
+
         return $data;
+    }
+
+    public function getUserInfo(AuthCodes $authCodes)
+    {
+        $user = Sentinel::getUser();
+
+        return $user;
+    }
+
+    public function apply(Request $request, AuthCodes $authCodes)
+    {
+        $messages = [
+            'required' => ':attribute 是必填资讯.',
+            'exists'   => '此银行卡不存在，请刷新页面后重试.',
+            'integer'  => '请输入有效:attribute，应由数字构成',
+        ];
+
+        $validator = Validator::make( $request->toArray(), [
+            'amount' => 'required|integer',
+            'account' => 'required|integer|exists:accounts,id'
+        ], $messages);
+
+        if ($validator->fails())
+            return $this->validateErrorResponseInJson($validator);
+
+        $client = Sentinel::getUser();
+        $account = Account::find($request->account);
+
+        if ($client->apply_status != 'on')
+            return Response::json(array(
+                'Result' => 'error',
+                'Message'=> '您无下发申请之权限，请联络客服人员'
+            ));
+
+        if($account->user_id != $client->id)
+            return Response::json(array(
+                'Result' => 'error',
+                'Message'=> '此银行卡持有厂商与要求不符，请联络客服人员'
+            ));
+
+        $data = $authCodes->getMoneyRecord($client);
+
+        $fee = $request->amount * $client->lend_fee;
+        $applyAmount = $request->amount + $fee;
+
+        if($applyAmount > filter_var($data['totalIncome'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION))
+            return Response::json(array(
+                'Result' => 'error',
+                'Message'=> '申请金额超过可下发馀额，请联络客服人员'
+            ));
+
+        $client->addLendRecord(new LendRecord([
+            'record_seq' => $seq = Carbon::now('Asia/Taipei')->format('YmdHis'),
+            'account_id' => $request->account,
+            'amount' => $applyAmount,
+            'fee'    => $request->amount * $client->lend_fee,
+            'lend_state' => LendRecords::APPLY_STATE,
+            'lend_summary' => LendRecords::APPLY_SUMMARY,
+            'description' => (isset($request->description)) ? $request->description : ""
+        ]));
+
+        $user = Sentinel::getUser();
+        activity($user->email)
+            ->causedBy($user)
+            ->log('提交一笔下发申请，单号：'. $seq);
+
+        return array('Result' => 'OK');
     }
 
     public function data(LendRecords $lendRecords)
