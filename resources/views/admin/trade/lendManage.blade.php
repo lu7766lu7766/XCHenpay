@@ -231,6 +231,7 @@
             table.ajax.reload();
             total();
             setTimeout('subTotal()', 500);
+            autoRefresh();
         });
 
         $(document).ready(function () {

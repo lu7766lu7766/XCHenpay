@@ -121,9 +121,17 @@
                         <p class="form-control-static col-md-6 " id="td_totalMoney" style="font-weight: bold;"></p>
                     </div>
 
-                    <div class="col-lg-3 form-horizontal">
+                    <div class="col-lg-2 form-horizontal">
                         <label class="col-md-6 control-label text-center">@lang('Trade/LogQuery/form.totalFee')</label>
                         <p class="form-control-static col-md-6" id="td_totalFee" style="font-weight: bold;"></p>
+                    </div>
+
+                    <div class="col-lg-1 form-horizontal">
+                        <label class="control-label text-center" id="auto_refresh">10s</label>
+                        <button type="button" class="btn btn-success btn-sm" id="refresh_button">
+                            <i class="livicon" data-name="refresh" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                            <span class="label-text">刷新</span>
+                        </button>
                     </div>
                 </div>
                 <div class="row">
@@ -412,6 +420,7 @@
 
         $('#daterange1').on('apply.daterangepicker', function(ev, picker) {
             table.ajax.reload();
+            autoRefresh();
         });
 
         function companyFilter() {
@@ -422,12 +431,33 @@
             }else {
                 $('.client-switch').addClass("hidden");
             }
-
+            autoRefresh();
         }
 
         function stateFilter() {
             table.ajax.reload();
             fee_table.ajax.reload();
+        }
+
+        {{--重新整理--}}
+        $("#refresh_button").click(function () {
+            companyFilter();
+        });
+
+                {{--自動整理--}}
+        var timer = null;
+
+        function autoRefresh() {
+            var seconds = 10;
+            $('#auto_refresh').text(--seconds + 's');
+            clearInterval(timer);
+            timer = setInterval(function () {
+                $('#auto_refresh').text(--seconds + 's');
+                if (seconds == 0) {
+                    clearInterval(timer);
+                    companyFilter();
+                }
+            }, 1000)
         }
     </script>
 
