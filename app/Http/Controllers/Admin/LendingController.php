@@ -55,6 +55,16 @@ class LendingController extends Controller
         if ($validator->fails())
             return $this->validateErrorResponseInJson($validator);
 
+        /*
+         * 下发金额不可小于及大于设定值
+         */
+        if ($request->amount < config('constants.apply.min') || $request->amount > config('constants.apply.max')) {
+            return Response::json([
+                'Result'  => 'error',
+                'Message' => '下发金额填写错误, 请重新输入'
+            ]);
+        }
+
         $client = Sentinel::getUser();
         $account = Account::find($request->account);
 
