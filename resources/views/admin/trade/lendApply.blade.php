@@ -32,7 +32,6 @@
     </section>
     <!-- Main content -->
     <section class="content paddingleft_right15">
-
         <!-- 商戶篩選 -->
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -121,8 +120,8 @@
 
                     </form>
                 </div>
-                
-                
+
+
                 <hr>
 
                 <form id="applyForm" class="form-horizontal">
@@ -139,7 +138,8 @@
                                 </span>
                                 <input id="money" name="money" type="text" class="form-control">
                             </div>
-                            <p class="text-warning">@lang('Trade/LendApply/form.lendMoney')最少填入1000</p>
+                            <p class="text-warning">@lang('Trade/LendApply/form.lendMoney')
+                                最少填入{{ config('constants.apply.min') }}, 最大不可超过 {{ config('constants.apply.max') }}</p>
                         </div>
                     </div>
 
@@ -182,7 +182,7 @@
                         </div>
                     </div>
                 </form>
-                
+
 
             </div>
         </div>
@@ -365,9 +365,14 @@
 
         $(document).ready(function () {
             $('#lendApply').click(function (e) {
-                if ($('#money').val() < 1000) {
-                    alert('@lang('Trade/LendApply/form.lendMoney')最少填入1000');
-                    return;
+                if ($('#money').val() < {{ config('constants.apply.min') }}) {
+                    alert('@lang('Trade/LendApply/form.lendMoney')最少填入{{ config('constants.apply.min') }}');
+                    return false;
+                }
+
+                if ($('#money').val() > {{ config('constants.apply.max') }}) {
+                    alert('@lang('Trade/LendApply/form.lendMoney')最大不可超过{{ config('constants.apply.max') }}');
+                    return false;
                 }
 
                 if ($('#money').val() > Number($('#td_totalIncome').text())) {
@@ -497,7 +502,7 @@
             };
         }
 
-        function applyInfo (postData) {
+        function applyInfo(postData) {
             $.ajax({
                 url: "{{ route('admin.users.getUserInfo') }}",
                 type: "get",
