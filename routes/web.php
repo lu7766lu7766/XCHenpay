@@ -56,6 +56,9 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
         Route::get('{user}/restore', 'UsersController@getRestore')->name('restore.user');
         Route::post('passwordreset', 'UsersController@passwordreset')->name('passwordreset');
         Route::get('getUserInfo', 'UsersController@getUserInfo')->name('users.getUserInfo');
+        Route::get('{user}/showApplyStatus', 'UsersController@showApplyStatus')->name('users.showApplyStatus');
+        Route::get('{user}/updateApplyStatus', 'UsersController@updateApplyStatus')->name('users.updateApplyStatus');
+
     });
     Route::resource('users', 'UsersController');
     Route::get('deleted_users',['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])->name('users.deleted_users');

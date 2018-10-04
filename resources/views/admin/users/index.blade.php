@@ -37,11 +37,13 @@
                         {{ trans('users/UserList/title.title') }}
                     </h4>
                     <div class="pull-right">
-                        <button class="btn btn-warning btn-sm"
-                                onclick="document.location.href=this.getAttribute('href');"
-                                href="{{ route('admin.users.create') }}">
-                            <i class="livicon" data-name="user-add" data-size="16" data-loop="true" data-c="#fff"
-                               data-hc="white"></i></button>
+                        @if (Sentinel::getUser()->hasAccess('users.create') || Sentinel::getUser()->hasAccess('users'))
+                            <button class="btn btn-warning btn-sm"
+                                    onclick="document.location.href=this.getAttribute('href');"
+                                    href="{{ route('admin.users.create') }}">
+                                <i class="livicon" data-name="user-add" data-size="16" data-loop="true" data-c="#fff"
+                                   data-hc="white"></i></button>
+                        @endif
                     </div>
                 </div>
                 <br/>

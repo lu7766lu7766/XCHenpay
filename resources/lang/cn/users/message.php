@@ -31,6 +31,7 @@ return [
         'delete'    => 'There was an issue deleting the user. Please try again.',
         'unsuspend' => 'There was an issue unsuspending the user. Please try again.',
         'file_type_error'   => 'Only jpg, jpeg, bmp, png extensions are allowed.',
+        'illegal_operation' => 'User Illegal operation.'
     ],
 
 ];

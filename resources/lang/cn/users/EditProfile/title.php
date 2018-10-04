@@ -3,9 +3,7 @@
  * Language file for form fields for trade list
  *
  */
-
-return array(
-
-    'title'		=> '编辑用户',
-
-);
+return [
+    'title'            => '编辑用户',
+    'ApplyStatustitle' => '编辑下发状态',
+];
