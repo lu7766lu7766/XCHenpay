@@ -88,18 +88,23 @@
                     </div>
 
                     <div class="col-lg-3 form-horizontal">
-                        <label class="col-md-6 control-label text-center">小计</label>
-                        <p class="form-control-static col-md-6 " id="subTotal" style="font-weight: bold;">0</p>
+                        <label class="col-md-6 control-label text-center">申请中金额</label>
+                        <p class="form-control-static col-md-6 " id="totalApplying" style="font-weight: bold;">0</p>
+                        <label class="col-md-6 control-label text-center">可提現金額</label>
+                        <p class="form-control-static col-md-6" id="totalWithdrawal" style="font-weight: bold;">0</p>
                     </div>
 
                     <div class="col-lg-3 form-horizontal">
+                        <label class="col-md-6 control-label text-center">小计</label>
+                        <p class="form-control-static col-md-6 " id="subTotal" style="font-weight: bold;">0</p>
                         <label class="col-md-6 control-label text-center">总计</label>
                         <p class="form-control-static col-md-6" id="totalAmount" style="font-weight: bold;">0</p>
                     </div>
                     <div class="col-lg-3 form-horizontal" style="text-align: right">
                         <label class="control-label text-center" id="auto_refresh">10s</label>
                         <button type="button" class="btn btn-success btn-sm" id="refresh_button">
-                            <i class="livicon" data-name="refresh" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
+                            <i class="livicon" data-name="refresh" data-size="16" data-loop="true" data-c="#fff"
+                               data-hc="white"></i>
                             <span class="label-text">刷新</span>
                         </button>
                     </div>
@@ -232,6 +237,7 @@
             total();
             setTimeout('subTotal()', 500);
             autoRefresh();
+            applyingAndWithdrawal();
         });
 
         $(document).ready(function () {
@@ -265,6 +271,7 @@
             total();
             setTimeout('subTotal()', 500);
             autoRefresh();
+            applyingAndWithdrawal();
             $('#lendList').removeClass("hidden");
         }
 
@@ -304,7 +311,7 @@
             companyFilter();
         });
 
-        {{--自動整理--}}
+                {{--自動整理--}}
         var timer = null;
 
         function autoRefresh() {
@@ -320,6 +327,20 @@
             }, 1000)
         }
 
+        {{--申請中金额,可提現金額--}}
+        function applyingAndWithdrawal() {
+            $.ajax({
+                url: "{!! route('admin.lendManage.applyingAndWithdrawalAmount') !!}",
+                type: "post",
+                data: {
+                    userId: $('#company_selection').val(),
+                },
+                success: function (data) {
+                    $('#totalApplying').text(data.totalApplying);
+                    $('#totalWithdrawal').text(data.totalWithdrawal);
+                }
+            });
+        }
     </script>
 
 @stop

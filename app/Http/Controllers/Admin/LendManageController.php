@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\LendRecord;
+use App\Repositories\AuthCodes;
 use App\Repositories\LendRecords;
 use App\User;
 use Illuminate\Http\Request;
@@ -52,6 +53,22 @@ class LendManageController extends Controller
         }
 
         return $lendRecords->getTotal(request()->startDate, request()->endDate, $userId);
+    }
+
+    /**
+     * 申請中金额,可提現金額
+     * @param AuthCodes $authCodes
+     * @return array
+     */
+    public function getApplyingAndWithdrawalAmount(AuthCodes $authCodes)
+    {
+        $userId = null;
+        if (request()->userId != self::ALLCOMPANIES) {
+            $userId = request()->userId;
+        }
+        $result = $this->calculateApplyingAndWithdrawal($authCodes->applyingAndWithdrawalAmount($userId));
+
+        return $result;
     }
 
     private function makeDataTable($lendRecords)
@@ -125,5 +142,56 @@ class LendManageController extends Controller
         return Response::json([
             'Result' => 'OK'
         ]);
+    }
+
+    /**
+     * 計算申請中金额,可提現金額
+     * @param array $data
+     * @return array
+     */
+    private function calculateApplyingAndWithdrawal(array $data)
+    {
+        $totalMoney = 0;
+        $totalFee = 0;
+        $totalApplying = 0;
+        $withdrawal = 0;
+        foreach ($data as $row) {
+            $totalMoney += current($row['trade_logs'])['totalMoney'] ?? 0;
+            $totalFee += current($row['trade_logs'])['totalFee'] ?? 0;
+            $totalApplying += $this->calculateTotalApplying(current($row['lend_records']));
+            $withdrawal += $this->calculateTotalWithdrawal(current($row['lend_records']));
+        }
+        $result = [
+            'totalApplying'   => number_format($totalApplying, 3, ".", ","),
+            'totalWithdrawal' => number_format($totalMoney - $totalFee - $totalApplying - $withdrawal, 3, ".", ",")
+        ];
+
+        return $result;
+    }
+
+    /**
+     * @param $data array|boolean
+     * @return int
+     */
+    private function calculateTotalApplying($data)
+    {
+        if ($data['lend_state'] == 0) {
+            return $data['totalMoney'];
+        }
+
+        return 0;
+    }
+
+    /**
+     * @param $data array|boolean
+     * @return int
+     */
+    private function calculateTotalWithdrawal($data)
+    {
+        if ($data['lend_state'] == 1) {
+            return $data['totalMoney'];
+        }
+
+        return 0;
     }
 }

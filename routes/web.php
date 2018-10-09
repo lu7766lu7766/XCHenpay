@@ -126,6 +126,7 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
     Route::get('lendManage/showRecord/{lendRecord}', 'LendManageController@showRecordDialog')->name('lendManage.showRecord');
     Route::post('lendManage', 'LendManageController@update')->name('lendManage.Manage');
     Route::post('lendManage/total', 'LendManageController@total')->name('lendManage.total');
+    Route::post('lendManage/applyingAndWithdrawalAmount', 'LendManageController@getApplyingAndWithdrawalAmount')->name('lendManage.applyingAndWithdrawalAmount');
 });
 
 #permission
