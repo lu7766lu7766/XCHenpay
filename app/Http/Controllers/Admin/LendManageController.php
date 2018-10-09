@@ -153,39 +153,43 @@ class LendManageController extends Controller
     {
         $totalMoney = 0;
         $totalFee = 0;
+        $totalApplying = 0;
+        $withdrawal = 0;
         foreach ($data as $row) {
             $totalMoney += current($row['trade_logs'])['totalMoney'] ?? 0;
             $totalFee += current($row['trade_logs'])['totalFee'] ?? 0;
-            $totalLend = $this->calculateTotalLend($row['lend_records']);
+            $totalApplying += $this->calculateTotalApplying($row['lend_records']);
+            $withdrawal += $this->calculateTotalWithdrawal($row['lend_records']);
         }
         $result = [
-            'totalApplying'   => number_format($totalLend['totalApplying'], 3, ".", ","),
-            'totalWithdrawal' => number_format($totalMoney - $totalFee - $totalLend['totalApplying'] -
-                $totalLend['withdrawal'], 3, ".", ",")
+            'totalApplying'   => number_format($totalApplying, 3, ".", ","),
+            'totalWithdrawal' => number_format($totalMoney - $totalFee - $totalApplying - $withdrawal, 3, ".", ",")
         ];
 
         return $result;
     }
 
-    /**
-     * @param $data array|boolean
-     * @return array
-     */
-    private function calculateTotalLend($data)
+    private function calculateTotalApplying($data)
     {
-        $totalApplying = 0;
-        $withdrawal = 0;
         foreach ($data as $row) {
             switch ($row['lend_state']) {
                 case 0:
-                    $totalApplying += $row['totalMoney'];
-                    break;
-                case 1:
-                    $withdrawal += $row['totalMoney'];
-                    break;
+                    return $row['totalMoney'];
             }
         }
 
-        return ['totalApplying' => $totalApplying, 'withdrawal' => $withdrawal];
+        return 0;
+    }
+
+    private function calculateTotalWithdrawal($data)
+    {
+        foreach ($data as $row) {
+            switch ($row['lend_state']) {
+                case 1:
+                    return $row['totalMoney'];
+            }
+        }
+
+        return 0;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\User;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Sentinel;
 use Yajra\DataTables\DataTables;
 use function trans;
@@ -131,7 +132,7 @@ class AuthCodes
     {
         $query = User::query()
             ->with([
-                'tradeLogs'   => function ($builder) {
+                'tradeLogs'   => function (Relation $builder) {
                     $builder->select(
                         'company_service_id',
                         \DB::raw('SUM(amount) as totalMoney'),
@@ -139,7 +140,7 @@ class AuthCodes
                     )->whereIn('pay_state', [self::allDone_state, self::accept_state, self::deny_state])
                         ->groupBy('company_service_id');
                 },
-                'LendRecords' => function ($builder) {
+                'LendRecords' => function (Relation $builder) {
                     $builder->select(
                         'user_id',
                         'lend_state',
