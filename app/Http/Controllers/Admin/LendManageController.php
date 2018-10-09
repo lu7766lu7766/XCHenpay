@@ -174,7 +174,7 @@ class LendManageController extends Controller
         foreach ($data as $row) {
             switch ($row['lend_state']) {
                 case 0:
-                    return $row['totalMoney'];
+                    return round($row['totalMoney'], 3);
             }
         }
 
@@ -186,7 +186,7 @@ class LendManageController extends Controller
         foreach ($data as $row) {
             switch ($row['lend_state']) {
                 case 1:
-                    return $row['totalMoney'];
+                    return  round($row['totalMoney'], 3);
             }
         }
 
