@@ -153,17 +153,15 @@ class LendManageController extends Controller
     {
         $totalMoney = 0;
         $totalFee = 0;
-        $totalApplying = 0;
-        $withdrawal = 0;
         foreach ($data as $row) {
             $totalMoney += current($row['trade_logs'])['totalMoney'] ?? 0;
             $totalFee += current($row['trade_logs'])['totalFee'] ?? 0;
-            $totalApplying += $this->calculateTotalApplying(current($row['lend_records']));
-            $withdrawal += $this->calculateTotalWithdrawal(current($row['lend_records']));
+            $totalLend = $this->calculateTotalLend($row['lend_records']);
         }
         $result = [
-            'totalApplying'   => number_format($totalApplying, 3, ".", ","),
-            'totalWithdrawal' => number_format($totalMoney - $totalFee - $totalApplying - $withdrawal, 3, ".", ",")
+            'totalApplying'   => number_format($totalLend['totalApplying'], 3, ".", ","),
+            'totalWithdrawal' => number_format($totalMoney - $totalFee - $totalLend['totalApplying'] -
+                $totalLend['withdrawal'], 3, ".", ",")
         ];
 
         return $result;
@@ -171,27 +169,23 @@ class LendManageController extends Controller
 
     /**
      * @param $data array|boolean
-     * @return int
+     * @return array
      */
-    private function calculateTotalApplying($data)
+    private function calculateTotalLend($data)
     {
-        if ($data['lend_state'] == 0) {
-            return $data['totalMoney'];
+        $totalApplying = 0;
+        $withdrawal = 0;
+        foreach ($data as $row) {
+            switch ($row['lend_state']) {
+                case 0:
+                    $totalApplying += $row['totalMoney'];
+                    break;
+                case 1:
+                    $withdrawal += $row['totalMoney'];
+                    break;
+            }
         }
 
-        return 0;
-    }
-
-    /**
-     * @param $data array|boolean
-     * @return int
-     */
-    private function calculateTotalWithdrawal($data)
-    {
-        if ($data['lend_state'] == 1) {
-            return $data['totalMoney'];
-        }
-
-        return 0;
+        return ['totalApplying' => $totalApplying, 'withdrawal' => $withdrawal];
     }
 }
