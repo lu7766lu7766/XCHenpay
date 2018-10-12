@@ -145,7 +145,9 @@ class AuthCodes
                         'user_id',
                         'lend_state',
                         \DB::raw('SUM(amount) as totalMoney')
-                    )->groupBy('lend_state');
+                    )
+                        ->whereIn('lend_state', [LendRecords::APPLY_STATE, LendRecords::ACCEPT_STATE])
+                        ->groupBy('lend_state', 'user_id');
                 }
             ]);
         if (!is_null($userId)) {

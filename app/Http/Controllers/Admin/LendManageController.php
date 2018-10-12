@@ -155,11 +155,19 @@ class LendManageController extends Controller
         $totalFee = 0;
         $totalApplying = 0;
         $withdrawal = 0;
-        foreach ($data as $row) {
-            $totalMoney += current($row['trade_logs'])['totalMoney'] ?? 0;
-            $totalFee += current($row['trade_logs'])['totalFee'] ?? 0;
-            $totalApplying += $this->calculateTotalApplying($row['lend_records']);
-            $withdrawal += $this->calculateTotalWithdrawal($row['lend_records']);
+        foreach ($data as $dataInfo) {
+            $totalMoney += current($dataInfo['trade_logs'])['totalMoney'] ?? 0;
+            $totalFee += current($dataInfo['trade_logs'])['totalFee'] ?? 0;
+            foreach ($dataInfo['lend_records'] as $lendsInfo) {
+                switch ($lendsInfo['lend_state']) {
+                    case 0:
+                        $totalApplying += round($lendsInfo['totalMoney'], 3);
+                        break;
+                    case 1:
+                        $withdrawal += round($lendsInfo['totalMoney'], 3);
+                        break;
+                }
+            }
         }
         $result = [
             'totalApplying'   => number_format($totalApplying, 3, ".", ","),
@@ -167,29 +175,5 @@ class LendManageController extends Controller
         ];
 
         return $result;
-    }
-
-    private function calculateTotalApplying($data)
-    {
-        foreach ($data as $row) {
-            switch ($row['lend_state']) {
-                case 0:
-                    return round($row['totalMoney'], 3);
-            }
-        }
-
-        return 0;
-    }
-
-    private function calculateTotalWithdrawal($data)
-    {
-        foreach ($data as $row) {
-            switch ($row['lend_state']) {
-                case 1:
-                    return  round($row['totalMoney'], 3);
-            }
-        }
-
-        return 0;
     }
 }
