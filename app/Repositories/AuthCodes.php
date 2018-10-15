@@ -43,9 +43,11 @@ class AuthCodes
         }
         $query->whereBetween('created_at', [$startDate, $endDate])
             ->with(['i6payment', 'company', 'currency'])
-            ->orderBy('created_at', 'desc')
-            ->forPage($page, $perpage)
-            ->get($this->getCol);
+            ->orderBy('created_at', 'desc');
+        if($perpage!=-1){
+        $query->forPage($page, $perpage);
+        }
+        $query->get($this->getCol);
 
         return $query;
     }
