@@ -38,6 +38,9 @@ class AuthcodeController extends Controller
         if (isset(request()->company)) {
             $company = User::find(request()->company);
             $totalRecords = $authCodes->companyDataTotal($company, $startDate, $endDate, request()->payState);
+            if($perpage==-1){
+                $perpage = $totalRecords;
+            }
             $authCode = $authCodes->companyData(
                 $company,
                 $startDate,
