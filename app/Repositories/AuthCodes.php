@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\User;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Sentinel;
+use Yajra\DataTables\CollectionDataTable;
 use Yajra\DataTables\DataTables;
 use function trans;
 
@@ -34,26 +35,41 @@ class AuthCodes
         'pay_end_time'
     ];
 
-    public function companyData(User $user, $startDate, $endDate, $payState = null)
+    public function companyData(User $user, $startDate, $endDate, $page, $perpage, $payState = null)
     {
-        if (isset($payState)) {
-            return $user->tradeLogs()
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->where('pay_state', $payState)
-                ->get($this->getCol);
-        } else {
-            return $user->tradeLogs()
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->get($this->getCol);
+        $query = $user->tradeLogs();
+        if (!is_null($payState)) {
+            $query->where('pay_state', $payState);
         }
+        $query->whereBetween('created_at', [$startDate, $endDate])
+            ->with(['i6payment', 'company', 'currency'])
+            ->orderBy('created_at', 'desc')
+            ->forPage($page, $perpage)
+            ->get($this->getCol);
+
+        return $query;
     }
 
-    public function makeSimpleDatatable($authCodes)
+    public function companyDataTotal(User $user, $startDate, $endDate, $payState = null)
     {
-        return DataTables::of($authCodes)
-            ->addColumn('payment_name', function ($authCode) {
-                return $authCode->i6payment->name;
-            })
+        $query = $user->tradeLogs();
+        if (!is_null($payState)) {
+            $query->where('pay_state', $payState);
+        }
+        $result = $query->whereBetween('created_at', [$startDate, $endDate])
+            ->with(['i6payment', 'company', 'currency'])
+            ->count();
+
+        return $result;
+    }
+
+    public function makeSimpleDatatable($authCodes, $totalRecords)
+    {
+        /** @var CollectionDataTable $orm */
+        $orm = DataTables::of($authCodes);
+        $result = $orm->addColumn('payment_name', function ($authCode) {
+            return $authCode->i6payment->name;
+        })
             ->addColumn('currency_name', function ($authCode) {
                 return $authCode->currency->name;
             })
@@ -77,8 +93,11 @@ class AuthCodes
 
                 return $action;
             })
+            ->setTotalRecords($totalRecords)
             ->rawColumns(['actions'])
             ->make(true);
+
+        return $result;
     }
 
     public function getMoneyRecord(User $user)

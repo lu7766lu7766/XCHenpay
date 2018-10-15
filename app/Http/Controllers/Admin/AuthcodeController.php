@@ -32,18 +32,25 @@ class AuthcodeController extends Controller
     {
         $startDate = request()->startDate . ' 00:00:00';
         $endDate = request()->endDate . ' 23:59:59';
+        $page = request()->start;
+        $perpage = request()->length;
+        $totalRecords = 0;
         if (isset(request()->company)) {
             $company = User::find(request()->company);
-            if (isset(request()->payState)) {
-                $authCode = $authCodes->companyData($company, $startDate, $endDate, request()->payState);
-            } else {
-                $authCode = $authCodes->companyData($company, $startDate, $endDate);
-            }
+            $totalRecords = $authCodes->companyDataTotal($company, $startDate, $endDate, request()->payState);
+            $authCode = $authCodes->companyData(
+                $company,
+                $startDate,
+                $endDate,
+                $page,
+                $perpage,
+                request()->payState
+            );
         } else {
             $authCode = [];
         }
 
-        return $authCodes->makeSimpleDatatable($authCode);
+        return $authCodes->makeSimpleDatatable($authCode, $totalRecords);
     }
 
     public function showInfo(Authcode $authcode)
