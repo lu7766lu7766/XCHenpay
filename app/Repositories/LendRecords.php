@@ -42,7 +42,9 @@ class LendRecords
 
         return $lendRecords = LendRecord::where('user_id', '=', $userId)
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->with('account')
+            ->whereHas('account', function ($builder) use ($userId) {
+                $builder->where('accounts.user_id', $userId);
+            })
             ->with('user')
             ->get([
                 'id',
