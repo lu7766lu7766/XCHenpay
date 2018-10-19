@@ -129,6 +129,14 @@ Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin'
     Route::post('lendManage/applyingAndWithdrawalAmount', 'LendManageController@getApplyingAndWithdrawalAmount')->name('lendManage.applyingAndWithdrawalAmount');
 });
 
+#search
+Route::group(['prefix' => 'admin','namespace'=>'Admin', 'middleware' => ['admin','search'], 'as' => 'admin.'], function () {
+    Route::group([ 'prefix' => 'search'], function () {
+        Route::get('report/view', 'SearchController@reportIndex')->name('search.reportIndex');
+        Route::post('reportQuery', 'SearchController@reportQuery')->name('search.reportQuery');
+    });
+});
+
 #permission
 Route::group(['prefix' => 'admin','namespace'=>'Admin', 'as' => 'admin.'], function () {
     Route::get('permissionSwitch', 'PermissionController@permissionSwitch')->name('permission.switch');
