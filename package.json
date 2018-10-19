@@ -12,8 +12,8 @@
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",
     "cross-env": "^5.0.1",
-    "daterangepicker": "^3.0.3",
     "laravel-mix": "^1.0",
+    "moment": "^2.22.2",
     "vue": "^2.1.10",
     "vue-filter-number-format": "^1.0.3",
     "vue-resource": "^1.5.1"
