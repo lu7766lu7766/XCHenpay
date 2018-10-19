@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Authcode;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthCodeOrderSearchRequest;
 use App\Models\PaymentFees;
 use App\Payment;
 use App\Repositories\AuthCodes;
 use App\User;
 use Curl\Curl;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Response;
 use Sentinel;
 use Validator;
@@ -28,32 +30,39 @@ class AuthcodeController extends Controller
         return view('admin.trade.logQuery', compact('companies', 'switchPromission', 'notifyUrl'));
     }
 
-    public function data(AuthCodes $authCodes)
+    /**
+     * @param AuthCodeOrderSearchRequest $request
+     * @param AuthCodes $authCodes
+     * @return array
+     */
+    public function data(AuthCodeOrderSearchRequest $request, AuthCodes $authCodes)
     {
-        $startDate = request()->startDate . ' 00:00:00';
-        $endDate = request()->endDate . ' 23:59:59';
-        $page = request()->start;
-        $perpage = request()->length;
-        $totalRecords = 0;
-        if (isset(request()->company)) {
-            $company = User::find(request()->company);
-            $totalRecords = $authCodes->companyDataTotal($company, $startDate, $endDate, request()->payState);
-            if($perpage==-1){
-                $perpage = $totalRecords;
-            }
-            $authCode = $authCodes->companyData(
-                $company,
-                $startDate,
-                $endDate,
-                $page,
-                $perpage,
-                request()->payState
-            );
-        } else {
-            $authCode = [];
+        /** @var User $user */
+        $user = Sentinel::getUser();
+        $company = $user->getKey();
+        // 如果有擁有可選擇商戶的權限
+        if ($user->hasAccess('users.dataSwitch')) {
+            $company = $request->get('company', $company);
         }
+        /** @var Collection $authCode */
+        [$authCode, $totalRecords, $fee, $amount] = $authCodes->companyDataWithReport(
+            $company,
+            $request->get('start'),
+            $request->get('end'),
+            $request->get('page', 1),
+            $request->get('perpage', 20),
+            $request->get('pay_state'),
+            $request->get('keyword'),
+            $request->get('payment_type')
+        );
+        $result = [
+            'data'   => $authCode->all(),
+            'total'  => $totalRecords,
+            'fee'    => $fee,
+            'amount' => $amount
+        ];
 
-        return $authCodes->makeSimpleDatatable($authCode, $totalRecords);
+        return $result;
     }
 
     public function showInfo(Authcode $authcode)
