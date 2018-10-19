@@ -86,32 +86,32 @@
 
         <ul class="sub-menu">
 
-        @if(Sentinel::getUser()->hasAccess('showLending.index') || Sentinel::getUser()->hasAccess('showLending'))
-            <li {!! (Request::is('admin/showLending') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('admin/showLending') }}">
-                    <i class="fa fa-angle-double-right"></i>
-                    {{ trans('Trade/showLending/title.title') }}
-                </a>
-            </li>
-        @endif
+            @if(Sentinel::getUser()->hasAccess('showLending.index') || Sentinel::getUser()->hasAccess('showLending'))
+                <li {!! (Request::is('admin/showLending') ? 'class="active"' : '') !!}>
+                    <a href="{{ URL::to('admin/showLending') }}">
+                        <i class="fa fa-angle-double-right"></i>
+                        {{ trans('Trade/showLending/title.title') }}
+                    </a>
+                </li>
+            @endif
 
-        @if(Sentinel::getUser()->hasAccess('lendApply.index') || Sentinel::getUser()->hasAccess('lendApply'))
-            <li {!! (Request::is('admin/lendApply') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('admin/lendApply') }}">
-                    <i class="fa fa-angle-double-right"></i>
-                    {{ trans('Trade/LendApply/title.title') }}
-                </a>
-            </li>
-        @endif
+            @if(Sentinel::getUser()->hasAccess('lendApply.index') || Sentinel::getUser()->hasAccess('lendApply'))
+                <li {!! (Request::is('admin/lendApply') ? 'class="active"' : '') !!}>
+                    <a href="{{ URL::to('admin/lendApply') }}">
+                        <i class="fa fa-angle-double-right"></i>
+                        {{ trans('Trade/LendApply/title.title') }}
+                    </a>
+                </li>
+            @endif
 
-        @if(Sentinel::getUser()->hasAccess('lendManage.index') || Sentinel::getUser()->hasAccess('lendManage'))
-            <li {!! (Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
-                <a href="{{ URL::to('admin/lendManage') }}">
-                    <i class="fa fa-angle-double-right"></i>
-                    {{ trans('Trade/LendManage/title.title') }}
-                </a>
-            </li>
-        @endif
+            @if(Sentinel::getUser()->hasAccess('lendManage.index') || Sentinel::getUser()->hasAccess('lendManage'))
+                <li {!! (Request::is('admin/lendManage') ? 'class="active"' : '') !!}>
+                    <a href="{{ URL::to('admin/lendManage') }}">
+                        <i class="fa fa-angle-double-right"></i>
+                        {{ trans('Trade/LendManage/title.title') }}
+                    </a>
+                </li>
+            @endif
 
 
         </ul>
@@ -159,7 +159,7 @@
 
     {{--#Trade Query(index)--}}
     <li>
-        <a href="https://doc.166ok.com/3rdPartyPay_API_%E6%96%87%E6%8C%A1.pdf">
+        <a href="/doc/3rdPay_API.pdf">
             <i class="livicon" data-name="doc-portrait" data-size="18" data-c="#67C5DF" data-hc="#67C5DF"
                data-loop="true"></i>
             <span class="title">{{ trans('general.document') }}</span>
