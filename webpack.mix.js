@@ -1013,6 +1013,9 @@ mix.copy(srcCss + 'pages/minisidebar.css', destCss + 'pages');
 // Fixed menu layout
 mix.copy(srcCss + 'pages/fixedmenu.css', destCss + 'pages');
 
+// search-report style
+mix.copy(srcCss + 'report/style.css', destCss + 'report');
+
 //css section
 // Custom Styles
 //black color scheme
