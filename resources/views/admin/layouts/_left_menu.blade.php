@@ -127,7 +127,7 @@
     </li>
 
     {{--#Search--}}
-    @if(Sentinel::getUser()->hasAccess('search.menu'))
+    @if(Sentinel::getUser()->hasAccess('search.menu') || Sentinel::getUser()->hasAccess('search'))
         <li {!! (Request::is('admin/search') || Request::is('admin/search/report/view') ? 'class="active"' : '') !!}>
             <a href="#">
                 <i class="livicon" data-name="search" data-c="#418bca" data-hc="#418bca" data-size="18"
