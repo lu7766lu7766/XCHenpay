@@ -23,12 +23,12 @@
     <section class="content-header">
         <!--section starts-->
         <h1>@lang('Search/title.title')</h1>
-
         <ol class="breadcrumb">
-            <i class="livicon" data-name="search" data-size="14" data-loop="true"></i>
-            <li class="active">
-                @lang('Search/Report/title.title')
+            <li>
+                <i class="livicon" data-name="search" data-size="14" data-loop="true"></i>
+                @lang('Search/title.title')
             </li>
+            <li class="active">@lang('Search/Report/title.title')</li>
         </ol>
     </section>
     <section class="content">
