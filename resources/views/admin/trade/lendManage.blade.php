@@ -141,11 +141,6 @@
     <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"
             type="text/javascript"></script>
 
-    <script type="text/javascript"
-            src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.js') }}"></script>
-    <script type="text/javascript"
-            src="{{ asset('assets/vendors/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js') }}"></script>
-
     <div class="modal fade" id="lend_manage" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content"></div>
