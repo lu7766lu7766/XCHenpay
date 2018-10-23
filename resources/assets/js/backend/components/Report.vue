@@ -51,19 +51,19 @@
                     <td>{{ data.company_name }}</td>
                     <td class="text-green">
                         <div>{{ data.success_amount | numFormat('0,0.00') }}</div>
-                        <div>{{ data.success_count }}</div>
+                        <div>{{ data.success_count | numFormat }}</div>
                     </td>
                     <td class="text-red">
                         <div>{{ data.fail_amount | numFormat('0,0.00') }}</div>
-                        <div>{{ data.fail_count }}</div>
+                        <div>{{ data.fail_count | numFormat }}</div>
                     </td>
                     <td>
                         <div>{{ data.success_fee | numFormat('0,0.00') }}</div>
-                        <div>{{ data.success_count }}</div>
+                        <div>{{ data.success_count | numFormat }}</div>
                     </td>
                     <td>
                         <div>{{ data.success_amount + data.fail_amount | numFormat('0,0.00') }}</div>
-                        <div>{{ parseInt(data.success_count)+ parseInt(data.fail_count) }}</div>
+                        <div>{{ parseInt(data.success_count)+ parseInt(data.fail_count) | numFormat }}</div>
                     </td>
                 </tr>
                 </tbody>
@@ -77,10 +77,10 @@
                 </tr>
                 <tr>
                     <td colspan="2">筆數</td>
-                    <td>{{ this.success_count_sum }}</td>
-                    <td>{{ this.fail_count_sum }}</td>
-                    <td>{{ this.count_sum }}</td>
-                    <td>{{ this.count_sum }}</td>
+                    <td>{{ this.success_count_sum | numFormat }}</td>
+                    <td>{{ this.fail_count_sum | numFormat }}</td>
+                    <td>{{ this.count_sum | numFormat }}</td>
+                    <td>{{ this.count_sum | numFormat }}</td>
                 </tr>
                 </tfoot>
             </table>
