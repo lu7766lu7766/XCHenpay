@@ -10,7 +10,7 @@ return [
     'account'          => '银行卡号',
     'total_amount'     => '下发金额',
     'apply_time'       => '申请时间',
-    'bank_card_status' => '銀行卡狀態',
+    'bank_card_status' => '银行卡状态',
     'action'           => '操作',
     'totalMoney'       => '总交易金额',
     'totalFee'         => '总通道手续费',
