@@ -20,7 +20,6 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
     ];
-
     /**
      * The application's route middleware groups.
      *
@@ -37,13 +36,11 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\Locale::class,
         ],
-
         'api' => [
             'throttle:60,1',
             'bindings',
         ],
     ];
-
     /**
      * The application's route middleware.
      *
@@ -52,17 +49,18 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth'       => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'login' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin' => \App\Http\Middleware\SentinelAdmin::class,
-	    'users' => \App\Http\Middleware\usersPermission::class,
-        'lendApply' => \App\Http\Middleware\lendApplyPermission::class,
+        'bindings'   => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'can'        => \Illuminate\Auth\Middleware\Authorize::class,
+        'login'      => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin'      => \App\Http\Middleware\SentinelAdmin::class,
+        'users'      => \App\Http\Middleware\usersPermission::class,
+        'lendApply'  => \App\Http\Middleware\lendApplyPermission::class,
         'lendManage' => \App\Http\Middleware\lendManagePermission::class,
-        'account' => \App\Http\Middleware\accountPermission::class,
-        'tradeLog' => \App\Http\Middleware\tradeLogPermission::class,
+        'account'    => \App\Http\Middleware\accountPermission::class,
+        'tradeLog'   => \App\Http\Middleware\tradeLogPermission::class,
+        'search'     => \App\Http\Middleware\SearchPermission::class,
     ];
 }

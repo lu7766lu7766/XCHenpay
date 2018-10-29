@@ -6,6 +6,7 @@ use App\Authcode;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Collection;
 use Sentinel;
 use Yajra\DataTables\CollectionDataTable;
 use Yajra\DataTables\DataTables;
@@ -195,6 +196,44 @@ class AuthCodes
             $query->where('id', $userId);
         }
         $result = $query->get()->toArray();
+
+        return $result;
+    }
+
+    /**
+     * 查詢報表資訊
+     * @param string $startDate 開始時間
+     * @param string $endDate 結束時間
+     * @return \Illuminate\Database\Eloquent\Collection[]
+     */
+    public function getReportRecord(string $startDate, string $endDate)
+    {
+        $result = [];
+        try {
+            $builder = \DB::table('authcodes')->selectRaw(
+                " round(sum(case when pay_state = ? then amount else 0 end),2) success_amount,
+                  round(sum(case when pay_state = ? then fee else 0 end),2) success_fee,
+                  sum(case when pay_state = ? then 1 else 0 end) success_count,
+                  round(sum(case when pay_state != ? then amount else 0 end),2) fail_amount,
+                  round(sum(case when pay_state != ? then fee else 0 end),2) fail_fee,
+                  sum(case when pay_state != ? then 1 else 0 end) fail_count,
+                  company_service_id",
+                array_fill(0, 6, (string)self::allDone_state))
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->groupBy('company_service_id');
+            $result = User::query()
+                ->rightJoin(
+                    \DB::raw('(' . $builder->toSql() . ') A'),
+                    'A.company_service_id',
+                    '=',
+                    'users.company_service_id')
+                ->setBindings($builder->getBindings())
+                ->selectRaw("A .*, users . company_name")
+                ->orderBy('users.id', 'ASC')
+                ->get();
+        } catch (\Throwable $e) {
+            $result = new Collection();
+        }
 
         return $result;
     }

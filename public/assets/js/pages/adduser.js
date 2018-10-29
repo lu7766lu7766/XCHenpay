@@ -24,50 +24,92 @@ $("#commentForm").bootstrapValidator({
         company_name: {
             validators: {
                 notEmpty: {
-                    message: '商户名称请勿留空'
+                    message: 'The company name is required'
+                }
+            },
+            required: true,
+            minlength: 3
+        },
+        first_name: {
+            validators: {
+                notEmpty: {
+                    message: 'The first name is required'
+                }
+            },
+            required: true,
+            minlength: 3
+        },
+        last_name: {
+            validators: {
+                notEmpty: {
+                    message: 'The last name is required'
+                }
+            },
+            required: true,
+            minlength: 3
+        },
+        password: {
+            validators: {
+                notEmpty: {
+                    message: 'Password is required'
                 },
-                stringLength: {
-                    min: 6,
-                    message: '商户名称必须大于6个字元'
+                different: {
+                    field: 'first_name,last_name',
+                    message: 'Password should not match first name'
                 }
             }
         },
-        mobile: {
+        password_confirm: {
             validators: {
                 notEmpty: {
-                    message: '联络人手机请勿留空'
+                    message: 'Confirm Password is required'
                 },
-                phone: {
-                    country: 'CN',
-                    message: '请输入有效的手机号码'
+                identical: {
+                    field: 'password'
+                },
+                different: {
+                    field: 'first_name,last_name',
+                    message: 'Confirm Password should match with password'
                 }
             }
         },
         email: {
             validators: {
                 notEmpty: {
-                    message: '电子邮箱请勿留空'
+                    message: 'The email address is required'
                 },
                 emailAddress: {
-                    message: '请输入有效的电子邮箱'
+                    message: 'The input is not a valid email address'
                 }
             }
         },
-        QQ_id: {
+        bio: {
             validators: {
                 notEmpty: {
-                    message: 'QQ号请勿留空'
-                },
-                stringLength: {
-                    min: 6,
-                    message: 'QQ号必须大于6个字元'
+                    message: 'Bio is required and cannot be empty'
+                }
+            },
+            minlength: 20
+        },
+
+        gender: {
+            validators: {
+                notEmpty: {
+                    message: 'Please select a gender'
+                }
+            }
+        },
+        activate: {
+            validators: {
+                notEmpty: {
+                    message: 'Please check the checkbox to activate'
                 }
             }
         },
         group: {
             validators:{
                 notEmpty:{
-                    message: '必须选择权限角色'
+                    message: 'You must select a group'
                 }
             }
         }

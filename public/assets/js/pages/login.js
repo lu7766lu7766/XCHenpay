@@ -15,17 +15,17 @@ $(document).ready(function () {
             email: {
                 validators: {
                     notEmpty: {
-                        message: '帐户信箱是必填登入资讯'
+                        message: 'The email address is required'
                     },
                     emailAddress: {
-                        message: '请输入有效的电子邮箱'
+                        message: 'The input is not a valid email address'
                     }
                 }
             },
             password: {
                 validators: {
                     notEmpty: {
-                        message: '密码是必填登入资讯'
+                        message: 'Password is required'
                     }
                 }
             }
