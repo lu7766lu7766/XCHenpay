@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Response;
 use Sentinel;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Validator;
 use Yajra\DataTables\DataTables;
 
@@ -25,6 +26,11 @@ class LendManageController extends Controller
         return view('admin.trade.lendManage', compact('companies'));
     }
 
+    /**
+     * @param LendRecords $lendRecords
+     * @return JsonResponse
+     * @throws \Exception
+     */
     public function data(LendRecords $lendRecords)
     {
         $records = collect();
@@ -71,6 +77,11 @@ class LendManageController extends Controller
         return $result;
     }
 
+    /**
+     * @param $lendRecords
+     * @return JsonResponse
+     * @throws \Exception
+     */
     private function makeDataTable($lendRecords)
     {
         return DataTables::of($lendRecords)
@@ -85,6 +96,13 @@ class LendManageController extends Controller
             })
             ->addColumn('tatol_amount', function ($lendRecord) {
                 return $lendRecord->amount - $lendRecord->fee;
+            })->addColumn('bank_card_status', function ($lendRecord) {
+                $result = '<span style="color: green">正常</span>';
+                if (!is_null($lendRecord->account->deleted_at)) {
+                    $result = '<span style="color: red">删除</span>';
+                }
+
+                return $result;
             })
             ->addColumn('actions', function ($lendRecord) {
                 $lendLink = '<a href=' . route('admin.lendManage.manageRecord',
@@ -96,13 +114,17 @@ class LendManageController extends Controller
 
                 return $action;
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'bank_card_status'])
             ->make(true);
     }
 
+    /**
+     * @param LendRecord $lendRecord
+     * @return \Illuminate\View\View
+     */
     public function showRecordDialog(LendRecord $lendRecord)
     {
-        $account = $lendRecord->account;
+        $account = $lendRecord->account()->withTrashed()->first();
 
         return view('admin.trade.showRecordModal', compact('lendRecord', 'account'));
     }
