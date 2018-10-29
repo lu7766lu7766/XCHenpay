@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\LendRecord;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class LendRecords
 {
@@ -35,6 +37,13 @@ class LendRecords
             ]);
     }
 
+    /**
+     * 取得下發列表資訊
+     * @param $userId
+     * @param $start
+     * @param $end
+     * @return Collection
+     */
     public function getUserRecords($userId, $start, $end)
     {
         $startDate = $start . ' 00:00:00';
@@ -42,11 +51,13 @@ class LendRecords
 
         return $lendRecords = LendRecord::where('user_id', '=', $userId)
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->whereHas('account', function ($builder) use ($userId) {
-                $builder->where('accounts.user_id', $userId);
-            })
-            ->with('user')
-            ->get([
+            ->with(
+                [
+                    'account' => function (Relation $builder) use ($userId) {
+                        $builder->withTrashed()->where('accounts.user_id', $userId);
+                    }
+                ], 'user'
+            )->get([
                 'id',
                 'record_seq',
                 'amount',
