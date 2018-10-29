@@ -97,9 +97,6 @@
 
     export default {
         mixins: [TimeMixins, FetchMixins],
-        data: () => ({
-            datas: []
-        }),
         computed: {
             success_count_sum() {
                 return _.sumBy(this.datas, data => +data.success_count);

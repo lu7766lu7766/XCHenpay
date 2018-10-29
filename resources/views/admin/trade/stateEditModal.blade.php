@@ -25,7 +25,8 @@
             <div class="col-sm-9">
                 <select class="form-control" name="pay_state">
                     @foreach($stateList as $stKey => $stVal)
-                        <option value="{{ $stKey }}" @if($stKey == $authcode->pay_state) selected @endif>{{ $stVal }}</option>
+                        <option value="{{ $stKey }}"
+                                @if($stKey == $authcode->pay_state) selected @endif>{{ $stVal }}</option>
                     @endforeach
                 </select>
             </div>
@@ -50,11 +51,12 @@
             },
             dataType: 'json',
             success: function () {
-                table.ajax.reload();
+                vm.$root.$emit('reload')
+                // table.ajax.reload();
                 $('#stateEditModal').modal('toggle');
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr+ ' '+ thrownError);
+                console.log(xhr + ' ' + thrownError);
                 alert('与服务器沟通错误');
             }
         });

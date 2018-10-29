@@ -57,6 +57,8 @@ class AuthCodeOrderSearchRequest extends FormRequest
             'pay_state'    => 'sometimes|required|integer',
             'keyword'      => 'sometimes|required|string|between:1,100',
             'payment_type' => 'sometimes|required|integer',
+            'sort'         => 'sometimes|required|in:created_at,amount',
+            'direction'    => 'sometimes|required|in:desc,asc',
         ];
     }
 }

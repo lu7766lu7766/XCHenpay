@@ -4,7 +4,8 @@ export default {
     mixins: [PaginateMixins],
     data: () => ({
         isLoading: false,
-        serchData: {}
+        serchData: {},
+        datas: [],
     }),
     methods: {
         async post(url, data) {
@@ -34,6 +35,11 @@ export default {
         },
         filterData(data) {
             return _.pickBy(data, x => x !== '' && !_.isNull(x) && !_.isUndefined(x))
+        }
+    },
+    computed: {
+        startIndex() {
+            return (this.paginate.page-1) * this.paginate.perpage + 1
         }
     }
 }

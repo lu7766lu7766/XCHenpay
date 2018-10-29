@@ -58,7 +58,9 @@ class AuthCodes
         int $perpage = 20,
         int $payState = null,
         string $tradeSeq = null,
-        int $paymentType = null
+        int $paymentType = null,
+        string $sort = 'created_at',
+        string $direction = 'desc'
     ) {
         $query = Authcode::query()->whereHas('company', function (Builder $builder) use ($company) {
             $builder->where('id', $company);
@@ -77,10 +79,9 @@ class AuthCodes
         $fee = $query->sum('fee');
         $amount = $query->sum('amount');
         $orders = $query->with(['i6payment', 'company', 'currency'])
-            ->orderBy('created_at', 'desc')
+            ->orderBy($sort, $direction)
             ->forPage($page, $perpage)
             ->get($this->getCol);
-
         return [$orders, $count, $fee, $amount];
     }
 
@@ -113,13 +114,11 @@ class AuthCodes
                 if ($authCode->pay_state == $this::success_state) {
                     $action .= $callBackLink;
                 }
-
                 return $action;
             })
             ->setTotalRecords($totalRecords)
             ->rawColumns(['actions'])
             ->make(true);
-
         return $result;
     }
 
@@ -161,7 +160,6 @@ class AuthCodes
             'totalLended'  => number_format($totalLended, 3, ".", ","),
             'totalIncome'  => number_format($totalMoney - $totalFee - $totalLending - $totalLended, 3, ".", ","),
         ];
-
         return $data;
     }
 
@@ -196,7 +194,6 @@ class AuthCodes
             $query->where('id', $userId);
         }
         $result = $query->get()->toArray();
-
         return $result;
     }
 
@@ -234,7 +231,6 @@ class AuthCodes
         } catch (\Throwable $e) {
             $result = new Collection();
         }
-
         return $result;
     }
 }
