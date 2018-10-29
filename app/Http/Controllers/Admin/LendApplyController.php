@@ -139,6 +139,11 @@ class LendApplyController extends Controller
             ->make(true);
     }
 
+    /**
+     * 下發資訊
+     * @param LendRecord $lendRecord
+     * @return \Illuminate\View\View
+     */
     public function showRecordDialog(LendRecord $lendRecord)
     {
         $account = $lendRecord->account()->withTrashed()->first();

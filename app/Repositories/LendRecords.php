@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\LendRecord;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class LendRecords
@@ -36,6 +37,13 @@ class LendRecords
             ]);
     }
 
+    /**
+     * 取得下發列表資訊
+     * @param $userId
+     * @param $start
+     * @param $end
+     * @return Collection
+     */
     public function getUserRecords($userId, $start, $end)
     {
         $startDate = $start . ' 00:00:00';
