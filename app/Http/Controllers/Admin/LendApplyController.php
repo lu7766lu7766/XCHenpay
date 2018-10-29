@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Response;
 use Sentinel;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Validator;
 use Yajra\DataTables\DataTables;
 
@@ -98,6 +99,12 @@ class LendApplyController extends Controller
         return ['Result' => 'OK'];
     }
 
+    /**
+     * 取得下發列表
+     * @param LendRecords $lendRecords
+     * @return JsonResponse
+     * @throws \Exception
+     */
     public function data(LendRecords $lendRecords)
     {
         if (isset(request()->companyId)) {
@@ -109,6 +116,11 @@ class LendApplyController extends Controller
         return $this->makeDataTable($lendRecords);
     }
 
+    /**
+     * @param $lendRecords
+     * @return JsonResponse
+     * @throws \Exception
+     */
     private function makeDataTable($lendRecords)
     {
         return DataTables::of($lendRecords)
