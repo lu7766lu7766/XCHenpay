@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\LendRecord;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class LendRecords
 {
@@ -42,11 +43,13 @@ class LendRecords
 
         return $lendRecords = LendRecord::where('user_id', '=', $userId)
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->whereHas('account', function ($builder) use ($userId) {
-                $builder->where('accounts.user_id', $userId);
-            })
-            ->with('user')
-            ->get([
+            ->with(
+                [
+                    'account' => function (Relation $builder) use ($userId) {
+                        $builder->withTrashed()->where('accounts.user_id', $userId);
+                    }
+                ], 'user'
+            )->get([
                 'id',
                 'record_seq',
                 'amount',
