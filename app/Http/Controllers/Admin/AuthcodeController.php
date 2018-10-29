@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Authcode;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthCodeOrderSearchRequest;
 use App\Models\PaymentFees;
 use App\Payment;
 use App\Repositories\AuthCodes;
 use App\User;
 use Curl\Curl;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Response;
 use Sentinel;
 use Validator;
@@ -24,36 +26,43 @@ class AuthcodeController extends Controller
         if ($switchPromission) {
             $companies = User::All()->where('company_service_id', '<>', null);
         }
-
         return view('admin.trade.logQuery', compact('companies', 'switchPromission', 'notifyUrl'));
     }
 
-    public function data(AuthCodes $authCodes)
+    /**
+     * @param AuthCodeOrderSearchRequest $request
+     * @param AuthCodes $authCodes
+     * @return array
+     */
+    public function data(AuthCodeOrderSearchRequest $request, AuthCodes $authCodes)
     {
-        $startDate = request()->startDate . ' 00:00:00';
-        $endDate = request()->endDate . ' 23:59:59';
-        $page = request()->start;
-        $perpage = request()->length;
-        $totalRecords = 0;
-        if (isset(request()->company)) {
-            $company = User::find(request()->company);
-            $totalRecords = $authCodes->companyDataTotal($company, $startDate, $endDate, request()->payState);
-            if($perpage==-1){
-                $perpage = $totalRecords;
-            }
-            $authCode = $authCodes->companyData(
-                $company,
-                $startDate,
-                $endDate,
-                $page,
-                $perpage,
-                request()->payState
-            );
-        } else {
-            $authCode = [];
+        /** @var User $user */
+        $user = Sentinel::getUser();
+        $company = $user->getKey();
+        // 如果有擁有可選擇商戶的權限
+        if ($user->hasAccess('users.dataSwitch')) {
+            $company = $request->get('company', $company);
         }
-
-        return $authCodes->makeSimpleDatatable($authCode, $totalRecords);
+        /** @var Collection $authCode */
+        [$authCode, $totalRecords, $fee, $amount] = $authCodes->companyDataWithReport(
+            $company,
+            $request->get('start'),
+            $request->get('end'),
+            $request->get('page', 1),
+            $request->get('perpage', 20),
+            $request->get('pay_state'),
+            $request->get('keyword'),
+            $request->get('payment_type'),
+            $request->get('sort', 'created_at'),
+            $request->get('direction', 'desc')
+        );
+        $result = [
+            'data'   => $authCode->all(),
+            'total'  => $totalRecords,
+            'fee'    => $fee,
+            'amount' => $amount
+        ];
+        return $result;
     }
 
     public function showInfo(Authcode $authcode)
@@ -92,7 +101,6 @@ class AuthcodeController extends Controller
                 $payments = $paymentsSQL->get();
             }
         }
-
         return $this->makeFeeDatatable($payments);
     }
 
@@ -115,7 +123,6 @@ class AuthcodeController extends Controller
                 if ($user->hasAccess('logQuery') || ($user->hasAccess('logQuery.editFeeInfo') && $user->hasAccess('logQuery.updateFeeInfo'))) {
                     $action .= $editLink;
                 }
-
                 return $action;
             })
             ->rawColumns(['actions'])
@@ -129,7 +136,6 @@ class AuthcodeController extends Controller
             ->join('payments as p', 'p.id', '=', 'f.payment_id')
             ->where('f.id', $id)
             ->first();
-
         return view('admin.trade.showFeeModal', compact('payment'));
     }
 
@@ -140,7 +146,6 @@ class AuthcodeController extends Controller
             ->join('payments as p', 'p.id', '=', 'f.payment_id')
             ->where('f.id', $id)
             ->first();
-
         return view('admin.trade.editFeeModal', compact('payment'));
     }
 
@@ -175,7 +180,6 @@ class AuthcodeController extends Controller
         if (!$user->hasAccess('users.dataSwitch') && $user->tradeLogs()->where('id', '=',
                 request()->id)->first() == null) {
             $this->errorLog($user->email . '手动回调一笔不属于齐权限的订单: ' . request()->id);
-
             return $this->errorResponse('请求发生错误，请联络客服人员');
         }
         if (env('APP_inLocal')) {
@@ -192,7 +196,6 @@ class AuthcodeController extends Controller
         if ($response != 'success') {
             return $this->errorResponse('回调失败，请联络客服人员');
         }
-
         //success
         return Response::json([
             'Result' => 'OK'
@@ -208,7 +211,6 @@ class AuthcodeController extends Controller
             3 => '交易结束',
             4 => '交易失败'
         ];
-
         return view('admin.trade.stateEditModal', compact('authcode', 'stateList'));
     }
 
@@ -238,7 +240,6 @@ class AuthcodeController extends Controller
         activity($user->email)
             ->causedBy($user)
             ->log('修改订单:' . $authcode->trade_seq . ' 状态,由"' . $oldState . '"修改至"' . $authcode->pay_summary . '"');
-
         return Response::json($authcode);
     }
 }

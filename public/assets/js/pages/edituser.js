@@ -19,69 +19,64 @@ $("#dob").datetimepicker({
 });
 $("#commentForm").bootstrapValidator({
     fields: {
-        company_name: {
+        first_name: {
             validators: {
                 notEmpty: {
-                    message: '商户名称请勿留空'
-                },
-                stringLength: {
-                    min: 6,
-                    message: '商户名称必须大于6个字元'
+                    message: 'The fisrt name is required'
                 }
-            }
+            },
+            required: true,
+            minlength: 3
         },
-        mobile: {
+        last_name: {
             validators: {
                 notEmpty: {
-                    message: '联络人手机请勿留空'
-                },
-                phone: {
-                    country: 'CN',
-                    message: '请输入有效的手机号码'
+                    message: 'The last name is required'
                 }
-            }
-        },
-        email: {
-            validators: {
-                notEmpty: {
-                    message: '电子邮箱请勿留空'
-                },
-                emailAddress: {
-                    message: '请输入有效的电子邮箱'
-                }
-            }
-        },
-        QQ_id: {
-            validators: {
-                integer:{
-                    message: 'QQ号必须为数字'
-                },
-                stringLength: {
-                    min: 6,
-                    message: 'QQ号必须大于6个字元'
-                }
-            }
+            },
+            required: true,
+            minlength: 3
         },
         password: {
             validators: {
-                stringLength: {
-                    min: 6,
-                    message: '密码必须大于6个字元'
+                different: {
+                    field: 'first_name,last_name',
+                    message: 'Password should not match first or last name'
                 }
             }
         },
         password_confirm: {
             validators: {
                 identical: {
-                    field: 'password',
-                    message: '与密码不符'
+                    field: 'password'
+                },
+                different: {
+                    field: 'first_name,last_name',
+                    message: 'Confirm Password should match with password'
+                }
+            }
+        },
+        email: {
+            validators: {
+                notEmpty: {
+                    message: 'The email address is required'
+                },
+                emailAddress: {
+                    message: 'The input is not a valid email address'
+                }
+            }
+        },
+        activate: {
+            validators: {
+                notEmpty: {
+                    message: 'Please check the checkbox to activate'
                 }
             }
         },
         group: {
             validators:{
                 notEmpty:{
-                    message: '必须选择权限角色'
+                    message: 'You must select a group'
                 }
             }
         }

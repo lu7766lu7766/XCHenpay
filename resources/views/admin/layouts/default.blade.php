@@ -26,8 +26,8 @@
 
     <!-- end of global css -->
     <!--page level css-->
-    @yield('header_styles')
-    <!--end of page level css-->
+@yield('header_styles')
+<!--end of page level css-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"
@@ -37,6 +37,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.9/metisMenu.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.9/metisMenu.min.css" rel="stylesheet"
           type="text/css"/>
+
+    <!-- vue used library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.css"
+          rel="stylesheet"
+          type="text/css"/>
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}"/>
 
 <body class="skin-josh">
 <header class="header">
@@ -56,22 +66,26 @@
                 {{--@include('admin.layouts._notifications')--}}
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            @if(Sentinel::getUser()->roles()->first()->slug === "admin")
-                                <img src="{{ asset('assets/images/authors/admin_avatar.png') }}" alt="img" height="35px" width="35px"
-                                     class="img-circle img-responsive pull-left"/>
+                        @if(Sentinel::getUser()->roles()->first()->slug === "admin")
+                            <img src="{{ asset('assets/images/authors/admin_avatar.png') }}" alt="img" height="35px"
+                                 width="35px"
+                                 class="img-circle img-responsive pull-left"/>
 
-                            @elseif(Sentinel::getUser()->roles()->first()->slug === "finance")
-                                <img src="{{ asset('assets/images/authors/finance_avatar.png') }}" alt="img" height="35px" width="35px"
-                                     class="img-circle img-responsive pull-left"/>
+                        @elseif(Sentinel::getUser()->roles()->first()->slug === "finance")
+                            <img src="{{ asset('assets/images/authors/finance_avatar.png') }}" alt="img"
+                                 height="35px" width="35px"
+                                 class="img-circle img-responsive pull-left"/>
 
-                            @elseif(Sentinel::getUser()->roles()->first()->slug === "user")
-                                <img src="{{ asset('assets/images/authors/user_avatar.png') }}" alt="img" height="35px" width="35px"
-                                     class="img-circle img-responsive pull-left"/>
+                        @elseif(Sentinel::getUser()->roles()->first()->slug === "user")
+                            <img src="{{ asset('assets/images/authors/user_avatar.png') }}" alt="img" height="35px"
+                                 width="35px"
+                                 class="img-circle img-responsive pull-left"/>
 
-                            @else
-                                <img src="{{ asset('assets/images/authors/no_avatar.jpg') }}" alt="img" height="35px" width="35px"
-                                     class="img-circle img-responsive pull-left"/>
-                            @endif
+                        @else
+                            <img src="{{ asset('assets/images/authors/no_avatar.jpg') }}" alt="img" height="35px"
+                                 width="35px"
+                                 class="img-circle img-responsive pull-left"/>
+                        @endif
                         <div class="riot">
                             <div>
                                 <p class="user_name_max">{{ Sentinel::getUser()->email }}</p>
@@ -85,18 +99,22 @@
                         <!-- User image -->
                         <li class="user-header bg-light-blue">
                             @if(Sentinel::getUser()->roles()->first()->slug === "admin")
-                                <img src="{{ asset('assets/images/authors/admin_avatar.png') }}" alt="img" height="35px" width="35px"
+                                <img src="{{ asset('assets/images/authors/admin_avatar.png') }}" alt="img"
+                                     height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
 
                             @elseif(Sentinel::getUser()->roles()->first()->slug === "finance")
-                                <img src="{{ asset('assets/images/authors/finance_avatar.png') }}" alt="img" height="35px" width="35px"
+                                <img src="{{ asset('assets/images/authors/finance_avatar.png') }}" alt="img"
+                                     height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
 
                             @elseif(Sentinel::getUser()->gender === "user")
-                                <img src="{{ asset('assets/images/authors/user_avatar.png') }}" alt="img" height="35px" width="35px"
+                                <img src="{{ asset('assets/images/authors/user_avatar.png') }}" alt="img"
+                                     height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
                             @else
-                                <img src="{{ asset('assets/images/authors/no_avatar.jpg') }}" alt="img" height="35px" width="35px"
+                                <img src="{{ asset('assets/images/authors/no_avatar.jpg') }}" alt="img"
+                                     height="35px" width="35px"
                                      class="img-circle img-responsive pull-left"/>
                             @endif
                             <p class="topprofiletext">{{ Sentinel::getUser()->email }}</p>
@@ -113,7 +131,8 @@
                         <li class="user-footer">
                             <div class="pull-left">
                                 <a href="{{ URL::route('admin.lockscreen',Sentinel::getUser()->id) }}">
-                                    <i class="livicon" data-name="lock" data-size="16" data-c="#555555" data-hc="#555555" data-loop="true"></i>
+                                    <i class="livicon" data-name="lock" data-size="16" data-c="#555555"
+                                       data-hc="#555555" data-loop="true"></i>
                                     @lang('DefaultBlade/form.Lock')
                                 </a>
                             </div>
@@ -165,8 +184,8 @@
                 </div>
                 <div class="clearfix"></div>
                 <!-- BEGIN SIDEBAR MENU -->
-                @include('admin.layouts._left_menu')
-                <!-- END SIDEBAR MENU -->
+            @include('admin.layouts._left_menu')
+            <!-- END SIDEBAR MENU -->
             </div>
         </section>
     </aside>
@@ -174,11 +193,13 @@
 
         <!-- Notifications -->
         <div id="notific">
-        @include('notifications')
+            @include('notifications')
         </div>
 
-                <!-- Content -->
-        @yield('content')
+        <!-- Content -->
+        <div id="app">
+            @yield('content')
+        </div>
 
     </aside>
     <!-- right-side -->
@@ -192,6 +213,6 @@
 <!-- end of global js -->
 <!-- begin page level js -->
 @yield('footer_scripts')
-        <!-- end page level js -->
+<!-- end page level js -->
 </body>
 </html>

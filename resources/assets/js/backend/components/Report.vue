@@ -2,10 +2,10 @@
     <div class="panel-body">
         <div class="search-box">
             <div class="col-sm-6 col-md-2">
-                <date-time-picker :value.sync="startTime"/>
+                <date-time-picker v-model="startTime"/>
             </div>
             <div class="col-sm-6 col-md-2">
-                <date-time-picker :value.sync="endTime"/>
+                <date-time-picker v-model="endTime"/>
             </div>
             <div class="col-sm-12 col-md-8">
                 <button type="button" class="btn btn-orange-lighter" data-toggle="button"
@@ -92,19 +92,11 @@
 </template>
 
 <script>
-    import PickerMixins from '../mixins/picker'
+    import TimeMixins from '../mixins/time'
+    import FetchMixins from '../mixins/fetch'
 
     export default {
-        mixins: [PickerMixins],
-        components: {
-            DateTimePicker: require('./DateTimePicker')
-        },
-        data: () => ({
-            startTime: moment().format('YYYY/MM/DD'),
-            endTime: moment().format('YYYY/MM/DD'),
-            datas: [],
-            isLoading: false
-        }),
+        mixins: [TimeMixins, FetchMixins],
         computed: {
             success_count_sum() {
                 return _.sumBy(this.datas, data => +data.success_count);
@@ -130,28 +122,14 @@
                 return _.sumBy(this.datas, function (data) {
                     return data.success_amount + data.fail_amount;
                 });
-            },
-            timeContainer: {
-                get() {
-                },
-                set(value) {
-                    this.startTime = value.start.format('YYYY/MM/DD')
-                    this.endTime = value.end.format('YYYY/MM/DD')
-                }
             }
         },
         methods: {
             async fetch() {
-                this.isLoading = true;
-                var res = await this.$http.post('/admin/search/reportQuery', {
-                    "startDate": this.startTime.replace(/\//g, '-'),
-                    "endDate": this.endTime.replace(/\//g, '-')
-                }).catch(e => {
-                    this.isLoading = false
-                    alert("与服务器沟通错误")
-                    return false;
+                var res = await this.post('/admin/search/reportQuery', {
+                    "startDate": this.startTime.startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+                    "endDate": this.endTime.endOf('day').format('YYYY-MM-DD HH:mm:ss')
                 })
-
                 if (res.ok) {
                     this.isLoading = false
                     this.datas = res.body.data

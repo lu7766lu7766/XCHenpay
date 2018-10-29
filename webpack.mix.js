@@ -1013,8 +1013,8 @@ mix.copy(srcCss + 'pages/minisidebar.css', destCss + 'pages');
 // Fixed menu layout
 mix.copy(srcCss + 'pages/fixedmenu.css', destCss + 'pages');
 
-// search-report style
-mix.copy(srcCss + 'report/style.css', destCss + 'report');
+// sunny style
+mix.copy(srcCss + 'style.css', destCss);
 
 //css section
 // Custom Styles
@@ -1079,3 +1079,4 @@ mix.combine(
     ], destJs + 'frontend/lib.js');
 
 mix.js('resources/assets/js/backend/report.js', 'public/assets/js');
+mix.js('resources/assets/js/backend/OrderSearch.js', 'public/assets/js');

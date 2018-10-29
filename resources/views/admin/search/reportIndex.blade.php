@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/tables.css') }}"/>
     <link href="{{ asset('assets/css/pages/transitions.css') }}" rel="stylesheet"/>
     {{--<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/daterangepicker/css/daterangepicker.css') }}"/>--}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/report/style.css') }}"/>
 
 
 @stop
@@ -59,11 +58,5 @@
 
 {{-- page level scripts --}}
 @section('footer_scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.3/daterangepicker.min.css"
-          rel="stylesheet"
-          type="text/css"/>
     <script src="{{ asset('assets/js/report.js') }}"></script>
 @stop

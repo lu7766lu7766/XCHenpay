@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Cartalyst\Sentinel\Users\UserInterface;
 use Closure;
 use Sentinel;
 
@@ -16,33 +17,32 @@ class usersPermission
      */
     public function handle($request, Closure $next)
     {
-        $openSource = array(
+        $openSource = [
             'showProfile',
             'passwordreset',
             'lockscreen',
             'postLockscreen'
-        );
-        $protectOthers = array(
+        ];
+        $protectOthers = [
             'show'
-        );
-
+        ];
         $method = $request->route()->getActionMethod();
+        /** @var UserInterface $user */
         $user = Sentinel::getUser();
-
-        if(in_array($method, $openSource))
+        if (in_array($method, $openSource)) {
             return $next($request);
-
-        if($user->hasAccess('users'))
+        }
+        if ($user->hasAccess('users')) {
             return $next($request);
-
-        if(in_array($method, $protectOthers) && $user->id == $request->route()->user->id)
+        }
+        if (in_array($method, $protectOthers) && $user->id == $request->route()->user->id) {
             return $next($request);
-
-        if ($user->hasAccess('users.'.$method)|| $user->hasAccess('users'))
+        }
+        if ($user->hasAccess('users.' . $method) || $user->hasAccess('users')) {
             return $next($request);
+        }
 
         // Execute this code if the permission check failed
         return redirect()->route('admin.authcode.index')->with('error', "您所造访的页面不存在");
-
     }
 }
