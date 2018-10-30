@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Account;
+use App\Http\Controllers\Controller;
 use App\LendRecord;
-use App\Repositories\LendRecords;
-use Carbon\Carbon;
-use Yajra\DataTables\DataTables;
 use App\Repositories\AuthCodes;
-use Validator;
+use App\Repositories\LendRecords;
 use App\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Response;
 use Sentinel;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Validator;
+use Yajra\DataTables\DataTables;
 
 class LendApplyController extends Controller
 {
@@ -98,6 +99,12 @@ class LendApplyController extends Controller
         return ['Result' => 'OK'];
     }
 
+    /**
+     * 取得下發列表
+     * @param LendRecords $lendRecords
+     * @return JsonResponse
+     * @throws \Exception
+     */
     public function data(LendRecords $lendRecords)
     {
         if (isset(request()->companyId)) {
@@ -109,6 +116,11 @@ class LendApplyController extends Controller
         return $this->makeDataTable($lendRecords);
     }
 
+    /**
+     * @param $lendRecords
+     * @return JsonResponse
+     * @throws \Exception
+     */
     private function makeDataTable($lendRecords)
     {
         return DataTables::of($lendRecords)
@@ -121,19 +133,32 @@ class LendApplyController extends Controller
             ->addColumn('tatol_amount', function ($lendRecord) {
                 return $lendRecord->amount - $lendRecord->fee;
             })
+            ->addColumn('bank_card_status', function ($lendRecord) {
+                $result = '<span style="color: green">正常</span>';
+                if (!is_null($lendRecord->account->deleted_at)) {
+                    $result = '<span style="color: red">删除</span>';
+                }
+
+                return $result;
+            })
             ->addColumn('actions', function ($lendRecord) {
                 $infoLink = '<a href=' . route('admin.lendApply.showRecord',
                         ['lendRecord' => $lendRecord->id]) . ' data-toggle="modal" data-target="#lend_info"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('Trade/LendManage/form.manage') . '></i></a>';
 
                 return $infoLink;
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'bank_card_status'])
             ->make(true);
     }
 
+    /**
+     * 下發資訊
+     * @param LendRecord $lendRecord
+     * @return \Illuminate\View\View
+     */
     public function showRecordDialog(LendRecord $lendRecord)
     {
-        $account = $lendRecord->account;
+        $account = $lendRecord->account()->withTrashed()->first();
 
         return view('admin.trade.showRecordModal', compact('lendRecord', 'account'));
     }
