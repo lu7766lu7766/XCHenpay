@@ -1,4 +1,11 @@
 export default {
+    components: {
+        DateTimePicker: require('@/shared/DateTimePicker')
+    },
+    data: () => ({
+        startTime: moment().startOf('day'),
+        endTime: moment().endOf('day')
+    }),
     methods: {
         yesterday() {
             return {
@@ -34,6 +41,16 @@ export default {
             return {
                 start: moment().startOf('month'),
                 end: moment().endOf('month')
+            }
+        }
+    },
+    computed: {
+        timeContainer: {
+            get() {
+            },
+            set(value) {
+                this.startTime = value.start
+                this.endTime = value.end
             }
         }
     }

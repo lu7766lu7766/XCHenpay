@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Authcode;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Sentinel;
@@ -36,31 +38,54 @@ class AuthCodes
         'pay_end_time'
     ];
 
-    public function companyData(User $user, $startDate, $endDate, $page, $perpage, $payState = null)
-    {
-        $query = $user->tradeLogs();
+    /**
+     * 商戶注單
+     * @param int $company
+     * @param string $startDate
+     * @param string $endDate
+     * @param int $page
+     * @param int $perpage
+     * @param int|null $payState
+     * @param string|null $tradeSeq
+     * @param int|null $paymentType
+     * @param string $sort 排序欄位
+     * @param string $direction 排序規格
+     * @return array array of the key => [orders , count].
+     */
+    public function companyDataWithReport(
+        int $company,
+        string $startDate,
+        string $endDate,
+        int $page = 1,
+        int $perpage = 20,
+        int $payState = null,
+        string $tradeSeq = null,
+        int $paymentType = 0,
+        string $sort = 'created_at',
+        string $direction = 'desc'
+    ) {
+        $query = Authcode::query()->whereHas('company', function (Builder $builder) use ($company) {
+            $builder->where('id', $company);
+        });
         if (!is_null($payState)) {
             $query->where('pay_state', $payState);
         }
-        $query->whereBetween('created_at', [$startDate, $endDate])
-            ->with(['i6payment', 'company', 'currency'])
-            ->orderBy('created_at', 'desc')
-            ->forPage($page, $perpage)->get($this->getCol);
-
-        return $query;
-    }
-
-    public function companyDataTotal(User $user, $startDate, $endDate, $payState = null)
-    {
-        $query = $user->tradeLogs();
-        if (!is_null($payState)) {
-            $query->where('pay_state', $payState);
+        if (!is_null($tradeSeq)) {
+            $query->where('trade_seq', $tradeSeq);
         }
-        $result = $query->whereBetween('created_at', [$startDate, $endDate])
-            ->with(['i6payment', 'company', 'currency'])
-            ->count();
+        if ($paymentType > 0) {
+            $query->where('payment_type', $paymentType);
+        }
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+        $count = $query->count();
+        $fee = $query->sum('fee');
+        $amount = $query->sum('amount');
+        $orders = $query->with(['i6payment', 'company', 'currency'])
+            ->orderBy($sort, $direction)
+            ->forPage($page, $perpage)
+            ->get($this->getCol);
 
-        return $result;
+        return [$orders, $count, $fee, $amount];
     }
 
     public function makeSimpleDatatable($authCodes, $totalRecords)
@@ -78,8 +103,10 @@ class AuthCodes
             })
             ->addColumn('actions', function ($authCode) {
                 $callBackLink = '<a href="javascript: void(0);" data-callUrl="' . $authCode->id . '" class="notifyBtn"><i class="livicon" data-name="rocket" data-size="18" data-loop="true" data-c="#e9573f" data-hc="#e9573f" title=' . trans('Trade/LogQuery/form.callBackTitle') . '></i></a>';
-                $infoLink = '<a href=' . route('admin.authcode.showInfo',
-                        ['authcode' => $authCode->id]) . ' data-toggle="modal" data-target="#show_Info"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('Trade/LogQuery/form.showModalTitle') . '></i></a>';
+                $infoLink = '<a href='
+                    . route('admin.authcode.showInfo', ['authcode' => $authCode->id])
+                    . ' data-toggle="modal" data-target="#show_Info">
+                    <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('Trade/LogQuery/form.showModalTitle') . '></i></a>';
                 $editLink = '<a href=' . route('admin.authcode.showState',
                         ['authcode' => $authCode->id]) . ' data-toggle="modal" data-target="#stateEditModal"><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="订单状态修改"></i></a>';
                 $action = $infoLink;

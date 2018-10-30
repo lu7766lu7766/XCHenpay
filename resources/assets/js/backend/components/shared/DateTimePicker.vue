@@ -31,7 +31,7 @@
                 </svg>
             </i>
         </div>
-        <input type="text" ref="myPicker" :value="value" class="form-control"/>
+        <input type="text" ref="myPicker" :value="moment(value).format(dateFormat)" class="form-control"/>
     </div>
 </template>
 <script>
@@ -42,42 +42,38 @@
                 default: 'datepicker'
             },
             value: {
-                type: String,
+                type: Object,
                 required: true
+            },
+            dateFormat: {
+                type: String,
+                default: 'YYYY/MM/DD'
             }
         },
-        data: () => ({
-            id: Math.round(Math.random() * 100)
-        }),
-
         mounted() {
             var timepicker, format
             switch (this.type) {
                 case 'datetimepicker':
                     timepicker = true
-                    format = 'YYYY/MM/DD HH:ii:ss'
+                    format = this.dateFormat + ' HH:mm:ss'
                     break;
                 case 'datepicker':
                     timepicker = false
-                    format = 'YYYY/MM/DD'
+                    format = this.dateFormat
                     break;
                 case 'timepicker':
                     timepicker = true
-                    format = 'HH:ii:ss'
+                    format = 'HH:mm:ss'
                     break;
-
-            }
-            if (this.type.indexOf('timepicker') > -1) {
-                timepicker = true
 
             }
             $(this.$refs.myPicker).daterangepicker({
                 timepicker,
                 singleDatePicker: true,
                 opens: 'left',
-                startDate: moment(this.value),
+                startDate: this.value,
                 "locale": {
-                    format: "YYYY/MM/DD",
+                    format: this.dateFormat,
                     daysOfWeek: [
                         'Su',
                         'Mo',
@@ -103,7 +99,7 @@
                     ],
                 },
             }, start => {
-                this.$emit('update:value', start.format(format))
+                this.$emit('input', start)
             });
         }
     }

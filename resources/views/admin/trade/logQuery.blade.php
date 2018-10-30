@@ -14,6 +14,7 @@
     <link href="{{ asset('assets/css/pages/transitions.css') }}" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css"
           href="{{ asset('assets/vendors/daterangepicker/css/daterangepicker.css') }}"/>
+
 @stop
 
 {{-- Page content --}}
@@ -31,145 +32,94 @@
         </ol>
     </section>
 
-    <section class="content paddingleft_right15">
+    <section class="content">
         @if($switchPromission)
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <i class="livicon" data-name="stopwatch" data-size="16" data-loop="true" data-c="#fff"
-                           data-hc="white"></i>
-                        @lang('Trade/LogQuery/title.form1')
-                    </h3>
-                    <span class="pull-right clickable">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <i class="livicon" data-name="stopwatch" data-size="16" data-loop="true" data-c="#fff"
+                                   data-hc="white"></i>
+                                @lang('Trade/LogQuery/title.form1')
+                            </h3>
+                            <span class="pull-right clickable">
                                     <i class="glyphicon glyphicon-chevron-up"></i>
                                 </span>
-                </div>
-                <div class="panel-body text-center">
-                    <!--content starts-->
-                    <div class="warp">
-                        <p>
-                            <select id="company_selection" name="company_selection" class="js--animations form-control"
-                                    onchange="companyFilter(this.value);">
-                                <option value="">@lang('Trade/LogQuery/form.company_please')</option>
-                                @foreach($companies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->company_name }}</option>
-                                @endforeach
-                            </select>
-                        </p>
+                        </div>
+                        <div class="panel-body text-center">
+                            <!--content starts-->
+                            <div class="warp">
+                                <p>
+                                    <select id="company_selection" name="company_selection"
+                                            class="js--animations form-control"
+                                            onchange="companyFilter(this.value);">
+                                        <option value="">@lang('Trade/LogQuery/form.company_please')</option>
+                                        @foreach($companies as $company)
+                                            <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </p>
+                            </div>
+                            <!--content ends-->
+                        </div>
                     </div>
-                    <!--content ends-->
                 </div>
             </div>
-        @endif
+    @endif
 
-        <!-- 手續費列表-->
-        <div class="panel panel-primary client-switch @if($switchPromission){{ 'hidden' }}@endif">
-            <div class="panel-heading">
-                <h4 class="panel-title"><i class="livicon" data-name="settings" data-size="16" data-loop="true"
-                                           data-c="#fff" data-hc="white"></i>
-                    @lang('Trade/LogQuery/title.form3')
-                </h4>
-                <span class="pull-right clickable">
+    <!-- 手續費列表-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary client-switch @if($switchPromission){{ 'hidden' }}@endif">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><i class="livicon" data-name="settings" data-size="16" data-loop="true"
+                                                   data-c="#fff" data-hc="white"></i>
+                            @lang('Trade/LogQuery/title.form3')
+                        </h4>
+                        <span class="pull-right clickable">
                             <i class="glyphicon glyphicon-chevron-up"></i>
                         </span>
-            </div>
+                    </div>
 
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered width100" id="fee_table">
-                        <thead>
-                        <tr class="filters">
-                            <th>@lang('Trade/LendManage/form.API_id')</th>
-                            <th>@lang('Trade/LendManage/form.payment_name')</th>
-                            <th>@lang('Trade/LendManage/form.fee')</th>
-                            <th>@lang('Trade/LendManage/form.status')</th>
-                            <th>@lang('Trade/LendManage/form.actions')</th>
-                        </tr>
-                        </thead>
-                    </table>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered width100" id="fee_table">
+                                <thead>
+                                <tr class="filters">
+                                    <th>@lang('Trade/LendManage/form.API_id')</th>
+                                    <th>@lang('Trade/LendManage/form.payment_name')</th>
+                                    <th>@lang('Trade/LendManage/form.fee')</th>
+                                    <th>@lang('Trade/LendManage/form.status')</th>
+                                    <th>@lang('Trade/LendManage/form.actions')</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        {{--<button id="ManageAllButton" class="btn btn-primary">@lang('Trade/LendManage/form.lendAll')</button>--}}
+                    </div>
                 </div>
-                {{--<button id="ManageAllButton" class="btn btn-primary">@lang('Trade/LendManage/form.lendAll')</button>--}}
             </div>
         </div>
 
         <!-- 訂單查詢-->
-        <div class="panel panel-primary client-switch @if($switchPromission){{ 'hidden' }}@endif" id="logQuery">
-            <div class="panel-heading">
-                <h4 class="panel-title"><i class="livicon" data-name="user" data-size="16" data-loop="true"
-                                           data-c="#fff" data-hc="white"></i>
-                    @lang('Trade/LogQuery/title.form2')
-                </h4>
-                <span class="pull-right clickable">
-                            <i class="glyphicon glyphicon-chevron-up"></i>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary client-switch @if($switchPromission){{ 'hidden' }}@endif" id="logQuery">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><i class="livicon" data-name="user" data-size="16" data-loop="true"
+                                                   data-c="#fff" data-hc="white"></i>
+                            @lang('Trade/LogQuery/title.form2')
+                        </h4>
+                        <span class="refresh pull-right" onclick="vm.$root.$emit('reload')">
+                            <i class="livicon" data-name="refresh" data-size="18" data-loop="true" data-c="#fff"
+                               data-hc="white" id="livicon-26" style="width: 18px; height: 18px;">
+                            </i>
+                            刷新
                         </span>
-            </div>
-            <br/>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-4" >
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="livicon" data-name="calendar" data-size="16" data-c="#555555"
-                                   data-hc="#555555" data-loop="true"></i>
-                            </div>
-                            <input type="text" class="form-control" id="daterange1" style="width: 80%;"/>
-                        </div>
                     </div>
-
-                    <div class="col-lg-5 form-horizontal">
-                        <label class="col-md-6 control-label text-center">@lang('Trade/LogQuery/form.totalMoney')</label>
-                        <p class="form-control-static col-md-6 " id="td_totalMoney" style="font-weight: bold;"></p>
-                    </div>
-
-                    <div class="col-lg-2 form-horizontal">
-                        <label class="col-md-6 control-label text-center">@lang('Trade/LogQuery/form.totalFee')</label>
-                        <p class="form-control-static col-md-6" id="td_totalFee" style="font-weight: bold;"></p>
-                    </div>
-
-                    <div class="col-lg-1 form-horizontal">
-                        <button type="button" class="btn btn-success btn-sm" id="refresh_button">
-                            <i class="livicon" data-name="refresh" data-size="16" data-loop="true" data-c="#fff" data-hc="white"></i>
-                            <span class="label-text">刷新</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-2" >
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="livicon" data-name="filter" data-size="16" data-c="#555555"
-                                   data-hc="#555555" data-loop="true"></i>
-                            </div>
-                            <select class="form-control" id="paystate" onchange="stateFilter(this.value);">
-                                <option value=>全部</option>
-                                <option value=0>申請成功</option>
-                                <option value=1>交易中</option>
-                                <option value=2>交易成功,未回調</option>
-                                <option value=3>交易結束</option>
-                                <option value=4>交易失敗</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="table-responsive">
-                    <table class="table table-bordered width100" id="table">
-                        <thead>
-                        <tr class="filters">
-                            <th>@lang('Trade/LogQuery/form.pay_summary')</th>
-                            <th>@lang('Trade/LogQuery/form.trade_seq')</th>
-                            <th>@lang('Trade/LogQuery/form.trade_service_id')</th>
-                            <th>@lang('Trade/LogQuery/form.company_name')</th>
-                            <th>@lang('Trade/LogQuery/form.amount')</th>
-                            <th>@lang('Trade/LogQuery/form.payment_type')</th>
-                            <th>@lang('Trade/LogQuery/form.fee')</th>
-                            <th>@lang('Trade/LogQuery/form.apply_time')</th>
-                            <th>@lang('Trade/LogQuery/form.action')</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <br/>
+                    <order-search/>
                 </div>
             </div>
         </div>
@@ -181,12 +131,24 @@
 
 {{-- page level scripts --}}
 @section('footer_scripts')
+    <script>
+                @if(!$switchPromission)
+        var company = '{{ Sentinel::getUser()->id }}';
+        @endif
+    </script>
+
+
+    <script type="text/javascript" src="{{ asset('assets/js/OrderSearch.js') }}"></script>
+
+
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}" ></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}" ></script>
-    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}"></script>
+    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"
+            type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/decimal/decimal.min.js') }}" type="text/javascript"></script>
 
     <div class="modal fade" id="show_FeeInfo" tabindex="-1" role="dialog" aria-hidden="true">
@@ -274,7 +236,7 @@
                     @else
                         d.company = '{{ Sentinel::getUser()->id }}';
                     @endif
-                    d.startDate = $('#daterange1').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                        d.startDate = $('#daterange1').data('daterangepicker').startDate.format('YYYY-MM-DD');
                     d.endDate = $('#daterange1').data('daterangepicker').endDate.format('YYYY-MM-DD');
                     d.payState = $('#paystate').val();
                 }
@@ -290,8 +252,8 @@
                 {data: 'created_at', name: 'created_at'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ],
-            columnDefs: [ {
-                "targets": [1,7],
+            columnDefs: [{
+                "targets": [1, 7],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     $(td).css('max-width', '120px');
                     $(td).css('white-space', 'nowrap');
@@ -302,19 +264,19 @@
                 }
             }],
             order: [[7, 'desc']],
-            fnFooterCallback: function( row, data, start, end, display ) {
+            fnFooterCallback: function (row, data, start, end, display) {
                 var api = this.api();
 
                 // Remove the formatting to get float data for summation
-                var floatVal = function ( f ) {
-                    return (f != null)? new Decimal(f) : new Decimal(0.0);
+                var floatVal = function (f) {
+                    return (f != null) ? new Decimal(f) : new Decimal(0.0);
                 };
 
                 // Total over this pages
                 pageAmount = api
                     .column(4, {page: 'current'})
                     .data()
-                    .reduce( function (a, b) {
+                    .reduce(function (a, b) {
                         return Decimal.add(floatVal(a), floatVal(b));
                     }, 0);
 
@@ -322,7 +284,7 @@
                 pageFee = api
                     .column(6, {page: 'current'})
                     .data()
-                    .reduce( function (a, b) {
+                    .reduce(function (a, b) {
                         return Decimal.add(floatVal(a), floatVal(b));
                     }, 0);
 
@@ -366,7 +328,7 @@
                 {data: 'name', name: 'name'},
                 {data: 'fee', name: 'fee'},
                 {data: 'status', name: 'status'},
-                {data: 'actions', name: 'actions', orderable: false, searchable: false }
+                {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ],
             order: [[0, 'asc']]
         });
@@ -389,7 +351,7 @@
                 $(this).removeData('bs.modal');
             });
 
-            $(document).on('click', '.notifyBtn', function() {
+            $(document).on('click', '.notifyBtn', function () {
                 var postData = {
                     id: $(this).data('callurl')
                 };
@@ -400,7 +362,7 @@
                     data: postData,
                     dataType: 'json',
                     success: function (data) {
-                        if (data.Result == 'OK'){
+                        if (data.Result == 'OK') {
                             alert('回调成功');
 
                             table.ajax.reload();
@@ -409,23 +371,23 @@
                             alert(data.Message);
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr+ ' '+ thrownError);
+                        console.log(xhr + ' ' + thrownError);
                         alert('与服务器沟通错误');
                     }
                 });
             });
         });
 
-        $('#daterange1').on('apply.daterangepicker', function(ev, picker) {
+        $('#daterange1').on('apply.daterangepicker', function (ev, picker) {
             table.ajax.reload();
         });
 
         function companyFilter() {
-            if($('#company_selection').val() !== ''){
+            if ($('#company_selection').val() !== '') {
                 table.ajax.reload();
                 fee_table.ajax.reload();
                 $('.client-switch').removeClass("hidden");
-            }else {
+            } else {
                 $('.client-switch').addClass("hidden");
             }
         }

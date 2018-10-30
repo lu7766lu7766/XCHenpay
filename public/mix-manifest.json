@@ -1,4 +1,6 @@
 {
+    "/assets/js/report.js": "/assets/js/report.js",
+    "/assets/js/OrderSearch.js": "/assets/js/OrderSearch.js",
     "/assets/vendors/simple-line-icons/css/simple-line-icons.css": "/assets/vendors/simple-line-icons/css/simple-line-icons.css",
     "/assets/vendors/ionicons/css/ionicons.min.css": "/assets/vendors/ionicons/css/ionicons.min.css",
     "/assets/css/fonts.css": "/assets/css/fonts.css",
@@ -439,6 +441,7 @@
     "/assets/js/pages/minisidebar.js": "/assets/js/pages/minisidebar.js",
     "/assets/css/pages/minisidebar.css": "/assets/css/pages/minisidebar.css",
     "/assets/css/pages/fixedmenu.css": "/assets/css/pages/fixedmenu.css",
+    "/assets/css/style.css": "/assets/css/style.css",
     "/assets/css/app.css": "/assets/css/app.css",
     "/assets/css/app_white.css": "/assets/css/app_white.css",
     "/assets/css/lib.css": "/assets/css/lib.css",
