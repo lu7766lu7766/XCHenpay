@@ -92,11 +92,10 @@
 </template>
 
 <script>
-    import TimeMixins from '../mixins/time'
-    import FetchMixins from '../mixins/fetch'
+    import ReportMixins from 'mixins/report'
 
     export default {
-        mixins: [TimeMixins, FetchMixins],
+        mixins: [ReportMixins],
         computed: {
             success_count_sum() {
                 return _.sumBy(this.datas, data => +data.success_count);

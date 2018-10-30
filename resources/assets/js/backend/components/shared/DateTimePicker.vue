@@ -42,7 +42,7 @@
                 default: 'datepicker'
             },
             value: {
-                type: Object | String,
+                type: Object,
                 required: true
             },
             dateFormat: {
@@ -65,10 +65,6 @@
                     timepicker = true
                     format = 'HH:mm:ss'
                     break;
-
-            }
-            if (this.type.indexOf('timepicker') > -1) {
-                timepicker = true
 
             }
             $(this.$refs.myPicker).daterangepicker({
@@ -103,7 +99,7 @@
                     ],
                 },
             }, start => {
-                this.$emit('input', start.format(format))
+                this.$emit('input', start)
             });
         }
     }

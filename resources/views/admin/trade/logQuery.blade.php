@@ -32,80 +32,93 @@
         </ol>
     </section>
 
-    <section class="content paddingleft_right15">
+    <section class="content">
         @if($switchPromission)
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <i class="livicon" data-name="stopwatch" data-size="16" data-loop="true" data-c="#fff"
-                           data-hc="white"></i>
-                        @lang('Trade/LogQuery/title.form1')
-                    </h3>
-                    <span class="pull-right clickable">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <i class="livicon" data-name="stopwatch" data-size="16" data-loop="true" data-c="#fff"
+                                   data-hc="white"></i>
+                                @lang('Trade/LogQuery/title.form1')
+                            </h3>
+                            <span class="pull-right clickable">
                                     <i class="glyphicon glyphicon-chevron-up"></i>
                                 </span>
-                </div>
-                <div class="panel-body text-center">
-                    <!--content starts-->
-                    <div class="warp">
-                        <p>
-                            <select id="company_selection" name="company_selection" class="js--animations form-control"
-                                    onchange="companyFilter(this.value);">
-                                <option value="">@lang('Trade/LogQuery/form.company_please')</option>
-                                @foreach($companies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->company_name }}</option>
-                                @endforeach
-                            </select>
-                        </p>
+                        </div>
+                        <div class="panel-body text-center">
+                            <!--content starts-->
+                            <div class="warp">
+                                <p>
+                                    <select id="company_selection" name="company_selection"
+                                            class="js--animations form-control"
+                                            onchange="companyFilter(this.value);">
+                                        <option value="">@lang('Trade/LogQuery/form.company_please')</option>
+                                        @foreach($companies as $company)
+                                            <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </p>
+                            </div>
+                            <!--content ends-->
+                        </div>
                     </div>
-                    <!--content ends-->
                 </div>
             </div>
     @endif
 
     <!-- 手續費列表-->
-        <div class="panel panel-primary client-switch @if($switchPromission){{ 'hidden' }}@endif">
-            <div class="panel-heading">
-                <h4 class="panel-title"><i class="livicon" data-name="settings" data-size="16" data-loop="true"
-                                           data-c="#fff" data-hc="white"></i>
-                    @lang('Trade/LogQuery/title.form3')
-                </h4>
-                <span class="pull-right clickable">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary client-switch @if($switchPromission){{ 'hidden' }}@endif">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><i class="livicon" data-name="settings" data-size="16" data-loop="true"
+                                                   data-c="#fff" data-hc="white"></i>
+                            @lang('Trade/LogQuery/title.form3')
+                        </h4>
+                        <span class="pull-right clickable">
                             <i class="glyphicon glyphicon-chevron-up"></i>
                         </span>
-            </div>
+                    </div>
 
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered width100" id="fee_table">
-                        <thead>
-                        <tr class="filters">
-                            <th>@lang('Trade/LendManage/form.API_id')</th>
-                            <th>@lang('Trade/LendManage/form.payment_name')</th>
-                            <th>@lang('Trade/LendManage/form.fee')</th>
-                            <th>@lang('Trade/LendManage/form.status')</th>
-                            <th>@lang('Trade/LendManage/form.actions')</th>
-                        </tr>
-                        </thead>
-                    </table>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered width100" id="fee_table">
+                                <thead>
+                                <tr class="filters">
+                                    <th>@lang('Trade/LendManage/form.API_id')</th>
+                                    <th>@lang('Trade/LendManage/form.payment_name')</th>
+                                    <th>@lang('Trade/LendManage/form.fee')</th>
+                                    <th>@lang('Trade/LendManage/form.status')</th>
+                                    <th>@lang('Trade/LendManage/form.actions')</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        {{--<button id="ManageAllButton" class="btn btn-primary">@lang('Trade/LendManage/form.lendAll')</button>--}}
+                    </div>
                 </div>
-                {{--<button id="ManageAllButton" class="btn btn-primary">@lang('Trade/LendManage/form.lendAll')</button>--}}
             </div>
         </div>
 
         <!-- 訂單查詢-->
-        <div class="panel panel-primary client-switch @if($switchPromission){{ 'hidden' }}@endif" id="logQuery">
-            <div class="panel-heading">
-                <h4 class="panel-title"><i class="livicon" data-name="user" data-size="16" data-loop="true"
-                                           data-c="#fff" data-hc="white"></i>
-                    @lang('Trade/LogQuery/title.form2')
-                </h4>
-                <span class="pull-right clickable">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary client-switch @if($switchPromission){{ 'hidden' }}@endif" id="logQuery">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><i class="livicon" data-name="user" data-size="16" data-loop="true"
+                                                   data-c="#fff" data-hc="white"></i>
+                            @lang('Trade/LogQuery/title.form2')
+                        </h4>
+                        <span class="pull-right clickable">
                             <i class="glyphicon glyphicon-chevron-up"></i>
                         </span>
+                    </div>
+                    <br/>
+                    <order-search/>
+                </div>
             </div>
-            <br/>
-            <order-search/>
         </div>
 
     </section>
