@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-sm-1">
                     <button type="button" class="btn btn-search" data-toggle="button"
-                            @click="fetch()">搜寻
+                            @click="search()">搜寻
                     </button>
                     <span v-if="isLoading">Loading...</span>
                 </div>
@@ -213,7 +213,7 @@
                 </div>
             </div>
             <!-- end of table-scrollable -->
-            <paginate :lastPage="lastPage" :page="paginate.page"/>
+            <paginate :lastPage="lastPage" :page="paginate.page" @pageChange="pageChange"/>
         </template>
     </div>
 </template>
@@ -257,7 +257,8 @@
                 var res = await this.post('/admin/data', {
                     start: this.startTime.startOf('day').format('YYYY-MM-DD HH:mm:ss'),
                     end: this.endTime.endOf('day').format('YYYY-MM-DD HH:mm:ss'),
-                    company: document.querySelector('#company_selection').value,
+                    // at laravel view logQuery
+                    company: company ? company : document.querySelector('#company_selection').value,
                     pay_state: this.pay_state,
                     payment_type: this.payment_type,
                     sort: this.sort.column,
@@ -289,6 +290,13 @@
                 } else {
                     this.sort.direction = this.sort.direction == 'desc' ? 'asc' : 'desc'
                 }
+                this.fetch()
+            },
+            search() {
+                this.pageChange(1)
+            },
+            pageChange(page) {
+                this.paginate.page = page
                 this.fetch()
             }
         },

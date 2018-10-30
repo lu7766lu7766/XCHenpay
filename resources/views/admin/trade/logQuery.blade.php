@@ -111,8 +111,11 @@
                                                    data-c="#fff" data-hc="white"></i>
                             @lang('Trade/LogQuery/title.form2')
                         </h4>
-                        <span class="pull-right clickable">
-                            <i class="glyphicon glyphicon-chevron-up"></i>
+                        <span class="refresh pull-right" onclick="vm.$root.$emit('reload')">
+                            <i class="livicon" data-name="refresh" data-size="18" data-loop="true" data-c="#fff"
+                               data-hc="white" id="livicon-26" style="width: 18px; height: 18px;">
+                            </i>
+                            刷新
                         </span>
                     </div>
                     <br/>
@@ -128,6 +131,13 @@
 
 {{-- page level scripts --}}
 @section('footer_scripts')
+    <script>
+                @if(!$switchPromission)
+        var company = '{{ Sentinel::getUser()->id }}';
+        @endif
+    </script>
+
+
     <script type="text/javascript" src="{{ asset('assets/js/OrderSearch.js') }}"></script>
 
 

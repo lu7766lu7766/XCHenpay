@@ -5,13 +5,12 @@
                     disabled: page === 1
                 }"
                 @click="page === 1 ? '' : pageChange(1)"
-                >
+            >
                 <a href="javascript:;" aria-label="Previous">
                     <span aria-hidden="true">«</span>
                 </a>
             </li>
-            <li class="active"
-                v-for="p in _.range(startPage, endPage+1)"
+            <li v-for="p in _.range(startPage, endPage+1)"
                 :key="p"
                 :class="{active : p === page}"
                 @click="p === page ? '' : pageChange(p)">
@@ -50,8 +49,8 @@
             endPage() {
                 const end = this.page + 3
                 return end < this.lastPage
-                        ? end
-                        : this.lastPage
+                    ? end
+                    : this.lastPage
             }
         },
         methods: {
