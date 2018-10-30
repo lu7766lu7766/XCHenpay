@@ -3,8 +3,8 @@ export default {
         DateTimePicker: require('@/shared/DateTimePicker')
     },
     data: () => ({
-        startTime: '',
-        endTime: ''
+        startTime: moment().startOf('day'),
+        endTime: moment().endOf('day')
     }),
     methods: {
         yesterday() {
@@ -53,8 +53,5 @@ export default {
                 this.endTime = value.end
             }
         }
-    },
-    created() {
-        this.timeContainer = this.today()
     }
 }
