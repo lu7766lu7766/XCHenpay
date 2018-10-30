@@ -122,6 +122,7 @@
                             <th>@lang('Trade/LendManage/form.account')</th>
                             <th>@lang('Trade/LendManage/form.total_amount')</th>
                             <th>@lang('Trade/LendManage/form.apply_time')</th>
+                            <th>@lang('Trade/LendManage/form.bank_card_status')</th>
                             <th>@lang('Trade/LendManage/form.action')</th>
                         </tr>
                         </thead>
@@ -222,6 +223,7 @@
                 {data: 'account', name: 'account'},
                 {data: 'tatol_amount', name: 'amount', class: 'sub_total'},
                 {data: 'created_at', name: 'created_at'},
+                {data: 'bank_card_status', name: 'bank_card_status'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ],
             order: [[5, 'desc']]

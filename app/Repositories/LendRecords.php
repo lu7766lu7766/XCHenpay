@@ -22,8 +22,13 @@ class LendRecords
         $endDate = $end . ' 23:59:59';
 
         return $records = LendRecord::whereBetween('created_at', [$startDate, $endDate])
-            ->with('account')
-            ->with('user')
+            ->with(
+                [
+                    'account' => function (Relation $builder) {
+                        $builder->withTrashed();
+                    }
+                ], 'user'
+            )
             ->get([
                 'id',
                 'record_seq',
