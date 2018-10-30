@@ -59,7 +59,7 @@ class AuthCodes
         int $page = 1,
         int $perpage = 20,
         int $payState = null,
-        string $tradeSeq = null,
+        string $tradeServiceId = null,
         int $paymentType = 0,
         string $sort = 'created_at',
         string $direction = 'desc'
@@ -70,8 +70,8 @@ class AuthCodes
         if (!is_null($payState)) {
             $query->where('pay_state', $payState);
         }
-        if (!is_null($tradeSeq)) {
-            $query->where('trade_seq', $tradeSeq);
+        if (!is_null($tradeServiceId)) {
+            $query->where('trade_service_id', $tradeServiceId);
         }
         if ($paymentType > 0) {
             $query->where('payment_type', $paymentType);
