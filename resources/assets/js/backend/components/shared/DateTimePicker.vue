@@ -39,7 +39,7 @@
         props: {
             type: {
                 type: String,
-                default: 'datepicker'
+                default: 'datetimepicker'
             },
             value: {
                 type: Object,
@@ -51,24 +51,23 @@
             }
         },
         mounted() {
-            var timepicker, format
+            var timePicker
             switch (this.type) {
                 case 'datetimepicker':
-                    timepicker = true
-                    format = this.dateFormat + ' HH:mm:ss'
+                    timePicker = true
+                    this.dateFormat += ' HH:mm:ss'
                     break;
                 case 'datepicker':
-                    timepicker = false
-                    format = this.dateFormat
+                    timePicker = false
                     break;
                 case 'timepicker':
-                    timepicker = true
-                    format = 'HH:mm:ss'
+                    timePicker = true
+                    this.dateFormat = 'HH:mm:ss'
                     break;
 
             }
             $(this.$refs.myPicker).daterangepicker({
-                timepicker,
+                timePicker,
                 singleDatePicker: true,
                 opens: 'left',
                 startDate: this.value,
