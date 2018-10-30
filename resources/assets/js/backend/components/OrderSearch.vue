@@ -254,11 +254,13 @@
         }),
         methods: {
             async fetch() {
+                var $companySelector = document.querySelector('#company_selection')
+                let myCompany = $companySelector ? $companySelector.value : company
                 var res = await this.post('/admin/data', {
                     start: this.startTime.startOf('day').format('YYYY-MM-DD HH:mm:ss'),
                     end: this.endTime.endOf('day').format('YYYY-MM-DD HH:mm:ss'),
                     // at laravel view logQuery
-                    company: company ? company : document.querySelector('#company_selection').value,
+                    company: myCompany,
                     pay_state: this.pay_state,
                     payment_type: this.payment_type,
                     sort: this.sort.column,
