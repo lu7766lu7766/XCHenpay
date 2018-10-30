@@ -188,6 +188,7 @@
                             <th>@lang('Trade/showLending/form.account')</th>
                             <th>@lang('Trade/showLending/form.total_amount')</th>
                             <th>@lang('Trade/showLending/form.apply_time')</th>
+                            <th>@lang('Trade/showLending/form.bank_card_status')</th>
                             <th>@lang('Trade/showLending/form.action')</th>
                         </tr>
                         </thead>
@@ -324,6 +325,7 @@
                 {data: 'account', name: 'account'},
                 {data: 'tatol_amount', name: 'amount'},
                 {data: 'created_at', name: 'created_at'},
+                {data: 'bank_card_status', name: 'bank_card_status'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false}
             ]
         });
