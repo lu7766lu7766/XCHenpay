@@ -44,21 +44,21 @@
             value: {
                 type: Object,
                 required: true
-            },
-            dateFormat: {
-                type: String,
-                default: 'YYYY/MM/DD'
             }
         },
+        data: () => ({
+            dateFormat: ''
+        }),
         mounted() {
             var timePicker
             switch (this.type) {
                 case 'datetimepicker':
                     timePicker = true
-                    this.dateFormat += ' HH:mm:ss'
+                    this.dateFormat = 'YYYY/MM/DD HH:mm:ss'
                     break;
                 case 'datepicker':
                     timePicker = false
+                    this.dateFormat = 'YYYY/MM/DD'
                     break;
                 case 'timepicker':
                     timePicker = true
