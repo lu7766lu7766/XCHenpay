@@ -48,6 +48,8 @@ class AuthCodes
      * @param int|null $payState
      * @param string|null $tradeSeq
      * @param int|null $paymentType
+     * @param string $sort 排序欄位
+     * @param string $direction 排序規格
      * @return array array of the key => [orders , count].
      */
     public function companyDataWithReport(
@@ -58,7 +60,7 @@ class AuthCodes
         int $perpage = 20,
         int $payState = null,
         string $tradeSeq = null,
-        int $paymentType = null,
+        int $paymentType = 0,
         string $sort = 'created_at',
         string $direction = 'desc'
     ) {
@@ -71,7 +73,7 @@ class AuthCodes
         if (!is_null($tradeSeq)) {
             $query->where('trade_seq', $tradeSeq);
         }
-        if (!is_null($paymentType)) {
+        if ($paymentType > 0) {
             $query->where('payment_type', $paymentType);
         }
         $query->whereBetween('created_at', [$startDate, $endDate]);
@@ -82,6 +84,7 @@ class AuthCodes
             ->orderBy($sort, $direction)
             ->forPage($page, $perpage)
             ->get($this->getCol);
+
         return [$orders, $count, $fee, $amount];
     }
 
@@ -114,11 +117,13 @@ class AuthCodes
                 if ($authCode->pay_state == $this::success_state) {
                     $action .= $callBackLink;
                 }
+
                 return $action;
             })
             ->setTotalRecords($totalRecords)
             ->rawColumns(['actions'])
             ->make(true);
+
         return $result;
     }
 
@@ -160,6 +165,7 @@ class AuthCodes
             'totalLended'  => number_format($totalLended, 3, ".", ","),
             'totalIncome'  => number_format($totalMoney - $totalFee - $totalLending - $totalLended, 3, ".", ","),
         ];
+
         return $data;
     }
 
@@ -194,6 +200,7 @@ class AuthCodes
             $query->where('id', $userId);
         }
         $result = $query->get()->toArray();
+
         return $result;
     }
 
@@ -231,6 +238,7 @@ class AuthCodes
         } catch (\Throwable $e) {
             $result = new Collection();
         }
+
         return $result;
     }
 }
