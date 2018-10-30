@@ -219,11 +219,10 @@
 </template>
 
 <script>
-    import TimeMixins from '../mixins/time'
-    import FetchMixins from '../mixins/fetch'
+    import ReportMixins from 'mixins/report'
 
     export default {
-        mixins: [TimeMixins, FetchMixins],
+        mixins: [ReportMixins],
         data: () => ({
             options: {
                 payState: {
@@ -294,7 +293,6 @@
             }
         },
         mounted() {
-            this.timeContainer = this.today()
             this.$root.$on('reload', this.fetch)
         },
         destroyed() {

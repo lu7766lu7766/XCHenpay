@@ -1,11 +1,16 @@
-import PaginateMixins from './paginate'
-
 export default {
-    mixins: [PaginateMixins],
+    components: {
+        Paginate: require('@/shared/Paginate.vue')
+    },
     data: () => ({
         isLoading: false,
         serchData: {},
         datas: [],
+        paginate: {
+            total: 0,
+            page: 1,
+            perpage: 10
+        }
     }),
     methods: {
         async post(url, data) {
@@ -39,7 +44,10 @@ export default {
     },
     computed: {
         startIndex() {
-            return (this.paginate.page-1) * this.paginate.perpage + 1
+            return (this.paginate.page - 1) * this.paginate.perpage + 1
+        },
+        lastPage() {
+            return Math.ceil(this.paginate.total / this.paginate.perpage)
         }
     }
 }

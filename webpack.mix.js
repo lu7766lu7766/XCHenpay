@@ -1078,5 +1078,18 @@ mix.combine(
         srcJs + 'frontend/josh_frontend.js'
     ], destJs + 'frontend/lib.js');
 
+// laravel-mix webpack config
+
+mix.webpackConfig({
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            // 'vue$': 'vue/dist/vue.esm.js',
+            '@': __dirname + '/resources/assets/js/backend/components',
+            'mixins': __dirname + '/resources/assets/js/backend/mixins'
+        },
+    },
+})
+
 mix.js('resources/assets/js/backend/report.js', 'public/assets/js');
 mix.js('resources/assets/js/backend/OrderSearch.js', 'public/assets/js');

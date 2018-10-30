@@ -189,7 +189,7 @@
             </div>
         </section>
     </aside>
-    <aside class="right-side">
+    <aside class="right-side" id="app">
 
         <!-- Notifications -->
         <div id="notific">
@@ -197,9 +197,8 @@
         </div>
 
         <!-- Content -->
-        <div id="app">
-            @yield('content')
-        </div>
+
+        @yield('content')
 
     </aside>
     <!-- right-side -->
