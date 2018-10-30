@@ -50,7 +50,7 @@
             dateFormat: ''
         }),
         mounted() {
-            var timePicker
+            var timePicker, timePicker24Hour = true, timePickerSeconds = true
             switch (this.type) {
                 case 'datetimepicker':
                     timePicker = true
@@ -67,34 +67,13 @@
             }
             $(this.$refs.myPicker).daterangepicker({
                 timePicker,
+                timePicker24Hour,
+                timePickerSeconds,
                 singleDatePicker: true,
                 opens: 'left',
                 startDate: this.value,
                 "locale": {
-                    format: this.dateFormat,
-                    daysOfWeek: [
-                        'Su',
-                        'Mo',
-                        'Tu',
-                        'We',
-                        'Th',
-                        'Fr',
-                        'Sa'
-                    ],
-                    monthNames: [
-                        'Jan',
-                        'Feb',
-                        'Mar',
-                        'Apr',
-                        'May',
-                        'Jun',
-                        'Jul',
-                        'Aug',
-                        'Sep',
-                        'Oct',
-                        'Nov',
-                        'Dec'
-                    ],
+                    format: this.dateFormat
                 },
             }, start => {
                 this.$emit('input', start)

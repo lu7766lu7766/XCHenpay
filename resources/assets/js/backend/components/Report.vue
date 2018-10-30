@@ -126,8 +126,8 @@
         methods: {
             async fetch() {
                 var res = await this.post('/admin/search/reportQuery', {
-                    "startDate": this.startTime.startOf('day').format('YYYY-MM-DD HH:mm:ss'),
-                    "endDate": this.endTime.endOf('day').format('YYYY-MM-DD HH:mm:ss')
+                    "startDate": this.startTime.format('YYYY-MM-DD HH:mm:ss'),
+                    "endDate": this.endTime.format('YYYY-MM-DD HH:mm:ss')
                 })
                 if (res.ok) {
                     this.isLoading = false
