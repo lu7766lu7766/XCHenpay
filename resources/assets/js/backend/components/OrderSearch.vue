@@ -130,7 +130,11 @@
                                     <td>{{ data.trade_seq }}</td>
                                     <td>{{ data.trade_service_id }}</td>
                                     <td class="text-right">{{ data.amount | numFormat('0,0.00') }}</td>
-                                    <td>{{ options.paymentType[data.payment_type] }}</td>
+                                    <td>
+                                        {{ data.payment_type == 0
+                                        ? '-'
+                                        : options.paymentType[data.payment_type] }}
+                                    </td>
                                     <td class="text-right">{{ data.fee | numFormat('0,0.000') }}</td>
                                     <td>{{ data.created_at }}</td>
                                     <td class="control">
