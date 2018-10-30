@@ -72,8 +72,8 @@
                     笔资料
                 </div>
                 <div class="col-sm-6 view-info">
-                    <span><b>总金额:</b>{{ amount | numFormat('0.00') }}</span>
-                    <span><b>总手续费:</b>{{ fee | numFormat('0.00') }}</span>
+                    <span><b>总金额:</b>{{ amount | numFormat('0,0.00') }}</span>
+                    <span><b>总手续费:</b>{{ fee | numFormat('0,0.000') }}</span>
                 </div>
             </div>
             <!-- end of search-box -->
@@ -129,9 +129,9 @@
                                     <td>{{ data.pay_summary }}</td>
                                     <td>{{ data.trade_seq }}</td>
                                     <td>{{ data.trade_service_id }}</td>
-                                    <td class="text-right">{{ data.amount | numFormat('0.00') }}</td>
+                                    <td class="text-right">{{ data.amount | numFormat('0,0.00') }}</td>
                                     <td>{{ options.paymentType[data.payment_type] }}</td>
-                                    <td class="text-right">{{ data.fee | numFormat('0.00') }}</td>
+                                    <td class="text-right">{{ data.fee | numFormat('0,0.000') }}</td>
                                     <td>{{ data.created_at }}</td>
                                     <td class="control">
                                         <a @click="showInfo(data.id)">
@@ -190,13 +190,13 @@
                                     <td rowspan="1" colspan="1"></td>
                                     <td class="text-right" rowspan="1" colspan="1">
                                         {{
-                                        _.sumBy(datas, x => + x.amount) | numFormat('0.00')
+                                        _.sumBy(datas, x => + x.amount) | numFormat('0,0.00')
                                         }}
                                     </td>
                                     <td rowspan="1" colspan="1"></td>
                                     <td class="text-right" rowspan="1" colspan="1">
                                         {{
-                                        _.sumBy(datas, x => + x.fee) | numFormat('0.00')
+                                        _.sumBy(datas, x => + x.fee) | numFormat('0,0.000')
                                         }}
                                     </td>
                                     <td rowspan="1" colspan="1"></td>
