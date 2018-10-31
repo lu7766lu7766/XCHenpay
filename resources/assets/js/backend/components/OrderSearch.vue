@@ -55,7 +55,6 @@
                     <button type="button" class="btn btn-search" data-toggle="button"
                             @click="search()">搜寻
                     </button>
-                    <span v-if="isLoading">Loading...</span>
                 </div>
             </div>
         </div>

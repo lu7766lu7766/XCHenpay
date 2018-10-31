@@ -13,6 +13,10 @@ Vue.use(VueResource);
 Vue.prototype._ = _
 Vue.prototype.moment = moment
 
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+Vue.use(Loading);
+
 Vue.http.interceptors.push(function (request, next) {
     request.headers.set('X-CSRF-TOKEN', document.head.querySelector('meta[name="csrf-token"]').content);
     next();

@@ -29,7 +29,6 @@
                 <button type="button" class="btn btn-search" data-toggle="button"
                         @click="fetch()">搜寻
                 </button>
-                <span v-if="isLoading">Loading...</span>
             </div>
         </div>
         <!-- end of search-box -->
@@ -130,7 +129,6 @@
                     "endDate": this.endTime.format('YYYY-MM-DD HH:mm:ss')
                 })
                 if (res.ok) {
-                    this.isLoading = false
                     this.datas = res.body.data
                 }
             }

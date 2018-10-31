@@ -73,7 +73,8 @@
             success: function (data) {
                 //complete(data);
                 alert('成功');
-                fee_table.ajax.reload();
+                // fee_table.ajax.reload();
+                vm.$root.$emit('getFeeData')
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert('错误，与服务器沟通失败');

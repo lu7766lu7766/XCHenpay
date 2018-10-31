@@ -46,6 +46,11 @@
                 required: true
             }
         },
+        watch: {
+            value(newValue) {
+                $(this.$refs.myPicker).val(newValue.format(this.dateFormat))
+            }
+        },
         data: () => ({
             dateFormat: ''
         }),
