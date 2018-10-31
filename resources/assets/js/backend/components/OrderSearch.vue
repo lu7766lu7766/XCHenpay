@@ -256,6 +256,11 @@
             amount: 0,
             fee: 0
         }),
+        watch: {
+            'paginate.perpage'() {
+                this.search()
+            }
+        },
         methods: {
             async fetch() {
                 var $companySelector = document.querySelector('#company_selection')
