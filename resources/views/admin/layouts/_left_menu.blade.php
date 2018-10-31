@@ -125,7 +125,6 @@
             {{ trans('ActivityLog/title.title') }}
         </a>
     </li>
-
     {{--#Search--}}
     @if(Sentinel::getUser()->hasAccess('search.menu') || Sentinel::getUser()->hasAccess('search'))
         <li {!! (Request::is('admin/search') || Request::is('admin/search/report/view') ? 'class="active"' : '') !!}>
@@ -142,6 +141,15 @@
                         <a href="{{ URL::to('admin/search/report/view') }}">
                             <i class="fa fa-angle-double-right"></i>
                             {{ trans('Search/Report/title.title') }}
+                        </a>
+                    </li>
+                @endif
+
+                @if(Sentinel::getUser()->hasAccess('search.reportStatIndex') || Sentinel::getUser()->hasAccess('search'))
+                    <li>
+                        <a href="{{ URL::to('admin/search/reportStat/view') }}">
+                            <i class="fa fa-angle-double-right"></i>
+                            {{ trans('Search/ReportStat/title.title') }}
                         </a>
                     </li>
                 @endif
@@ -182,7 +190,7 @@
 
     {{--#Trade Query(index)--}}
     <li>
-		<a href="/doc/3rdPay_API.pdf">
+        <a href="/doc/3rdPay_API.pdf">
             <i class="livicon" data-name="doc-portrait" data-size="18" data-c="#67C5DF" data-hc="#67C5DF"
                data-loop="true"></i>
             <span class="title">{{ trans('general.document') }}</span>

@@ -208,9 +208,10 @@ class AuthCodes
      * 查詢報表資訊
      * @param string $startDate 開始時間
      * @param string $endDate 結束時間
-     * @return \Illuminate\Database\Eloquent\Collection[]
+     * @param int $userId
+     * @return Collection
      */
-    public function getReportRecord(string $startDate, string $endDate)
+    public function getReportRecord(string $startDate, string $endDate, int $userId = 0)
     {
         $result = [];
         try {
@@ -225,7 +226,7 @@ class AuthCodes
                 array_fill(0, 6, (string)self::allDone_state))
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->groupBy('company_service_id');
-            $result = User::query()
+            $builder = User::query()
                 ->rightJoin(
                     \DB::raw('(' . $builder->toSql() . ') A'),
                     'A.company_service_id',
@@ -233,8 +234,11 @@ class AuthCodes
                     'users.company_service_id')
                 ->setBindings($builder->getBindings())
                 ->selectRaw("A .*, users . company_name")
-                ->orderBy('users.id', 'ASC')
-                ->get();
+                ->orderBy('users.id', 'ASC');
+            if ($userId > 0) {
+                $builder->where('users.id', $userId);
+            }
+            $result = $builder->get();
         } catch (\Throwable $e) {
             $result = new Collection();
         }
