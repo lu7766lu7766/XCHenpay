@@ -19,7 +19,7 @@
                 <td>{{ data.fee }}</td>
                 <td>
                     <i class="icon ion-checkmark-round text-green" v-if="data.status == '开启'"></i>
-                    <i class="icon ion-close-round text-red" v-if="data.ststus = '关闭'"></i>
+                    <i class="icon ion-close-round text-red" v-else></i>
                 </td>
                 <td class="control">
                     <a @click="showInfo(data.id)">

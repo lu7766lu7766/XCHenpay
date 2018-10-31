@@ -47,6 +47,7 @@
           type="text/css"/>
 
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/ionicons/css/ionicons.min.css') }}"/>
 
     {{--<script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}"></script>--}}
 {{--<script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"--}}
