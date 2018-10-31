@@ -24,7 +24,29 @@ class SearchController extends Controller
     {
         $request = request();
         $report = app(AuthCodes::class)
-            ->getReportRecord($request->startDate . ' 00:00:00', $request->endDate . ' 23:59:59');
+            ->getReportRecord($request->startDate, $request->endDate);
+
+        return response()->json(["code" => 200, "data" => $report]);
+    }
+
+    /**
+     * 報表統計(版面)
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function reportStatIndex()
+    {
+        return view('admin.search.reportStatRecord');
+    }
+
+    /**
+     * 報表統計(資料)
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reportStatQuery()
+    {
+        $request = request();
+        $report = app(AuthCodes::class)
+            ->getReportRecord($request->startDate, $request->endDate, $request->user()->id);
 
         return response()->json(["code" => 200, "data" => $report]);
     }

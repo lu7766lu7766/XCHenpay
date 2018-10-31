@@ -1093,3 +1093,4 @@ mix.webpackConfig({
 
 mix.js('resources/assets/js/backend/report.js', 'public/assets/js');
 mix.js('resources/assets/js/backend/OrderSearch.js', 'public/assets/js');
+mix.js('resources/assets/js/backend/reportStat.js', 'public/assets/js');

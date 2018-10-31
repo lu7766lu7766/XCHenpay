@@ -5,6 +5,7 @@ Route::get('setlocale/{locale}', function ($locale) {
         Session::put('locale', $locale);
         Session::put('fallback_locale', $locale);
     }
+
     return redirect()->back();
 });
 Route::pattern('slug', '[a-z0-9- _]+');
@@ -139,6 +140,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['adm
         Route::group(['prefix' => 'search'], function () {
             Route::get('report/view', 'SearchController@reportIndex')->name('search.reportIndex');
             Route::post('reportQuery', 'SearchController@reportQuery')->name('search.reportQuery');
+            Route::get('reportStat/view', 'SearchController@reportStatIndex')->name('search.reportStatIndex');
+            Route::post('reportStatQuery', 'SearchController@reportStatQuery')->name('search.reportStatQuery');
         });
     });
 #permission
@@ -155,6 +158,7 @@ Route::get('/', [
         if (Sentinel::check()) {
             return Redirect::route('admin.authcode.index');
         }
+
         // Show the page
         return view('admin.login');
     }
