@@ -46,7 +46,7 @@ class AuthCodes
      * @param int $page
      * @param int $perpage
      * @param int|null $payState
-     * @param string|null $tradeSeq
+     * @param string|null $keyword 關鍵字
      * @param int|null $paymentType
      * @param string $sort 排序欄位
      * @param string $direction 排序規格
@@ -59,7 +59,7 @@ class AuthCodes
         int $page = 1,
         int $perpage = 20,
         int $payState = null,
-        string $tradeServiceId = null,
+        string $keyword = null,
         int $paymentType = 0,
         string $sort = 'created_at',
         string $direction = 'desc'
@@ -70,8 +70,11 @@ class AuthCodes
         if (!is_null($payState)) {
             $query->where('pay_state', $payState);
         }
-        if (!is_null($tradeServiceId)) {
-            $query->where('trade_service_id', $tradeServiceId);
+        if (!is_null($keyword)) {
+            $query->where(function (Builder $b) use ($keyword) {
+                $b->where('trade_seq', $keyword)
+                    ->orWhere('trade_service_id', $keyword);
+            });
         }
         if ($paymentType > 0) {
             $query->where('payment_type', $paymentType);
