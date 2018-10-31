@@ -73,8 +73,9 @@
             <div class="col-md-12">
                 <div class="panel panel-primary client-switch @if($switchPromission){{ 'hidden' }}@endif">
                     <div class="panel-heading">
-                        <h4 class="panel-title"><i class="livicon" data-name="settings" data-size="16" data-loop="true"
-                                                   data-c="#fff" data-hc="white"></i>
+                        <h4 class="panel-title">
+                            <i class="livicon" data-name="list-ol" data-size="16" data-loop="true" data-c="#fff"
+                               data-hc="white"></i>
                             @lang('Trade/LogQuery/title.form3')
                         </h4>
                         <span class="pull-right clickable">
@@ -82,22 +83,7 @@
                         </span>
                     </div>
 
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered width100" id="fee_table">
-                                <thead>
-                                <tr class="filters">
-                                    <th>@lang('Trade/LendManage/form.API_id')</th>
-                                    <th>@lang('Trade/LendManage/form.payment_name')</th>
-                                    <th>@lang('Trade/LendManage/form.fee')</th>
-                                    <th>@lang('Trade/LendManage/form.status')</th>
-                                    <th>@lang('Trade/LendManage/form.actions')</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        {{--<button id="ManageAllButton" class="btn btn-primary">@lang('Trade/LendManage/form.lendAll')</button>--}}
-                    </div>
+                    <fee-list/>
                 </div>
             </div>
         </div>
@@ -140,16 +126,8 @@
 
     <script type="text/javascript" src="{{ asset('assets/js/OrderSearch.js') }}"></script>
 
-
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}"></script>
-    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"
-            type="text/javascript"></script>
-    <script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"
-            type="text/javascript"></script>
-    <script src="{{ asset('assets/vendors/decimal/decimal.min.js') }}" type="text/javascript"></script>
 
     <div class="modal fade" id="show_FeeInfo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -385,7 +363,8 @@
         function companyFilter() {
             if ($('#company_selection').val() !== '') {
                 table.ajax.reload();
-                fee_table.ajax.reload();
+                // fee_table.ajax.reload();
+                vm.$root.$emit('getFeeData')
                 $('.client-switch').removeClass("hidden");
             } else {
                 $('.client-switch').addClass("hidden");
@@ -394,7 +373,8 @@
 
         function stateFilter() {
             table.ajax.reload();
-            fee_table.ajax.reload();
+            // fee_table.ajax.reload();
+            vm.$root.$emit('getFeeData')
         }
 
         {{--重新整理--}}

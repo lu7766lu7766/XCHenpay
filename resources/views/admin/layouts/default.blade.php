@@ -48,6 +48,11 @@
 
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}"/>
 
+    {{--<script type="text/javascript" src="{{ asset('assets/vendors/daterangepicker/js/daterangepicker.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/vendors/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"--}}
+{{--type="text/javascript"></script>--}}
+{{--<script src="{{ asset('assets/vendors/decimal/decimal.min.js') }}" type="text/javascript"></script>--}}
+
 <body class="skin-josh">
 <header class="header">
     <a href="{{ route('admin.authcode.index') }}" class="logo">
