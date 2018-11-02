@@ -97,7 +97,7 @@
                                                    data-c="#fff" data-hc="white"></i>
                             @lang('Trade/LogQuery/title.form2')
                         </h4>
-                        <span class="refresh pull-right" onclick="vm.$root.$emit('reload')">
+                        <span class="refresh pull-right" onclick="vm.$root.$emit('getOrderSearch')">
                             <i class="livicon" data-name="refresh" data-size="18" data-loop="true" data-c="#fff"
                                data-hc="white" id="livicon-26" style="width: 18px; height: 18px;">
                             </i>
@@ -126,8 +126,8 @@
 
     <script type="text/javascript" src="{{ asset('assets/js/OrderSearch.js') }}"></script>
 
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/jquery.dataTables.js') }}"></script>--}}
+    {{--<script type="text/javascript" src="{{ asset('assets/vendors/datatables/js/dataTables.bootstrap.js') }}"></script>--}}
 
     <div class="modal fade" id="show_FeeInfo" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
@@ -154,175 +154,175 @@
     </div>
 
     <script>
-        $("#daterange1").daterangepicker({
-            locale: {
-                startDate: moment(),
-                endDate: moment(),
-                format: 'YYYY/MM/DD',
-                applyLabel: '@lang('dateRangePicker.filter')',
-                cancelLabel: '@lang('dateRangePicker.cancel')',
-                daysOfWeek: [
-                    '@lang('dateRangePicker.SUN')',
-                    '@lang('dateRangePicker.MON')',
-                    '@lang('dateRangePicker.TUE')',
-                    '@lang('dateRangePicker.WED')',
-                    '@lang('dateRangePicker.THU')',
-                    '@lang('dateRangePicker.FRI')',
-                    '@lang('dateRangePicker.SAT')'
-                ],
-                monthNames: [
-                    '@lang('dateRangePicker.JAN')',
-                    '@lang('dateRangePicker.FEB')',
-                    '@lang('dateRangePicker.MAR')',
-                    '@lang('dateRangePicker.APR')',
-                    '@lang('dateRangePicker.MAY')',
-                    '@lang('dateRangePicker.JUN')',
-                    '@lang('dateRangePicker.JUL')',
-                    '@lang('dateRangePicker.AUG')',
-                    '@lang('dateRangePicker.SEP')',
-                    '@lang('dateRangePicker.OCT')',
-                    '@lang('dateRangePicker.NOV')',
-                    '@lang('dateRangePicker.DEC')'
-                ]
-            }
-        });
+        {{--$("#daterange1").daterangepicker({--}}
+        {{--locale: {--}}
+        {{--startDate: moment(),--}}
+        {{--endDate: moment(),--}}
+        {{--format: 'YYYY/MM/DD',--}}
+        {{--applyLabel: '@lang('dateRangePicker.filter')',--}}
+        {{--cancelLabel: '@lang('dateRangePicker.cancel')',--}}
+        {{--daysOfWeek: [--}}
+        {{--'@lang('dateRangePicker.SUN')',--}}
+        {{--'@lang('dateRangePicker.MON')',--}}
+        {{--'@lang('dateRangePicker.TUE')',--}}
+        {{--'@lang('dateRangePicker.WED')',--}}
+        {{--'@lang('dateRangePicker.THU')',--}}
+        {{--'@lang('dateRangePicker.FRI')',--}}
+        {{--'@lang('dateRangePicker.SAT')'--}}
+        {{--],--}}
+        {{--monthNames: [--}}
+        {{--'@lang('dateRangePicker.JAN')',--}}
+        {{--'@lang('dateRangePicker.FEB')',--}}
+        {{--'@lang('dateRangePicker.MAR')',--}}
+        {{--'@lang('dateRangePicker.APR')',--}}
+        {{--'@lang('dateRangePicker.MAY')',--}}
+        {{--'@lang('dateRangePicker.JUN')',--}}
+        {{--'@lang('dateRangePicker.JUL')',--}}
+        {{--'@lang('dateRangePicker.AUG')',--}}
+        {{--'@lang('dateRangePicker.SEP')',--}}
+        {{--'@lang('dateRangePicker.OCT')',--}}
+        {{--'@lang('dateRangePicker.NOV')',--}}
+        {{--'@lang('dateRangePicker.DEC')'--}}
+        {{--]--}}
+        {{--}--}}
+        {{--});--}}
 
-        var table = $('#table').DataTable({
-            language: {
-                search: "@lang('dataTable.search')",
-                lengthMenu: "@lang('dataTable.lengthMenu')",
-                zeroRecords: "@lang('dataTable.noData')",
-                info: "@lang('dataTable.pageInfo')",
-                infoEmpty: "@lang('dataTable.noData')",
-                infoFiltered: "@lang('dataTable.infoFiltered')",
-                paginate: {
-                    "next": "@lang('dataTable.next')",
-                    "previous": "@lang('dataTable.previous')"
-                },
-                processing: "@lang('dataTable.processing')"
-            },
-            lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "全部"]],
-            scrollX: true,
-            processing: true,
-            serverSide: true,
-            ajax: {
-                "url": "{!! route('admin.authcode.data') !!}",
-                "type": "post",
-                "data": function (d) {
-                    @if($switchPromission)
-                        d.company = $('#company_selection').val();
-                    @else
-                        d.company = '{{ Sentinel::getUser()->id }}';
-                    @endif
-                        d.startDate = $('#daterange1').data('daterangepicker').startDate.format('YYYY-MM-DD');
-                    d.endDate = $('#daterange1').data('daterangepicker').endDate.format('YYYY-MM-DD');
-                    d.payState = $('#paystate').val();
-                }
-            },
-            columns: [
-                {data: 'pay_summary', name: 'pay_summary'},
-                {data: 'trade_seq', name: 'trade_seq'},
-                {data: 'trade_service_id', name: 'trade_service_id'},
-                {data: 'company_name', name: 'company_name'},
-                {data: 'amount', name: 'amount'},
-                {data: 'payment_name', name: 'payment_name'},
-                {data: 'fee', name: 'fee'},
-                {data: 'created_at', name: 'created_at'},
-                {data: 'actions', name: 'actions', orderable: false, searchable: false}
-            ],
-            columnDefs: [{
-                "targets": [1, 7],
-                "createdCell": function (td, cellData, rowData, row, col) {
-                    $(td).css('max-width', '120px');
-                    $(td).css('white-space', 'nowrap');
-                    $(td).css('text-overflow', 'ellipsis');
-                    $(td).css('word-break', 'break-all');
-                    $(td).css('overflow', 'hidden');
-                    $(td).attr('title', cellData);
-                }
-            }],
-            order: [[7, 'desc']],
-            fnFooterCallback: function (row, data, start, end, display) {
-                var api = this.api();
+        {{--var table = $('#table').DataTable({--}}
+        {{--language: {--}}
+        {{--search: "@lang('dataTable.search')",--}}
+        {{--lengthMenu: "@lang('dataTable.lengthMenu')",--}}
+        {{--zeroRecords: "@lang('dataTable.noData')",--}}
+        {{--info: "@lang('dataTable.pageInfo')",--}}
+        {{--infoEmpty: "@lang('dataTable.noData')",--}}
+        {{--infoFiltered: "@lang('dataTable.infoFiltered')",--}}
+        {{--paginate: {--}}
+        {{--"next": "@lang('dataTable.next')",--}}
+        {{--"previous": "@lang('dataTable.previous')"--}}
+        {{--},--}}
+        {{--processing: "@lang('dataTable.processing')"--}}
+        {{--},--}}
+        {{--lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "全部"]],--}}
+        {{--scrollX: true,--}}
+        {{--processing: true,--}}
+        {{--serverSide: true,--}}
+        {{--ajax: {--}}
+        {{--"url": "{!! route('admin.authcode.data') !!}",--}}
+        {{--"type": "post",--}}
+        {{--"data": function (d) {--}}
+        {{--@if($switchPromission)--}}
+        {{--d.company = $('#company_selection').val();--}}
+        {{--@else--}}
+        {{--d.company = '{{ Sentinel::getUser()->id }}';--}}
+        {{--@endif--}}
+        {{--d.startDate = $('#daterange1').data('daterangepicker').startDate.format('YYYY-MM-DD');--}}
+        {{--d.endDate = $('#daterange1').data('daterangepicker').endDate.format('YYYY-MM-DD');--}}
+        {{--d.payState = $('#paystate').val();--}}
+        {{--}--}}
+        {{--},--}}
+        {{--columns: [--}}
+        {{--{data: 'pay_summary', name: 'pay_summary'},--}}
+        {{--{data: 'trade_seq', name: 'trade_seq'},--}}
+        {{--{data: 'trade_service_id', name: 'trade_service_id'},--}}
+        {{--{data: 'company_name', name: 'company_name'},--}}
+        {{--{data: 'amount', name: 'amount'},--}}
+        {{--{data: 'payment_name', name: 'payment_name'},--}}
+        {{--{data: 'fee', name: 'fee'},--}}
+        {{--{data: 'created_at', name: 'created_at'},--}}
+        {{--{data: 'actions', name: 'actions', orderable: false, searchable: false}--}}
+        {{--],--}}
+        {{--columnDefs: [{--}}
+        {{--"targets": [1, 7],--}}
+        {{--"createdCell": function (td, cellData, rowData, row, col) {--}}
+        {{--$(td).css('max-width', '120px');--}}
+        {{--$(td).css('white-space', 'nowrap');--}}
+        {{--$(td).css('text-overflow', 'ellipsis');--}}
+        {{--$(td).css('word-break', 'break-all');--}}
+        {{--$(td).css('overflow', 'hidden');--}}
+        {{--$(td).attr('title', cellData);--}}
+        {{--}--}}
+        {{--}],--}}
+        {{--order: [[7, 'desc']],--}}
+        {{--fnFooterCallback: function (row, data, start, end, display) {--}}
+        {{--var api = this.api();--}}
 
-                // Remove the formatting to get float data for summation
-                var floatVal = function (f) {
-                    return (f != null) ? new Decimal(f) : new Decimal(0.0);
-                };
+        {{--// Remove the formatting to get float data for summation--}}
+        {{--var floatVal = function (f) {--}}
+        {{--return (f != null) ? new Decimal(f) : new Decimal(0.0);--}}
+        {{--};--}}
 
-                // Total over this pages
-                pageAmount = api
-                    .column(4, {page: 'current'})
-                    .data()
-                    .reduce(function (a, b) {
-                        return Decimal.add(floatVal(a), floatVal(b));
-                    }, 0);
+        {{--// Total over this pages--}}
+        {{--pageAmount = api--}}
+        {{--.column(4, {page: 'current'})--}}
+        {{--.data()--}}
+        {{--.reduce(function (a, b) {--}}
+        {{--return Decimal.add(floatVal(a), floatVal(b));--}}
+        {{--}, 0);--}}
 
-                // Total over this page
-                pageFee = api
-                    .column(6, {page: 'current'})
-                    .data()
-                    .reduce(function (a, b) {
-                        return Decimal.add(floatVal(a), floatVal(b));
-                    }, 0);
+        {{--// Total over this page--}}
+        {{--pageFee = api--}}
+        {{--.column(6, {page: 'current'})--}}
+        {{--.data()--}}
+        {{--.reduce(function (a, b) {--}}
+        {{--return Decimal.add(floatVal(a), floatVal(b));--}}
+        {{--}, 0);--}}
 
-                // Update total amount
-                document.getElementById("td_totalMoney").innerHTML = pageAmount;
-                document.getElementById("td_totalFee").innerHTML = pageFee;
-            }
-        });
+        {{--// Update total amount--}}
+        {{--document.getElementById("td_totalMoney").innerHTML = pageAmount;--}}
+        {{--document.getElementById("td_totalFee").innerHTML = pageFee;--}}
+        {{--}--}}
+        {{--});--}}
 
-        var fee_table = $('#fee_table').DataTable({
-            language: {
-                search: "@lang('dataTable.search')",
-                lengthMenu: "@lang('dataTable.lengthMenu')",
-                zeroRecords: "@lang('dataTable.noData')",
-                info: "@lang('dataTable.pageInfo')",
-                infoEmpty: "@lang('dataTable.noData')",
-                infoFiltered: "@lang('dataTable.infoFiltered')",
-                paginate: {
-                    "next": "@lang('dataTable.next')",
-                    "previous": "@lang('dataTable.previous')"
-                }
-            },
-            processing: true,
-            serverSide: true,
-            searching: false,
-            paginate: false,
-            info: false,
-            ajax: {
-                "url": "{!! route('admin.authcode.feeData') !!}",
-                "type": "post",
-                "data": function (d) {
-                    @if($switchPromission)
-                        d.company = $('#company_selection').val();
-                    @else
-                        d.company = '{{ Sentinel::getUser()->id }}';
-                    @endif
-                }
-            },
-            columns: [
-                {data: 'i6pay_id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'fee', name: 'fee'},
-                {data: 'status', name: 'status'},
-                {data: 'actions', name: 'actions', orderable: false, searchable: false}
-            ],
-            order: [[0, 'asc']]
-        });
+        {{--var fee_table = $('#fee_table').DataTable({--}}
+        {{--language: {--}}
+        {{--search: "@lang('dataTable.search')",--}}
+        {{--lengthMenu: "@lang('dataTable.lengthMenu')",--}}
+        {{--zeroRecords: "@lang('dataTable.noData')",--}}
+        {{--info: "@lang('dataTable.pageInfo')",--}}
+        {{--infoEmpty: "@lang('dataTable.noData')",--}}
+        {{--infoFiltered: "@lang('dataTable.infoFiltered')",--}}
+        {{--paginate: {--}}
+        {{--"next": "@lang('dataTable.next')",--}}
+        {{--"previous": "@lang('dataTable.previous')"--}}
+        {{--}--}}
+        {{--},--}}
+        {{--processing: true,--}}
+        {{--serverSide: true,--}}
+        {{--searching: false,--}}
+        {{--paginate: false,--}}
+        {{--info: false,--}}
+        {{--ajax: {--}}
+        {{--"url": "{!! route('admin.authcode.feeData') !!}",--}}
+        {{--"type": "post",--}}
+        {{--"data": function (d) {--}}
+        {{--@if($switchPromission)--}}
+        {{--d.company = $('#company_selection').val();--}}
+        {{--@else--}}
+        {{--d.company = '{{ Sentinel::getUser()->id }}';--}}
+        {{--@endif--}}
+        {{--}--}}
+        {{--},--}}
+        {{--columns: [--}}
+        {{--{data: 'i6pay_id', name: 'id'},--}}
+        {{--{data: 'name', name: 'name'},--}}
+        {{--{data: 'fee', name: 'fee'},--}}
+        {{--{data: 'status', name: 'status'},--}}
+        {{--{data: 'actions', name: 'actions', orderable: false, searchable: false}--}}
+        {{--],--}}
+        {{--order: [[0, 'asc']]--}}
+        {{--});--}}
 
         $(document).ready(function () {
-            fee_table.on('draw', function () {
-                $('.livicon').each(function () {
-                    $(this).updateLivicon();
-                });
-            });
-
-            table.on('draw', function () {
-                $('.livicon').each(function () {
-                    $(this).updateLivicon();
-                });
-            });
+            // fee_table.on('draw', function () {
+            //     $('.livicon').each(function () {
+            //         $(this).updateLivicon();
+            //     });
+            // });
+            //
+            // table.on('draw', function () {
+            //     $('.livicon').each(function () {
+            //         $(this).updateLivicon();
+            //     });
+            // });
 
             //clear the data in hidden modal
             $('body').on('hidden.bs.modal', '.modal', function () {
@@ -342,8 +342,8 @@
                     success: function (data) {
                         if (data.Result == 'OK') {
                             alert('回调成功');
-
-                            table.ajax.reload();
+                            // table.ajax.reload();
+                            vm.$root.$emit('getOrderSearch')
                         }
                         else
                             alert(data.Message);
@@ -354,33 +354,41 @@
                     }
                 });
             });
+
+            // 沒下拉選單時觸發(各戶)
+            if (!$('#company_selection').length) {
+                vm.$root.$emit('getFeeData')
+                vm.$root.$emit('getOrderSearch')
+            }
         });
 
-        $('#daterange1').on('apply.daterangepicker', function (ev, picker) {
-            table.ajax.reload();
-        });
+        // $('#daterange1').on('apply.daterangepicker', function (ev, picker) {
+        //     table.ajax.reload();
+        // });
 
+        // 下拉選單選擇
         function companyFilter() {
             if ($('#company_selection').val() !== '') {
-                table.ajax.reload();
+                // table.ajax.reload();
                 // fee_table.ajax.reload();
                 vm.$root.$emit('getFeeData')
+                vm.$root.$emit('getOrderSearch')
                 $('.client-switch').removeClass("hidden");
             } else {
                 $('.client-switch').addClass("hidden");
             }
         }
 
-        function stateFilter() {
-            table.ajax.reload();
-            // fee_table.ajax.reload();
-            vm.$root.$emit('getFeeData')
-        }
+        // function stateFilter() {
+        //     // table.ajax.reload();
+        //     // fee_table.ajax.reload();
+        //     vm.$root.$emit('getFeeData')
+        // }
 
         {{--重新整理--}}
-        $("#refresh_button").click(function () {
-            companyFilter();
-        });
+        // $("#refresh_button").click(function () {
+        //     companyFilter();
+        // });
 
     </script>
 

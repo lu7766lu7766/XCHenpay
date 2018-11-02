@@ -26,7 +26,6 @@ class AuthcodeController extends Controller
         if ($switchPromission) {
             $companies = User::All()->where('company_service_id', '<>', null);
         }
-
         return view('admin.trade.logQuery', compact('companies', 'switchPromission', 'notifyUrl'));
     }
 
@@ -57,13 +56,15 @@ class AuthcodeController extends Controller
             $request->get('sort', 'created_at'),
             $request->get('direction', 'desc')
         );
+        $can_edit = $user->hasAccess('logQuery') || ($user->hasAccess('logQuery.showState') &&
+                $user->hasAccess('logQuery.updateState'));
         $result = [
-            'data'   => $authCode->all(),
-            'total'  => $totalRecords,
-            'fee'    => $fee,
-            'amount' => $amount
+            'data'     => $authCode->all(),
+            'total'    => $totalRecords,
+            'fee'      => $fee,
+            'amount'   => $amount,
+            'can_edit' => $can_edit
         ];
-
         return $result;
     }
 
@@ -103,13 +104,18 @@ class AuthcodeController extends Controller
                 $payments = $paymentsSQL->get();
             }
         }
-
         return $this->makeFeeDatatable($payments);
     }
 
     private function makeFeeDatatable($payments)
     {
+        $user = Sentinel::getUser();
+        $can_edit = $user->hasAccess('logQuery') || ($user->hasAccess('logQuery.editFeeInfo') &&
+                $user->hasAccess('logQuery.updateFeeInfo'));
         return DataTables::of($payments)
+            ->editColumn('can_edit', function ($payment) use ($can_edit) {
+                return $can_edit;
+            })
             ->editColumn('fee', function ($payment) {
                 return $payment->fee . '%';
             })
@@ -126,7 +132,6 @@ class AuthcodeController extends Controller
                 if ($user->hasAccess('logQuery') || ($user->hasAccess('logQuery.editFeeInfo') && $user->hasAccess('logQuery.updateFeeInfo'))) {
                     $action .= $editLink;
                 }
-
                 return $action;
             })
             ->rawColumns(['actions'])
@@ -140,7 +145,6 @@ class AuthcodeController extends Controller
             ->join('payments as p', 'p.id', '=', 'f.payment_id')
             ->where('f.id', $id)
             ->first();
-
         return view('admin.trade.showFeeModal', compact('payment'));
     }
 
@@ -151,7 +155,6 @@ class AuthcodeController extends Controller
             ->join('payments as p', 'p.id', '=', 'f.payment_id')
             ->where('f.id', $id)
             ->first();
-
         return view('admin.trade.editFeeModal', compact('payment'));
     }
 
@@ -186,7 +189,6 @@ class AuthcodeController extends Controller
         if (!$user->hasAccess('users.dataSwitch') && $user->tradeLogs()->where('id', '=',
                 request()->id)->first() == null) {
             $this->errorLog($user->email . '手动回调一笔不属于齐权限的订单: ' . request()->id);
-
             return $this->errorResponse('请求发生错误，请联络客服人员');
         }
         if (env('APP_inLocal')) {
@@ -203,7 +205,6 @@ class AuthcodeController extends Controller
         if ($response != 'success') {
             return $this->errorResponse('回调失败，请联络客服人员');
         }
-
         //success
         return Response::json([
             'Result' => 'OK'
@@ -219,7 +220,6 @@ class AuthcodeController extends Controller
             3 => '交易结束',
             4 => '交易失败'
         ];
-
         return view('admin.trade.stateEditModal', compact('authcode', 'stateList'));
     }
 
@@ -249,7 +249,6 @@ class AuthcodeController extends Controller
         activity($user->email)
             ->causedBy($user)
             ->log('修改订单:' . $authcode->trade_seq . ' 状态,由"' . $oldState . '"修改至"' . $authcode->pay_summary . '"');
-
         return Response::json($authcode);
     }
 }

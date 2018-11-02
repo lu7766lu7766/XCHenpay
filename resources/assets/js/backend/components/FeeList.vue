@@ -40,7 +40,7 @@
                             </svg>
                         </i>
                     </a>
-                    <a @click="showEdit(data.id)">
+                    <a @click="showEdit(data.id)" v-if="data.can_edit">
                         <i class="livicon" data-name="edit" data-size="18" data-c="#f56954" data-hc="#f56954"
                            data-loop="true" data-toggle="modal" data-target="#hand-edit" id="livicon-18"
                            style="width: 18px; height: 18px;">
@@ -94,12 +94,6 @@
             },
             showEdit(id) {
                 this.modalProccess($('#edit_FeeInfo'), '/admin/logQuery/editFeeInfo/' + id)
-            },
-            async modalProccess($modal, url) {
-                $modal.modal('show')
-                $modal.find('.modal-content').html('')
-                var res = await this.$http.get(url)
-                $modal.find('.modal-content').html(res.body)
             }
         },
         mounted() {

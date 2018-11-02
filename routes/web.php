@@ -81,9 +81,7 @@ Route::group(
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'tradeLog'], 'as' => 'admin.'],
     function () {
-        // house#5 view
         Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
-        // house#5 订单查询
         Route::post('data', 'AuthcodeController@data')->name('authcode.data');
         Route::get('logQuery/showInfo/{authcode}', 'AuthcodeController@showInfo')->name('authcode.showInfo');
         Route::get('logQuery/showState/{authcode}', 'AuthcodeController@showState')->name('authcode.showState');

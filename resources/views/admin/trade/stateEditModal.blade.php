@@ -51,7 +51,7 @@
             },
             dataType: 'json',
             success: function () {
-                vm.$root.$emit('reload')
+                vm.$root.$emit('getOrderSearch')
                 // table.ajax.reload();
                 $('#stateEditModal').modal('toggle');
             },

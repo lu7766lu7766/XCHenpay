@@ -159,7 +159,7 @@
                                                 </svg>
                                             </i>
                                         </a>
-                                        <a @click="showEdit(data.id)">
+                                        <a @click="showEdit(data.id)" v-if="can_edit">
                                             <i class="livicon" data-name="edit" data-size="18" data-c="#f56954"
                                                data-hc="#f56954" data-loop="true" data-toggle="modal"
                                                data-target="#order-edit" id="livicon-30"
@@ -183,7 +183,8 @@
                                                           transform="matrix(0.5625,0,0,0.5625,0,0)" stroke-width="0"
                                                           style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
                                                 </svg>
-                                            </i></a>
+                                            </i>
+                                        </a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -253,7 +254,8 @@
                 keyword: ''
             },
             amount: 0,
-            fee: 0
+            fee: 0,
+            can_edit: false
         }),
         watch: {
             'paginate.perpage'() {
@@ -279,6 +281,7 @@
                     this.amount = res.body.amount
                     this.fee = res.body.fee
                     this.paginate.total = res.body.total
+                    this.can_edit = res.body.can_edit
                 }
             },
             showInfo(id) {
@@ -286,12 +289,6 @@
             },
             showEdit(id) {
                 this.modalProccess($('#stateEditModal'), '/admin/logQuery/showState/' + id)
-            },
-            async modalProccess($modal, url) {
-                $modal.modal('show')
-                $modal.find('.modal-content').html('')
-                var res = await this.$http.get(url)
-                $modal.find('.modal-content').html(res.body)
             },
             changeSort(column) {
                 if (this.sort.column != column) {
@@ -311,10 +308,10 @@
             }
         },
         mounted() {
-            this.$root.$on('reload', this.fetch)
+            this.$root.$on('getOrderSearch', this.fetch)
         },
         destroyed() {
-            this.$root.$off('reload')
+            this.$root.$off('getOrderSearch')
         }
     }
 </script>
