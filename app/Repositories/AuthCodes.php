@@ -211,35 +211,31 @@ class AuthCodes
      * 查詢報表資訊
      * @param string $startDate 開始時間
      * @param string $endDate 結束時間
-     * @param int $userId
+     * @param string $companyServiceId
      * @return Collection
      */
-    public function getReportRecord(string $startDate, string $endDate, int $userId = 0)
+    public function getReportRecord(string $startDate, string $endDate, string $companyServiceId = null)
     {
-        $result = [];
         try {
-            $builder = \DB::table('authcodes')->selectRaw(
-                " round(sum(case when pay_state = ? then amount else 0 end),2) success_amount,
-                  round(sum(case when pay_state = ? then fee else 0 end),2) success_fee,
-                  sum(case when pay_state = ? then 1 else 0 end) success_count,
-                  round(sum(case when pay_state != ? then amount else 0 end),2) fail_amount,
-                  round(sum(case when pay_state != ? then fee else 0 end),2) fail_fee,
-                  sum(case when pay_state != ? then 1 else 0 end) fail_count,
-                  company_service_id",
-                array_fill(0, 6, (string)self::allDone_state))
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->groupBy('company_service_id');
-            $builder = User::query()
-                ->rightJoin(
-                    \DB::raw('(' . $builder->toSql() . ') A'),
-                    'A.company_service_id',
-                    '=',
-                    'users.company_service_id')
-                ->setBindings($builder->getBindings())
-                ->selectRaw("A .*, users . company_name")
-                ->orderBy('users.id', 'ASC');
-            if ($userId > 0) {
-                $builder->where('users.id', $userId);
+            $builder = User::with([
+                'tradeLogs' => function ($builder) use ($startDate, $endDate, $companyServiceId) {
+                    /** @var Builder $builder */
+                    $builder->selectRaw(
+                        "round(sum(case when pay_state = ? then amount else 0 end),2) success_amount,
+                        round(sum(case when pay_state = ? then fee else 0 end),2) success_fee,
+                        sum(case when pay_state = ? then 1 else 0 end) success_count,
+                        round(sum(case when pay_state != ? then amount else 0 end),2) fail_amount,
+                        round(sum(case when pay_state != ? then fee else 0 end),2) fail_fee,
+                        sum(case when pay_state != ? then 1 else 0 end) fail_count,
+                        company_service_id",
+                        array_fill(0, 6, self::allDone_state)
+                    )->whereBetween('created_at', [$startDate, $endDate])
+                        ->groupBy('company_service_id');
+                }
+            ])->leftJoin('role_users', 'users.id', 'role_users.user_id')
+                ->where('role_users.role_id', 4);
+            if (!is_null($companyServiceId)) {
+                $builder->where('company_service_id', $companyServiceId);
             }
             $result = $builder->get();
         } catch (\Throwable $e) {

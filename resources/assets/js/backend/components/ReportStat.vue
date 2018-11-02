@@ -29,7 +29,6 @@
                 <button type="button" class="btn btn-search" data-toggle="button"
                         @click="fetch()">搜寻
                 </button>
-                <span v-if="isLoading">Loading...</span>
             </div>
         </div>
         <!-- end of search-box -->
@@ -50,20 +49,52 @@
                     <td>{{ index + 1 }}</td>
                     <td>{{ data.company_name }}</td>
                     <td class="text-green">
-                        <div>{{ data.success_amount | numFormat('0,0.00') }}</div>
-                        <div>{{ data.success_count | numFormat }}</div>
+                        <div>{{
+                            data.trade_logs[0]
+                            ? (data.trade_logs[0].success_amount )
+                            : 0 | numFormat('0,0.00')}}
+                        </div>
+                        <div>{{
+                            data.trade_logs[0]
+                            ? (data.trade_logs[0].success_count )
+                            : 0 | numFormat}}
+                        </div>
                     </td>
                     <td class="text-red">
-                        <div>{{ data.fail_amount | numFormat('0,0.00') }}</div>
-                        <div>{{ data.fail_count | numFormat }}</div>
+                        <div>{{
+                            data.trade_logs[0]
+                            ? (data.trade_logs[0].fail_amount )
+                            : 0 | numFormat('0,0.00')}}
+                        </div>
+                        <div>{{
+                            data.trade_logs[0]
+                            ? (data.trade_logs[0].fail_count )
+                            : 0 | numFormat}}
+                        </div>
                     </td>
                     <td>
-                        <div>{{ data.success_fee | numFormat('0,0.00') }}</div>
-                        <div>{{ data.success_count | numFormat }}</div>
+                        <div>{{
+                            data.trade_logs[0]
+                            ? (data.trade_logs[0].success_fee )
+                            : 0 | numFormat('0,0.00')}}
+                        </div>
+                        <div>{{
+                            data.trade_logs[0]
+                            ? (data.trade_logs[0].success_count )
+                            : 0 | numFormat }}
+                        </div>
                     </td>
                     <td>
-                        <div>{{ data.success_amount + data.fail_amount | numFormat('0,0.00') }}</div>
-                        <div>{{ parseInt(data.success_count)+ parseInt(data.fail_count) | numFormat }}</div>
+                        <div>{{
+                            data.trade_logs[0]
+                            ? parseInt(data.trade_logs[0].success_amount) + parseInt(data.trade_logs[0].fail_amount)
+                            : 0| numFormat('0,0.00') }}
+                        </div>
+                        <div>{{
+                            data.trade_logs[0]
+                            ? parseInt(data.trade_logs[0].success_count)+ parseInt(data.trade_logs[0].fail_count)
+                            : 0| numFormat }}
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -98,40 +129,69 @@
         mixins: [ReportMixins],
         computed: {
             success_count_sum() {
-                return _.sumBy(this.datas, data => +data.success_count);
+                return _.sumBy(this.datas, data =>
+                    data.trade_logs[0]
+                        ? (+data.trade_logs[0].success_count)
+                        : 0);
             },
             success_amount_sum: function () {
-                return _.sumBy(this.datas, 'success_amount');
+                return _.sumBy(this.datas, data =>
+                    data.trade_logs[0]
+                        ? (+data.trade_logs[0].success_amount)
+                        : 0);
             },
             fail_count_sum: function () {
-                return _.sumBy(this.datas, data => +data.fail_count);
+                return _.sumBy(this.datas, data =>
+                    data.trade_logs[0]
+                        ? (+data.trade_logs[0].fail_count)
+                        : 0);
             },
             fail_amount_sum: function () {
-                return _.sumBy(this.datas, 'fail_amount');
+                return _.sumBy(this.datas, data =>
+                    data.trade_logs[0]
+                        ? (+data.trade_logs[0].fail_amount)
+                        : 0);
             },
             fee_sum: function () {
-                return _.sumBy(this.datas, 'success_fee');
+                return _.sumBy(this.datas, data =>
+                    data.trade_logs[0]
+                        ? (+data.trade_logs[0].success_fee)
+                        : 0);
             },
             count_sum: function () {
                 return _.sumBy(this.datas, function (data) {
-                    return parseInt(data.success_count) + parseInt(data.fail_count)
+                    return data.trade_logs[0]
+                        ? parseInt(data.trade_logs[0].success_count) + parseInt(data.trade_logs[0].fail_count)
+                        : 0
                 });
             },
             amount_sum: function () {
                 return _.sumBy(this.datas, function (data) {
-                    return data.success_amount + data.fail_amount;
+                    return data.trade_logs[0]
+                        ? parseInt(data.trade_logs[0].success_amount) + parseInt(data.trade_logs[0].fail_amount)
+                        : 0;
                 });
             }
         },
         methods: {
             async fetch() {
                 var res = await this.post('/admin/search/reportStatQuery', {
-                    "startDate": this.startTime.startOf('day').format('YYYY-MM-DD HH:mm:ss'),
-                    "endDate": this.endTime.endOf('day').format('YYYY-MM-DD HH:mm:ss')
+                    "startDate": this.startTime.format('YYYY-MM-DD HH:mm:ss'),
+                    "endDate": this.endTime.format('YYYY-MM-DD HH:mm:ss')
                 })
-                if (res.ok) {
-                    this.isLoading = false
+                if (res.ok && res.body.code == 200) {
                     this.datas = res.body.data
+                } else {
+                    var err_msg = '与伺服器沟通错误';
+                    if (Object.keys(res.body.data).length || res.body.data.length) {
+                        var err_list = [];
+                        for (var val in res.body.data) {
+                            err_list.push(res.body.data[val].join('\n'))
+                        }
+                        err_msg = err_list.join('\n')
+                    }
+                    this.datas = [];
+                    alert(err_msg)
                 }
             }
         }

@@ -74,7 +74,7 @@ class User extends EloquentUser
         return $this->hasMany(Account::class, 'user_id', 'id');
     }
 
-    public function LendRecords()
+    public function lendRecords()
     {
         return $this->hasMany(LendRecord::class, 'user_id', 'id');
     }

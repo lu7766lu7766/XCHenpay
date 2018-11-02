@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Repositories\AuthCodes;
+use App\Service\SearchService;
 
-class SearchController extends Controller
+class SearchController extends BaseController
 {
     /**
      * 報表查詢(版面)
@@ -22,11 +21,9 @@ class SearchController extends Controller
      */
     public function reportQuery()
     {
-        $request = request();
-        $report = app(AuthCodes::class)
-            ->getReportRecord($request->startDate, $request->endDate);
+        $service = SearchService::getInstance($this->getReq());
 
-        return response()->json(["code" => 200, "data" => $report]);
+        return response()->json($service->reportQuery());
     }
 
     /**
@@ -44,10 +41,8 @@ class SearchController extends Controller
      */
     public function reportStatQuery()
     {
-        $request = request();
-        $report = app(AuthCodes::class)
-            ->getReportRecord($request->startDate, $request->endDate, $request->user()->id);
+        $service = SearchService::getInstance($this->getReq());
 
-        return response()->json(["code" => 200, "data" => $report]);
+        return response()->json($service->reportStatQuery(request()->user()->company_service_id));
     }
 }
