@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use\App\Http\Controllers\JoshController;
+use App\Http\Controllers\JoshController;
 use App\Http\Requests\ConfirmPasswordRequest;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;

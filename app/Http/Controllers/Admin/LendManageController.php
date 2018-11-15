@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\LendRecord;
+use App\Models\LendRecord;
 use App\Repositories\AuthCodes;
 use App\Repositories\LendRecords;
 use App\User;

@@ -35,14 +35,17 @@ class UsersController extends JoshController
                 return ($users->apply_status == 'on') ? trans('users/UserList/form.open') : trans('users/UserList/form.close');
             })
             ->addColumn('actions', function ($user) {
-                $showLink = '<a href=' . route('admin.users.show', $user->id) . '><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>';
+                $showLink = '<a href=' . route('admin.users.show',
+                        $user->id) . '><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>';
                 $showSelfLink = '<a href=' . route('admin.users.showProfile') . '><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.view user') . '></i></a>';
-                $editLink = '<a href=' . route('admin.users.edit', $user->id) . '><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.update user') . '></i></a>';
-                $deleteLink = '<a href=' . route('admin.users.confirm-delete', $user->id) . ' data-toggle="modal" data-target="#delete_confirm"><i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=' . trans('users/UserList/form.delete user') . '></i></a>';
-                $showApplyStatus = '<a href=' . route('admin.users.showApplyStatus', $user->id) . '><i class="livicon" data-name="piggybank" data-size="18" data-loop="true" data-c="#ff8000" data-hc="#ff8000" title=' . trans('users/UserList/form.update_apply_status') . '></i></a>';
+                $editLink = '<a href=' . route('admin.users.edit',
+                        $user->id) . '><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('users/UserList/form.update user') . '></i></a>';
+                $deleteLink = '<a href=' . route('admin.users.confirm-delete',
+                        $user->id) . ' data-toggle="modal" data-target="#delete_confirm"><i class="livicon" data-name="user-remove" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title=' . trans('users/UserList/form.delete user') . '></i></a>';
+                $showApplyStatus = '<a href=' . route('admin.users.showApplyStatus',
+                        $user->id) . '><i class="livicon" data-name="piggybank" data-size="18" data-loop="true" data-c="#ff8000" data-hc="#ff8000" title=' . trans('users/UserList/form.update_apply_status') . '></i></a>';
                 $actions = '';
-
-                if(Sentinel::inRole('admin')) {
+                if (Sentinel::inRole('admin')) {
                     if (Sentinel::getUser()->id != $user->id) {
                         $actions .= $showLink;
                     } else {
@@ -329,13 +332,13 @@ class UsersController extends JoshController
                 ->log('User restored by ' . Sentinel::getUser()->email);
 
             // Redirect to the user management page
-            return Redirect::route('admin.deleted_users')->with('success', $success);
+            return Redirect::route('admin.users.deleted_users')->with('success', $success);
         } catch (UserNotFoundException $e) {
             // Prepare the error message
             $error = trans('users/message.user_not_found', compact('id'));
 
             // Redirect to the user management page
-            return Redirect::route('admin.deleted_users')->with('error', $error);
+            return Redirect::route('admin.users.deleted_users')->with('error', $error);
         }
     }
 
@@ -394,7 +397,7 @@ class UsersController extends JoshController
         if (Sentinel::check()) {
             $user = Sentinel::findUserById($id);
 
-            return view('admin.lockscreen', compact('user'));
+            return view('admin.users.lockscreen', compact('user'));
         }
 
         return view('admin.login');

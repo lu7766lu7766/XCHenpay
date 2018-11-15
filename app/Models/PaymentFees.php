@@ -16,6 +16,6 @@ class PaymentFees extends Model
 
     public function payment()
     {
-        return $this->hasOne(\App\Payment::class, 'id', 'payment_id');
+        return $this->hasOne(Payment::class, 'id', 'payment_id');
     }
 }

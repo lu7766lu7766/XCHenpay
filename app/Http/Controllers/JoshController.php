@@ -9,8 +9,6 @@ use View;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use Yajra\DataTables\DataTables;
-use Charts;
-use App\Datatable;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Spatie\Analytics\Period;
@@ -396,39 +394,16 @@ class JoshController extends Controller {
             ->orderBy("created_at")
             ->groupBy(DB::raw("month(created_at)"))
             ->get();
-        $db_chart =  Charts::database(User::all(), 'area', 'morris')
-            ->elementLabel("Users")
-            ->dimensions(0, 250)
-            ->responsive(true)
-            ->groupByMonth( 2017, true);
-
-
-//        $countries = DB::table('users')->where('deleted_at', null)
-//            ->leftJoin('countries', 'countries.sortname', '=', 'users.country')
-//            ->select('countries.name')
-//            ->get();
-//        $geo = Charts::database($countries, 'geo', 'google')
-//            ->dimensions(0,250)
-//            ->responsive(true)
-//            ->groupBy('name');
 
         $roles = DB::table('role_users')
             ->join('users','users.id','=','role_users.user_id')->wherenull('deleted_at')
             ->leftJoin('roles', 'role_users.role_id', '=', 'roles.id')
             ->select('roles.name')
             ->get();
-        $user_roles = Charts::database($roles, 'pie', 'google')
-            ->dimensions(0, 200)
-            ->responsive(true)
-            ->groupBy('name');
-        $line_chart =  Charts::database(User::all(), 'donut', 'morris')
-            ->elementLabel("Users")
-            ->dimensions(0, 150)
-            ->responsive(true)
-            ->groupByMonth( 2017, true);
+
 
         if(Sentinel::check())
-            return view('admin.index',[ 'analytics_error'=>$analytics_error,'chart_data'=>$chart_data,'user_count'=>$user_count,'users'=>$users,'db_chart'=>$db_chart,'user_roles'=>$user_roles,'visitors'=>$visitors,'pageVisits'=>$pageVisits,'line_chart'=>$line_chart,'month_visits'=>$month_visits,'year_visits'=>$year_visits] );
+            return view('admin.index',[ 'analytics_error'=>$analytics_error,'chart_data'=>$chart_data,'user_count'=>$user_count,'users'=>$users,'visitors'=>$visitors,'pageVisits'=>$pageVisits,'month_visits'=>$month_visits,'year_visits'=>$year_visits] );
         else
             return redirect('admin/signin')->with('error', 'You must be logged in!');
     }

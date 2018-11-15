@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Task;
+use App\Models\Task;
 use Closure;
 use Sentinel;
 

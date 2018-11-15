@@ -28,18 +28,12 @@ const destVendors = dest + 'vendors/';
 
 const paths = {
     'animate': vendors + 'animate.css/',
-    'accwizard': vendors + 'acc-wizard/release/',
-    'animationChart': vendors + 'animatechart/',
-    'autogrow': vendors + 'autogrow/',
-    'backbone': vendors + 'backbone/',
     'blueimpcanvas': vendors + 'blueimp-canvas-to-blob/',
     'fileUpload': vendors + 'blueimp-file-upload/',
     'imgLoad': vendors + 'blueimp-load-image/',
     'bootstrap': vendors + 'bootstrap/dist/',
-    'bootstrapFormBuilder': vendors + 'bootstrap-form-builder/',
     'blueimpgallery': vendors + 'blueimp-gallery-with-desc/',
     'blueimptmpl': vendors + 'blueimp-tmpl/',
-    'formBuilder': vendors + 'form-builder/js/lib/',
     'wysihtml5': vendors + 'bootstrap3-wysihtml5-bower/dist/',
     'daterangepicker': vendors + 'bootstrap-daterangepicker/',
     'magnify': vendors + 'bootstrap-magnify/',
@@ -57,16 +51,11 @@ const paths = {
     'buttons': vendors + 'Buttons/',
     'card': vendors + 'card/',
     'chartjs': vendors + 'Chart.js/dist/',
-    'ckeditor': vendors + 'ckeditor/',
     'clockface': vendors + 'clockface.js/',
     'fontawesome': vendors + 'font-awesome/',
-    'flotchart': vendors + 'flotchart/',
     'countUp': vendors + 'countUp.js/dist/',
     'dataTables': vendors + 'datatables/media',
-    'devicon': vendors + 'devicon/',
     'dropzone': vendors + 'dropzone/dist/',
-    'fortjs': vendors + 'fort.js/',
-    'fancybox': vendors + 'fancybox/',
     'fastclick': vendors + 'fastclick/lib/',
     'gmaps': vendors + 'gmaps/',
     'gridmanager': vendors + 'gridmanager.js/',
@@ -83,7 +72,6 @@ const paths = {
     'select2': vendors + 'select2/dist/',
     'datetimepicker': vendors + 'eonasdan-bootstrap-datetimepicker/build/',
     'fullcalendar': vendors + 'fullcalendar/dist/',
-    'summernote': vendors + 'summernote/dist/',
     'icheck': vendors + 'iCheck/',
     'jasnyBootstrap': vendors + 'jasny-bootstrap/dist/',
     'toastr': vendors + 'toastr/',
@@ -100,7 +88,6 @@ const paths = {
     'timezone': vendors + 'moment-timezone/',
     'nestable': vendors + 'nestable/',
     'noty': vendors + 'noty/js/noty/',
-    'owlcarousel': vendors + 'owlCarousel/owl-carousel/',
     'pace': vendors + 'PACE/',
     'rangy': vendors + 'rangy-1.3/',
     'bootstrapSlider': vendors + 'seiyria-bootstrap-slider/dist/',
@@ -110,12 +97,8 @@ const paths = {
     'transitionize': vendors + 'transitionize/dist',
     'switchery': vendors + 'switchery/dist/',
     'twtrBootstrapWizard': vendors + 'twitter-bootstrap-wizard/',
-    'underscore': vendors + 'underscore/',
     'wysihtml5x': vendors + 'wysihtml5x/dist/',
     'xeditable': vendors + 'x-editable/dist/',
-    'nestablelist': vendors + 'nestable-list/',
-    'sparkline': vendors + 'sparkline/src/',
-    'tinymce': vendors + 'tinymce-dist/',
     'jqueryeasypiechart': vendors + 'bower-jquery-easyPieChart/dist/',
     'datatables': vendors + 'datatables.net/',
     'datatablesbs': vendors + 'datatables.net-bs/',
@@ -148,7 +131,6 @@ const paths = {
     'sweetalert': vendors + 'sweetalert/dist/',
     'jstree': vendors + 'jstree/dist/',
     'hover': vendors + 'hover/css/',
-    'jeditable': vendors + 'jeditable/src/',
     'd3': vendors + 'd3/',
     'morrisjs': vendors + 'morris.js/',
     'd3pie': vendors + 'd3pie/',
@@ -156,9 +138,6 @@ const paths = {
     'smalotDatepicker': vendors + 'smalot-bootstrap-datetimepicker/',
     'jTable': vendors + 'jtable/'
 };
-
-//copy frontend skins to public
-mix.copy(srcCss + 'frontend/skins', destCss + 'frontend/skins');
 
 //simple-line-icons
 mix.copy(paths.simplelineicons + 'css/simple-line-icons.css', destVendors + 'simple-line-icons/css');
@@ -213,12 +192,6 @@ mix.copy(srcJs + 'pages/custom_datepicker.js', destJs + 'pages');
 // awesome-bootstrap-checkbox
 mix.copy(paths.awesomeBootstrapCheckbox + '/awesome-bootstrap-checkbox.css', destVendors + 'awesomeBootstrapCheckbox');
 
-// tinymce
-mix.copy(paths.tinymce + 'tinymce.min.js', destVendors + 'tinymce');
-mix.copy(paths.tinymce + 'plugins/', destVendors + 'tinymce/plugins', false);
-mix.copy(paths.tinymce + 'themes/', destVendors + 'tinymce/themes', false);
-mix.copy(paths.tinymce + 'skins/', destVendors + 'tinymce/skins', false);
-
 //bootsdtrap starrating
 mix.copy('resources/assets/vendors/bootstrap-star-rating/css/star-rating.min.css', 'public/assets/vendors/bootstrapRating/css');
 mix.copy('resources/assets/vendors/bootstrap-star-rating/js/star-rating.min.js', 'public/assets/vendors/bootstrapRating/js');
@@ -226,21 +199,10 @@ mix.copy('resources/assets/vendors/bootstrap-star-rating/js/star-rating.min.js',
 // metis menu
 mix.copy(srcJs + 'metisMenu.js', destJs);
 
-//bootstrap-form-builder
-mix.copy(paths.bootstrapFormBuilder + 'assets3', destVendors + 'bootstrap-form-builder', false);
-
 //  gui builder
 mix.copy(srcCss + 'pages/custom_gui_builder.css', destCss + 'pages');
 mix.copy(srcCss + 'pages/formbuilder.css', destCss + 'pages');
 mix.copy(srcCss + 'pages/adv_date_pickers.css', destCss + 'pages');
-
-// form builder
-mix.copy(paths.formBuilder + 'beautify-html.js', destVendors + 'form-builder/js');
-mix.copy(paths.formBuilder + 'beautify-css.js', destVendors + 'form-builder/js');
-mix.copy(paths.formBuilder + 'beautify.js', destVendors + 'form-builder/js');
-
-// backbone
-mix.copy(paths.backbone + 'backbone-min.js', destVendors + 'backbone/js');
 
 // dropzone
 mix.copy(paths.dropzone + 'dropzone.css', destVendors + 'dropzone/css');
@@ -287,10 +249,6 @@ mix.copy(paths.blueimpgallery + 'img/', destVendors + 'blueimp-gallery-with-desc
 // mix.copy('resources/assets/css/pages/blueimp-gallery.min.css', destCss + 'pages');
 mix.copy(srcJs + 'pages/main.js', destJs + 'pages');
 
-//fancybox
-mix.copy(paths.fancybox + 'source', destVendors + 'fancybox');
-mix.copy(paths.fancybox + 'lib/jquery.mousewheel.pack.js', destVendors + 'fancybox');
-
 //grid manager
 mix.copy(paths.gridmanager + 'dist/css/jquery.gridmanager.css', destVendors + 'gridmanager/css');
 mix.copy(paths.gridmanager + 'demo/css/demo.css', destVendors + 'gridmanager/css');
@@ -305,21 +263,6 @@ mix.copy(paths.wysihtml5 + 'bootstrap3-wysihtml5.min.css', destVendors + 'bootst
 mix.copy(paths.wysihtml5 + 'bootstrap3-wysihtml5.all.min.js', destVendors + 'bootstrap3-wysihtml5-bower/js');
 mix.copy(paths.wysihtml5 + 'bootstrap3-wysihtml5.min.js', destVendors + 'bootstrap3-wysihtml5-bower/js');
 
-// summer note
-mix.copy(paths.summernote + 'summernote.css', destVendors + 'summernote');
-mix.copy(paths.summernote + 'summernote.min.js', destVendors + 'summernote');
-mix.copy(paths.summernote + 'font', destVendors + 'summernote/font');
-
-// ckeditor
-mix.copy(paths.ckeditor + 'ckeditor.js', destVendors + 'ckeditor/js');
-mix.copy(paths.ckeditor + 'adapters/jquery.js', destVendors + 'ckeditor/js');
-mix.copy(paths.ckeditor + 'config.js', destVendors + 'ckeditor/js');
-mix.copy(paths.ckeditor + 'skins/moono/', destVendors + 'ckeditor/js/skins/moono', false);
-mix.copy(paths.ckeditor + 'plugins/', destVendors + 'ckeditor/js/plugins', false);
-mix.copy(paths.ckeditor + 'lang', destVendors + 'ckeditor/js/lang', false);
-mix.copy(paths.ckeditor + 'styles.js', destVendors + 'ckeditor/js');
-mix.copy(paths.ckeditor + 'contents.css', destVendors + 'ckeditor/js');
-
 // starability
 mix.copy(paths.starability + '/starability-css/starability-all.css', destVendors + 'starability');
 mix.copy(paths.starability + '/starability-images', destVendors + 'starability-images');
@@ -330,9 +273,6 @@ mix.copy(paths.bootstrapStarRating + '/js/star-rating.min.js', destVendors + 'bo
 mix.copy(paths.bootstrapStarRating + '/img', destVendors + 'bootstrapStarRating/img');
 mix.copy(srcJs + 'pages/custom_rating.js', destJs + 'pages');
 mix.copy(srcCss + 'pages/custom_rating.css', destCss + 'pages');
-
-//autogrow
-mix.copy(paths.autogrow + 'js/jQuery-autogrow.min.js', destVendors + 'autogrow/js');
 
 // trumbowyg
 mix.copy(paths.trumbowyg + 'ui/trumbowyg.min.css', destVendors + 'trumbowyg/css');
@@ -373,9 +313,6 @@ mix.copy(srcJs + 'pages/jquery.easingpie.js', destVendors + 'bower-jquery-easyPi
 // moment
 mix.copy(paths.moment + 'min/moment.min.js', destVendors + 'moment/js');
 
-// underscore
-mix.copy(paths.underscore + 'underscore-min.js', destVendors + 'underscore/js');
-
 // datepicker
 mix.copy(srcJs + 'pages/datepicker.js', destJs + 'pages');
 
@@ -396,12 +333,6 @@ mix.copy(paths.buttons + 'js/buttons.js', destVendors + 'Buttons/js');
 mix.copy(paths.colorpicker + 'css/bootstrap-colorpicker.min.css', destVendors + 'colorpicker/css');
 mix.copy(paths.colorpicker + 'js/bootstrap-colorpicker.min.js', destVendors + 'colorpicker/js');
 mix.copy(paths.colorpicker + 'img/bootstrap-colorpicker', destVendors + 'colorpicker/img/bootstrap-colorpicker');
-
-// owl-carousel
-mix.copy(paths.owlcarousel + 'owl.carousel.css', destVendors + 'owl_carousel/css');
-mix.copy(paths.owlcarousel + 'owl.theme.css', destVendors + 'owl_carousel/css');
-mix.copy(paths.owlcarousel + 'owl.transitions.css', destVendors + 'owl_carousel/css');
-mix.copy(paths.owlcarousel + 'owl.carousel.min.js', destVendors + 'owl_carousel/js');
 
 // advanced modals
 mix.copy(paths.modal + 'css', destVendors + 'modal/css');
@@ -498,7 +429,6 @@ mix.copy(paths.datatablesscroll + 'js/dataTables.scroller.js', destVendors + 'da
 mix.copy(paths.datatablesscrollbs + 'css/scroller.bootstrap.css', destVendors + 'datatables/css');
 mix.copy(paths.pdfmake + 'pdfmake.js', destVendors + 'datatables/js');
 mix.copy(paths.pdfmake + 'vfs_fonts.js', destVendors + 'datatables/js');
-mix.copy(paths.jeditable + 'jquery.jeditable.js', destVendors + 'jeditable/js');
 
 //datatables page
 mix.copy(srcJs + 'pages/table-advanced.js', destJs + 'pages');
@@ -507,23 +437,6 @@ mix.copy(srcJs + 'pages/table-advanced2.js', destJs + 'pages');
 mix.copy(srcJs + 'pages/table-editable.js', destJs + 'pages');
 mix.copy(srcJs + 'pages/data.txt', destJs + 'pages');
 mix.copy(srcJs + 'pages/table-responsive.js', destJs + 'pages');
-
-// flot charts
-mix.copy(paths.flotchart + 'jquery.flot.js', destVendors + 'flotchart/js');
-mix.copy(paths.flotchart + 'jquery.flot.stack.js', destVendors + 'flotchart/js');
-mix.copy(paths.flotchart + 'jquery.flot.crosshair.js', destVendors + 'flotchart/js');
-mix.copy(paths.flotchart + 'jquery.flot.time.js', destVendors + 'flotchart/js');
-mix.copy(paths.flotchart + 'jquery.flot.selection.js', destVendors + 'flotchart/js');
-mix.copy(paths.flotchart + 'jquery.flot.symbol.js', destVendors + 'flotchart/js');
-mix.copy(paths.flotchart + 'jquery.flot.resize.js', destVendors + 'flotchart/js');
-mix.copy(paths.flotchart + 'jquery.flot.categories.js', destVendors + 'flotchart/js');
-mix.copy(paths.flotchart + 'jquery.flot.pie.js', destVendors + 'flotchart/js');
-mix.copy(paths.flottooltip + 'jquery.flot.tooltip.js', destVendors + 'flot_tooltip/js');
-mix.copy(srcCss + 'pages/flot.css', destCss + 'pages');
-mix.copy(srcJs + 'pages/customcharts.js', destJs + 'pages');
-
-//animationchart page
-mix.copy(paths.animatechart + 'jquery.flot.animator.js', destVendors + 'animatechart');
 
 // Chart.js
 mix.copy(paths.chartjs + 'Chart.js', destVendors + 'Chartjs/js');
@@ -575,10 +488,6 @@ mix.copy(paths.jqvmap + 'dist/maps/jquery.vmap.europe.js', destVendors + 'jqvmap
 mix.copy(paths.jqvmap + 'dist/maps/jquery.vmap.germany.js', destVendors + 'jqvmap/js');
 mix.copy(paths.jqvmap + 'dist/maps/jquery.vmap.russia.js', destVendors + 'jqvmap/js');
 mix.copy(paths.jqvmap + 'examples/js/jquery.vmap.sampledata.js', destVendors + 'jqvmap/js');
-
-//fort.js
-mix.copy(paths.fortjs + 'fort.css', destVendors + 'fort_js/css');
-mix.copy(paths.fortjs + 'fort.js', destVendors + 'fort_js/js');
 
 //c3 charts
 mix.copy(paths.c3 + 'c3.min.css', destVendors + 'c3');
@@ -661,21 +570,9 @@ mix.copy(srcJs + 'pages/calendar.js', destJs + 'pages');
 mix.copy(srcCss + 'pages/piecharts.css', destCss + 'pages');
 mix.copy(srcJs + 'pages/custompiecharts.js', destJs + 'pages');
 
-//animation charts page
-mix.copy(srcCss + 'pages/charts.css', destCss + 'pages');
-mix.copy(srcCss + 'jquery.circliful.css', destVendors + 'animationcharts');
-mix.copy(srcJs + 'jquery.circliful.min.js', destVendors + 'animationcharts');
-mix.copy(srcJs + 'pages/animation-chart.js', destJs + 'pages');
-
 // js charts page
 mix.copy(srcCss + 'pages/jscharts.css', destCss + 'pages');
 mix.copy(srcJs + 'pages/chartjs.js', destJs + 'pages');
-
-// sparkline charts page
-mix.copy(srcCss + 'pages/sparklinecharts.css', destCss + 'pages');
-mix.copy(srcJs + 'pages/sparkline.js', destJs + 'pages');
-mix.copy(srcJs + 'jquery.sparkline.js', destVendors + 'sparklinecharts');
-mix.copy(srcJs + 'jquery.flot.spline.js', destVendors + 'splinecharts');
 
 // editable datatables pages
 mix.copy(srcCss + 'pages/tables.css', destCss + 'pages');
@@ -822,12 +719,6 @@ mix.copy(srcJs + 'pages/scripts.min.js', destJs + 'pages');
 mix.copy(srcCss + 'pages/grid_manager.css', destCss + 'pages');
 mix.copy(srcJs + 'pages/grid_manager.js', destJs + 'pages');
 
-//nestable list page
-mix.copy(srcCss + 'pages/sortable.css', destCss + 'pages');
-mix.copy(paths.html5sortable + 'html.sortable.js', destVendors + 'html5sortable/html.sortable.js');
-mix.copy(paths.nestablelist + 'jquery.nestable.js', destVendors + 'nestable-list/jquery.nestable.js');
-mix.copy(srcJs + 'pages/ui-nestable.js', destJs + 'pages');
-
 //sifter
 mix.copy(paths.sifter + 'sifter.js', destVendors + 'sifter/sifter.js');
 
@@ -839,12 +730,6 @@ mix.copy(srcCss + 'pages/wizard.css', destCss + 'pages');
 mix.copy(srcJs + 'pages/form_wizard.js', destJs + 'pages');
 mix.copy(paths.twtrBootstrapWizard + 'jquery.bootstrap.wizard.js', destVendors + 'bootstrapwizard');
 mix.copy(srcJs + 'pages/form_wizard.js', destJs + 'pages');
-
-//accordianform wizard page
-mix.copy(srcCss + 'pages/accordionformwizard.css', destCss + 'pages');
-mix.copy(srcJs + 'pages/accordionformwizard.js', destJs + 'pages');
-mix.copy(paths.accwizard + 'acc-wizard.min.css', destVendors + 'acc-wizard');
-mix.copy(paths.accwizard + 'acc-wizard.min.js', destVendors + 'acc-wizard');
 
 // selectize
 mix.copy(paths.selectize + '/css/selectize.css', destVendors + 'selectize/css');
@@ -867,133 +752,6 @@ mix.copy(paths.jqueryui + 'jquery-ui.min.js', destJs);
 mix.copy(paths.raphael + 'raphael-min.js', destJs);
 mix.copy(paths.holderjs + 'holder.js', destJs);
 mix.copy(paths.holderjs + 'holder.min.js', destJs);
-
-// frontend pages
-
-// default layout
-mix.copy(srcCss + 'frontend/custom.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/josh_frontend.js', destJs + 'frontend');
-mix.copy(srcJs + 'frontend/style-switcher.js', destJs + 'frontend');
-
-// index page
-mix.copy(srcCss + 'frontend/tabbular.css', destCss + 'frontend');
-mix.copy(srcCss + 'frontend/jquery.circliful.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/carousel.js', destJs + 'frontend');
-mix.copy(srcJs + 'frontend/index.js', destJs + 'frontend');
-mix.copy(srcJs + 'frontend/jquery.circliful.js', destJs + 'frontend');
-
-// typography
-mix.copy(srcCss + 'frontend/features.css', destCss + 'frontend');
-
-// advanced features
-mix.copy(srcCss + 'frontend/panel.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/advfeatures.js', destJs + 'frontend');
-mix.copy(srcCss + 'frontend/timeline.css', destCss + 'frontend');
-
-// switchery
-mix.copy(paths.switchery + 'switchery.css', destVendors + 'switchery/css');
-mix.copy(paths.switchery + 'switchery.js', destVendors + 'switchery/js');
-
-// devicon
-mix.copy(paths.devicon + 'devicon.min.css', destVendors + 'devicon');
-mix.copy(paths.devicon + 'fonts', destVendors + 'devicon/fonts');
-mix.copy(paths.devicon + 'devicon-colors.css', destVendors + 'devicon');
-
-//pages section
-// about us
-mix.copy(srcCss + 'frontend/aboutus.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/aboutus.js', destJs + 'frontend');
-
-//timeline
-mix.copy(srcCss + 'frontend/timeline1.css', destCss + 'frontend');
-
-//price
-mix.copy(srcCss + 'frontend/price.css', destCss + 'frontend');
-
-//404
-mix.copy(srcCss + 'frontend/404.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/404.js', destJs + 'frontend');
-
-//500
-mix.copy(srcCss + 'frontend/500.css', destCss + 'frontend');
-
-//frontend forgotpwd js
-mix.copy(srcJs + 'frontend/forgotpwd_custom.js', destJs + 'frontend');
-
-//frontned login js
-mix.copy(srcJs + 'frontend/login_custom.js', destJs + 'frontend');
-
-//frontned register js
-mix.copy(srcJs + 'frontend/register_custom.js', destJs + 'frontend');
-
-//faq
-mix.copy(srcCss + 'frontend/faq.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/faq.js', destJs + 'frontend');
-mix.copy(paths.mixitup + 'src/jquery.mixitup.js', destVendors + 'mixitup');
-
-// register
-mix.copy(srcCss + 'frontend/register.css', destCss + 'frontend');
-mix.copy(srcJs + 'jquery.min.js', destJs);
-
-// login
-mix.copy(srcCss + 'frontend/login.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/jquery.min.js', destJs + 'frontend');
-mix.copy(srcJs + 'frontend/bootstrap.min.js', destJs + 'frontend');
-
-// forgot
-mix.copy(srcCss + 'frontend/forgot.css', destCss + 'frontend');
-
-//shoping section
-//products page
-mix.copy(srcCss + 'frontend/shopping.css', destCss + 'frontend');
-
-//single_product
-mix.copy(paths.rating + 'bootstrap-rating.js', destVendors + 'bootstrap-rating');
-mix.copy(paths.rating + 'bootstrap-rating.css', destVendors + 'bootstrap-rating');
-mix.copy(srcCss + 'frontend/cart.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/cart.js', destJs + 'frontend');
-mix.copy(srcJs + 'frontend/elevatezoom.js', destJs + 'frontend');
-
-mix.copy(srcCss + 'pages/pickers.css', destCss + 'pages');
-
-//portfolio section
-//portfolio
-mix.copy(srcCss + 'frontend/portfolio.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/portfolio.js', destJs + 'frontend');
-mix.copy(srcJs + 'frontend/elevatezoom.js', destJs + 'frontend');
-
-//portfolioitem
-mix.copy(srcCss + 'frontend/portfolio.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/carousel.js', destJs + 'frontend');
-
-//news section
-mix.copy(srcCss + 'frontend/news.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/carousel.js', destJs + 'frontend');
-
-//newsitem
-mix.copy(srcCss + 'frontend/blog.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/carousel.js', destJs + 'frontend');
-
-//contact page
-mix.copy(srcCss + 'frontend/contact.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/gmap.js', destJs + 'frontend');
-
-//user account
-mix.copy(srcCss + 'frontend/user_account.css', destCss + 'frontend');
-mix.copy(srcJs + 'frontend/user_account.js', destJs + 'frontend');
-
-//jtable
-mix.copy(paths.jTable + 'jquery.jtable.js', destVendors + 'jtable/js');
-mix.copy(paths.jTable + 'lib/themes/metro/blue/jtable.css', destVendors + 'jtable/themes/metro/blue/');
-mix.copy(resourcesAssets + 'img/edit.png', destVendors + 'jtable/themes/metro/');
-mix.copy(resourcesAssets + 'img/delete.png', destVendors + 'jtable/themes/metro/');
-mix.copy(paths.jTable + 'lib/themes/metro/add.png', destVendors + 'jtable/themes/metro/');
-mix.copy(paths.jTable + 'lib/themes/metro/column-asc.png', destVendors + 'jtable/themes/metro/');
-mix.copy(paths.jTable + 'lib/themes/metro/column-desc.png', destVendors + 'jtable/themes/metro/');
-mix.copy(paths.jTable + 'lib/themes/metro/column-sortable.png', destVendors + 'jtable/themes/metro/');
-mix.copy(paths.jTable + 'lib/themes/metro/blue/loading.gif', destVendors + 'jtable/themes/metro/blue/');
-mix.copy(srcCss + 'pages/jtable.css', destCss + 'pages');
-mix.copy(srcCss + 'pages/jtablemetroblue_jquery-ui.css', destCss + 'pages');
 
 // Custom Styles
 // wow
@@ -1042,15 +800,6 @@ mix.combine(
         srcCss + 'metisMenu.css'
     ], destCss + 'app_white.css');
 
-/*frontend css mix*/
-/*default skin*/
-mix.combine(
-    [
-        srcCss + 'fonts.css',
-        srcCss + 'bootstrap.min.css',
-        srcCss + 'font-awesome.min.css',
-        srcCss + 'frontend/custom.css'
-    ], destCss + 'lib.css');
 
 // all global js files into app.js
 mix.combine(
@@ -1065,18 +814,6 @@ mix.combine(
         srcJs + 'josh.js',
         // vendors + 'holderjs/holder.min.js'
     ], destJs + 'app.js');
-
-/*frontend js mix*/
-
-mix.combine(
-    [
-        srcJs + 'jquery-1.11.1.min.js',
-        srcJs + 'bootstrap.min.js',
-        srcJs + 'bootstrap.min.js',
-        vendors + 'raphael/raphael-min.js',
-        srcJs + 'livicons-1.4.min.js',
-        srcJs + 'frontend/josh_frontend.js'
-    ], destJs + 'frontend/lib.js');
 
 // laravel-mix webpack config
 

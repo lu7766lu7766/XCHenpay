@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Account;
+use App\Models\Account;
 use App\Http\Controllers\Controller;
 use App\Repositories\VerifyCodes;
 use App\User;

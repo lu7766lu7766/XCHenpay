@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Authcode;
+use App\Models\Authcode;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;

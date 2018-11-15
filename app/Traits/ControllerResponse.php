@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\ErrorLog;
+use App\Models\ErrorLog;
 use Validator;
 use Redirect;
 use Response;

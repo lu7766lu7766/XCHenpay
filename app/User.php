@@ -2,12 +2,16 @@
 
 namespace App;
 
-use App\Models\PaymentFees;
 use Cartalyst\Sentinel\Permissions\StrictPermissions;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cviebrock\EloquentTaggable\Taggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Authcode;
+use App\Models\Account;
+use App\Models\LendRecord;
+use App\Models\PaymentFees;
+use App\Models\verifyCode;
 
 /**
  * Class User

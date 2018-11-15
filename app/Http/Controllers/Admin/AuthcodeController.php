@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Authcode;
+use App\Models\Authcode;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthCodeOrderSearchRequest;
 use App\Models\PaymentFees;
-use App\Payment;
+use App\Models\Payment;
 use App\Repositories\AuthCodes;
 use App\User;
 use Curl\Curl;

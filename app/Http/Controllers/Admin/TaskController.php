@@ -2,7 +2,7 @@
 
 
 use App\Http\Requests\TaskRequest;
-use App\Task;
+use App\Models\Task;
 use Illuminate\Http\Request;
 use Sentinel;
 use Yajra\DataTables\DataTables;

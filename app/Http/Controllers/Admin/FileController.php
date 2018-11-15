@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\JoshController;
-use App\File;
+use App\Models\File;
 use App\Helpers\Thumbnail;
 use App\Http\Requests;
 use App\Http\Requests\FileUploadRequest;

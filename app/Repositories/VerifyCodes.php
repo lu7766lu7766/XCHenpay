@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Authcode;
-use App\verifyCode;
+use App\Models\Authcode;
+use App\Models\verifyCode;
 
 
 class VerifyCodes
