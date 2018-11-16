@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ExtraEnvironmentExport;
 use App\Http\Middleware\SimpleJsonResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -27,7 +28,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewareGroups = [
-        'web' => [
+        'web'      => [
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -37,9 +38,13 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\Locale::class,
         ],
-        'api' => [
+        'api'      => [
             'throttle:60,1',
             'bindings',
+        ],
+        'json_api' => [
+            'to_json_resp',
+            'env_export',
         ],
     ];
     /**
@@ -64,5 +69,6 @@ class Kernel extends HttpKernel
         'tradeLog'     => \App\Http\Middleware\tradeLogPermission::class,
         'search'       => \App\Http\Middleware\SearchPermission::class,
         'to_json_resp' => SimpleJsonResponse::class,
+        'env_export'   => ExtraEnvironmentExport::class,
     ];
 }
