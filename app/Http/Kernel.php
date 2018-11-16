@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\SimpleJsonResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -49,18 +50,19 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'       => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings'   => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can'        => \Illuminate\Auth\Middleware\Authorize::class,
-        'login'      => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin'      => \App\Http\Middleware\SentinelAdmin::class,
-        'users'      => \App\Http\Middleware\usersPermission::class,
-        'lendApply'  => \App\Http\Middleware\lendApplyPermission::class,
-        'lendManage' => \App\Http\Middleware\lendManagePermission::class,
-        'account'    => \App\Http\Middleware\accountPermission::class,
-        'tradeLog'   => \App\Http\Middleware\tradeLogPermission::class,
-        'search'     => \App\Http\Middleware\SearchPermission::class,
+        'auth'         => \Illuminate\Auth\Middleware\Authenticate::class,
+        'auth.basic'   => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings'     => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        'can'          => \Illuminate\Auth\Middleware\Authorize::class,
+        'login'        => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'     => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin'        => \App\Http\Middleware\SentinelAdmin::class,
+        'users'        => \App\Http\Middleware\usersPermission::class,
+        'lendApply'    => \App\Http\Middleware\lendApplyPermission::class,
+        'lendManage'   => \App\Http\Middleware\lendManagePermission::class,
+        'account'      => \App\Http\Middleware\accountPermission::class,
+        'tradeLog'     => \App\Http\Middleware\tradeLogPermission::class,
+        'search'       => \App\Http\Middleware\SearchPermission::class,
+        'to_json_resp' => SimpleJsonResponse::class,
     ];
 }
