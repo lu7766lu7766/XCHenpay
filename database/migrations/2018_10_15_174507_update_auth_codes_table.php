@@ -25,5 +25,8 @@ class UpdateAuthCodesTable extends Migration
      */
     public function down()
     {
+        Schema::table('authcodes', function (Blueprint $table) {
+            $table->dropIndex('authcodes_company_service_id_index');
+        });
     }
 }

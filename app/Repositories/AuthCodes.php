@@ -138,6 +138,10 @@ class AuthCodes
             $this::deny_state
         ];
         $authCodes = $user->tradeLogs()
+            ->select([
+                \DB::raw('sum(amount) as amount'),
+                \DB::raw('sum(fee) as fee')
+            ])
             ->whereIn('pay_state', $filterState)
             ->get();
         if (!$authCodes) {
