@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Modules\Base\Support\Scalar\StringMaster;
 
 class SimpleJsonResponse
 {
@@ -25,8 +24,9 @@ class SimpleJsonResponse
             $content['query_loq'] = \DB::getQueryLog();
         }
         if ($response instanceof JsonResponse) {
-            $content['data'] = $response->getData();
-            $content['code'] = $response->getStatusCode();
+            $tmpContent = $response->getData(true);
+            $content['data'] = $tmpContent['data'] ?? $tmpContent;
+            $content['code'] = $tmpContent['code'] ?? $response->getStatusCode();
             $response->setData($content);
         } elseif (($response instanceof Response)) {
             // exception occur.
