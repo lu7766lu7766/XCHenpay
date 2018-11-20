@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-TW">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>龙亨支付</title>
+        <meta content="Admin Dashboard" name="description" />
+        <meta content="Themesbrand" name="author" />
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        
+        <!-- datapicker style -->
+        <link rel="stylesheet" href="../../plugins/datepicker/css/bootstrap-datetimepicker.min.css">
+
+        <!-- default style -->
+        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/style.css" rel="stylesheet" type="text/css">
+
+        <!-- myself style -->
+        <link rel="stylesheet" href="../../css/style.css">
+    </head>
+
+    <body>
+
+        <!-- Navigation Bar-->
+        <header id="topnav">
+            <div class="topbar-main">
+                <div class="container-fluid">
+
+                    <!-- Logo container-->
+                    <div class="../../logo">
+                        
+                        <a href="../../index.html" class="logo">
+                            <img src="../../img/logo-sm.png" alt="" class="logo-small">
+                            <img src="../../img/logo.png" alt="" class="logo-large">
+                        </a>
+
+                    </div>
+                    <!-- End Logo container-->
+
+
+                    <div class="menu-extras topbar-custom">
+
+                        <ul class="float-right list-unstyled mb-0 ">
+
+                            <li class="dropdown notification-list">
+                                <a class="nav-link arrow-none waves-effect" href="">
+                                    <i class="ti-bell noti-icon"></i>
+                                    <span class="badge badge-pill badge-danger noti-icon-badge">3</span>
+                                </a>      
+                            </li>
+                            <li class="dropdown notification-list">
+                                <div class="dropdown notification-list nav-pro-img">
+                                    <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                        <img src="../../assets/images/users/user-4.jpg" alt="user" class="rounded-circle">
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                        <!-- item-->
+                                        <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> 商户资料</a>
+                                        <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> 锁定</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-danger" href="#"><i class="mdi mdi-power text-danger"></i> 登出</a>
+                                    </div>                                                                    
+                                </div>
+                            </li>
+                            <li class="menu-item">
+                                <!-- Mobile menu toggle-->
+                                <a class="navbar-toggle nav-link" id="mobileToggle">
+                                    <div class="lines">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </a>
+                                <!-- End mobile menu toggle-->
+                            </li>    
+                        </ul>
+                    </div>
+                    <!-- end menu-extras -->
+
+                    <div class="clearfix"></div>
+
+                </div> <!-- end container -->
+            </div>
+            <!-- end topbar-main -->
+
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box d-flex">
+                            <h4 class="page-title">报表统计</h4>
+                            <ol class="breadcrumb ml-auto">
+                                <li class="breadcrumb-item"><a href="../../index.html">首页</a></li>
+                                <li class="breadcrumb-item"><a>查询功能</a></li>
+                                <li class="breadcrumb-item active">报表统计</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENU Start -->
+            <div class="navbar-custom">
+                <div class="container-fluid">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+                            <li class="has-submenu">
+                                <a href="#">
+                                    <i class="ti-user"></i>
+                                    <span>商戶</span>
+                                </a>
+                                <ul class="submenu">    
+                                    <li><a href="../../page/merchant/data.html">商户资料</a></li>
+                                    <li><a href="../../page/merchant/list.html">商户管理</a></li>
+                                    <li><a href="../../page/merchant/card_list.html">行卡列表</a></li>
+                                    <li><a href="../../page/merchant/card_bind.html">行卡绑定</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#"><i class="ti-pie-chart"></i>財務管理</a>
+                                <ul class="submenu">
+                                    <li><a href="../../page/finance/apply.html">下发申请</a></li>
+                                    <li><a href="../../page/finance/manage.html">下发管理</a></li>
+                                    <li><a href="../../page/finance/list.html">下发列表</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#"><i class="ti-search"></i>查询功能</a>
+                                <ul class="submenu">
+                                    <li><a href="../../page/search/order.html">订单查询</a></li>
+                                    <li><a href="../../page/search/report_search.html">报表查询</a></li>
+                                    <li><a href="../../page/search/report_statistics.html">报表统计</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#"><i class="ti-write"></i>历程记录</a>
+                                <ul class="submenu">
+                                    <li><a href="../../page/history/account.html">帐户历程</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu ml-auto"></li>
+                            <li class="has-submenu">
+                                <a href="#"><i class="ti-settings"></i>系统设置</a>
+                                <ul class="submenu">
+                                    <li><a href="#">设置</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="https://hackmd.io/s/S1hn8pDaX" target="_blank"><i class="ti-link"></i>串接文件</a>
+                            </li>
+                        </ul>
+                        <!-- End navigation menu -->
+                    </div> <!-- end navigation -->
+                </div> <!-- end container-fluid -->
+            </div> <!-- end navbar-custom -->
+        </header>
+        <!-- End Navigation Bar-->
+
+        <div class="wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card m-b-30">
+                            <div class="card-body">
+                                <div class="search-box">
+                                    <div class="date-select">
+                                        <div class="input-group">
+                                            <input type='text' class="form-control" id='datetimepicker_start' placeholder="開始日期" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="date-select">
+                                        <div class="input-group">
+                                            <input type='text' class="form-control" id='datetimepicker_end' placeholder="結束日期"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="date-btn">
+                                        <button type="button" class="btn btn-info-lighter" data-toggle="button">昨日</button>
+                                        <button type="button" class="btn btn-info-lighter" data-toggle="button">今日</button>
+                                        <button type="button" class="btn btn-info-lighter" data-toggle="button">上周</button>
+                                        <button type="button" class="btn btn-info-lighter" data-toggle="button">本周</button>
+                                        <button type="button" class="btn btn-purple-lighter" data-toggle="button">上月</button>
+                                        <button type="button" class="btn btn-purple-lighter" data-toggle="button">本月</button>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-search" data-toggle="button">搜寻</button>
+                                    </div>
+                                </div>
+                                <!-- search-box end -->
+                                <div class="table-responsive m-t-15">
+                                    <table class="table table-hover text-center table-bordered table-box report-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="width-40">#</th>
+                                                <th>商户</th>
+                                                <th>交易成功</th>
+                                                <th>交易失败</th>
+                                                <th>手续费</th>
+                                                <th>总计</th>
+                                                <th>净利</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>99_API_TEST</td>
+                                                <td class="text-green">
+                                                    <div>123,333</div>
+                                                    <div>100</div>
+                                                </td>
+                                                <td class="text-red">
+                                                    <div>3,000</div>
+                                                    <div>5</div>
+                                                </td>
+                                                <td>
+                                                    <div>150.05</div>
+                                                    <div>100</div>
+                                                </td>
+                                                <td>
+                                                    <div>126,333</div>
+                                                    <div>105</div>
+                                                </td>
+                                                <td>
+                                                    <div>50.05</div>
+                                                    <div>100</div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2">总额</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">笔数</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- table-responsive end -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+     
+            </div> <!-- end container -->
+        </div>
+        <!-- end wrapper -->
+
+        
+
+        <!-- jQuery  -->
+        <script src="../../assets/js/jquery.min.js"></script>
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/jquery.slimscroll.js"></script>
+        <script src="../../assets/js/waves.min.js"></script>
+
+        <script src="../../plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+
+        <!-- datapicker js -->
+        <script src="../../plugins/datepicker/js/moment.min.js" type="text/javascript"></script>
+        <script src="../../plugins/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- App js -->
+        <script src="../../assets/js/app.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#datetimepicker_start').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    date: moment().startOf('day')
+                });
+
+                $('#datetimepicker_end').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    date: moment().endOf('day')
+                });
+            } );
+        </script>
+    </body>
+</html>

@@ -1,5 +1,4 @@
 <?php
-include_once 'web_builder.php';
 Route::get('setlocale/{locale}', function ($locale) {
     if (in_array($locale, \Config::get('app.locales'))) {
         Session::put('locale', $locale);
@@ -12,10 +11,10 @@ Route::pattern('slug', '[a-z0-9- _]+');
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     # Error pages should be shown without requiring login
     Route::get('404', function () {
-        return view('admin/404');
+        return view('errors/404');
     });
     Route::get('500', function () {
-        return view('admin/500');
+        return view('errors/500');
     });
     # All basic routes defined here
     Route::get('login', 'AuthController@getSignin')->name('login');
@@ -23,9 +22,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::post('signin', 'AuthController@postSignin')->name('postSignin');
     Route::post('signup', 'AuthController@postSignup')->name('admin.signup');
     Route::post('forgot-password', 'AuthController@postForgotPassword')->name('forgot-password');
-    Route::get('login2', function () {
-        return view('admin/login2');
-    });
     # Logout
     Route::get('logout', 'AuthController@getLogout')->name('logout');
     # Account Activation

@@ -63,16 +63,13 @@ class AuthController extends JoshController
 
                 Sentinel::logout($user);
             }
-            $this->messageBag->add('email', trans('auth/message.account_not_found'));
+
         } catch (NotActivatedException $e) {
-            $this->messageBag->add('email', trans('auth/message.account_not_activated'));
-        } catch (ThrottlingException $e) {
-            $delay = $e->getDelay();
-            $this->messageBag->add('email', trans('auth/message.account_suspended', compact('delay')));
+            //
         }
         // Ooops.. something went wrong
 
-        return Redirect::back()->withInput()->withErrors($this->messageBag);
+        return Redirect::back()->with('error', trans('auth/message.account_not_found'));
     }
 
     /**
@@ -107,12 +104,12 @@ class AuthController extends JoshController
             // Redirect to the home page with success menu
             return Redirect::route("admin.dashboard")->with('success', trans('auth/message.signup.success'));
 
-        } catch (UserExistsException $e) {
-            $this->messageBag->add('email', trans('auth/message.account_already_exists'));
+        } catch (UserNoException $e) {
+            //
         }
 
         // Ooops.. something went wrong
-        return Redirect::back()->withInput()->withErrors($this->messageBag);
+        return Redirect::back()->with('warning', trans('auth/message.account_already_exists'));
     }
 
     /**
@@ -138,8 +135,7 @@ class AuthController extends JoshController
             return Redirect::route('signin')->with('success', trans('auth/message.activate.success'));
         } else {
             // Activation not found or not completed.
-            $error = trans('auth/message.activate.error');
-            return Redirect::route('signin')->with('error', $error);
+            return Redirect::route('signin')->with('error', trans('auth/message.activate.error'));
         }
 
     }
@@ -287,11 +283,11 @@ class AuthController extends JoshController
             return Redirect::route("admin.dashboard")->with('success', trans('auth/message.signup.success'));
 
         } catch (UserExistsException $e) {
-            $this->messageBag->add('email', trans('auth/message.account_already_exists'));
+            //
         }
 
         // Ooops.. something went wrong
-        return Redirect::back()->withInput()->withErrors($this->messageBag);
+        return Redirect::back()->withInput()->withErrors('warning', trans('auth/message.account_already_exists'));
     }
 
 }

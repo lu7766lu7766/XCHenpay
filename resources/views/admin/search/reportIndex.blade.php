@@ -1,62 +1,32 @@
 @extends('admin.layouts.default')
 
-{{-- Page title --}}
-@section('title')
-    {{ trans('Search/title.title') }}
-    @parent
-@stop
-
-{{-- page level styles --}}
 @section('header_styles')
-    <link rel="stylesheet" type="text/css"
-          href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/tables.css') }}"/>
-    <link href="{{ asset('assets/css/pages/transitions.css') }}" rel="stylesheet"/>
-    {{--<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/daterangepicker/css/daterangepicker.css') }}"/>--}}
-
-
+    {{--放置 css--}}
 @stop
 
-{{-- Page content --}}
-@section('content')
-    <section class="content-header">
-        <!--section starts-->
-        <h1>@lang('Search/title.title')</h1>
-        <ol class="breadcrumb">
-            <li>
-                <i class="livicon" data-name="search" data-size="14" data-loop="true"></i>
-                @lang('Search/title.title')
-            </li>
-            <li class="active">@lang('Search/Report/title.title')</li>
-        </ol>
-    </section>
-    <section class="content">
-        <!--main content-->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">
-                            <i class="livicon" data-name="search" data-size="16" data-loop="true" data-c="#fff"
-                               data-hc="white"></i> @lang('Search/Report/title.title')
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-
-                        @yield('reportRecord')
-
-                    </div>
-                    <!--ends-->
-                </div>
+@section('breadcrumb')
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-title-box d-flex">
+                <h4 class="page-title">报表查询</h4>
+                <ol class="breadcrumb ml-auto">
+                    <li class="breadcrumb-item active"><a href="{{ URL::to('admin/logQuery') }}">首页</a></li>
+                    <li class="breadcrumb-item"><a>查询功能</a></li>
+                    <li class="breadcrumb-item active">报表查询</li>
+                </ol>
             </div>
         </div>
-        <!--main content ends-->
-    </section>
-    <!-- content -->
-
+    </div>
 @stop
 
-{{-- page level scripts --}}
+@section('content')
+    {{--放置 content--}}
+@stop
+
+@section('modal')
+    {{--放置 modal--}}
+@stop
+
 @section('footer_scripts')
-    <script src="{{ asset('assets/js/report.js') }}"></script>
+    {{--放置 js--}}
 @stop

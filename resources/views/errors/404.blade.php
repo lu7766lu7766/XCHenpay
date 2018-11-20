@@ -1,42 +1,52 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>404 page | Welcome to Josh Frontend</title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <!-- global level css-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <!-- end of globallevel css-->
-    <!-- page level styles-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/frontend/404.css') }}" />
-    <!-- end of page level styles-->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>龙亨支付</title>
+    <meta content="Admin Dashboard" name="description"/>
+    <meta content="Themesbrand" name="author"/>
+    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
+
+    <!-- default style -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- myself style -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
 <body>
 
-    <div id="animate" class="row">
-        <div class="number">4</div>
-        <div class="icon"> <i class="livicon" data-name="pacman" data-size="105" data-c="#f6c500" data-hc="#f1b21d" data-eventtype="click" data-iteration="15"></i>
+<!-- Begin page -->
+<div class="wrapper-page">
+    <div class="card">
+        <div class="card-block">
+
+            <div class="ex-page-content text-center">
+                <h1 class="text-dark">404!</h1>
+                <h4 class="">抱歉, 您访问的网页不存在</h4><br>
+                <a class="btn btn-primary mb-5 waves-effect waves-light" href="{{ URL::to('admin/logQuery') }}"><i class="mdi mdi-home"></i> 返回首页</a>
+            </div>
+
         </div>
-        <div class="number">4</div>
     </div>
-    <div class="hgroup">
-        <h1>Page Not Found</h1>
-        <h2>It seems that page you are looking for no longer exists.</h2>
-        <a href="{{ route('home') }}">
-            <button type="button" class="btn btn-primary button-alignment">Home</button>
-        </a>
-    </div>
-    <!-- global js -->
-    <script src="{{ asset('assets/js/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
-    <!--livicons-->
-    <script src="{{ asset('assets/js/raphael-min.js') }}"></script>
-    <script src="{{ asset('assets/js/livicons-1.4.min.js') }}"></script>
-    <!-- end of global js -->
-    <!-- begining of page level js-->
-    <script src="{{ asset('assets/js/frontend/404.js') }}"></script>
-    <!-- end of page level js-->
+
+</div>
+
+
+<!-- jQuery  -->
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
+<script src="{{ asset('assets/js/waves.min.js') }}"></script>
+
+<script src="{{ asset('plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+
+<!-- App js -->
+<script src="{{ asset('assets/js/app.js') }}"></script>
+
 </body>
 </html>

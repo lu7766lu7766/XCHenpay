@@ -1,0 +1,10 @@
+@mixin btnColor($btnColor){
+    background-color: $btnColor;
+    color:#fff;
+    transition: all .5s;
+    &:hover{
+        background-color: darken($btnColor, 5%);
+        color:#fff;
+    }
+}
+    

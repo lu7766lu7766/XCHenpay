@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-TW">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title>龙亨支付</title>
+        <meta content="Admin Dashboard" name="description" />
+        <meta content="Themesbrand" name="author" />
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        
+        <!-- datapicker style -->
+        <link rel="stylesheet" href="../../plugins/datepicker/css/bootstrap-datetimepicker.min.css">
+
+        <!-- DataTables -->
+        <link href="../../plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <link href="../../plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- default style -->
+        <link href="../../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css">
+        <link href="../../assets/css/style.css" rel="stylesheet" type="text/css">
+
+        <!-- myself style -->
+        <link rel="stylesheet" href="../../css/style.css">
+    </head>
+
+    <body>
+
+        <!-- Navigation Bar-->
+        <header id="topnav">
+            <div class="topbar-main">
+                <div class="container-fluid">
+
+                    <!-- Logo container-->
+                    <div class="../../logo">
+                        
+                        <a href="../../index.html" class="logo">
+                            <img src="../../img/logo-sm.png" alt="" class="logo-small">
+                            <img src="../../img/logo.png" alt="" class="logo-large">
+                        </a>
+
+                    </div>
+                    <!-- End Logo container-->
+
+
+                    <div class="menu-extras topbar-custom">
+
+                        <ul class="float-right list-unstyled mb-0 ">
+
+                            <li class="dropdown notification-list">
+                                <a class="nav-link arrow-none waves-effect" href="">
+                                    <i class="ti-bell noti-icon"></i>
+                                    <span class="badge badge-pill badge-danger noti-icon-badge">3</span>
+                                </a>      
+                            </li>
+                            <li class="dropdown notification-list">
+                                <div class="dropdown notification-list nav-pro-img">
+                                    <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                        <img src="../../assets/images/users/user-4.jpg" alt="user" class="rounded-circle">
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                        <!-- item-->
+                                        <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> 商户资料</a>
+                                        <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> 锁定</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-danger" href="#"><i class="mdi mdi-power text-danger"></i> 登出</a>
+                                    </div>                                                                    
+                                </div>
+                            </li>
+                            <li class="menu-item">
+                                <!-- Mobile menu toggle-->
+                                <a class="navbar-toggle nav-link" id="mobileToggle">
+                                    <div class="lines">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </a>
+                                <!-- End mobile menu toggle-->
+                            </li>    
+                        </ul>
+                    </div>
+                    <!-- end menu-extras -->
+
+                    <div class="clearfix"></div>
+
+                </div> <!-- end container -->
+            </div>
+            <!-- end topbar-main -->
+
+            <div class="container-fluid">
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box d-flex">
+                            <h4 class="page-title">下发列表</h4>
+                            <ol class="breadcrumb ml-auto">
+                                <li class="breadcrumb-item"><a href="../../index.html">首页</a></li>
+                                <li class="breadcrumb-item"><a>財務管理</a></li>
+                                <li class="breadcrumb-item active">下发列表</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENU Start -->
+            <div class="navbar-custom">
+                <div class="container-fluid">
+                    <div id="navigation">
+                        <!-- Navigation Menu-->
+                        <ul class="navigation-menu">
+                            <li class="has-submenu">
+                                <a href="#">
+                                    <i class="ti-user"></i>
+                                    <span>商戶</span>
+                                </a>
+                                <ul class="submenu">    
+                                    <li><a href="../../page/merchant/data.html">商户资料</a></li>
+                                    <li><a href="../../page/merchant/list.html">商户管理</a></li>
+                                    <li><a href="../../page/merchant/card_list.html">行卡列表</a></li>
+                                    <li><a href="../../page/merchant/card_bind.html">行卡绑定</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#"><i class="ti-pie-chart"></i>財務管理</a>
+                                <ul class="submenu">
+                                    <li><a href="../../page/finance/apply.html">下发申请</a></li>
+                                    <li><a href="../../page/finance/manage.html">下发管理</a></li>
+                                    <li><a href="../../page/finance/list.html">下发列表</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#"><i class="ti-search"></i>查询功能</a>
+                                <ul class="submenu">
+                                    <li><a href="../../page/search/order.html">订单查询</a></li>
+                                    <li><a href="../../page/search/report_search.html">报表查询</a></li>
+                                    <li><a href="../../page/search/report_statistics.html">报表统计</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="#"><i class="ti-write"></i>历程记录</a>
+                                <ul class="submenu">
+                                    <li><a href="../../page/history/account.html">帐户历程</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu ml-auto"></li>
+                            <li class="has-submenu">
+                                <a href="#"><i class="ti-settings"></i>系统设置</a>
+                                <ul class="submenu">
+                                    <li><a href="#">设置</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="https://hackmd.io/s/S1hn8pDaX" target="_blank"><i class="ti-link"></i>串接文件</a>
+                            </li>
+                        </ul>
+                        <!-- End navigation menu -->
+                    </div> <!-- end navigation -->
+                </div> <!-- end container-fluid -->
+            </div> <!-- end navbar-custom -->
+        </header>
+        <!-- End Navigation Bar-->
+
+        <div class="wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card m-b-30">
+                            <div class="card-header">
+                                下发资讯
+                            </div>
+                            <div class="card-body">
+                                <div class="row delivery-amount">
+                                    <div class="col-sm">
+                                        <div class="card mini-stat bg-primary">
+                                            <div class="card-body mini-stat-img">
+                                                <div class="mini-stat-icon">
+                                                    <i class="mdi mdi-cube-outline float-right"></i>
+                                                </div>
+                                                <div class="text-white">
+                                                    <h6 class="text-uppercase mb-3">总交易金额</h6>
+                                                    <h4>43,441,733.870</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="card mini-stat bg-primary" style="background-color: #ffb000 !important;">
+                                            <div class="card-body mini-stat-img">
+                                                <div class="mini-stat-icon">
+                                                    <i class="mdi mdi-clock-fast float-right"></i>
+                                                </div>
+                                                <div class="text-white">
+                                                    <h6 class="text-uppercase mb-3">总通道手续费</h6>
+                                                    <h4>43,441,733.870</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="card mini-stat bg-primary" style="background-color: #fb5597 !important;">
+                                            <div class="card-body mini-stat-img">
+                                                <div class="mini-stat-icon">
+                                                    <i class="mdi mdi-cash-usd float-right"></i>
+                                                </div>
+                                                <div class="text-white">
+                                                    <h6 class="text-uppercase mb-3">申请中金额</h6>
+                                                    <h4>43,441,733.870</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="card mini-stat bg-primary" style="background-color: #5271af !important;">
+                                            <div class="card-body mini-stat-img">
+                                                <div class="mini-stat-icon">
+                                                    <i class="mdi mdi-credit-card float-right"></i>
+                                                </div>
+                                                <div class="text-white">
+                                                    <h6 class="text-uppercase mb-3">已提现金额</h6>
+                                                    <h4>43,441,733.870</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div class="card mini-stat bg-primary" style="background-color: #7d6cc4 !important;">
+                                            <div class="card-body mini-stat-img">
+                                                <div class="mini-stat-icon">
+                                                    <i class="mdi mdi-cash-multiple float-right"></i>
+                                                </div>
+                                                <div class="text-white">
+                                                    <h6 class="text-uppercase mb-3">可提领金额</h6>
+                                                    <h4>43,441,733.870</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- card end -->
+                        <div class="card m-b-30">
+                            <div class="card-header">
+                                下发列表
+                                <span class="refresh">
+                                    <i class="mdi mdi-refresh"></i>刷新
+                                </span>
+                            </div>
+                            <div class="card-body">
+                                <div class="search-box">
+                                    <div class="date-select">
+                                        <div class="input-group">
+                                            <input type='text' class="form-control" id='datetimepicker_start' placeholder="開始日期" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="date-select">
+                                        <div class="input-group">
+                                            <input type='text' class="form-control" id='datetimepicker_end' placeholder="結束日期"/>
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="date-btn">
+                                        <button type="button" class="btn btn-info-lighter" data-toggle="button">昨日</button>
+                                        <button type="button" class="btn btn-info-lighter" data-toggle="button">今日</button>
+                                        <button type="button" class="btn btn-info-lighter" data-toggle="button">上周</button>
+                                        <button type="button" class="btn btn-info-lighter" data-toggle="button">本周</button>
+                                        <button type="button" class="btn btn-purple-lighter" data-toggle="button">上月</button>
+                                        <button type="button" class="btn btn-purple-lighter" data-toggle="button">本月</button>
+                                    </div>
+                                    <div class="search-select">
+                                        <select name="" id="" class="form-control">
+                                            <option value="">下发状态</option>
+                                            <option value="">下发中</option>
+                                            <option value="">完成下发</option>
+                                            <option value="">拒绝下发</option>
+                                        </select>
+                                    </div>
+                                    <div class="search-input">
+                                        <input type="text"  class="form-control" placeholder="关键字">
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-search" data-toggle="button">搜寻</button>
+                                    </div>
+                                </div>
+                                <!-- search-box end -->
+                                <div class="row view-btn-box">
+                                    <div class="col-sm-6 view-btn">
+                                        <button data-toggle="modal" data-target="#application" class="btn btn-application btn-full">申请</button>
+                                    </div>
+                                    <div class="col-sm-6 view-info">
+                                        <div class="view-page">
+                                            每页显示
+                                            <select name="" id="" class="form-control">
+                                                <option value="">10</option>
+                                                <option value="">25</option>
+                                                <option value="">50</option>
+                                                <option value="">100</option>
+                                            </select>
+                                            笔资料
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- view-box end -->
+                                <div class="table-responsive m-t-15">
+                                    <table class="table table-hover text-center table-bordered table-box" id="table-sort">
+                                        <thead>
+                                            <tr>
+                                                <th class="width-40">#</th>
+                                                <th>下发状态</th>
+                                                <th>商户名称</th>
+                                                <th>单号</th>
+                                                <th>户名</th>
+                                                <th>银行卡号</th>
+                                                <th>下发金额</th>
+                                                <th class="width-status">银行卡状态</th>
+                                                <th class="width-date">申请时间</th>
+                                                <th class="width-control">操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>
+                                                    <span class="badge badge-warning badge-pill">交易中</span>
+                                                </td>
+                                                <td>彩99</td>
+                                                <td class="text-red">20181102140501</td>
+                                                <td>林鋐</td>
+                                                <td>6217002430050013219</td>
+                                                <td class="text-right">49,592</td>
+                                                <td class="width-status">
+                                                    <i class="mdi mdi-check-circle-outline text-green"></i>
+                                                </td>
+                                                <td>2018-10-16 08:00:31</td>
+                                                <td class="width-control">
+                                                    <a data-toggle="modal" data-target="#info"><i class="mdi mdi-information-outline text-blue"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>
+                                                    <span class="badge badge-warning badge-pill">交易中</span>
+                                                </td>
+                                                <td>彩99</td>
+                                                <td class="text-red">20181102140501</td>
+                                                <td>林鋐</td>
+                                                <td>6217002430050013219</td>
+                                                <td class="text-right">49,592</td>
+                                                <td class="width-status">
+                                                    <i class="mdi mdi-check-circle-outline text-green"></i>
+                                                </td>
+                                                <td>2018-10-17 08:00:31</td>
+                                                <td class="width-control">
+                                                    <a data-toggle="modal" data-target="#info"><i class="mdi mdi-information-outline text-blue"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>
+                                                    <span class="badge badge-success badge-pill">完成下发</span>
+                                                </td>
+                                                <td>彩99</td>
+                                                <td class="text-red">20181102140501</td>
+                                                <td>林鋐</td>
+                                                <td>6217002430050013219</td>
+                                                <td class="text-right">49,592</td>
+                                                <td class="width-status">
+                                                    <i class="mdi mdi-close-circle-outline text-red"></i>
+                                                </td>
+                                                <td>2018-10-16 08:00:31</td>
+                                                <td class="width-control">
+                                                    <a data-toggle="modal" data-target="#info"><i class="mdi mdi-information-outline text-blue"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>
+                                                    <span class="badge badge-danger badge-pill">拒绝下发</span>
+                                                </td>
+                                                <td>彩99</td>
+                                                <td class="text-red">20181102140501</td>
+                                                <td>林鋐</td>
+                                                <td>6217002430050013219</td>
+                                                <td class="text-right">49,592</td>
+                                                <td class="width-status">
+                                                    <i class="mdi mdi-close-circle-outline text-red"></i>
+                                                </td>
+                                                <td>2018-10-15 08:00:31</td>
+                                                <td class="width-control">
+                                                    <a data-toggle="modal" data-target="#info"><i class="mdi mdi-information-outline text-blue"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="6" class="text-right">小计</td>
+                                                <td class="text-right">198,727</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- table-responsive end -->
+                                <nav aria-label="Page navigation" class="page-bar">
+                                    <ul class="pagination">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <!-- <nav aria-label="Page navigation" class="page-bar"> end -->
+                            </div>
+                        </div>
+                        <!-- card end -->
+                    </div>
+                </div>
+
+     
+            </div> <!-- end container -->
+        </div>
+        <!-- end wrapper -->
+        <!-- info modal -->
+        <div id="info" class="modal fade info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="myModalLabel">下发资讯: 20180904093027</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" action="#" method="post">
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">下发状态</label>
+                                <div class="col-md-9 p-t-7">完成下发</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">单号</label>
+                                <div class="col-md-9 p-t-7">20181030215708</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">户名</label>
+                                <div class="col-md-9 p-t-7">许荣</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">银行卡号</label>
+                                <div class="col-md-9 p-t-7"></div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">银行名</label>
+                                <div class="col-md-9 p-t-7">中国银行</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">开户支行</label>
+                                <div class="col-md-9 p-t-7">福建省分行营业部</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">申请金额</label>
+                                <div class="col-md-9 p-t-7">49989.996</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">下发手续费</label>
+                                <div class="col-md-9 p-t-7">9.996</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">下发金额</label>
+                                <div class="col-md-9 p-t-7">49980</div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">备注</label>
+                                <div class="col-md-9 p-t-7"></div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">申请时间</label>
+                                <div class="col-md-9 p-t-7">2018-10-30 21:57:08</div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">确定</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!-- application modal -->
+        <div id="application" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="myModalLabel">申请</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal delivery-form">
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label required">下发金额<b>*</b></label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control">
+                                    <div class="tips">
+                                        下发金额 最少填入 xxxxx, 最大不可超过 xxxxxx
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label required">下发帐号<b>*</b></label>
+                                <div class="col-md-9">
+                                    <select class="form-control">
+                                        <option value="">请选择银行卡 (开户名/银行卡号/银行名)</option>
+                                        <option value="">杨俊佳/6217906400019604637/中国银行</option>
+                                        <option value="">周芸娴/6217858000096671596/中国银行</option>
+                                        <option value="">王明洋/6228480038937834372/中国农业银行</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 control-label">备注</label>
+                                <div class="col-md-9">
+                                    <textarea cols="30" rows="4" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row justify-content-end">
+                                <div class="col-md-9 text-red">
+                                    申请金额将自动加上 0.02% 的申请手续费
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">下发申请</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        
+
+        <!-- jQuery  -->
+        <script src="../../assets/js/jquery.min.js"></script>
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/jquery.slimscroll.js"></script>
+        <script src="../../assets/js/waves.min.js"></script>
+
+        <script src="../../plugins/jquery-sparkline/jquery.sparkline.min.js"></script>
+
+        <!-- datapicker js -->
+        <script src="../../plugins/datepicker/js/moment.min.js" type="text/javascript"></script>
+        <script src="../../plugins/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+        <!-- Required datatable js -->
+        <script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
+        <script src="../../plugins/datatables/dataTables.bootstrap4.min.js"></script>
+
+        <!-- Datatable init js -->
+        <script src="../../assets/pages/datatables.init.js"></script>
+
+        <!-- App js -->
+        <script src="../../assets/js/app.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#table-sort').DataTable({
+                    searching : false,
+                    paging:   false,
+                    info:     false,
+                    aoColumnDefs: [ { "bSortable": false, "aTargets": [ 0 , 1 , 2, 3, 4, 5, 6, 7, 9 ] }]
+                });
+                $('#datetimepicker_start').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    date: moment().startOf('day')
+                });
+
+                $('#datetimepicker_end').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    date: moment().endOf('day')
+                });
+            } );
+        </script>
+    </body>
+</html>

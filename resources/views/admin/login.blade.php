@@ -1,107 +1,79 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="zh-Hans-TW">
 <head>
-    <title>Login</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- global level css -->
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('assets/vendors/bootstrapvalidator/css/bootstrapValidator.min.css') }}" rel="stylesheet"/>
-    <!-- end of global level css -->
-    <!-- page level css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/pages/login.css') }}"/>
-    <link href="{{ asset('assets/vendors/iCheck/css/square/blue.css') }}" rel="stylesheet"/>
-    <!-- end of page level css -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>龙亨支付</title>
+    <meta content="Admin Dashboard" name="description"/>
+    <meta content="Themesbrand" name="author"/>
+    <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
 
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
+
+    <!-- myself style -->
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
 <body>
-<div class="container">
-    <div class="row vertical-offset-100">
-        <!-- Notifications -->
-        <div id="notific">
-            @include('notifications')
-        </div>
 
-        <div class="col-sm-6 col-sm-offset-3  col-md-5 col-md-offset-4 col-lg-4 col-lg-offset-4">
-            <div id="container_demo">
-                <a class="hiddenanchor" id="toregister"></a>
-                <a class="hiddenanchor" id="tologin"></a>
-                <a class="hiddenanchor" id="toforgot"></a>
-                <div id="wrapper">
-                    <div id="login" class="animate form">
-                        <form action="{{ route('signin') }}" autocomplete="on" method="post" role="form"
-                              id="login_form">
-                            <h3 class="black_bg">
-                                <img src="{{ asset('assets/img/3rdpay_logo.png') }}" alt="josh logo">
-                                <br>@lang('SignIn/form.logIn')</h3>
-                            <!-- CSRF Token -->
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                            <div class="form-group {{ $errors->first('email', 'has-error') }}">
-                                <label style="margin-bottom:0px;" for="email" class="uname control-label"> <i
-                                            class="livicon" data-name="mail" data-size="16" data-loop="true"
-                                            data-c="#3c8dbc" data-hc="#3c8dbc"></i>
-                                    @lang('SignIn/form.Email')
-                                </label>
-                                <input id="email" name="email" type="email" placeholder="@lang('SignIn/form.Email')"
-                                       value="{!! old('email') !!}"/>
-                                <div class="col-sm-12">
-                                    {!! $errors->first('email', '<span class="help-block">:message</span>') !!}
-                                </div>
-                            </div>
-                            <div class="form-group {{ $errors->first('password', 'has-error') }}">
-                                <label style="margin-bottom:0px;" for="password" class="youpasswd"> <i class="livicon"
-                                                                                                       data-name="key"
-                                                                                                       data-size="16"
-                                                                                                       data-loop="true"
-                                                                                                       data-c="#3c8dbc"
-                                                                                                       data-hc="#3c8dbc"></i>
-                                    @lang('SignIn/form.Password')
-                                </label>
-                                <input id="password" name="password" type="password"
-                                       placeholder="@lang('SignIn/form.Password')"/>
-                                <div class="col-sm-12">
-                                    {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    <input type="checkbox" name="remember-me" id="remember-me" value="remember-me"
-                                           class="square-blue"/>
-                                    @lang('SignIn/form.Keeploggedin')
-                                </label>
-                            </div>
-                            <p class="login button">
-                                <input type="submit" value="@lang('SignIn/form.logIn')" class="btn btn-success"/>
-                            </p>
+<!-- Begin page -->
+<div class="wrapper-page">
 
-                            {{--//todo 把這兩個導到我做的新稱使用者--}}
-                            {{--<p class="change_link">--}}
-                            {{--<a href="#toforgot">--}}
-                            {{--<button type="button" class="btn btn-responsive botton-alignment btn-warning btn-sm">Forgot password</button>--}}
-                            {{--</a>--}}
-                            {{--<a href="#toregister">--}}
-                            {{--<button type="button" id="signup" class="btn btn-responsive botton-alignment btn-success btn-sm" style="float:right;">Sign Up</button>--}}
-                            {{--</a>--}}
-                            {{--</p>--}}
-                        </form>
+    <div class="card">
+        <div class="card-body">
+
+            <h3 class="text-center m-0">
+                <a href="#" class="logo logo-admin"><img src="{{ asset('img/logo.png') }}" height="30" alt="logo"></a>
+            </h3>
+
+            <div class="p-3">
+                <form class="form-horizontal" action="{{ route('signin') }}" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                    <div class="form-group">
+                        <label for="email">帐户信箱</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="帐户信箱">
                     </div>
-                </div>
+
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                    </div>
+
+                    <div class="form-group row m-t-20">
+                        <div class="col-6">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="remember-me" name="remember-me" value="remember-me">
+                                <label class="custom-control-label" for="customControlInline">保持登陆状态</label>
+                            </div>
+                        </div>
+                        <div class="col-6 text-right">
+                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">登入</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="login-alert">
+                @include('notifications')
             </div>
         </div>
     </div>
+
 </div>
-<!-- global js -->
-<script src="{{ asset('assets/js/jquery-1.11.1.min.js') }}" type="text/javascript"></script>
-<!-- Bootstrap -->
-<script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/vendors/bootstrapvalidator/js/bootstrapValidator.min.js') }}"
-        type="text/javascript"></script>
-<!--livicons-->
-<script src="{{ asset('assets/js/raphael-min.js') }}"></script>
-<script src="{{ asset('assets/js/livicons-1.4.min.js') }}"></script>
-<script src="{{ asset('assets/vendors/iCheck/js/icheck.js') }}" type="text/javascript"></script>
-<script src="{{ asset('assets/js/pages/login.js') }}" type="text/javascript"></script>
-<!-- end of global js -->
+
+
+<!-- jQuery  -->
+<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
+<script src="{{ asset('assets/js/waves.min.js') }}"></script>
+
+<script src="{{ asset('plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+
+<!-- App js -->
+<script src="{{ asset('assets/js/app.js') }}"></script>
+
 </body>
 </html>
