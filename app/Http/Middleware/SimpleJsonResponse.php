@@ -17,6 +17,7 @@ class SimpleJsonResponse
      */
     public function handle($request, Closure $next)
     {
+        $request->headers->set('Accept', 'application/json');
         $response = $next($request);
         $content = [];
         if (config('app.debug')) {
