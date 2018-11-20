@@ -1,6 +1,7 @@
 body {
   font-family: 'Microsoft JhengHei', "Poppins", sans-serif;
   padding-right: 0 !important;
+  background: #dee2e6;
 }
 
 .p-t-7, .control-label {
@@ -365,10 +366,6 @@ body {
   margin-bottom: 0;
 }
 
-.table-box.dataTable {
-  margin-top: 0 !important;
-}
-
 .table-box thead tr th {
   padding: 8px 5px;
   white-space: nowrap;
@@ -392,6 +389,40 @@ body {
 
 .table-box tfoot tr td {
   background-color: #f5f5f5;
+}
+
+.table-sort thead tr th {
+  position: relative;
+}
+
+.table-sort thead tr th.sorting::before, .table-sort thead tr th.sorting::after {
+  font-family: "dripicons-v2" !important;
+  position: absolute;
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.table-sort thead tr th.sorting::before {
+  content: "\6e";
+  right: 1.4em;
+}
+
+.table-sort thead tr th.sorting::after {
+  content: "\6b";
+  right: 0.5em;
+}
+
+.table-sort thead tr th.sorting.sort-desc::after {
+  opacity: 1;
+}
+
+.table-sort thead tr th.sorting.sort-asc::before {
+  opacity: 1;
+}
+
+.table-sort tbody tr td {
+  white-space: nowrap;
+  min-width: 105px;
 }
 
 .search-box {
@@ -527,30 +558,6 @@ body {
 
 .report-table td div:first-child {
   border-bottom: 1px dotted #ccc;
-}
-
-#table-sort th.sorting, #table-sort th.sorting_asc, #table-sort th.sorting_desc {
-  padding: 8px 0 !important;
-}
-
-#table-sort th.width-40.sorting_asc {
-  width: 40px !important;
-}
-
-#table-sort th.width-40.sorting_asc::after, #table-sort th.width-40.sorting_asc::before {
-  display: none;
-}
-
-#table-sort th.width-40.sorting_disabled {
-  width: 29px !important;
-}
-
-#table-sort th.sorting::after, #table-sort th.sorting::before, #table-sort th.sorting_asc::after, #table-sort th.sorting_asc::before, #table-sort .sorting_desc::after, #table-sort .sorting_desc::before {
-  top: 8px;
-}
-
-#table-sort td {
-  white-space: nowrap;
 }
 
 .delivery-amount {
