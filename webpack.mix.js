@@ -1,5 +1,4 @@
-let mix = require('laravel-mix');
-
+let mix = require('laravel-mix')
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,8 +10,8 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css');
+// mix.js('resources/assets/js/app.js', 'public/js')
+//     .sass('resources/assets/sass/app.scss', 'public/css')
 
 // laravel-mix webpack config
 
@@ -22,12 +21,15 @@ mix.webpackConfig({
         alias: {
             // 'vue$': 'vue/dist/vue.esm.js',
             '@': __dirname + '/resources/assets/js/backend/components',
-            'mixins': __dirname + '/resources/assets/js/backend/mixins'
+            'mixins': __dirname + '/resources/assets/js/backend/mixins',
+            'config': __dirname + '/resources/assets/js/backend/config'
         },
+    },
+    output: {
+        publicPath: '/',
+        chunkFilename: 'assets/js/vendor/[name].[chunkhash].js',
     },
 })
 
-mix.js('resources/assets/js/backend/report.js', 'public/assets/js');
-mix.js('resources/assets/js/backend/OrderSearch.js', 'public/assets/js');
-mix.js('resources/assets/js/backend/reportStat.js', 'public/assets/js');
-mix.js('resources/assets/js/backend/ApplyNotice.js', 'public/assets/js');
+// mix.js('resources/assets/js/backend/pages/*.js', 'public/assets/js');
+mix.js('resources/assets/js/backend/App.js', 'public/assets/js')

@@ -21,6 +21,7 @@
 
 @section('content')
     {{--放置 content--}}
+    <activity-log/>
 @stop
 
 @section('modal')
@@ -30,3 +31,4 @@
 @section('footer_scripts')
     {{--放置 js--}}
 @stop
+

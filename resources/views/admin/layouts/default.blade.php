@@ -7,7 +7,12 @@
     <title>龙亨支付</title>
     <meta content="Admin Dashboard" name="description"/>
     <meta content="Themesbrand" name="author"/>
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
+
+    <link rel="stylesheet" href="{{ asset('plugins/datepicker/css/bootstrap-datetimepicker.min.css') }}">
 
     <!-- default style -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
@@ -16,6 +21,7 @@
 
     <!-- myself style -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
 
     @yield('header_styles')
 </head>
@@ -53,7 +59,7 @@
 </header>
 <!-- End Navigation Bar-->
 
-<div class="wrapper">
+<div id="app" class="wrapper">
     <div class="container-fluid">
         @include('notifications')
         @yield('content')
@@ -72,7 +78,13 @@
 <script src="{{ asset('plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
 
 <!-- App js -->
-<script src="{{ asset('assets/js/app.js') }}"></script>
+{{--<script src="{{ asset('assets/js/app.js') }}"></script>--}}
+
+<script src="{{ asset('plugins/datepicker/js/moment.min.js') }}"></script>
+<script src="{{ asset('plugins/datepicker/js/moment_zh-cn.js') }}"></script>
+<script src="{{ asset('plugins/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+
+<script src="{{ asset('assets/js/App.js') }}"></script>
 
 @yield('footer_scripts')
 </body>

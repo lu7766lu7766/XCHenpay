@@ -1,31 +1,33 @@
 <template>
-    <div aria-label="Page navigation" class="page-box" v-if="lastPage > 1">
+    <nav aria-label="Page navigation" class="page-bar" v-if="lastPage > 1">
         <ul class="pagination">
-            <li :class="{
+            <li class="page-item" :class="{
                     disabled: page === 1
-                }"
-                @click="page === 1 ? '' : pageChange(1)"
-            >
-                <a href="javascript:;" aria-label="Previous">
-                    <span aria-hidden="true">«</span>
+                }" @click="page === 1 ? '' : pageChange(1)">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
                 </a>
             </li>
-            <li v-for="p in _.range(startPage, endPage+1)"
+
+            <li class="page-item" v-for="p in _.range(startPage, endPage+1)"
                 :key="p"
                 :class="{active : p === page}"
                 @click="p === page ? '' : pageChange(p)">
-                <a href="javascript:;">{{ p }}</a>
+                <a class="page-link" href="javascript:;">{{ p }}</a>
             </li>
-            <li :class="{
+
+            <li class="page-item" :class="{
                     disabled: page === lastPage
                 }"
                 @click="page === lastPage ? '' : pageChange(lastPage)">
-                <a href="javascript:;" aria-label="Next">
-                    <span aria-hidden="true">»</span>
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
                 </a>
             </li>
         </ul>
-    </div>
+    </nav>
 </template>
 <script>
     export default {

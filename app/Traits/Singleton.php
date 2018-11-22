@@ -6,7 +6,7 @@
  * Time: 下午 07:01
  */
 
-namespace App\Traits\Pattern;
+namespace App\Traits;
 
 trait Singleton
 {

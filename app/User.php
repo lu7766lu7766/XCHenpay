@@ -2,20 +2,23 @@
 
 namespace App;
 
+use App\Models\Account;
+use App\Models\Activity;
+use App\Models\Authcode;
+use App\Models\LendRecord;
+use App\Models\PaymentFees;
+use App\Models\verifyCode;
 use Cartalyst\Sentinel\Permissions\StrictPermissions;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cviebrock\EloquentTaggable\Taggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Authcode;
-use App\Models\Account;
-use App\Models\LendRecord;
-use App\Models\PaymentFees;
-use App\Models\verifyCode;
 
 /**
  * Class User
  * @package App
+ * @property string email
+ * @property string company_name
  * @mixin StrictPermissions|Builder
  */
 class User extends EloquentUser
@@ -86,5 +89,13 @@ class User extends EloquentUser
     public function tradeLogs()
     {
         return $this->hasMany(Authcode::class, 'company_service_id', 'company_service_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function activityLogs()
+    {
+        return $this->morphMany(Activity::class, 'causer');
     }
 }

@@ -29,8 +29,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
 });
 # Activity log
 Route::group(['prefix' => 'admin', 'middleware' => 'admin', 'as' => 'admin.'], function () {
-    Route::get('activity_log', 'JoshController@activityLog')->name('activity_log');
-    Route::get('activity_log/data', 'JoshController@activityLogData')->name('activity_log.data');
+    Route::get('activity_log', 'ActivityHistoryController@view')->name('activity_log');
+    Route::post('activity_log/data', 'ActivityHistoryController@data')
+        ->name('activity_log.data')->middleware('json_api');
+    Route::post('activity_log/data/total', 'ActivityHistoryController@total')
+        ->name('activity_log.data.total')->middleware('json_api');
 });
 # User Management
 Route::group(
@@ -129,7 +132,8 @@ Route::group(
     }
 );
 #search
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'search'], 'as' => 'admin.'],
+Route::group(
+    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'search'], 'as' => 'admin.'],
     function () {
         Route::group(['prefix' => 'search'], function () {
             Route::get('report/view', 'SearchController@reportIndex')->name('search.reportIndex');
@@ -137,7 +141,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['adm
             Route::get('reportStat/view', 'SearchController@reportStatIndex')->name('search.reportStatIndex');
             Route::post('reportStatQuery', 'SearchController@reportStatQuery')->name('search.reportStatQuery');
         });
-    });
+    }
+);
 #permission
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
     Route::get('permissionSwitch', 'PermissionController@permissionSwitch')->name('permission.switch');

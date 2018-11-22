@@ -11,7 +11,7 @@ namespace App\Service;
 use App\Http\Requests\SearchReportQueryRequest;
 use App\Http\Requests\SearchReportStatQueryRequest;
 use App\Repositories\AuthCodes;
-use App\Traits\Pattern\Singleton;
+use App\Traits\Singleton;
 use Illuminate\Validation\ValidationException;
 
 class SearchService
