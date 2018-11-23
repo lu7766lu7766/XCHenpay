@@ -340,6 +340,9 @@ body{
                 td{
                     white-space: nowrap;
                     min-width: 105px;
+                    &:first-child{
+                        min-width: 40px;
+                    }
                 }
             }
         }

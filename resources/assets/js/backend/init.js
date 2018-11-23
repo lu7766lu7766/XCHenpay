@@ -20,13 +20,15 @@ Vue.use(Loading)
 import apiConfs from 'config/api'
 
 // console.log(document.head.querySelector('[name="csrf-token"]'))
-axios.defaults.headers.common['X-CSRF-TOKEN'] = document.head.querySelector('meta[name="csrf-token"]').content
+var $csrf = document.head.querySelector('meta[name="csrf-token"]')
+axios.defaults.headers.common['X-CSRF-TOKEN'] = $csrf ? $csrf.content : ''
 
 var qs = require('qs')
-Vue.prototype.$callApi = async (key, data) => {
-    const {0: apiKey, 1: target} = key.split(':')
-    const apiGroup = apiConfs[apiKey]
-    const apiConf = apiGroup[target]
+Vue.prototype.$callApi = async (key, data, loader) => {
+    let apiConf = apiConfs
+    key.split(':').forEach(apiKey => {
+        apiConf = apiConf[apiKey]
+    })
     // console.log(apiKey, target, data, apiGroup, apiConf)
 
     let axiosBody = {
@@ -37,6 +39,8 @@ Vue.prototype.$callApi = async (key, data) => {
         //     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
         // }
     }
+
+    data = _.pickBy(data, x => x !== '' && !_.isNull(x) && !_.isUndefined(x))
     const isSendData = apiConf.method === 'put' || apiConf.method === 'post'
     const dataProperty = isSendData
         ? 'data'
@@ -49,10 +53,12 @@ Vue.prototype.$callApi = async (key, data) => {
 
     if (res.status !== 200) {
         alert("网路异常")
+        if (loader) loader.hide()
         throw 'network error'
     }
-    if (!_.includes([0, 200], res.data.code)) {
+    if (res.data && res.data.code && !_.includes([0, 200], res.data.code)) {
         alert("与服务器沟通错误")
+        if (loader) loader.hide()
         throw 'service error'
     }
     // console.log(res)

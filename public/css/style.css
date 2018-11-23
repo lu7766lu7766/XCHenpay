@@ -425,6 +425,10 @@ body {
   min-width: 105px;
 }
 
+.table-sort tbody tr td:first-child {
+  min-width: 40px;
+}
+
 .search-box {
   display: -webkit-box;
   display: -ms-flexbox;

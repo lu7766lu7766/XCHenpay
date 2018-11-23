@@ -21,12 +21,21 @@ class AuthcodeController extends Controller
 {
     public function index()
     {
+        return view('admin.trade.logQuery', compact('companies', 'switchPromission', 'notifyUrl'));
+    }
+
+    public function dataInit()
+    {
         $user = Sentinel::getUser();
         $switchPromission = $user->hasAccess('users.dataSwitch');
         if ($switchPromission) {
             $companies = User::All()->where('company_service_id', '<>', null);
         }
-        return view('admin.trade.logQuery', compact('companies', 'switchPromission', 'notifyUrl'));
+        return [
+            "isAdmin"   => !!$switchPromission,
+            "companies" => $companies ?? [],
+            "user"      => $user
+        ];
     }
 
     /**
@@ -70,7 +79,11 @@ class AuthcodeController extends Controller
 
     public function showInfo(Authcode $authcode)
     {
-        return view('admin.trade.showTradeLogModal', compact('authcode'));
+//        return view('admin.trade.showTradeLogModal', compact('authcode'));
+        $authcode->load(['currency', 'tradeType']);
+        return [
+            'authcode' => $authcode
+        ];
     }
 
     public function feeData()
@@ -145,7 +158,10 @@ class AuthcodeController extends Controller
             ->join('payments as p', 'p.id', '=', 'f.payment_id')
             ->where('f.id', $id)
             ->first();
-        return view('admin.trade.showFeeModal', compact('payment'));
+//        return view('admin.trade.showFeeModal', compact('payment'));
+        return [
+            'payment' => $payment
+        ];
     }
 
     public function editFeeInfo($id)
@@ -155,7 +171,10 @@ class AuthcodeController extends Controller
             ->join('payments as p', 'p.id', '=', 'f.payment_id')
             ->where('f.id', $id)
             ->first();
-        return view('admin.trade.editFeeModal', compact('payment'));
+//        return view('admin.trade.editFeeModal', compact('payment'));
+        return [
+            'payment' => $payment
+        ];
     }
 
     public function updateFeeInfo()
@@ -220,7 +239,11 @@ class AuthcodeController extends Controller
             3 => '交易结束',
             4 => '交易失败'
         ];
-        return view('admin.trade.stateEditModal', compact('authcode', 'stateList'));
+//        return view('admin.trade.stateEditModal', compact('authcode', 'stateList'));
+        return [
+            'authcode'  => $authcode,
+            'stateList' => $stateList
+        ];
     }
 
     public function updateState(Request $request)

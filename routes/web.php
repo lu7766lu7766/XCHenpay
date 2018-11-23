@@ -4,7 +4,6 @@ Route::get('setlocale/{locale}', function ($locale) {
         Session::put('locale', $locale);
         Session::put('fallback_locale', $locale);
     }
-
     return redirect()->back();
 });
 Route::pattern('slug', '[a-z0-9- _]+');
@@ -81,6 +80,7 @@ Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'tradeLog'], 'as' => 'admin.'],
     function () {
         Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
+        Route::get('logQuery/dataInit', 'AuthcodeController@dataInit')->name('authcode.dataInit');
         Route::post('data', 'AuthcodeController@data')->name('authcode.data');
         Route::get('logQuery/showInfo/{authcode}', 'AuthcodeController@showInfo')->name('authcode.showInfo');
         Route::get('logQuery/showState/{authcode}', 'AuthcodeController@showState')->name('authcode.showState');
@@ -157,7 +157,6 @@ Route::get('/', [
         if (Sentinel::check()) {
             return Redirect::route('admin.authcode.index');
         }
-
         // Show the page
         return view('admin.login');
     }

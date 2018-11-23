@@ -14,6 +14,9 @@ let mix = require('laravel-mix')
 //     .sass('resources/assets/sass/app.scss', 'public/css')
 
 // laravel-mix webpack config
+var rm = require('rimraf')
+rm(path.join(__dirname, 'public/assets/js/vendor'), err => {
+})
 
 mix.webpackConfig({
     resolve: {
@@ -27,8 +30,9 @@ mix.webpackConfig({
     },
     output: {
         publicPath: '/',
+        // chunkFilename: 'assets/js/vendor/[name].js',
         chunkFilename: 'assets/js/vendor/[name].[chunkhash].js',
-    },
+    }
 })
 
 // mix.js('resources/assets/js/backend/pages/*.js', 'public/assets/js');

@@ -20,7 +20,7 @@
 @stop
 
 @section('content')
-    {{--放置 content--}}
+    <order-search/>
 @stop
 
 @section('modal')
