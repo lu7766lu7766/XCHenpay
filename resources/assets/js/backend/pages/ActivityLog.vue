@@ -58,10 +58,6 @@
     export default {
         api: "activityLog",
         mixins: [ListMixins],
-        components: {
-            DateTimePicker: require('@/DateTimePicker'),
-            PickerButton: require('@/PickerButton')
-        },
         data: () => ({
             searchData: {
                 start: moment().startOf('day'),

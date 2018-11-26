@@ -49,12 +49,12 @@ export default {
                 uri: '/admin/logQuery/updateFeeInfo',
                 method: 'post'
             }
-        },
-        reportSearch: {
-            list: {
-                uri: '/admin/search/reportQuery',
-                method: 'post'
-            }
+        }
+    },
+    reportSearch: {
+        list: {
+            uri: '/admin/search/reportQuery',
+            method: 'post'
         }
     }
 }

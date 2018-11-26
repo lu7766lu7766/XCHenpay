@@ -1,5 +1,5 @@
 @extends('admin.search.reportIndex')
 
-@section('reportRecord')
-    <Report></Report>
+@section('content')
+    <report-search/>
 @endsection
