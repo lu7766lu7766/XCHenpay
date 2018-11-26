@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateLendRecordsTable extends Migration
 {
@@ -18,8 +18,8 @@ class CreateLendRecordsTable extends Migration
             $table->string('record_seq')->unique();
             $table->integer('user_id');
             $table->integer('account_id');
-            $table->float('amount', 50,6);
-            $table->float('fee', 50,6);
+            $table->decimal('amount', 16, 6);
+            $table->decimal('fee', 16, 6)->default(0);
             $table->integer('lend_state');
             $table->string('lend_summary');
             $table->string('description');

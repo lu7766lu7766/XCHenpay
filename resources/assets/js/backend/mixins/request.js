@@ -10,6 +10,18 @@ export default {
                 }
             })
             return res
+        },
+        async proccessAjax(target, data, cb) {
+            let loader = this.$loading.show({
+                container: this.$el,
+            })
+            this.data = {}
+            var res = await this.$callApi(`${this.apiKey}:${target}`, this.createReqBody(data), loader)
+            cb(res)
+            loader.hide()
+        },
+        createReqBody(data) {
+            return this.convertMoment2String(_.assign({}, data))
         }
     },
     computed: {

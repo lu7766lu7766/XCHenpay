@@ -50,5 +50,30 @@ export default {
                 method: 'post'
             }
         }
+    },
+    lendManage: {
+        dataInit: {
+            uri: '/admin/lendManage/data',
+            method: 'get'
+        },
+        list: {
+            uri: '/admin/lendManage/data',
+            method: 'post'
+        },
+        total: {
+            uri: [
+                '/admin/lendManage/dataTotal',
+                '/admin/lendManage/total'
+            ],
+            method: 'post'
+        },
+        // applyTotal: {
+        //     uri: '/admin/lendManage/total',
+        //     method: 'post'
+        // },
+        update: {
+            uri: '/admin/lendManage',
+            method: 'post'
+        }
     }
 }

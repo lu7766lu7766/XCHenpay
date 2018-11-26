@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Authcode;
+use App\Models\LendRecord;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Sentinel;
 use Yajra\DataTables\CollectionDataTable;
@@ -183,32 +183,29 @@ class AuthCodes
      */
     public function applyingAndWithdrawalAmount(int $userId = null)
     {
-        $query = User::query()
-            ->with([
-                'tradeLogs'   => function (Relation $builder) {
-                    $builder->select(
-                        'company_service_id',
-                        \DB::raw('SUM(amount) as totalMoney'),
-                        \DB::raw('SUM(fee) as totalFee')
-                    )->whereIn('pay_state', [self::allDone_state, self::accept_state, self::deny_state])
-                        ->groupBy('company_service_id');
-                },
-                'LendRecords' => function (Relation $builder) {
-                    $builder->select(
-                        'user_id',
-                        'lend_state',
-                        \DB::raw('SUM(amount) as totalMoney')
-                    )
-                        ->whereIn('lend_state', [LendRecords::APPLY_STATE, LendRecords::ACCEPT_STATE])
-                        ->groupBy('lend_state', 'user_id');
+        $lendRecords = LendRecord::query()
+            ->whereHas('user', function (Builder $builder) use ($userId) {
+                if (!is_null($userId)) {
+                    $builder->where('id', $userId);
                 }
-            ]);
-        if (!is_null($userId)) {
-            $query->where('id', $userId);
-        }
-        $result = $query->get()->toArray();
+            })
+            ->whereIn('lend_state', [LendRecords::APPLY_STATE, LendRecords::ACCEPT_STATE])
+            ->select(
+                \DB::raw('IFNULL(SUM(case when lend_state=0 then amount else 0 end),0) as totalApplying'),
+                \DB::raw('IFNULL(SUM(amount),0) as totalLendRecords')
+            )
+            ->first();
+        $tradeLogs = Authcode::query()
+            ->whereHas('company', function (Builder $builder) use ($userId) {
+                if (!is_null($userId)) {
+                    $builder->where('id', $userId);
+                }
+            })
+            ->whereIn('pay_state', [self::allDone_state, self::accept_state, self::deny_state])
+            ->select(\DB::raw('IFNULL(SUM(amount - fee),0) as totalRealMoney'))
+            ->first();
 
-        return $result;
+        return [$lendRecords, $tradeLogs];
     }
 
     /**
