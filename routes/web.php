@@ -4,6 +4,7 @@ Route::get('setlocale/{locale}', function ($locale) {
         Session::put('locale', $locale);
         Session::put('fallback_locale', $locale);
     }
+
     return redirect()->back();
 });
 Route::pattern('slug', '[a-z0-9- _]+');
@@ -92,43 +93,48 @@ Route::group(
         Route::post('logQuery/callNotify', 'AuthcodeController@callNotify')->name('authcode.callNotify');
     }
 );
-#lending
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin'], 'as' => 'admin.'], function () {
-    Route::get('showLending', 'LendingController@index')->name('showLending.index');
-    Route::post('showLending/getInfo', 'LendingController@getInfo')->name('showLending.getInfo');
-    Route::get('showLending/getUserInfo', 'LendingController@getUserInfo')->name('showLending.getUserInfo');
-    Route::post('showLending/apply', 'LendingController@apply')->name('showLending.apply');
-    Route::post('showLending/data', 'LendingController@data')->name('showLending.data');
-    Route::get('showLending/showRecord/{lendRecord}', 'LendingController@showRecordDialog')
-        ->name('showLending.showRecord');
-});
-#lendApply
+#lendList (下發列表)
 Route::group(
-    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'lendApply'], 'as' => 'admin.'],
+    ['prefix' => 'admin/lendList', 'namespace' => 'Admin', 'middleware' => ['admin', 'lendList'], 'as' => 'admin.'],
     function () {
-        Route::get('lendApply', 'LendApplyController@index')->name('lendApply.index');
-        Route::post('lendApply/apply', 'LendApplyController@apply')->name('lendApply.apply');
-        Route::post('lendApply/data', 'LendApplyController@data')->name('lendApply.data');
-        Route::post('lendApply/getLendInfo', 'LendApplyController@getLendInfo')->name('lendApply.getLendInfo');
-        Route::get('lendApply/showRecord/{lendRecord}', 'LendApplyController@showRecordDialog')
-            ->name('lendApply.showRecord');
+        Route::get('/', 'LendListController@indexView')->name('lend.list.index');
+        Route::group(['middleware' => 'json_api'], function () {
+            Route::get('userInfo', 'LendListController@userInfo');
+            Route::get('amountInfo', 'LendListController@amountInfo');
+            Route::get('lendStatus', 'LendListController@lendStatus');
+            Route::get('backAccountInfo', 'LendListController@backAccountInfo');
+            Route::post('/', 'LendListController@index');
+            Route::post('/apply', 'LendListController@apply');
+            Route::post('/total', 'LendListController@total');
+            Route::get('/{id}', 'LendListController@info');
+        });
     }
 );
 #lendManage
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'lendManage'], 'as' => 'admin.'],
     function () {
-        Route::get('lendManage', 'LendManageController@index')->name('lendManage.index');
-        Route::post('lendManage/getLendInfo', 'LendManageController@getLendInfo')->name('lendManage.getLendInfo');
-        Route::post('lendManage/data', 'LendManageController@data')->name('lendManage.data');
-        Route::get('lendManage/manageRecord/{lendRecord}', 'LendManageController@showManageDialog')
-            ->name('lendManage.manageRecord');
-        Route::get('lendManage/showRecord/{lendRecord}', 'LendManageController@showRecordDialog')
-            ->name('lendManage.showRecord');
-        Route::post('lendManage', 'LendManageController@update')->name('lendManage.Manage');
-        Route::post('lendManage/total', 'LendManageController@total')->name('lendManage.total');
-        Route::post('lendManage/applyingAndWithdrawalAmount', 'LendManageController@getApplyingAndWithdrawalAmount')
-            ->name('lendManage.applyingAndWithdrawalAmount');
+        // @todo branch ed#4,請實作view, api 可取得商戶下拉選單內容.
+        Route::get('lendManage', 'LendManageController@index')
+            ->name('lendManage.index');
+        Route::group(['middleware' => ['json_api']], function () {
+            Route::get('lendManage/data', 'LendManageController@dataInit')
+                ->name('lendManage.dataInit');
+            // @todo branch ed#4,請實作view, api 是下列uri中有data字段的route,一個是資料一個是資料總筆數.
+            // post filed 請參照 App\Http\Requests\LendManageDataRequest::rules().
+            Route::post('lendManage/data', 'LendManageController@data')
+                ->name('lendManage.data');
+            Route::post('lendManage/dataTotal', 'LendManageController@dataTotal')
+                ->name('lendManage.dataTotal');
+            // @todo branch ed#4,請實作view, 取得申請中金額.可提領金額與總計資訊.
+            // post filed 請參照 App\Http\Requests\LendManageTotalRequest::rules().
+            Route::post('lendManage/total', 'LendManageController@total')
+                ->name('lendManage.total');
+            // @todo branch ed#4,請實作view, api 變更下發申請單狀態.
+            // post filed 請參照 App\Http\Requests\LendManageUpdateRequest::rules().
+            Route::post('lendManage', 'LendManageController@update')
+                ->name('lendManage.Manage');
+        });
     }
 );
 #search
@@ -157,6 +163,7 @@ Route::get('/', [
         if (Sentinel::check()) {
             return Redirect::route('admin.authcode.index');
         }
+
         // Show the page
         return view('admin.login');
     }

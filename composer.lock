@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d51861d03fdd58f75f6e83dd34e4b81b",
+    "content-hash": "183049eb83cd53394194c70eed360fb2",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -4040,6 +4040,42 @@
                 "environment"
             ],
             "time": "2018-07-29T20:33:41+00:00"
+        },
+        {
+            "name": "xc-php/independent-kit",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xc-php/independent.kit.git",
+                "reference": "25448ebf031dd7033f6088fe234339f182e3c6fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xc-php/independent.kit/zipball/25448ebf031dd7033f6088fe234339f182e3c6fc",
+                "reference": "25448ebf031dd7033f6088fe234339f182e3c6fc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "XC\\Independent\\Kit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "House",
+                    "email": "richhuang076@gmail.com"
+                }
+            ],
+            "description": "獨立工具包",
+            "time": "2018-11-08T09:15:19+00:00"
         },
         {
             "name": "yajra/laravel-datatables-oracle",

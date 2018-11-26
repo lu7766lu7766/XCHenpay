@@ -98,7 +98,9 @@
                     </div>
                 </div>
                 <!-- search-box end -->
-                <per-page-selector v-model="paginate.perpage"/>
+                <div class="row view-box m-t-15">
+                    <per-page-selector v-model="paginate.perpage"/>
+                </div>
                 <!-- view-box end -->
                 <div class="table-responsive m-t-15">
                     <table class="table table-hover text-center table-bordered table-box table-sort">

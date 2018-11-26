@@ -16,8 +16,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class User
- * @package App
+ * @property int id
+ * @property string company_service_id
+ * @property double lend_fee
  * @property string email
+ * @property string apply_status
+ * @package App
  * @property string company_name
  * @mixin StrictPermissions|Builder
  */

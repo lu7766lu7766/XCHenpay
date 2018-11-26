@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Constants\Order\OrderStatusConstants;
 use App\Models\Authcode;
+use App\Models\LendRecord;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
 use Sentinel;
 use Yajra\DataTables\CollectionDataTable;
@@ -130,52 +131,6 @@ class AuthCodes
         return $result;
     }
 
-    public function getMoneyRecord(User $user)
-    {
-        $filterState = [
-            $this::allDone_state,
-            $this::accept_state,
-            $this::deny_state
-        ];
-        $authCodes = $user->tradeLogs()
-            ->select([
-                \DB::raw('sum(amount) as amount'),
-                \DB::raw('sum(fee) as fee')
-            ])
-            ->whereIn('pay_state', $filterState)
-            ->get();
-        if (!$authCodes) {
-            return $data['Result'] = 'error';
-        }
-        $lendRecords = $user->lendRecords;
-        $totalLending = 0;
-        $totalLended = 0;
-        $totalMoney = 0;
-        $totalFee = 0;
-        $lendKeys = $lendRecords->groupBy('lend_state');
-        $pendingRecords = $lendKeys->get(0);
-        if ($pendingRecords) {
-            $totalLending = $pendingRecords->sum('amount');
-        }
-        $acceptRecords = $lendKeys->get(1);
-        if ($acceptRecords) {
-            $totalLended = $acceptRecords->sum('amount');
-        }
-        foreach ($authCodes as $authCode) {
-            $totalMoney += $authCode->amount;
-            $totalFee += $authCode->fee;
-        }
-        $data = [
-            'totalMoney'   => number_format($totalMoney, 3, ".", ","),
-            'totalFee'     => number_format($totalFee, 3, ".", ","),
-            'totalLending' => number_format($totalLending, 3, ".", ","),
-            'totalLended'  => number_format($totalLended, 3, ".", ","),
-            'totalIncome'  => number_format($totalMoney - $totalFee - $totalLending - $totalLended, 3, ".", ","),
-        ];
-
-        return $data;
-    }
-
     /**
      * 申請中金额,可提現金額
      * @param int|null $userId
@@ -183,32 +138,29 @@ class AuthCodes
      */
     public function applyingAndWithdrawalAmount(int $userId = null)
     {
-        $query = User::query()
-            ->with([
-                'tradeLogs'   => function (Relation $builder) {
-                    $builder->select(
-                        'company_service_id',
-                        \DB::raw('SUM(amount) as totalMoney'),
-                        \DB::raw('SUM(fee) as totalFee')
-                    )->whereIn('pay_state', [self::allDone_state, self::accept_state, self::deny_state])
-                        ->groupBy('company_service_id');
-                },
-                'LendRecords' => function (Relation $builder) {
-                    $builder->select(
-                        'user_id',
-                        'lend_state',
-                        \DB::raw('SUM(amount) as totalMoney')
-                    )
-                        ->whereIn('lend_state', [LendRecords::APPLY_STATE, LendRecords::ACCEPT_STATE])
-                        ->groupBy('lend_state', 'user_id');
+        $lendRecords = LendRecord::query()
+            ->whereHas('user', function (Builder $builder) use ($userId) {
+                if (!is_null($userId)) {
+                    $builder->where('id', $userId);
                 }
-            ]);
-        if (!is_null($userId)) {
-            $query->where('id', $userId);
-        }
-        $result = $query->get()->toArray();
+            })
+            ->whereIn('lend_state', [LendRecords::APPLY_STATE, LendRecords::ACCEPT_STATE])
+            ->select(
+                \DB::raw('IFNULL(SUM(case when lend_state=0 then amount else 0 end),0) as totalApplying'),
+                \DB::raw('IFNULL(SUM(amount),0) as totalLendRecords')
+            )
+            ->first();
+        $tradeLogs = Authcode::query()
+            ->whereHas('company', function (Builder $builder) use ($userId) {
+                if (!is_null($userId)) {
+                    $builder->where('id', $userId);
+                }
+            })
+            ->whereIn('pay_state', [self::allDone_state, self::accept_state, self::deny_state])
+            ->select(\DB::raw('IFNULL(SUM(amount - fee),0) as totalRealMoney'))
+            ->first();
 
-        return $result;
+        return [$lendRecords, $tradeLogs];
     }
 
     /**
@@ -247,5 +199,22 @@ class AuthCodes
         }
 
         return $result;
+    }
+
+    /**
+     * 得到指定對象的總加合
+     * @param array $companyServiceId
+     * @return Authcode
+     */
+    public function getTotalMoneyAndTotalFee(array $companyServiceId)
+    {
+        return Authcode::query()
+            ->select(\DB::raw('IFNULL(SUM(amount),0 )as totalMoney'), \DB::raw('IFNULL(SUM(fee),0) as totalFee'))
+            ->whereIn('company_service_id', $companyServiceId)
+            ->whereIn('pay_state', [
+                OrderStatusConstants::ALL_DONE_CODE,
+                OrderStatusConstants::ACCEPT_CODE,
+                OrderStatusConstants::DENY_CODE
+            ])->first();
     }
 }

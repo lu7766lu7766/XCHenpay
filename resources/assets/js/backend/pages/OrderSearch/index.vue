@@ -1,23 +1,13 @@
 <template>
     <div class="row">
         <div class="col-lg-12">
-            <div class="card m-b-30" v-if="isAdmin">
-                <div class="card-header">
-                    商户筛选
-                </div>
-                <div class="card-body">
-                    <select class="form-control" v-model="company_id">
-                        <option value="">請選擇商戶</option>
-                        <option v-for="company in companies" :value="company.id">{{ company.company_name }}</option>
-                    </select>
-                </div>
-            </div>
+            <company-selector v-model="company_id" :options="companies"/>
             <!-- fee start -->
-            <component :is="isDataInit ? 'fee' : ''" v-if="company_id !== ''"/>
+            <component :is="company_id ? 'fee' : ''" v-if="company_id !== ''"/>
             <!-- fee end -->
 
             <!-- order start -->
-            <component :is="isDataInit ? 'order' : ''" v-if="company_id !== ''"/>
+            <component :is="company_id ? 'order' : ''" v-if="company_id !== ''"/>
             <!-- order end -->
         </div>
     </div>
@@ -27,11 +17,11 @@
     export default {
         api: "orderSearch",
         components: {
+            CompanySelector: require('@/CompanySelector'),
             Fee: require('./Fee'),
             Order: require('./Order'),
         },
         data: () => ({
-            isDataInit: false,
             isAdmin: false,
             company_id: '',
             companies: [],
@@ -46,7 +36,6 @@
             if (!this.isAdmin) {
                 this.company_id = res.user.id
             }
-            this.isDataInit = true
             loader.hide()
         }
     }
