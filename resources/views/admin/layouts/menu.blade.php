@@ -24,8 +24,8 @@
                     <li><a href="{{ URL::to('admin/lendManage') }}">下发管理</a></li>
                 @endif
 
-                @if(Sentinel::getUser()->hasAccess('showLending.index') || Sentinel::getUser()->hasAccess('showLending'))
-                    <li><a href="{{ URL::to('admin/showLending') }}">下发申请</a></li>
+                @if(Sentinel::getUser()->hasAccess('lendList.index') || Sentinel::getUser()->hasAccess('lendList'))
+                    <li><a href="{{route('admin.lend.list.index')}}">下发申请</a></li>
                 @endif
             </ul>
         </li>

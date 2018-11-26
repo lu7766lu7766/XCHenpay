@@ -21,6 +21,7 @@
 
 @section('content')
     {{--放置 content--}}
+    <lend-list/>
 @stop
 
 @section('modal')

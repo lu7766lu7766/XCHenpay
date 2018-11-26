@@ -1,4 +1,5 @@
 export default {
+    /** 帳戶歷程 */
     activityLog: {
         list: {
             uri: '/admin/activity_log/data',
@@ -9,6 +10,7 @@ export default {
             method: 'post',
         }
     },
+    /** 訂單查詢 */
     orderSearch: {
         dataInit: {
             uri: '/admin/logQuery/dataInit',
@@ -49,6 +51,41 @@ export default {
                 uri: '/admin/logQuery/updateFeeInfo',
                 method: 'post'
             }
+        }
+    },
+    /** 下發 */
+    lendList: {
+        userInfo: {
+            uri: '/admin/lendList/userInfo',
+            method: 'get'
+        },
+        amountInfo: {
+            uri: '/admin/lendList/amountInfo',
+            method: 'get'
+        },
+        lendStatus: {
+            uri: '/admin/lendList/lendStatus',
+            method: 'get'
+        },
+        bankAccountInfo: {
+            uri: '/admin/lendList/backAccountInfo',
+            method: 'get'
+        },
+        list: {
+            uri: '/admin/lendList',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/lendList/total',
+            method: 'post'
+        },
+        info: {
+            uri: '/admin/lendList/{id}',
+            method: 'get'
+        },
+        apply: {
+            uri: '/admin/lendList/apply',
+            method: 'post'
         }
     },
     lendManage: {

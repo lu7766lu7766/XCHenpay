@@ -45,7 +45,7 @@
                                 @if ($user->status == 'on')
                                     <i class="mdi mdi-check-circle-outline text-green text-lg"></i>
                                 @else
-                                    <i class="mdi mdi-check-close-outline text-red text-lg"></i>
+                                    <i class="mdi mdi-close-circle-outline text-red text-lg"></i>
                                 @endif
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                 @if ($user->apply_status == 'on')
                                     <i class="mdi mdi-check-circle-outline text-green text-lg"></i>
                                 @else
-                                    <i class="mdi mdi-check-close-outline text-red text-lg"></i>
+                                    <i class="mdi mdi-close-circle-outline text-red text-lg"></i>
                                 @endif
                             </div>
                         </div>
@@ -120,15 +120,15 @@
     <script>
         $(function () {
             $('#change-password').click(function (e) {
-                e.preventDefault();
+                e.preventDefault()
 
-                var $validator = $('#commentForm').data('bootstrapValidator').validate();
+                var $validator = $('#commentForm').data('bootstrapValidator').validate()
 
-                console.log($('#password').val());
+                console.log($('#password').val())
 
                 if ($validator.isValid()) {
                     var sendData = '_token=' + $("input[name='_token']").val() + '&oldPassword=' + $('#oldPassword').val() + '&password=' + $('#password').val() + '&id=' + {{ $user->id }};
-                    var path = "passwordreset";
+                    var path = "passwordreset"
                     $.ajax({
                         url: path,
                         type: "post",
@@ -137,22 +137,22 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
                         },
                         success: function (data) {
-                            $('#oldPassword, #password, #password_confirm').val('');
-                            $validator.resetForm();
+                            $('#oldPassword, #password, #password_confirm').val('')
+                            $validator.resetForm()
 
                             if (data.Result == 'error') {
-                                alert(data.Message);
-                                return;
+                                alert(data.Message)
+                                return
                             }
-                            alert('密码已成功设定');
+                            alert('密码已成功设定')
                         },
                         error: function (xhr, ajaxOptions, thrownError) {
-                            alert('设定失败，与服务器供沟通失败');
+                            alert('设定失败，与服务器供沟通失败')
                         }
-                    });
+                    })
                 }
-            });
-        });
+            })
+        })
 
         $("#commentForm").bootstrapValidator({
             fields: {
@@ -186,7 +186,7 @@
                     }
                 }
             }
-        });
+        })
 
     </script>
 

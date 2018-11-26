@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Models\LendRecord;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class LendRecords
@@ -137,6 +139,135 @@ class LendRecords
         $result = $query->first();
 
         return $result;
+    }
+
+    /**
+     * @param array $userId
+     * @return LendRecord
+     */
+    public function getApplyingAndWithdrawalAmount(array $userId)
+    {
+        return LendRecord::query()->select(
+            \DB::raw(
+                'IFNULL(SUM(CASE WHEN lend_state="' . LendRecords::APPLY_STATE .
+                ' " THEN amount ELSE 0 END),0 )AS totalApply'
+            ),
+            \DB::raw(
+                'IFNULL(SUM(CASE WHEN lend_state="' . LendRecords::ACCEPT_STATE .
+                ' " THEN amount ELSE 0 END),0) AS totalAccept'
+            )
+        )->whereIn('user_id', $userId)->first();
+    }
+
+    /**
+     * @param string $startTime
+     * @param string $endTime
+     * @param int $page
+     * @param int $perpage
+     * @param string $soft
+     * @param string|null $number
+     * @param int|null $status
+     * @param int|null $userId
+     * @return Collection|LendRecord[]
+     * @see SortConstant $soft type
+     */
+    public function list(
+        string $startTime,
+        string $endTime,
+        int $page,
+        int $perpage,
+        string $soft,
+        string $number = null,
+        int $status = null,
+        int $userId = null
+    ) {
+        $query = LendRecord::query()->whereBetween('created_at', [$startTime, $endTime]);
+        if (!is_null($status)) {
+            $query->where('lend_state', $status);
+        }
+        if (!is_null($userId)) {
+            $query->where('user_id', $userId);
+        }
+        if (!is_null($number)) {
+            $query->where(function (Builder $query) use ($number) {
+                $query->where('record_seq', 'like', '%' . $number . '%');
+                $query->orWhereHas('account', function (Builder $query) use ($number) {
+                    $query->where('account', 'like', '%' . $number . '%');
+                });
+            });
+        }
+        $query->with([
+            'account' => function (HasOne $query) {
+                $query->withTrashed();
+            }
+        ])->orderBy('created_at', $soft);
+
+        return $query->forPage($page, $perpage)->get();
+    }
+
+    /**
+     * @param array $data
+     * @return LendRecord|\Illuminate\Database\Eloquent\Model|null
+     */
+    public function create(array $data)
+    {
+        $item = null;
+        try {
+            $item = LendRecord::query()->create($data);
+        } catch (\Throwable $e) {
+        }
+
+        return $item;
+    }
+
+    /**
+     * @param string $startTime
+     * @param string $endTime
+     * @param string|null $number
+     * @param int|null $status
+     * @param int|null $userId
+     * @return int
+     */
+    public function getListTotal(
+        string $startTime,
+        string $endTime,
+        string $number = null,
+        int $status = null,
+        int $userId = null
+    ) {
+        $query = LendRecord::query()->whereBetween('created_at', [$startTime, $endTime]);
+        if (!is_null($status)) {
+            $query->where('lend_state', $status);
+        }
+        if (!is_null($userId)) {
+            $query->where('user_id', $userId);
+        }
+        if (!is_null($number)) {
+            $query->where(function (Builder $query) use ($number) {
+                $query->where('record_seq', 'like', '%' . $number . '%');
+                $query->orWhereHas('account', function (Builder $query) use ($number) {
+                    $query->where('account', 'like', '%' . $number . '%');
+                });
+            });
+        }
+
+        return $query->count();
+    }
+
+    /**
+     * @param int $id
+     * @param int|null $userId
+     * @return LendRecord|null
+     */
+    public function fullInfo(int $id, int $userId)
+    {
+        $query = LendRecord::query()->with([
+            'account' => function (HasOne $query) {
+                $query->withTrashed();
+            }
+        ])->where('id', $id)->where('user_id', $userId);
+
+        return $query->first();
     }
 
     /**

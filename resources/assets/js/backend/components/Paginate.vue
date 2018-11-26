@@ -4,7 +4,7 @@
             <li class="page-item" :class="{
                     disabled: page === 1
                 }" @click="page === 1 ? '' : pageChange(1)">
-                <a class="page-link" href="#" aria-label="Previous">
+                <a class="page-link" href="javascript:;" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only">Previous</span>
                 </a>
@@ -21,7 +21,7 @@
                     disabled: page === lastPage
                 }"
                 @click="page === lastPage ? '' : pageChange(lastPage)">
-                <a class="page-link" href="#" aria-label="Next">
+                <a class="page-link" href="javascript:;" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only">Next</span>
                 </a>

@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class LendRecord
+ * @package App\Models
+ * @property string record_seq
+ */
 class LendRecord extends Model
 {
     protected $guarded = [];
