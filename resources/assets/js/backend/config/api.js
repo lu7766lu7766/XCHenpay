@@ -116,7 +116,7 @@ export default {
     reportSearch: {
         list: {
             uri: '/admin/search/reportQuery',
-            method: 'get'
+            method: 'post'
         }
     }
 }
