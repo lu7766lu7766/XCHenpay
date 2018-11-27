@@ -27,7 +27,7 @@
                             </thead>
                             <tbody>
                             <tr v-for="(data, index) in datas" :key="index">
-                                <td>{{ index }}</td>
+                                <td>{{ startIndex + index }}</td>
                                 <td>{{ data.company_name }}</td>
                                 <td class="text-green">
                                     <div>
