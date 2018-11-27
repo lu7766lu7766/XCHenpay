@@ -18,7 +18,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="(data, index) in datas" :key="index">
-                        <td>{{ index }}</td>
+                        <td>{{ startIndex + index }}</td>
                         <td>{{ data.i6pay_id }}</td>
                         <td>{{ data.name }}</td>
                         <td>{{ data.fee }}</td>
