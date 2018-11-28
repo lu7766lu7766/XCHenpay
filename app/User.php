@@ -8,10 +8,9 @@ use App\Models\Authcode;
 use App\Models\LendRecord;
 use App\Models\PaymentFees;
 use App\Models\verifyCode;
-use Cartalyst\Sentinel\Permissions\StrictPermissions;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cviebrock\EloquentTaggable\Taggable;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -21,9 +20,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property double lend_fee
  * @property string email
  * @property string apply_status
+ * @property string mobile
  * @package App
  * @property string company_name
- * @mixin StrictPermissions|Builder
+ * @property Collection|Account[] accounts
  */
 class User extends EloquentUser
 {

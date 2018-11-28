@@ -44,7 +44,7 @@
         }),
         methods: {
             onUpdate() {
-                this.$parent.getList()
+                this.$parent.refresh()
                 $(this.$refs.modal).modal('hide')
             },
             async update() {

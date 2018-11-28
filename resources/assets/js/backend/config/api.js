@@ -53,7 +53,7 @@ export default {
             }
         }
     },
-    /** 下發 */
+    /** 下發列表 */
     lendList: {
         userInfo: {
             uri: '/admin/lendList/userInfo',
@@ -88,6 +88,7 @@ export default {
             method: 'post'
         }
     },
+    /** 下發管理 */
     lendManage: {
         dataInit: {
             uri: '/admin/lendManage/data',
@@ -113,18 +114,59 @@ export default {
             method: 'post'
         }
     },
+    /** 行卡列表 */
+    bankAccountList: {
+        dataInit: {
+            uri: '/admin/account/getCompany',
+            method: 'get'
+        },
+        list: {
+            uri: '/admin/account/accountData',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/account/total',
+            method: 'post'
+        },
+        delete: {
+            uri: '/admin/account/deleteAccount',
+            method: 'delete'
+        }
+    },
+    /** 行卡綁定 */
+    bankAccountBind: {
+        list: {
+            uri: '/admin/account/accountList',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/account/listTotal',
+            method: 'post'
+        },
+        create: {
+            uri: '/admin/account/addAccount',
+            method: 'post'
+        },
+        verify: {
+            uri: '/admin/account/sendVerifyCode',
+            method: 'post'
+        },
+        delete: {
+            uri: '/admin/account/deleteAccountData',
+            method: 'delete'
+        }
+    },
+    /** 報表查詢 */
     reportStatistics: {
         list: {
             uri: '/admin/search/reportStatQuery',
-            method:
-                'post'
+            method: 'post'
         }
     },
     reportSearch: {
         list: {
             uri: '/admin/search/reportQuery',
-            method:
-                'post'
+            method: 'post'
         }
     }
 }

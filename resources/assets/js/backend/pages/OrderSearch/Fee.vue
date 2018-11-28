@@ -56,7 +56,7 @@
         },
         watch: {
             company_id() {
-                this.getList()
+                this.refresh()
             }
         },
         methods: {
@@ -87,7 +87,7 @@
         },
         mounted() {
             if (this.company_id) {
-                this.getList()
+                this.refresh()
             }
         }
     }

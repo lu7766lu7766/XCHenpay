@@ -293,6 +293,7 @@
         <!-- datapicker js -->
         <script src="../../plugins/datepicker/js/moment.min.js" type="text/javascript"></script>
         <script src="../../plugins/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="../../plugins/datepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
 
         <!-- App js -->
         <script src="../../assets/js/app.js"></script>
@@ -300,12 +301,14 @@
             $(document).ready(function() {
                 $('#datetimepicker_start').datetimepicker({
                     format: 'YYYY-MM-DD HH:mm:ss',
-                    date: moment().startOf('day')
+                    date: moment().startOf('day'),
+                    locale: moment.locale('zh-cn')
                 });
 
                 $('#datetimepicker_end').datetimepicker({
                     format: 'YYYY-MM-DD HH:mm:ss',
-                    date: moment().endOf('day')
+                    date: moment().endOf('day'),
+                    locale: moment.locale('zh-cn')
                 });
             } );
         </script>

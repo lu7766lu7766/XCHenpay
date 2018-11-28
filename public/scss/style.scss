@@ -28,7 +28,7 @@ body{
 }
 .text{
     &-green{
-        color: #58db83;
+        color: #3bb563;
     }
     &-red{
         color: #ec536c;
@@ -469,6 +469,17 @@ body{
 //search/report_statistics
 .report{
     &-table{
+        th{
+            width: 200px;
+            min-width: 200px;
+            &.width-40{
+                width: 40px;
+                min-width: 40px;
+            }
+            &:nth-child(2){
+                width: auto;
+            }
+        }
         td{
             div{
                 padding: 3px;

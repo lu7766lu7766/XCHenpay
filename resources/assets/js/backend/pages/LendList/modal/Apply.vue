@@ -62,6 +62,26 @@
             amount: '',
             note: ''
         }),
+        rules: {
+            amount: {
+                require: {
+                    value: true,
+                    message: '下发金额 不得为空白'
+                },
+                type: {
+                    value: 'number',
+                    message: '下发金额 请输入数字'
+                },
+                min: {
+                    value: 1000,
+                    message: '下发金额 最少填入 1000'
+                },
+                max: {
+                    value: 50000,
+                    message: '下发金额 最大不可超过 50000'
+                }
+            }
+        },
         methods: {
             dataInit() {
                 this.target_id = ''
@@ -69,14 +89,19 @@
                 this.note = ''
             },
             onApply() {
-                this.$parent.getList()
+                this.$parent.refresh()
                 this.$parent.amountInit()
                 $(this.$refs.modal).modal('hide')
             },
             apply() {
-                if (typeof this.amount !== 'number' || this.amount < 1000 || this.amount > 5000) {
-                    alert('下发金额 最少填入 1000, 最大不可超过 50000')
-                    return
+                // if (typeof this.amount !== 'number' || this.amount < 1000 || this.amount > 5000) {
+                //     alert('下发金额 最少填入 1000, 最大不可超过 50000')
+                //     return
+                // }
+                try {
+                    this.validate()
+                } catch (e) {
+                    return alert(e)
                 }
                 this.proccessAjax('apply', {
                     target_id: this.target_id, //	下發帳戶ID

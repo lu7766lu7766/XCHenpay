@@ -20,6 +20,10 @@ export default {
             total: 0,
             page: 1,
             perpage: 10
+        },
+        sort: {
+            column: '',
+            direction: 'desc'
         }
     }),
     methods: {
@@ -38,6 +42,19 @@ export default {
         async getTotal() {
             var res = await this.$callApi(`${this.apiKey}:total`, this.getReqBody)
             this.onGetTotal(res)
+        },
+        changeSort(column) {
+            if (this.sort.column != column) {
+                this.sort.column = column
+                this.sort.direction = 'desc'
+            } else {
+                this.sort.direction = this.sort.direction == 'desc' ? 'asc' : 'desc'
+            }
+            this.getList()
+        },
+        refresh() {
+            this.getTotal()
+            this.getList()
         },
         search() {
             this.getTotal()

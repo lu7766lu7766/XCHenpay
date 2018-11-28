@@ -56,7 +56,7 @@
                 <div class="card m-b-30">
                     <div class="card-header">
                         下发列表
-                        <span class="refresh" @click="getList">
+                        <span class="refresh" @click="refresh">
                         <i class="mdi mdi-refresh"></i>刷新
                     </span>
                     </div>
@@ -190,8 +190,7 @@
                 lend_state: ''
             },
             sort: {
-                column: 'created_at',
-                direction: 'desc'
+                column: 'created_at'
             },
             count: {
                 totalApplying: 0,

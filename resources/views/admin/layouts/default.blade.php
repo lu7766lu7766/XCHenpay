@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
 
     <link rel="stylesheet" href="{{ asset('plugins/datepicker/css/bootstrap-datetimepicker.min.css') }}">
+    <link href="{{ asset('plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
 
     <!-- default style -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
@@ -83,6 +84,7 @@
 <script src="{{ asset('plugins/datepicker/js/moment.min.js') }}"></script>
 <script src="{{ asset('plugins/datepicker/js/moment_zh-cn.js') }}"></script>
 <script src="{{ asset('plugins/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script src="{{ asset('plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
 
 <script src="{{ asset('assets/js/App.js') }}"></script>
 

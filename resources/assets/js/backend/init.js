@@ -19,7 +19,6 @@ Vue.use(Loading)
 
 import apiConfs from 'config/api'
 
-// console.log(document.head.querySelector('[name="csrf-token"]'))
 var $csrf = document.head.querySelector('meta[name="csrf-token"]')
 axios.defaults.headers.common['X-CSRF-TOKEN'] = $csrf ? $csrf.content : ''
 
@@ -58,9 +57,18 @@ function replaceMatchData(uri, data) {
                 delete data[key]
             }
         })
+        // uri = uri.replace(/\/({[\w]+})/g, '')
     }
     return uri
 }
+
+import errorCode from 'config/error'
+
+axios.interceptors.response.use((response) => {
+    return response
+}, function (error) {
+    return Promise.reject(error.response)
+})
 
 async function doRequest(uri, method, data, loader) {
     let axiosBody = {
@@ -81,14 +89,16 @@ async function doRequest(uri, method, data, loader) {
         ? qs.stringify(data)
         : data
 
-    const res = await
-        axios(axiosBody)
-
-    if (res.status !== 200) {
-        alert("网路异常")
+    const res = await axios(axiosBody).catch(err => {
+        if (err.data && err.data.code) {
+            alert(errorCode[err.data.code] ? errorCode[err.data.code] : '伺服器忙碌中')
+        } else {
+            alert('伺服器忙碌中')
+        }
         if (loader) loader.hide()
         throw 'network error'
-    }
+    })
+
     if (res.data && res.data.code && !_.includes([0, 200], res.data.code)) {
         alert("与服务器沟通错误")
         if (loader) loader.hide()

@@ -64,7 +64,7 @@
         <div class="card m-b-30">
             <div class="card-header">
                 订单查询
-                <span class="refresh" @click="getList()">
+                <span class="refresh" @click="refresh">
                     <i class="mdi mdi-refresh"></i>刷新
                 </span>
             </div>
@@ -216,8 +216,7 @@
                 }
             },
             sort: {
-                column: 'created_at',
-                direction: 'desc'
+                column: 'created_at'
             },
             searchData: {
                 start: moment().startOf('day'),
@@ -244,15 +243,6 @@
                 this.count.amount = res.amount
                 this.count.fee = res.fee
                 this.paginate.total = res.total
-            },
-            changeSort(column) {
-                if (this.sort.column != column) {
-                    this.sort.column = column
-                    this.sort.direction = 'desc'
-                } else {
-                    this.sort.direction = this.sort.direction == 'desc' ? 'asc' : 'desc'
-                }
-                this.getList()
             },
             showInfo(id) {
                 this.$root.$emit('orderInfo.show', id)

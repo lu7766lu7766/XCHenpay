@@ -64,15 +64,30 @@ Route::group(
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'account'], 'as' => 'admin.'],
     function () {
+        // @todo branch funny#11+12 請實作view, api
         Route::group(['prefix' => 'account'], function () {
+            //view
             Route::get('/', 'AccountController@index')->name('account.index');
             Route::get('createAccount', 'AccountController@createAccount')->name('account.createAccount');
-            Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
-            Route::post('addAccount', 'AccountController@addAccount')->name('account.addAccount');
-            Route::post('accountData', 'AccountController@accountData')->name('account.data');
-            Route::get('{account}/confirm-delete', 'AccountController@getAccountDelete')
-                ->name('account.confirm-delete');
-            Route::get('{account}/delete', 'AccountController@destroy')->name('account.delete');
+            //data
+            Route::group(['middleware' => 'json_api'], function () {
+                //no request.
+                Route::get('getCompany', 'AccountController@getCompany')->name('account.getCompany');
+                // post filed 請參照 App\Http\Requests\Account\GetAccountRequest::rules().
+                Route::post('accountData', 'AccountController@accountData')->name('account.data');
+                Route::post('total', 'AccountController@total')->name('account.total');
+                //no request.
+                Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
+                // post filed 請參照 App\Http\Requests\Account\AddAccountRequest::rules().
+                Route::post('addAccount', 'AccountController@addAccount')->name('account.addAccount');
+                // post filed 請參照 App\Http\Requests\Account\DeleteAccountRequest::rules().
+                Route::delete('deleteAccount', 'AccountController@deleteAccount')->name('account.delete');
+                Route::delete('deleteAccountData', 'AccountController@deleteAccountData')
+                    ->name('account.deleteAccountData');
+                // post filed 請參照 App\Http\Requests\Account\GetAccountRequest::rules().
+                Route::post('accountList', 'AccountController@accountList')->name('account.accountList');
+                Route::post('listTotal', 'AccountController@listTotal')->name('account.listTotal');
+            });
         });
     }
 );

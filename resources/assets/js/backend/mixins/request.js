@@ -11,17 +11,49 @@ export default {
             })
             return res
         },
-        async proccessAjax(target, data, cb) {
+        async proccessAjax(target, data = {}, cb) {
             let loader = this.$loading.show({
                 container: this.$el,
             })
             this.data = {}
             var res = await this.$callApi(`${this.apiKey}:${target}`, this.createReqBody(data), loader)
-            cb(res)
+            if (cb) cb(res)
             loader.hide()
+            return res
         },
         createReqBody(data) {
             return this.convertMoment2String(_.assign({}, data))
+        },
+        validate() {
+            let message = ''
+            _.forEach(this.$options.rules, (rules, variable) => {
+                let realVar = this
+                _.forEach(variable.split('.'), key => {
+                    try {
+                        realVar = realVar[key]
+                    } catch (e) {
+                        console.log(e)
+                    }
+                })
+                var proccessValidate = (res, msg) => message += res ? `${msg}\n` : ''
+                _.forEach(rules, (rule, ruleName) => {
+                    switch (ruleName) {
+                        case 'require':
+                            proccessValidate(rule.value && !realVar, rule.message)
+                            break
+                        case 'type':
+                            proccessValidate(typeof realVar !== rule.value, rule.message)
+                            break
+                        case 'min':
+                            proccessValidate(realVar < rule.value, rule.message)
+                            break
+                        case 'max':
+                            proccessValidate(realVar > rule.value, rule.message)
+                            break
+                    }
+                })
+            })
+            if (message) throw message
         }
     },
     computed: {

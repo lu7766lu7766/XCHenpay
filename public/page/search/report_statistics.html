@@ -205,7 +205,6 @@
                                                 <th>交易失败</th>
                                                 <th>手续费</th>
                                                 <th>总计</th>
-                                                <th>净利</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -228,10 +227,6 @@
                                                     <div>126,333</div>
                                                     <div>105</div>
                                                 </td>
-                                                <td>
-                                                    <div>50.05</div>
-                                                    <div>100</div>
-                                                </td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
@@ -241,11 +236,9 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">笔数</td>
-                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -278,19 +271,24 @@
         <!-- datapicker js -->
         <script src="../../plugins/datepicker/js/moment.min.js" type="text/javascript"></script>
         <script src="../../plugins/datepicker/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="../../plugins/datepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+
 
         <!-- App js -->
         <script src="../../assets/js/app.js"></script>
         <script>
+            
             $(document).ready(function() {
                 $('#datetimepicker_start').datetimepicker({
                     format: 'YYYY-MM-DD HH:mm:ss',
-                    date: moment().startOf('day')
+                    date: moment().startOf('day'),
+                    locale: moment.locale('zh-cn')
                 });
 
                 $('#datetimepicker_end').datetimepicker({
                     format: 'YYYY-MM-DD HH:mm:ss',
-                    date: moment().endOf('day')
+                    date: moment().endOf('day'),
+                    locale: moment.locale('zh-cn')
                 });
             } );
         </script>

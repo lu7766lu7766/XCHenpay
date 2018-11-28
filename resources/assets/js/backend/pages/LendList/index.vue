@@ -79,7 +79,7 @@
             <div class="card m-b-30">
                 <div class="card-header">
                     下发列表
-                    <span class="refresh" @click="getList">
+                    <span class="refresh" @click="refresh">
                         <i class="mdi mdi-refresh"></i>刷新
                     </span>
                 </div>
@@ -216,8 +216,7 @@
                 bankAccount: []
             },
             sort: {
-                column: 'created_at',
-                direction: 'desc'
+                column: 'created_at'
             },
             searchData: {
                 start_time: moment().startOf('day'),
@@ -269,15 +268,6 @@
             },
             onGetList(res) {
                 this.datas = res.data
-            },
-            changeSort(column) {
-                if (this.sort.column != column) {
-                    this.sort.column = column
-                    this.sort.direction = 'desc'
-                } else {
-                    this.sort.direction = this.sort.direction == 'desc' ? 'asc' : 'desc'
-                }
-                this.getList()
             },
             showInfo(id) {
                 this.$root.$emit('lendListInfo.show', id)

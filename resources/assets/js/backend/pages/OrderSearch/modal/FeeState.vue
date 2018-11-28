@@ -65,7 +65,7 @@
                 this.data = res.payment
             },
             onUpdate() {
-                this.$parent.getList()
+                this.$parent.refresh()
                 alert('成功')
                 $(this.$refs.modal).modal('hide')
             },

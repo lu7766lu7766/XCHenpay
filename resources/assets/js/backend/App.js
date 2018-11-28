@@ -9,6 +9,8 @@ if ($app) {
             OrderSearch: () => import('./pages/OrderSearch'),
             LendList: () => import('./pages/LendList'),
             LendManage: () => import('./pages/LendManage'),
+            BankAccountList: () => import('./pages/BankAccountList'),
+            BankAccountBind: () => import('./pages/BankAccountBind'),
             ReportStatistics: () => import('./pages/ReportStatistics'),
             ReportSearch: () => import('./pages/ReportSearch')
             // ActivityLog: resolve => {

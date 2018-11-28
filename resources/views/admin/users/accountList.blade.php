@@ -21,6 +21,7 @@
 
 @section('content')
     {{--放置 content--}}
+    <bank-account-list/>
 @stop
 
 @section('modal')

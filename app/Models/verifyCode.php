@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int active
+ * @property string created_at
+ */
 class verifyCode extends Model
 {
     protected $guarded = [];
