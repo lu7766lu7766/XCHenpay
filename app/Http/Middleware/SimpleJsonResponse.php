@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class SimpleJsonResponse
 {
@@ -25,35 +26,59 @@ class SimpleJsonResponse
             $content['query_loq'] = \DB::getQueryLog();
         }
         if ($response instanceof JsonResponse) {
-            $tmpContent = $response->getData(true);
-            $content['data'] = $tmpContent['data'] ?? $tmpContent;
-            $content['code'] = $tmpContent['code'] ?? $response->getStatusCode();
-            $response->setData($content);
-        } elseif (($response instanceof Response)) {
             // exception occur.
             if (method_exists($response, 'withException') && !is_null($response->exception)) {
-                if (config('app.debug')) {
-                    return $response; // this resp is a exception trace page.
-                } else {
-                    $content['data'] = config('app.debug') ? $response->exception->getMessage() :
-                        'A team of highly trained monkeys has been dispatched to deal with this situation';
-                    $content['code'] = $response->getStatusCode();
-                }
+                $tmpContent = $this->formatExceptionToJson($response->exception);
+                $content['code'] = $tmpContent['code'] ?: $response->getStatusCode();
+                $content['data'] = config('app.debug') ? $tmpContent['data'] :
+                    'A team of highly trained monkeys has been dispatched to deal with this situation';
             } else {
-                if (!is_null($tmpContent = $response->getContent()) || $tmpContent !== '') {
-                    $tmpContent = json_decode($tmpContent, true);
-                }
-                if (is_scalar($tmpContent) || is_null($tmpContent)) {
-                    $content['data'] = $response->getContent();
-                    $content['code'] = $response->getStatusCode();
-                } else {
-                    $content['data'] = $tmpContent['data'] ?? $tmpContent;
-                    $content['code'] = $tmpContent['code'] ?? $response->getStatusCode();
-                }
+                $tmpContent = $response->getData(true);
+                $content['code'] = $tmpContent['code'] ?? $response->getStatusCode();
+                $content['data'] = $tmpContent['data'] ?? $tmpContent;
+            }
+            $response->setData($content);
+        } elseif (($response instanceof Response)) {
+            if (!is_null($tmpContent = $response->getContent()) || $tmpContent !== '') {
+                $tmpContent = json_decode($tmpContent, true);
+            }
+            if (is_scalar($tmpContent) || is_null($tmpContent)) {
+                $content['code'] = $response->getStatusCode();
+                $content['data'] = $response->getContent();
+            } else {
+                $content['code'] = $tmpContent['code'] ?? $response->getStatusCode();
+                $content['data'] = $tmpContent['data'] ?? $tmpContent;
             }
             $response->setContent($content);
         }
 
         return $response;
+    }
+
+    /**
+     * @param \Throwable $e
+     * @return array
+     */
+    private function formatExceptionToJson(\Throwable $e)
+    {
+        if ($e instanceof ValidationException) {
+            $msg = $e->validator->getMessageBag()->all();
+            $trace = [];
+            $code = $e->status;
+        } else {
+            $msg = $e->getMessage();
+            $trace = $e->getTrace();
+            $code = $e->getCode();
+        }
+        $result = [
+            'code' => $code,
+            'data' => [
+                'line'  => $e->getLine(),
+                'msg'   => $msg,
+                'trace' => $trace
+            ]
+        ];
+
+        return $result;
     }
 }
