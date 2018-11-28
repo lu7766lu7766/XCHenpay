@@ -1,9 +1,5 @@
 @extends('admin.layouts.default')
 
-@section('header_styles')
-    {{--放置 css--}}
-@stop
-
 @section('breadcrumb')
     <div class="row">
         <div class="col-sm-12">
@@ -19,13 +15,6 @@
     </div>
 @stop
 
-@section('content')
-    {{--放置 content--}}
-@stop
-
-@section('modal')
-    {{--放置 modal--}}
-@stop
 
 @section('footer_scripts')
     {{--放置 js--}}

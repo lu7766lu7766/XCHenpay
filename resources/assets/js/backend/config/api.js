@@ -113,10 +113,18 @@ export default {
             method: 'post'
         }
     },
+    reportStatistics: {
+        list: {
+            uri: '/admin/search/reportStatQuery',
+            method:
+                'post'
+        }
+    },
     reportSearch: {
         list: {
             uri: '/admin/search/reportQuery',
-            method: 'post'
+            method:
+                'post'
         }
     }
 }

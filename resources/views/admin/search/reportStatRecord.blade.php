@@ -1,5 +1,5 @@
 @extends('admin.search.reportStatIndex')
 
-@section('reportStatRecord')
-    <Report></Report>
+@section('content')
+    <report-statistics/>
 @endsection
