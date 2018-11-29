@@ -167,4 +167,24 @@ class LendManageService
 
         return $result;
     }
+
+    /**
+     * 查詢狀態為下發中的訂單總數量
+     * @return array
+     */
+    public function applyNotice()
+    {
+        $result = null;
+        $notice = app(LendRecords::class)->getApplyLendRecordQuantity();
+        if ($notice > -1) {
+            $result = ['total' => $notice];
+        } else {
+            $result = [
+                "code" => 1000,
+                "data" => ['total' => $notice]
+            ];
+        }
+
+        return $result;
+    }
 }

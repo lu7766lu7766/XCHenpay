@@ -199,24 +199,18 @@
             }
         }),
         watch: {
-            'options.user_id'() {
-                this.clearData()
+            'searchData.user_id'() {
+                if (this.searchData.user_id) {
+                    this.search()
+                }
             }
         },
         methods: {
-            clearData() {
-                this.datas = []
-                this.count = {
-                    totalApplying: 0,
-                    totalWithdrawal: 0,
-                    total: 0
-                }
-            },
             dataInit() {
                 this.proccessAjax('dataInit', {}, this.onDataInit)
             },
             onDataInit(res) {
-                this.options.companies = _.map(res.data.companies)
+                this.options.companies = _.concat([{id: 'all', company_name: '全部'}], _.map(res.data.companies))
                 this.options.lendStatus = res.data.lendStatus
             },
             onGetTotal(res) {
@@ -234,6 +228,13 @@
             },
             showState(data) {
                 this.$root.$emit('lendManageState.show', data)
+            }
+        },
+        computed: {
+            customGetReqBody() {
+                return {
+                    user_id: this.searchData.user_id !== 'all' ? this.searchData.user_id : ''
+                }
             }
         },
         mounted() {

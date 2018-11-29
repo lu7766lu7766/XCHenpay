@@ -1,5 +1,7 @@
 import './init'
 
+import './outer' // 外部前端(不在vue component範疇中)
+
 var $app = document.querySelector('#app')
 if ($app) {
     new Vue({
@@ -12,10 +14,12 @@ if ($app) {
             BankAccountList: () => import('./pages/BankAccountList'),
             BankAccountBind: () => import('./pages/BankAccountBind'),
             ReportStatistics: () => import('./pages/ReportStatistics'),
-            ReportSearch: () => import('./pages/ReportSearch')
+            ReportSearch: () => import('./pages/ReportSearch'),
+            CompanyManage: () => import('./pages/CompanyManage')
             // ActivityLog: resolve => {
             //     require(['./pages/ActivityLog'], resolve)
             // }
         }
     })
 }
+

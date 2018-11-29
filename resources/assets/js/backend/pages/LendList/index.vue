@@ -288,6 +288,7 @@
         },
         mounted() {
             this.dataInit()
+            this.search()
         }
     }
 </script>

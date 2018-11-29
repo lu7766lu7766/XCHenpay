@@ -26,13 +26,17 @@
 
                     <!-- view-box end -->
                     <div class="table-responsive m-t-15">
-                        <table class="table table-hover text-center table-bordered table-box">
+                        <table class="table table-hover text-center table-bordered table-box table-sort">
                             <thead>
                             <tr>
                                 <th class="width-40">#</th>
                                 <th>商户名</th>
                                 <th>描述</th>
-                                <th class="width-date">创建时间</th>
+                                <th class="width-date sorting" @click="changeSort('created_at')" :class="{
+                                    'sort-asc': this.sort.column == 'created_at' && this.sort.direction == 'asc',
+                                    'sort-desc': this.sort.column == 'created_at' && this.sort.direction == 'desc'
+                                }">创建时间
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -65,6 +69,9 @@
                 start: moment().startOf('day'),
                 end: moment().endOf('day'),
                 keyword: ''
+            },
+            sort: {
+                column: 'created_at'
             }
         }),
         methods: {
@@ -74,6 +81,16 @@
             onGetTotal(res) {
                 this.paginate.total = res.data
             }
+        },
+        computed: {
+            customGetReqBody() {
+                return {
+                    sort: this.sort.direction.toUpperCase()
+                }
+            }
+        },
+        mounted() {
+            this.search()
         }
     }
 </script>

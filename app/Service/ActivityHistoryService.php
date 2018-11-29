@@ -28,6 +28,7 @@ class ActivityHistoryService
             $request->getStart(),
             $request->getEnd(),
             User::class,
+            $request->getSort(),
             $request->getKeyword(),
             $userId,
             $request->getPage(),

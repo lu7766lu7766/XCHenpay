@@ -37,6 +37,7 @@ class LendManageController extends BaseController
     public function data()
     {
         $service = LendManageService::getInstance($this->getReq());
+
         return $service->lendManageData();
     }
 
@@ -47,6 +48,7 @@ class LendManageController extends BaseController
     public function dataTotal()
     {
         $service = LendManageService::getInstance($this->getReq());
+
         return $service->lendManageDataTotal();
     }
 
@@ -57,6 +59,7 @@ class LendManageController extends BaseController
     public function total()
     {
         $service = LendManageService::getInstance($this->getReq());
+
         return $service->lendManageTotal();
     }
 
@@ -67,6 +70,18 @@ class LendManageController extends BaseController
     public function update()
     {
         $service = LendManageService::getInstance($this->getReq());
+
         return $service->update();
+    }
+
+    /**
+     * 下發中的訂單總數量
+     * @return array
+     */
+    public function applyNotice()
+    {
+        $service = LendManageService::getInstance($this->getReq());
+
+        return $service->applyNotice();
     }
 }

@@ -156,17 +156,73 @@ export default {
             method: 'delete'
         }
     },
-    /** 報表查詢 */
+    /** 報表統計 */
     reportStatistics: {
         list: {
             uri: '/admin/search/reportStatQuery',
             method: 'post'
         }
     },
+    /** 報表查詢 */
     reportSearch: {
         list: {
             uri: '/admin/search/reportQuery',
             method: 'post'
+        }
+    },
+    /** 商戶管理 */
+    companyManage: {
+        dataInit: {
+            uri: ['/admin/users/getThisUser', '/admin/users/getRolesList'],
+            method: 'get'
+        },
+        list: {
+            uri: '/admin/users/data',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/users/dataTotal',
+            method: 'post'
+        },
+        create: {
+            uri: '/admin/users/dataAdd',
+            method: 'post'
+        },
+        info: {
+            uri: '/admin/users/dataDetail',
+            method: 'post'
+        },
+        update: {
+            uri: '/admin/users/dataUpdate',
+            method: 'post'
+        },
+        delete: {
+            uri: '/admin/users/dataDel',
+            method: 'post'
+        },
+        updateStatus: {
+            uri: '/admin/users/applyStatusUpdate',
+            method: 'post'
+        },
+        trashedList: {
+            uri: '/admin/users/dataTrashed',
+            method: 'post'
+        },
+        trashedTotal: {
+            uri: '/admin/users/dataTrashedTotal',
+            method: 'post'
+        },
+        restore: {
+            uri: '/admin/users/dataRestore',
+            method: 'post'
+        }
+    },
+    /** 外部view */
+    outer: {
+        /** 下發申請數量 */
+        lendApplyNotify: {
+            uri: '/admin/lendManage/applyNotice',
+            method: 'get'
         }
     }
 }

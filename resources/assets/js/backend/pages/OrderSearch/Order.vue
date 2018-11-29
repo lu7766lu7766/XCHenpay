@@ -150,7 +150,7 @@
                                 <a @click="showInfo(data.id)">
                                     <i class="mdi mdi-information-outline text-blue"></i>
                                 </a>
-                                <a @click="showState(data.id)" v-if="isAdmin">
+                                <a @click="showState(data.id)" v-if="$parent.canEditOrder">
                                     <i class="mdi mdi-pencil-box-outline"></i>
                                 </a>
                             </td>
@@ -252,9 +252,6 @@
             }
         },
         computed: {
-            isAdmin() {
-                return this.$parent.isAdmin
-            },
             company_id() {
                 return this.$parent.company_id
             },
@@ -265,6 +262,9 @@
                     direction: this.sort.direction
                 }
             }
+        },
+        mounted() {
+            this.search()
         }
     }
 </script>

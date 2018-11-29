@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Constants\Common\SortConstant;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ActivityHistoryRequest extends FormRequest
 {
@@ -49,6 +51,15 @@ class ActivityHistoryRequest extends FormRequest
     }
 
     /**
+     * 排序
+     * @return string
+     */
+    public function getSort()
+    {
+        return $this->get('sort');
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -71,6 +82,7 @@ class ActivityHistoryRequest extends FormRequest
             'keyword' => 'sometimes|required|string|max:32',
             'page'    => 'sometimes|required|integer',
             'perpage' => 'sometimes|required|integer|between:1,100',
+            'sort'    => 'required|' . Rule::in(SortConstant::enum()),
         ];
     }
 }

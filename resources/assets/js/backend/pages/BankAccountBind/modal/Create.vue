@@ -64,31 +64,26 @@
         rules: {
             'data.code': {
                 require: {
-                    value: true,
                     message: '验证码 不得为空白'
                 }
             },
             'data.name': {
                 require: {
-                    value: true,
                     message: '开户名 不得为空白'
                 }
             },
             'data.bank_account': {
                 require: {
-                    value: true,
                     message: '银行卡号 不得为空白'
                 }
             },
             'data.bank_name': {
                 require: {
-                    value: true,
                     message: '银行名 不得为空白'
                 }
             },
             'data.bank_branch': {
                 require: {
-                    value: true,
                     message: '开户支行 不得为空白'
                 }
             },
@@ -124,7 +119,7 @@
                 this.proccessAjax('create', this.data, this.onCreate)
             },
             onCreate() {
-                this.$parent.refresh()
+                this.createSuccess()
                 $(this.$refs.modal).modal('hide')
             },
         },

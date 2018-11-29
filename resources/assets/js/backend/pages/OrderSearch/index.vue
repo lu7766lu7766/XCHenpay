@@ -22,7 +22,9 @@
             Order: require('./Order'),
         },
         data: () => ({
-            isAdmin: false,
+            canEditOrder: false,
+            canEditFee: false,
+            canShowCompany: false,
             company_id: '',
             companies: [],
         }),
@@ -32,8 +34,10 @@
             })
             var res = await this.$callApi('orderSearch:dataInit')
             this.companies = _.map(res.companies)
-            this.isAdmin = res.isAdmin
-            if (!this.isAdmin) {
+            this.canEditFee = res.can_edit_fee
+            this.canEditOrder = res.can_edit_order
+            this.canShowCompany = res.can_show_company
+            if (!this.canShowCompany) {
                 this.company_id = res.user.id
             }
             loader.hide()

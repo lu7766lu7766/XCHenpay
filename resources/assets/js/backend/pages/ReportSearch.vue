@@ -185,6 +185,9 @@
                         : 0
                 })
             }
+        },
+        mounted() {
+            this.search()
         }
     }
 </script>

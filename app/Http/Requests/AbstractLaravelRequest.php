@@ -22,8 +22,8 @@ abstract class AbstractLaravelRequest
      */
     protected function __construct(array $request)
     {
-        \Validator::make($request, $this->rules(), $this->messages())->validate();
         $this->request = $request;
+        \Validator::make($request, $this->rules(), $this->messages())->validate();
     }
 
     /**

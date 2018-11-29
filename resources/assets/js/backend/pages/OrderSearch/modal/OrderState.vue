@@ -55,7 +55,7 @@
                 this.stateList = res.stateList
             },
             onUpdate() {
-                this.$parent.refresh()
+                this.updateSuccess()
                 $(this.$refs.modal).modal('hide')
             },
             async getState(data) {

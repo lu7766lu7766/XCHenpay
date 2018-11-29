@@ -35,12 +35,12 @@ Vue.prototype.$callApi = async (key, data, loader) => {
     } else if (typeof apiConf.uri == 'object') {
         let res = []
         for (const uri of apiConf.uri) {
-            res.push(await doRequest(uri, apiConf.method, data, loader))
+            res.push(doRequest(uri, apiConf.method, data, loader))
         }
         // apiConf.uri.forEach(async uri => {
         //     res.push(await doRequest(uri, apiConf.method, data, loader))
         // })
-        return res
+        return axios.all(res)
     }
     return []
 }

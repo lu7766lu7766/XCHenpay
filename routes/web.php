@@ -40,21 +40,56 @@ Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'users'], 'as' => 'admin.'],
     function () {
         Route::group(['prefix' => 'users'], function () {
-            Route::get('data', 'UsersController@data')->name('users.data');
+            Route::get('/', 'UsersController@index')
+                ->name('users.index');
+            Route::group(['middleware' => 'json_api'], function () {
+                // @todo branch ed#14,請實作view, 新增商戶資料.
+                // post filed 請參照 App\Http\Requests\UsersDataAddRequest::rules().
+                Route::post('dataAdd', 'UsersController@dataAdd')
+                    ->name('users.dataAdd');
+                // @todo branch ed#14,請實作view, api 是下列uri中有data字段的route,一個是資料一個是資料總筆數.
+                // post filed 請參照 App\Http\Requests\UsersDataRequest::rules().
+                Route::post('data', 'UsersController@data')
+                    ->name('users.data');
+                Route::post('dataTotal', 'UsersController@dataTotal')
+                    ->name('users.dataTotal');
+                // @todo branch ed#14,請實作view, 商戶資料明細.
+                // post filed 請參照 App\Http\Requests\UsersDataDetailRequest::rules().
+                Route::post('dataDetail', 'UsersController@dataDetail')
+                    ->name('users.dataDetail');
+                // @todo branch ed#14,請實作view, 更新商戶資料.
+                // post filed 請參照 App\Http\Requests\userDataUpdate::rules().
+                Route::post('dataUpdate', 'UsersController@dataUpdate')
+                    ->name('users.dataUpdate');
+                // @todo branch ed#14,請實作view, 刪除商戶資料.
+                // post filed 請參照 App\Http\Requests\UsersDataDelRequest::rules().
+                Route::post('dataDel', 'UsersController@dataDel')
+                    ->name('users.delete');
+                // @todo branch ed#14,請實作view, 更新商戶下發狀態.
+                // post filed 請參照 App\Http\Requests\applyStatusUpdate::rules().
+                Route::post('applyStatusUpdate', 'UsersController@applyStatusUpdate')
+                    ->name('users.applyStatusUpdate');
+                // @todo branch ed#14,請實作view, 已刪除帳號列表.
+                // post filed 請參照 App\Http\Requests\UsersDataTrashedRequest::rules().
+                Route::post('dataTrashed', 'UsersController@dataTrashed')
+                    ->name('users.dataTrashed');
+                // @todo branch ed#14,請實作view, 已刪除帳號列表總筆數.
+                Route::post('dataTrashedTotal', 'UsersController@dataTrashedTotal')
+                    ->name('users.dataTrashedTotal');
+                // @todo branch ed#14,請實作view, 還原已刪除帳號.
+                // post filed 請參照 App\Http\Requests\userDataRestore::rules().
+                Route::post('dataRestore', 'UsersController@dataRestore')
+                    ->name('users.restore');
+                // @todo branch ed#14,請實作view, 取得所有角色清單.
+                Route::get('getRolesList', 'UsersController@getRolesList')
+                    ->name('users.getRolesList');
+                Route::get('getThisUser', 'UsersController@getThisUser')
+                    ->name('users.getThisUser');
+            });
             Route::get('showProfile', 'UsersController@showProfile')->name('users.showProfile');
-            Route::get('updateProfile', 'UsersController@updateProfile')->name('users.updateProfile');
-            Route::get('{user}/delete', 'UsersController@destroy')->name('users.delete');
-            Route::get('{user}/confirm-delete', 'UsersController@getModalDelete')->name('users.confirm-delete');
-            Route::get('{user}/restore', 'UsersController@getRestore')->name('restore.user');
             Route::post('passwordreset', 'UsersController@passwordreset')->name('passwordreset');
             Route::get('getUserInfo', 'UsersController@getUserInfo')->name('users.getUserInfo');
-            Route::get('{user}/showApplyStatus', 'UsersController@showApplyStatus')->name('users.showApplyStatus');
-            Route::get('{user}/updateApplyStatus', 'UsersController@updateApplyStatus')
-                ->name('users.updateApplyStatus');
         });
-        Route::resource('users', 'UsersController');
-        Route::get('deleted_users', ['before' => 'Sentinel', 'uses' => 'UsersController@getDeletedUsers'])
-            ->name('users.deleted_users');
         # Lock screen
         Route::get('{id}/lockscreen', 'UsersController@lockscreen')->name('lockscreen');
         Route::post('{id}/lockscreen', 'UsersController@postLockscreen')->name('post-lockscreen');
@@ -149,6 +184,8 @@ Route::group(
             // post filed 請參照 App\Http\Requests\LendManageUpdateRequest::rules().
             Route::post('lendManage', 'LendManageController@update')
                 ->name('lendManage.Manage');
+            Route::get('lendManage/applyNotice', 'LendManageController@applyNotice')
+                ->name('lendManage.notice');
         });
     }
 );

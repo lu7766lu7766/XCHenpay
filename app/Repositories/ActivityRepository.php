@@ -9,7 +9,9 @@
 namespace App\Repositories;
 
 use App\Models\Activity;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class ActivityRepository
 {
@@ -17,6 +19,7 @@ class ActivityRepository
      * @param string $start 起始日期
      * @param string $end 結束日期
      * @param string $type Class type. e.g. \App\User::class
+     * @param string $sort 排序
      * @param string|null $companyName 商戶平稱,模糊比對
      * @param int|null $userId user id
      * @param int $page
@@ -27,6 +30,7 @@ class ActivityRepository
         string $start,
         string $end,
         string $type,
+        string $sort,
         string $companyName = null,
         int $userId = null,
         int $page = 1,
@@ -43,7 +47,7 @@ class ActivityRepository
             if (!is_null($userId)) {
                 $builder->where('causer_id', $userId);
             }
-            $result = $builder->forPage($page, $perpage)->get();
+            $result = $builder->orderBy('created_at', $sort)->forPage($page, $perpage)->get();
         } catch (\Throwable $e) {
             logger($e->getMessage());
         }
@@ -54,6 +58,7 @@ class ActivityRepository
     /**
      * @param string $start
      * @param string $end
+     * @param string $type
      * @param string|null $companyName
      * @param int|null $userId
      * @return int
@@ -82,5 +87,18 @@ class ActivityRepository
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $logName
+     * @param Model $user
+     * @param string $msg
+     */
+    public function addActivityLog(string $logName, User $user, string $msg)
+    {
+        activity($logName)
+            ->performedOn($user)
+            ->causedBy($user)
+            ->log($msg);
     }
 }

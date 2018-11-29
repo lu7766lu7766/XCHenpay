@@ -32,9 +32,11 @@ class AuthcodeController extends Controller
             $companies = User::All()->where('company_service_id', '<>', null);
         }
         return [
-            "isAdmin"   => !!$switchPromission,
-            "companies" => $companies ?? [],
-            "user"      => $user
+            "can_show_company" => !!$switchPromission,
+            "can_edit_fee"     => $user->hasAccess('logQuery.editFeeInfo') || $user->hasAccess('logQuery'),
+            "can_edit_order"   => $user->hasAccess('logQuery.showState') || $user->hasAccess('logQuery'),
+            "companies"        => $companies ?? [],
+            "user"             => $user
         ];
     }
 

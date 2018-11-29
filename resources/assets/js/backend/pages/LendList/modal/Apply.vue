@@ -65,7 +65,6 @@
         rules: {
             amount: {
                 require: {
-                    value: true,
                     message: '下发金额 不得为空白'
                 },
                 type: {
@@ -89,7 +88,7 @@
                 this.note = ''
             },
             onApply() {
-                this.$parent.refresh()
+                this.createSuccess()
                 this.$parent.amountInit()
                 $(this.$refs.modal).modal('hide')
             },

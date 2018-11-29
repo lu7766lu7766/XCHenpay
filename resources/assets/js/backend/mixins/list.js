@@ -24,6 +24,18 @@ export default {
         sort: {
             column: '',
             direction: 'desc'
+        },
+        confirmDeleteConf: {
+            title: '删除用户',
+            text: "你确定要删除这个用户吗？ 这个操作是不可逆转的。",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'm-l-10',
+            confirmButtonColor: '#3eb7ba',
+            cancelButtonColor: '#6c757d',
+            cancelButtonText: '取消',
+            confirmButtonText: '删除'
         }
     }),
     methods: {
@@ -70,7 +82,7 @@ export default {
             return {}
         },
         getReqBody() {
-            return this.convertMoment2String(_.assign({}, this.customGetReqBody, this.paginate, this.searchData))
+            return this.convertMoment2String(_.assign({}, this.paginate, this.searchData, this.customGetReqBody))
         },
         startIndex() {
             return (this.paginate.page - 1) * this.paginate.perpage + 1

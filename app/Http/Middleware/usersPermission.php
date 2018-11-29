@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Cartalyst\Sentinel\Users\UserInterface;
 use Closure;
+use Illuminate\Support\Facades\Route;
 use Sentinel;
 
 class usersPermission
@@ -40,6 +41,9 @@ class usersPermission
         }
         if ($user->hasAccess('users.' . $method) || $user->hasAccess('users')) {
             return $next($request);
+        }
+        if (Route::hasMiddlewareGroup('json_api')) {
+            return response("您所造访的页面不存在", 404);
         }
 
         // Execute this code if the permission check failed
