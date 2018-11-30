@@ -111,24 +111,24 @@
                     role_id: ''
                 }
                 $(this.$refs.modal).modal('show')
+                _.assign(this.$options.rules, {
+                    'data.password': {
+                        require: {
+                            message: '密码 不得为空白'
+                        }
+                    },
+                    'data.password_confirm': {
+                        require: {
+                            message: '确认密码 不得为空白'
+                        },
+                        equal: {
+                            value: 'data.password',
+                            message: '确认密码 内容与密码不符合'
+                        }
+                    }
+                })
             })
 
-            _.assign(this.$options.rules, {
-                'data.password': {
-                    require: {
-                        message: '密码 不得为空白'
-                    }
-                },
-                'data.password_confirm': {
-                    require: {
-                        message: '确认密码 不得为空白'
-                    },
-                    equal: {
-                        value: 'data.password',
-                        message: '确认密码 内容与密码不符合'
-                    }
-                }
-            })
         },
         destroyed() {
             this.$root.$off('companyManageAdd.show')

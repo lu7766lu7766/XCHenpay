@@ -53,7 +53,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 control-label">密码</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" v-model="data.password">
+                                <input type="password" class="form-control" v-model="data.password">
                                 <div class="tips">
                                     如果您不想更改密码...请将它们留空
                                 </div>
@@ -62,7 +62,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 control-label">密码确认</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" v-model="data.password_confirm">
+                                <input type="password" class="form-control" v-model="data.password_confirm">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -100,14 +100,14 @@
             },
             onGetDetail(res) {
                 res.data.role_id = res.data.roles[0] ? res.data.roles[0].id : ''
-                // res.data.password = ''
-                // res.data.password_confirm = ''
+                res.data.password = ''
+                res.data.password_confirm = ''
                 this.data = res.data
             },
             update() {
-                try{
+                try {
                     this.validate()
-                } catch(e) {
+                } catch (e) {
                     return alert(e)
                 }
                 this.proccessAjax('update', this.data, this.onUpdate)
@@ -121,6 +121,15 @@
             this.$root.$on('companyManageEdit.show', id => {
                 this.getDetail(id)
                 $(this.$refs.modal).modal('show')
+                _.assign(this.$options.rules, {
+                    'data.password': {},
+                    'data.password_confirm': {
+                        equal: {
+                            value: 'data.password',
+                            message: '确认密码 内容与密码不符合'
+                        }
+                    }
+                })
             })
         },
         destroyed() {
