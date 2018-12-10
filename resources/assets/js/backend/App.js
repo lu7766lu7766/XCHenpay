@@ -13,8 +13,8 @@ if ($app) {
             LendManage: () => import('./pages/LendManage'),
             BankAccountList: () => import('./pages/BankAccountList'),
             BankAccountBind: () => import('./pages/BankAccountBind'),
-            ReportStatistics: () => import('./pages/ReportStatistics'),
-            ReportSearch: () => import('./pages/ReportSearch'),
+            ReportStatistics: () => import('./pages/Report/Statistics'),
+            ReportSearch: () => import('./pages/Report/Search'),
             CompanyManage: () => import('./pages/CompanyManage')
             // ActivityLog: resolve => {
             //     require(['./pages/ActivityLog'], resolve)

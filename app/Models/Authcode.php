@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\User;
+use Illuminate\Database\Eloquent\Model;
 
 class Authcode extends Model
 {
@@ -17,6 +17,11 @@ class Authcode extends Model
     public function i6payment()
     {
         return $this->belongsTo(Payment::class, 'payment_type', 'i6pay_id');
+    }
+
+    public function payment()
+    {
+        return $this->i6payment();
     }
 
     public function company()

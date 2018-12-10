@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Constants\Order\OrderStatusConstants;
+use App\Constants\Roles\RolesConstants;
 use App\Models\Authcode;
 use App\Models\LendRecord;
 use App\User;
@@ -15,14 +16,14 @@ use function trans;
 
 class AuthCodes
 {
-    const success_state = 2;
-    const allDone_state = 3;
-    const pending_state = 5;
-    const accept_state = 6;
-    const deny_state = 7;
-    const lended_summary = '申请下发中';
-    const accept_summary = '下发完成';
-    const deny_summary = '拒绝下发';
+    const APPLY_SUCCESS_STATE = 0; // 申請成功
+    const TRADING_STATE = 1;  //交易中
+    const SUCCESS_STATE = 2; //交易成功等待回調
+    const ALL_DONE_STATE = 3; //交易結束
+    const TRADE_FAIL_STATE = 4; //交易失敗
+    const PENDING_STATE = 5;
+    const ACCEPT_STATE = 6;
+    const DENY_STATE = 7;
     private $getCol = [
         'id',
         'pay_state',
@@ -118,7 +119,7 @@ class AuthCodes
                 if ($user->hasAccess('logQuery')) {
                     $action .= $editLink;
                 }
-                if ($authCode->pay_state == $this::success_state) {
+                if ($authCode->pay_state == $this::SUCCESS_STATE) {
                     $action .= $callBackLink;
                 }
 
@@ -156,7 +157,7 @@ class AuthCodes
                     $builder->where('id', $userId);
                 }
             })
-            ->whereIn('pay_state', [self::allDone_state, self::accept_state, self::deny_state])
+            ->whereIn('pay_state', [self::ALL_DONE_STATE, self::ACCEPT_STATE, self::DENY_STATE])
             ->select(\DB::raw('IFNULL(SUM(amount - fee),0) as totalRealMoney'))
             ->first();
 
@@ -176,20 +177,25 @@ class AuthCodes
             $builder = User::with([
                 'tradeLogs' => function ($builder) use ($startDate, $endDate, $companyServiceId) {
                     /** @var Builder $builder */
-                    $builder->selectRaw(
-                        "round(sum(case when pay_state = ? then amount else 0 end),2) success_amount,
-                        round(sum(case when pay_state = ? then fee else 0 end),2) success_fee,
-                        sum(case when pay_state = ? then 1 else 0 end) success_count,
-                        round(sum(case when pay_state != ? then amount else 0 end),2) fail_amount,
-                        round(sum(case when pay_state != ? then fee else 0 end),2) fail_fee,
-                        sum(case when pay_state != ? then 1 else 0 end) fail_count,
-                        company_service_id",
-                        array_fill(0, 6, self::allDone_state)
-                    )->whereBetween('created_at', [$startDate, $endDate])
-                        ->groupBy('company_service_id');
+                    $builder->with('payment')->selectRaw(
+                        "IFNULL(round(sum(amount),2),0) as amount,
+                        IFNULL(round(sum(authcodes.fee),2),0) as fee,
+                        IFNULL(count(1), 0) as count ,                        
+                        company_service_id,
+                        pay_state,
+                        payment_type"
+                    )
+                        ->whereBetween('created_at', [$startDate, $endDate])
+                        ->groupBy('company_service_id', 'payment_type', 'pay_state');
                 }
-            ])->leftJoin('role_users', 'users.id', 'role_users.user_id')
-                ->where('role_users.role_id', 4);
+            ])
+                ->whereHas('roles', function (Builder $builder) {
+                    $builder->where('roles.slug', RolesConstants::USER);
+                })
+                ->select(
+                    'company_name',
+                    'company_service_id'
+                );
             if (!is_null($companyServiceId)) {
                 $builder->where('company_service_id', $companyServiceId);
             }
