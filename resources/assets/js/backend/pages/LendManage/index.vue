@@ -110,11 +110,11 @@
                                 <tr v-for="(data, index) in datas" :key="index">
                                     <td>{{ startIndex + index }}</td>
                                     <td>
-                                        <span class="badge badge-warning badge-pill"
-                                              v-if="data.lend_state == 0">交易中</span>
-                                        <span class="badge badge-success badge-pill" v-else-if="data.lend_state == 1">完成下发</span>
-                                        <span class="badge badge-danger badge-pill" v-else-if="data.lend_state == 2">拒绝下发</span>
-                                        <span class="badge info badge-pill" v-else>{{ options.lendStatus[data.lend_state] }}</span>
+                                        <span class="badge badge-pill" :class="{
+                                            'badge-warning': data.lend_state == 0,
+                                            'badge-success': data.lend_state == 1,
+                                            'badge-danger': data.lend_state == 2
+                                        }">{{ options.lendStatus[data.lend_state] }}</span>
                                     </td>
                                     <td>{{ data.user.company_name }}</td>
                                     <td class="text-red">{{ data.record_seq }}</td>
