@@ -157,6 +157,7 @@ Route::group(
             Route::post('/apply', 'LendListController@apply');
             Route::post('/total', 'LendListController@total');
             Route::get('/{id}', 'LendListController@info');
+            Route::post('sendVerifyCode', 'LendListController@sendVerifyCode');
         });
     }
 );

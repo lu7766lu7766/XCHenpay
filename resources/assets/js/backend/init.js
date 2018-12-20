@@ -100,7 +100,7 @@ async function doRequest(uri, method, data, loader) {
     })
 
     if (res.data && res.data.code && !_.includes([0, 200], res.data.code)) {
-        alert("与服务器沟通错误")
+        alert(errorCode[res.data.code] ? errorCode[res.data.code] : '与服务器沟通错误')
         if (loader) loader.hide()
         throw 'service error'
     }

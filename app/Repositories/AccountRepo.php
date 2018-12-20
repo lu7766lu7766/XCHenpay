@@ -8,6 +8,7 @@
 
 namespace App\Repositories;
 
+use App\Constants\Common\VerifyType;
 use App\Models\Account;
 use App\Models\verifyCode;
 use App\User;
@@ -167,6 +168,7 @@ class AccountRepo
         try {
             $result = $user->verifyCodes()
                 ->where('code', $code)
+                ->where('type', VerifyType::ACCOUNT)
                 ->first();
         } catch (\Exception $e) {
             \Log::log('debug', $e->getMessage());

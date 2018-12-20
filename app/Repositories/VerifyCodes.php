@@ -20,11 +20,17 @@ class VerifyCodes
         return strval(rand($this::MIN, $this::MAX));
     }
 
-    public function createActiveCode($randCode)
+    /**
+     * @param string $randCode
+     * @param int $type
+     * @return verifyCode
+     */
+    public function createActiveCode(string $randCode, int $type)
     {
         return verifyCode::create([
             'code'   => $randCode,
-            'active' => $this::ACTIVE_STAT
+            'active' => $this::ACTIVE_STAT,
+            'type'   => $type
         ]);
     }
 

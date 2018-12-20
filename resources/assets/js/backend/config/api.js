@@ -86,6 +86,10 @@ export default {
         apply: {
             uri: '/admin/lendList/apply',
             method: 'post'
+        },
+        sendVerifyCode: {
+            uri: '/admin/lendList/sendVerifyCode',
+            method: 'post'
         }
     },
     /** 下發管理 */

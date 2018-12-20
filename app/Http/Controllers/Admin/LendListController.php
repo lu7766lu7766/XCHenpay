@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\Common\VerifyType;
 use App\Constants\Lend\LendStatusConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LendList\LendListApplyRequest;
@@ -91,5 +92,15 @@ class LendListController extends Controller
     public function backAccountInfo()
     {
         return LendListService::getInstance()->backAccountInfo();
+    }
+
+    /**
+     * 發送驗證碼
+     * @return array
+     * @throws \App\Exceptions\ApiErrorCodeException
+     */
+    public function sendVerifyCode()
+    {
+        return LendListService::getInstance()->sendVerifyCode(VerifyType::LEND_LIST);
     }
 }

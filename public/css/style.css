@@ -8,6 +8,28 @@ body {
   padding-top: 7px;
 }
 
+.badge-info {
+  background-color: #29bbe3;
+}
+
+.code {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.code input {
+  margin-right: 5px;
+}
+
+.code button {
+  color: #495057;
+}
+
+.code button:hover {
+  color: #495057;
+}
+
 .width-40 {
   width: 40px;
 }
@@ -133,6 +155,18 @@ body {
 
 .btn-replay:hover {
   background-color: #29447c;
+  color: #fff;
+}
+
+.btn-code {
+  background-color: #e9ecef;
+  color: #fff;
+  -webkit-transition: all .5s;
+  transition: all .5s;
+}
+
+.btn-code:hover {
+  background-color: #dadfe4;
   color: #fff;
 }
 

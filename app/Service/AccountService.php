@@ -8,22 +8,22 @@
 
 namespace App\Service;
 
-use App\Constants\Account\AccountErrorConstants;
 use App\Exceptions\ApiErrorCodeException;
-use App\Helpers\JPushSMS;
 use App\Http\Requests\Account\AddAccountRequest;
 use App\Http\Requests\Account\DeleteAccountRequest;
 use App\Http\Requests\Account\GetAccountRequest;
 use App\Repositories\AccountRepo;
-use App\Repositories\VerifyCodes;
+use App\Traits\SendVerifyCodeTraits;
 use App\Traits\Singleton;
 use App\User;
 use App\Validator\CodeValidator;
+use Cartalyst\Sentinel\Users\UserInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 class AccountService
 {
     use Singleton;
+    use SendVerifyCodeTraits;
     const BANK_CARD_LIMIT = 20;
 
     /**
@@ -70,32 +70,6 @@ class AccountService
     }
 
     /**
-     * @return array
-     * @throws ApiErrorCodeException
-     * @throws \ErrorException
-     */
-    public function sendVerifyCode()
-    {
-        /** @var User $user */
-        if (is_null($user = \Sentinel::getUser())) {
-            return ['result' => '此帐号不存在，请刷新页面后重试'];
-        }
-        if (!$mobile = $user->mobile) {
-            throw new ApiErrorCodeException('user no mobile', AccountErrorConstants::USER_NO_MOBILE);
-        }
-        $validate = app(VerifyCodes::class);
-        $code = $validate->generateCode();
-        $sender = new JPushSMS(env('JPUSH_KEY'), env('JPUSH_SECRET'));
-        $response = $sender->sendSMS($mobile, $code);
-        if ($response['result'] == 'success') {
-            $verifyCode = $validate->createActiveCode($code);
-            $user->attachCode($verifyCode);
-        }
-
-        return $response;
-    }
-
-    /**
      * @param AddAccountRequest $handle
      * @return array
      * @throws \Throwable
@@ -104,9 +78,9 @@ class AccountService
     {
         /** @var User $user */
         $user = \Sentinel::getUser();
-        $validator = new CodeValidator();
-        if (!$validator->success(app(AccountRepo::class)->findValidateCode($user, $handle->getValidateCode()))) {
-            return $result = ['result' => 'error', 'message' => $validator->getErrMsg()];
+        $validator = new CodeValidator(app(AccountRepo::class)->findValidateCode($user, $handle->getValidateCode()));
+        if (!$validator->success()) {
+            throw new ApiErrorCodeException($validator->getErrMsg(), $validator->getErrCode());
         }
         if ($user->accounts->count() < self::BANK_CARD_LIMIT) {
             $result = app(AccountRepo::class)->addAccount(
@@ -197,5 +171,13 @@ class AccountService
             $handle->getUserId(),
             $handle->getSearch()
         );
+    }
+
+    /**
+     * @return UserInterface|User
+     */
+    public function getReceiver()
+    {
+        return \Sentinel::getUser();
     }
 }

@@ -8,8 +8,10 @@
 
 namespace App\Service;
 
+use App\Constants\Common\SendVerifyErrorConstants;
 use App\Constants\Lend\LendStatusConstants;
 use App\Constants\User\UserStatusConstants;
+use App\Exceptions\ApiErrorCodeException;
 use App\Http\Requests\LendList\LendListApplyRequest;
 use App\Http\Requests\LendList\LendListIndexRequest;
 use App\Http\Requests\LendListInfoRequest;
@@ -18,13 +20,17 @@ use App\Models\LendRecord;
 use App\Repositories\AuthCodes;
 use App\Repositories\BankAccountRep;
 use App\Repositories\LendRecords;
+use App\Traits\SendVerifyCodeTraits;
 use App\Traits\Singleton;
 use App\User;
+use App\Validator\CodeValidator;
 use Carbon\Carbon;
+use Cartalyst\Sentinel\Users\UserInterface;
 
 class LendListService
 {
     use Singleton;
+    use SendVerifyCodeTraits;
 
     /**
      * @return array
@@ -87,7 +93,7 @@ class LendListService
 
     /**
      * @param LendListApplyRequest $request
-     * @return LendRecord|null
+     * @return LendRecord|null|array
      * @throws \Exception
      */
     public function apply(LendListApplyRequest $request)
@@ -96,6 +102,12 @@ class LendListService
         $item = null;
         $user = \Sentinel::getUser();
         if (!is_null($user)) {
+            $validator = new CodeValidator(
+                app(LendRecords::class)->findValidateCode($user, $request->getValidateCode())
+            );
+            if (!$validator->success()) {
+                throw new ApiErrorCodeException($validator->getErrMsg(), $validator->getErrCode());
+            }
             $accountId = $request->getTargetId();
             $bankAccounts = app(BankAccountRep::class)->findUser($user->getKey(), $accountId);
             $applyAmount = $request->getAmount();
@@ -184,5 +196,13 @@ class LendListService
         }
 
         return $result;
+    }
+
+    /**
+     * @return UserInterface|User
+     */
+    public function getReceiver()
+    {
+        return \Sentinel::getUser();
     }
 }

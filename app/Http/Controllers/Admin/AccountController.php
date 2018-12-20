@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\Common\VerifyType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Account\AddAccountRequest;
 use App\Http\Requests\Account\DeleteAccountRequest;
@@ -75,11 +76,10 @@ class AccountController extends Controller
      * 發送驗證碼
      * @return array
      * @throws \App\Exceptions\ApiErrorCodeException
-     * @throws \ErrorException
      */
     public function sendVerifyCode()
     {
-        return AccountService::getInstance()->sendVerifyCode();
+        return AccountService::getInstance()->sendVerifyCode(VerifyType::ACCOUNT);
     }
 
     /**

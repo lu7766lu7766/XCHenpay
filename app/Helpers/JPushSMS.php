@@ -8,9 +8,10 @@
 
 namespace App\Helpers;
 
+use App\Contract\ISenderService;
 use Curl\Curl;
 
-class JPushSMS
+class JPushSMS implements ISenderService
 {
     //極光SMS
     private $key;
@@ -26,10 +27,10 @@ class JPushSMS
     /**
      * @param string $mobile
      * @param string $message
-     * @return array
+     * @return AuroraResponse
      * @throws \ErrorException
      */
-    public function sendSMS(string $mobile, string $message)
+    public function sendMessage(string $mobile, string $message)
     {
         $data = [
             'mobile'    => $mobile,
@@ -40,15 +41,7 @@ class JPushSMS
         $sendCode->setBasicAuthentication($this->key, $this->secret);
         $sendCode->setHeader('Content-Type', 'application/json');
         $sendCode->post('https://api.sms.jpush.cn/v1/messages', json_encode($data));
-        $response = $sendCode->response;
-        if ($response) {
-            if (!isset($response->error)) {
-                return ['result' => 'success'];
-            } else {
-                return ['result' => 'error', 'message' => $response->error->message, 'code' => $response->error->code];
-            }
-        }
 
-        return $response;
+        return new AuroraResponse($sendCode);
     }
 }

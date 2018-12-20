@@ -2,7 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Constants\Common\VerifyType;
 use App\Models\LendRecord;
+use App\Models\verifyCode;
+use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -374,5 +377,25 @@ class LendRecords
         }
 
         return $builder;
+    }
+
+    /**
+     * @param User $user
+     * @param string $code
+     * @return verifyCode|null
+     */
+    public function findValidateCode(User $user, string $code)
+    {
+        $result = null;
+        try {
+            $result = $user->verifyCodes()
+                ->where('code', $code)
+                ->where('type', VerifyType::LEND_LIST)
+                ->first();
+        } catch (\Exception $e) {
+            \Log::log('debug', $e->getMessage());
+        }
+
+        return $result;
     }
 }

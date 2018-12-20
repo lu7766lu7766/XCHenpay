@@ -31,6 +31,14 @@ class LendListApplyRequest extends FormRequest
     }
 
     /**
+     * @return string
+     */
+    public function getValidateCode()
+    {
+        return $this->get('code');
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -52,6 +60,7 @@ class LendListApplyRequest extends FormRequest
             'amount'    => 'required|integer|between:' .
                 config('constants.apply.min') . ',' . config('constants.apply.max'),
             'note'      => 'sometimes|required|string',
+            'code'      => 'required|string',
         ];
     }
 }
