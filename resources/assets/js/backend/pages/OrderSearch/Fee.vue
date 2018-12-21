@@ -63,7 +63,7 @@
             getTotal() {
             },
             onGetList(res) {
-                this.datas = res.data
+                this.datas = _.orderBy(res.data, x => +x.i6pay_id, 'asc')
             },
             showInfo(id) {
                 this.$root.$emit('feeInfo.show', id)
