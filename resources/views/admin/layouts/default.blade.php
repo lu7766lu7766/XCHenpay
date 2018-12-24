@@ -79,14 +79,14 @@
 <script src="{{ asset('plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
 
 <!-- App js -->
-{{--<script src="{{ asset('assets/js/app.js') }}"></script>--}}
+<script src="{{ asset('assets/js/app.js') }}"></script>
 
 <script src="{{ asset('plugins/datepicker/js/moment.min.js') }}"></script>
 <script src="{{ asset('plugins/datepicker/js/moment_zh-cn.js') }}"></script>
 <script src="{{ asset('plugins/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ asset('plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
 
-<script src="{{ asset('assets/js/App.js') }}"></script>
+<script src="{{ asset('assets/js/View.js') }}"></script>
 
 @yield('footer_scripts')
 </body>

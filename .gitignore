@@ -19,6 +19,6 @@ resources/views/vendor/
 resources/lang/vendor/
 .phpstorm.meta.php
 public/assets/js/vendor/
-public/assets/js/App.js
+public/assets/js/View.js
 mix-manifest.json
 yarn.lock

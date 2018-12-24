@@ -36,4 +36,4 @@ mix.webpackConfig({
 })
 
 // mix.js('resources/assets/js/backend/pages/*.js', 'public/assets/js');
-mix.js('resources/assets/js/backend/App.js', 'public/assets/js')
+mix.js('resources/assets/js/backend/View.js', 'public/assets/js')
