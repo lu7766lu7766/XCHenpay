@@ -30,6 +30,10 @@ body {
   color: #495057;
 }
 
+.fa-caret-square-down {
+  font-size: 12px;
+}
+
 .width-40 {
   width: 40px;
 }
@@ -52,6 +56,10 @@ body {
 
 .width-ip {
   width: 600px;
+}
+
+.width-name {
+  width: 350px;
 }
 
 .text-green {
@@ -244,7 +252,6 @@ body {
 
 .topbar-custom .ip > span {
   background-color: #d1dce0;
-  width: 147px;
 }
 
 .topbar-custom .pc-today-list {

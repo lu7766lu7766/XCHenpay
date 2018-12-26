@@ -30,7 +30,7 @@
                             <thead>
                             <tr>
                                 <th class="width-40">#</th>
-                                <th>商户名</th>
+                                <th class="width-name">商户名</th>
                                 <th>描述</th>
                                 <th class="width-date sorting" @click="changeSort('created_at')" :class="{
                                     'sort-asc': this.sort.column == 'created_at' && this.sort.direction == 'asc',
