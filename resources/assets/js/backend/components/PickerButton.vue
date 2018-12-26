@@ -19,7 +19,7 @@
             },
             yesterday() {
                 this.updateTime({
-                    start: moment().subtract(1, 'days'),
+                    start: moment().subtract(1, 'days').startOf('day'),
                     end: moment().subtract(1, 'days').endOf('day')
                 })
             },
