@@ -5,14 +5,14 @@
                 <div class="card-body">
                     <div class="search-box">
                         <div class="search-select">
-                            <select class="form-control">
+                            <select class="form-control" v-model="searchData.status">
                                 <option value="">状态</option>
                                 <option v-for="(name, val) in options.status" :key="val" :value="val">{{ name }}
                                 </option>
                             </select>
                         </div>
                         <div class="search-select">
-                            <select class="form-control">
+                            <select class="form-control" v-model="searchData.apply_status">
                                 <option value="">下发申请</option>
                                 <option v-for="(name, val) in options.applyStatus" :key="val" :value="val">{{ name }}
                                 </option>
