@@ -30,7 +30,7 @@
                             <div class="col-md-9 p-t-7">{{ data.customer_id }}</div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 control-label">品項名稱</label>
+                            <label class="col-md-3 control-label">品项名称</label>
                             <div class="col-md-9 p-t-7">{{ data.item_name }}</div>
                         </div>
                         <div class="form-group row">
