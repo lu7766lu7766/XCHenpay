@@ -28,13 +28,12 @@
             <h3 class="text-center m-0">
                 <a href="#" class="logo logo-admin"><img src="{{ asset('img/logo.png') }}" height="30" alt="logo"></a>
             </h3>
-
             <div class="p-3">
                 <form class="form-horizontal" action="{{ route('signin') }}" method="post">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                     <div class="form-group">
                         <label for="email">帐户信箱</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="帐户信箱">
+                        <input type="email" class="form-control" id="email" name="email" value="{{request()->old('email')}}" placeholder="帐户信箱">
                     </div>
 
                     <div class="form-group">

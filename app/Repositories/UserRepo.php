@@ -152,4 +152,22 @@ class UserRepo
             'apply_status'
         );
     }
+
+    /**
+     * @param int $page
+     * @param int $perpage
+     * @return User[]|Collection
+     */
+    public function getWhitelist(int $page = 1, int $perpage = 10)
+    {
+        return User::with('whitelist')->orderBy('id', 'DESC')->forPage($page, $perpage)->get();
+    }
+
+    /**
+     * @return int
+     */
+    public function total()
+    {
+        return User::count();
+    }
 }

@@ -50,6 +50,10 @@ body {
   width: 130px;
 }
 
+.width-ip {
+  width: 600px;
+}
+
 .text-green {
   color: #3bb563;
 }
@@ -182,6 +186,107 @@ body {
 
 .login-alert .alert-dismissible .close {
   padding: 8px 15px 7px;
+}
+
+.nav-pro-img img {
+  position: relative;
+  top: -2px;
+}
+
+.notification-list .pc-today-list i {
+  color: #fff;
+}
+
+@media (max-width: 400px) {
+  .notification-list .nav-link {
+    padding: 0 9px;
+  }
+}
+
+.notification-list .ti-bell {
+  font-size: 30px;
+}
+
+.topbar-custom .today-box.show > .nav-link,
+.topbar-custom .today-box.show > .nav-link:hover,
+.topbar-custom .today-box.show > .nav-link:focus {
+  background-color: transparent;
+}
+
+.topbar-custom .mb-today-btn {
+  display: none;
+}
+
+@media (max-width: 991px) {
+  .topbar-custom .mb-today-btn {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+.topbar-custom .ip > span, .topbar-custom .pc-today-list > span {
+  padding: 5px 10px;
+  border-radius: 3px;
+  display: inline-block;
+  line-height: 19px;
+}
+
+.topbar-custom .ip > span i, .topbar-custom .pc-today-list > span i {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 3px;
+}
+
+.topbar-custom .ip {
+  display: inline-block;
+  padding: 0;
+}
+
+.topbar-custom .ip > span {
+  background-color: #d1dce0;
+  width: 147px;
+}
+
+.topbar-custom .pc-today-list {
+  display: inline-block;
+  padding-left: 2px;
+}
+
+.topbar-custom .pc-today-list > span {
+  color: #fff;
+}
+
+.topbar-custom .pc-today-list > span > span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.topbar-custom .pc-today-list > span:nth-child(1) {
+  background-color: #35bd4e;
+}
+
+.topbar-custom .pc-today-list > span:nth-child(2) {
+  background-color: #ffb000;
+}
+
+.topbar-custom .pc-today-list > span:nth-child(3) {
+  background-color: #2bbedc;
+}
+
+@media (max-width: 991px) {
+  .topbar-custom .pc-today-list {
+    display: none;
+  }
+}
+
+.topbar-custom .mb-today-list span {
+  display: inline-block;
+  width: calc(50% - 2px);
+}
+
+.topbar-custom .mb-today-list span:last-child {
+  text-align: right;
+  margin-left: 10px;
 }
 
 .page-alert {

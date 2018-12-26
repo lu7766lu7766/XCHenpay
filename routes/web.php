@@ -19,7 +19,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     # All basic routes defined here
     Route::get('login', 'AuthController@getSignin')->name('login');
     Route::get('signin', 'AuthController@getSignin')->name('signin');
-    Route::post('signin', 'AuthController@postSignin')->name('postSignin');
+    Route::post('signin', 'AuthController@signIn')->name('postSignin');
     Route::post('signup', 'AuthController@postSignup')->name('admin.signup');
     Route::post('forgot-password', 'AuthController@postForgotPassword')->name('forgot-password');
     # Logout
@@ -206,6 +206,24 @@ Route::group(
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
     Route::get('permissionSwitch', 'PermissionController@permissionSwitch')->name('permission.switch');
     Route::post('permissionSwitch', 'PermissionController@update')->name('permission.update');
+});
+#whitelist
+Route::group([
+    'prefix'     => 'admin/whitelist',
+    'namespace'  => 'Admin',
+    'middleware' => ['admin', 'whitelist'],
+    'as'         => 'admin.whitelist.'
+], function () {
+    Route::get('', 'WhitelistController@indexView')->name('view');
+    Route::group(['middleware' => 'json_api'], function () {
+        Route::post('/total', 'WhitelistController@total')->name('total');
+        Route::post('/', 'WhitelistController@index')->name('index');
+        Route::group(['prefix' => 'maintain'], function () {
+            Route::get('/{user_id}', 'WhitelistController@info')->name('info');
+            Route::post('/', 'WhitelistController@edit')->name('edit');
+            Route::delete('/', 'WhitelistController@delete')->name('delete');
+        });
+    });
 });
 #home
 Route::get('/', [

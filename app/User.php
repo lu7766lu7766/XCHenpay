@@ -8,9 +8,12 @@ use App\Models\Authcode;
 use App\Models\LendRecord;
 use App\Models\PaymentFees;
 use App\Models\verifyCode;
+use App\Models\Whitelist;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cviebrock\EloquentTaggable\Taggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -24,6 +27,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App
  * @property string company_name
  * @property Collection|Account[] accounts
+ * @property Whitelist|null whitelist
+ * @property string status
+ * @mixin Builder
  */
 class User extends EloquentUser
 {
@@ -101,5 +107,13 @@ class User extends EloquentUser
     public function activityLogs()
     {
         return $this->morphMany(Activity::class, 'causer');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function whitelist()
+    {
+        return $this->hasOne(WhiteList::class, 'user_id', 'id');
     }
 }

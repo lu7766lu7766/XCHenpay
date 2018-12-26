@@ -11,7 +11,6 @@
                 @if(Sentinel::getUser()->hasAccess('users.index') || Sentinel::getUser()->hasAccess('users'))
                     <li><a href="{{ URL::to('admin/users') }}">商户管理</a></li>
                 @endif
-
                 @if(Sentinel::getUser()->hasAccess('account.index') || Sentinel::getUser()->hasAccess('account'))
                     <li><a href="{{ URL::to('admin/account') }}">行卡列表</a></li>
                 @endif
@@ -26,6 +25,9 @@
 
                 @if(Sentinel::getUser()->hasAccess('lendList.index') || Sentinel::getUser()->hasAccess('lendList'))
                     <li><a href="{{route('admin.lend.list.index')}}">下发申请</a></li>
+                @endif
+                @if(Sentinel::getUser()->hasAccess('whitelist'))
+                    <li><a href="{{route('admin.whitelist.view')}}">白名單設定</a></li>
                 @endif
             </ul>
         </li>

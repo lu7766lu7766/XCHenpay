@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'search'       => \App\Http\Middleware\SearchPermission::class,
         'to_json_resp' => SimpleJsonResponse::class,
         'env_export'   => ExtraEnvironmentExport::class,
+        'whitelist'    => \App\Http\Middleware\WhitelistMiddleware::class,
     ];
 }

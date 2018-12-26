@@ -52,6 +52,18 @@ export default {
                         case 'equal':
                             proccessValidate(getRealVar(rule.value) !== realVar, rule.message)
                             break
+                        case 'ips':
+                            const pattern = /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$/;
+                            const isIP = val => pattern.test(val)
+                            let isPass = true
+                            realVar.split(',').forEach(val => {
+                                if (!isIP(val)) {
+                                    isPass = false
+                                    return
+                                }
+                            })
+                            proccessValidate(!isPass, rule.message)
+                            break
                     }
                 })
             })

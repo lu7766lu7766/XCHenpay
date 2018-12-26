@@ -221,6 +221,29 @@ export default {
             method: 'post'
         }
     },
+    /** 白名單管理 */
+    whiteList: {
+        list: {
+            uri: '/admin/whitelist',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/whitelist/total',
+            method: 'post'
+        },
+        detail: {
+            uri: '/admin/whitelist/maintain/{user_id}',
+            method: 'get'
+        },
+        update: {
+            uri: '/admin/whitelist/maintain',
+            method: 'post'
+        },
+        delete: {
+            uri: '/admin/whitelist/maintain',
+            method: 'delete'
+        }
+    },
     /** 外部view */
     outer: {
         /** 下發申請數量 */

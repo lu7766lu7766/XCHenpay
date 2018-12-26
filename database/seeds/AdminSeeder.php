@@ -40,6 +40,7 @@ class AdminSeeder extends DatabaseSeeder
                 'activity_log'     => true,
                 'account'          => true,
                 'users.dataSwitch' => true,
+                'whitelist'        => true,
             ],
         ]);
         $ServiceRole = Sentinel::getRoleRepository()->createModel()->create([
