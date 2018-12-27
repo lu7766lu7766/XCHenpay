@@ -108,7 +108,7 @@
                                 <td>
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? x.fee : 0 ) |
+                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? +x.fee : 0 ) |
                                         numFormat('0,0.000')
                                         }}
                                     </div>
@@ -213,7 +213,7 @@
                                 <td>
                                     <div>
                                         {{
-                                        _.sumBy(details, x => x.pay_state == payState.done ? x.fee : 0 ) |
+                                        _.sumBy(details, x => x.pay_state == payState.done ? +x.fee : 0 ) |
                                         numFormat('0,0.000')
                                         }}
                                     </div>
@@ -281,7 +281,7 @@
                                 <td>
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? x.fee : 0)) |
+                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? +x.fee : 0)) |
                                     numFormat('0,0.000')
                                     }}
                                 </td>
