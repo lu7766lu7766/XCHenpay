@@ -95,7 +95,10 @@ class FillOrderService
         $tradeType = $this->repo->getFillTradeType();
         $currency = $this->repo->getDefaultCurrency();
         if (is_null($tradeType) || is_null($currency)) {
-            throw new ApiErrorScalarCodeException('该功能维护中,请稍后片刻再次尝试', OOO1FillOrderErrorCodes::MERCHANT_NOT_EXISTS);
+            throw new ApiErrorScalarCodeException(
+                '该功能维护中,请稍后片刻再次尝试',
+                OOO1FillOrderErrorCodes::FILL_ORDER_MAINTAINING
+            );
         }
         $merchant = $this->repo->findMerchantByUserId($request->getUserId());
         if (is_null($merchant)) {
