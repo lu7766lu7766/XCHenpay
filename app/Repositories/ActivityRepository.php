@@ -20,7 +20,7 @@ class ActivityRepository
      * @param string $end 結束日期
      * @param string $type Class type. e.g. \App\User::class
      * @param string $sort 排序
-     * @param string|null $companyName 商戶平稱,模糊比對
+     * @param string|null $description 描述,模糊比對
      * @param int|null $userId user id
      * @param int $page
      * @param int $perpage
@@ -31,18 +31,18 @@ class ActivityRepository
         string $end,
         string $type,
         string $sort,
-        string $companyName = null,
+        string $description = null,
         int $userId = null,
         int $page = 1,
         int $perpage = 20
     ) {
         $result = [];
         try {
-            $builder = Activity::with(['causer'])
+            $builder = Activity::with(['causerWithTrashed'])
                 ->whereBetween('created_at', [$start, $end])
                 ->where('causer_type', $type);
-            if (!is_null($companyName)) {
-                $builder->where('log_name', 'like', "%{$companyName}%");
+            if (!is_null($description)) {
+                $builder->where('description', 'like', "%{$description}%");
             }
             if (!is_null($userId)) {
                 $builder->where('causer_id', $userId);

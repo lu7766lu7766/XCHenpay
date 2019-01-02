@@ -9,6 +9,7 @@
 namespace App\Models;
 
 use App\User;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\Activitylog\Models\Activity as SpatieActivity;
 
 /**
@@ -24,4 +25,12 @@ class Activity extends SpatieActivity
         'subject_id',
         'causer_id',
     ];
+
+    /**
+     * @return MorphTo
+     */
+    public function causerWithTrashed(): MorphTo
+    {
+        return parent::causer()->withTrashed();
+    }
 }
