@@ -8,7 +8,7 @@
   "license": "Envato Standard License",
   "type": "project",
   "require": {
-    "php": ">=7.0.0",
+    "php": ">=7.1.0",
     "cartalyst/sentinel": "^2.0",
     "cviebrock/eloquent-sluggable": "^4.2",
     "cviebrock/eloquent-taggable": "^3.2",

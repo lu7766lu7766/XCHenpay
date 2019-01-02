@@ -244,6 +244,29 @@ export default {
             method: 'delete'
         }
     },
+    /** 補單管理 */
+    replenishment: {
+        list: {
+            uri: '/admin/order/fill/index',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/order/fill/total',
+            method: 'post'
+        },
+        update: {
+            uri: '/admin/order/fill/edit',
+            method: 'post'
+        },
+        detail: {
+            uri: '/admin/order/fill/info/{id}',
+            method: 'get'
+        },
+        dataInit: {
+            uri: '/admin/order/fill/options',
+            method: 'get'
+        }
+    },
     /** 外部view */
     outer: {
         /** 下發申請數量 */

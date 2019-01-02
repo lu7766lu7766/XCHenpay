@@ -14,6 +14,7 @@ export default {
         },
         reqSuccess(msg) {
             alert(`${msg}成功`)
+            this.data = {}
             this.$parent.refresh()
         }
     }

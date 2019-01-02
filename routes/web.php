@@ -1,4 +1,7 @@
 <?php
+
+use App\Policies\FillOrderPolicy;
+
 Route::get('setlocale/{locale}', function ($locale) {
     if (in_array($locale, \Config::get('app.locales'))) {
         Session::put('locale', $locale);
@@ -7,6 +10,20 @@ Route::get('setlocale/{locale}', function ($locale) {
 
     return redirect()->back();
 });
+#home
+Route::get('/', [
+    'as'         => 'home',
+    'middleware' => 'admin',
+    function () {
+        // Is the user logged in?
+        if (Sentinel::check()) {
+            return Redirect::route('admin.authcode.index');
+        }
+
+        // Show the page
+        return view('admin.login');
+    }
+]);
 Route::pattern('slug', '[a-z0-9- _]+');
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     # Error pages should be shown without requiring login
@@ -225,17 +242,21 @@ Route::group([
         });
     });
 });
-#home
-Route::get('/', [
-    'as'         => 'home',
-    'middleware' => 'admin',
+#fill order
+Route::group(
+    [
+        'prefix'     => 'admin/order/fill',
+        'middleware' => ['admin', 'has:management,' . FillOrderPolicy::class],
+        'as'         => 'admin.fill_order.'
+    ],
     function () {
-        // Is the user logged in?
-        if (Sentinel::check()) {
-            return Redirect::route('admin.authcode.index');
-        }
-
-        // Show the page
-        return view('admin.login');
+        Route::get('/view', 'FillOrderController@view')->name('view');
+        Route::group(['middleware' => ['json_api']], function () {
+            Route::get('info/{id}', 'FillOrderController@info')->name('info');
+            Route::post('index', 'FillOrderController@index')->name('index');
+            Route::post('total', 'FillOrderController@total')->name('total');
+            Route::post('edit', 'FillOrderController@edit')->name('edit');
+            Route::get('options', 'FillOrderController@options')->name('options');
+        });
     }
-]);
+);

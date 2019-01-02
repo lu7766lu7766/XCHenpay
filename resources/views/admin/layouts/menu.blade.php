@@ -45,6 +45,11 @@
                 @if(Sentinel::getUser()->hasAccess('search.reportStatIndex') || Sentinel::getUser()->hasAccess('search'))
                     <li><a href="{{ URL::to('admin/search/reportStat/view') }}">报表统计</a></li>
                 @endif
+
+                @if(Sentinel::getUser()->hasAccess(\App\Constants\PermissionSubjectConstants::FILL_ORDER) ||
+                    Sentinel::getUser()->inRole(\App\Constants\Roles\RolesConstants::ADMIN))
+                    <li><a href="{{ route('admin.fill_order.view') }}">补单管理</a></li>
+                @endif
             </ul>
         </li>
 

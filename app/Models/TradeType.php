@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class TradeType extends Model
 {
     protected $table = 'trade_types';
+    protected $fillable = [
+        'name',
+        'description'
+    ];
+    public $timestamps = false;
 
     public function tradeLogs()
     {

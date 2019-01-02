@@ -24,4 +24,42 @@ class OrderStatusConstants
     const ALL_DONE = '交易结束';//已可下发
     const FAILED = '交易失败';
     const DENY = '拒绝下发';
+
+    /**
+     * All state enum.
+     * @return array
+     */
+    public static function fillOrderEnum()
+    {
+        return [
+            self::PREPARE_CODE,
+            self::OPERATING_CODE,
+            self::SUCCESS_CODE,
+            self::ALL_DONE_CODE,
+            self::FAILED_CODE
+        ];
+    }
+
+    /**
+     * @param string|int $code
+     * @return string|null
+     */
+    public static function toSummary($code)
+    {
+        return self::summaryMap()[$code] ?? null;
+    }
+
+    /**
+     * @return array
+     */
+    private static function summaryMap()
+    {
+        return [
+            self::PREPARE_CODE   => self::PREPARE,
+            self::OPERATING_CODE => self::OPERATING,
+            self::SUCCESS_CODE   => self::SUCCESS,
+            self::ALL_DONE_CODE  => self::ALL_DONE,
+            self::FAILED_CODE    => self::FAILED
+        ];
+    }
 }

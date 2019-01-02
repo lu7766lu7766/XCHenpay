@@ -29,6 +29,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Collection|Account[] accounts
  * @property Whitelist|null whitelist
  * @property string status
+ * @method bool hasAccess(array | string $permissions)
+ * @method bool hasAnyAccess(array | string $permissions)
  * @mixin Builder
  */
 class User extends EloquentUser

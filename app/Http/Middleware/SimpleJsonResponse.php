@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Exceptions\ApiErrorScalarCodeException;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -64,11 +65,11 @@ class SimpleJsonResponse
         if ($e instanceof ValidationException) {
             $msg = $e->validator->getMessageBag()->all();
             $trace = [];
-            $code = $e->status;
+            $code = $msg;
         } else {
             $msg = $e->getMessage();
             $trace = $e->getTrace();
-            $code = $e->getCode();
+            $code = $e instanceof ApiErrorScalarCodeException ? [$e->getScalarCode()] : [$e->getCode()];
         }
         $result = [
             'code' => $code,

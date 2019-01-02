@@ -1,15 +1,13 @@
 <template>
     <div class="date-select">
-        <div class="input-group">
-            <input type='text' class="form-control" ref="picker" :placeholder="placeholder"/>
-            <div class="input-group-append">
-                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-            </div>
-        </div>
+        <date-time-picker :type="type" :placeholder="placeholder" v-model="value"/>
     </div>
 </template>
 <script>
     export default {
+        components: {
+            DateTimePicker: require('@/DateTimePicker2')
+        },
         props: {
             type: {
                 type: String,
@@ -21,31 +19,13 @@
             },
             value: {
                 type: Object,
-                required: true
+                requered: true
             }
         },
         watch: {
             value(newValue) {
-                $(this.$refs.picker).val(newValue.format('YYYY-MM-DD HH:mm:ss'))
+                this.$emit('input', newValue)
             }
-        },
-        mounted() {
-            $(this.$refs.picker).datetimepicker({
-                format: 'YYYY-MM-DD HH:mm:ss',
-                date: this.value,
-                locale: moment.locale('zh-cn')//'zh_CN'
-            })
-            $(this.$refs.picker).on("dp.change", e => {
-                // console.log(e.date)
-                this.$emit('input', e.date)
-            })
-        },
-        destroyed() {
-            $(this.$refs.picker).off("dp.change")
         }
     }
 </script>
-
-<style scoped>
-
-</style>

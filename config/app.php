@@ -220,6 +220,6 @@ return [
         'Reminder'     => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
         'Sentinel'     => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
         'Image'        => Intervention\Image\Facades\Image::class,
-        'Analytics'    => Spatie\Analytics\AnalyticsFacade::class,
+        'Analytics'    => Spatie\Analytics\AnalyticsFacade::class
     ],
 ];

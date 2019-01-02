@@ -71,5 +71,6 @@ class Kernel extends HttpKernel
         'to_json_resp' => SimpleJsonResponse::class,
         'env_export'   => ExtraEnvironmentExport::class,
         'whitelist'    => \App\Http\Middleware\WhitelistMiddleware::class,
+        'has'          => \App\Http\Middleware\SentinelAuthorize::class,
     ];
 }

@@ -11,18 +11,17 @@ export default {
             })
             return res
         },
-        async proccessAjax(target, data = {}, cb) {
-            let loader = this.$loading.show({
+        async proccessAjax(target, data = {}, cb, isLoading = true) {
+            let loader = isLoading ? this.$loading.show({
                 container: this.$el,
-            })
-            this.data = {}
+            }) : null
             var res = await this.$callApi(`${this.apiKey}:${target}`, this.createReqBody(data), loader)
             if (cb) cb(res)
-            loader.hide()
+            loader && loader.hide()
             return res
         },
         createReqBody(data) {
-            return this.convertMoment2String(_.assign({}, data))
+            return this.convertMoment2String(_.cloneDeep(data))
         },
         validate() {
             let message = ''
@@ -35,10 +34,14 @@ export default {
                 _.forEach(rules, (rule, ruleName) => {
                     switch (ruleName) {
                         case 'require':
-                            proccessValidate(!realVar, rule.message)
+                            // console.log(variable, realVar, _.isNull(realVar) || _.isUndefined(realVar) || realVar === '')
+                            proccessValidate(_.isNull(realVar) || _.isUndefined(realVar) || realVar === '', rule.message)
                             break
                         case 'type':
                             proccessValidate(typeof realVar !== rule.value, rule.message)
+                            break
+                        case 'number':
+                            proccessValidate(isNaN(parseInt(realVar)), rule.message)
                             break
                         case 'min':
                             proccessValidate(realVar < rule.value, rule.message)
