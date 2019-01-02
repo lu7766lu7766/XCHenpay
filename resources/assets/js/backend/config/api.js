@@ -18,7 +18,7 @@ export default {
         },
         order: {
             list: {
-                uri: '/admin/data',
+                uri: ['/admin/data', '/admin/orderTradeInfo'],
                 method: 'post'
             },
             info: {

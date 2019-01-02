@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Authcode;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthCodeOrderSearchRequest;
-use App\Models\PaymentFees;
+use App\Models\Authcode;
 use App\Models\Payment;
+use App\Models\PaymentFees;
 use App\Repositories\AuthCodes;
+use App\Service\AuthCodeService;
 use App\User;
 use Curl\Curl;
 use Illuminate\Http\Request;
@@ -31,6 +32,7 @@ class AuthcodeController extends Controller
         if ($switchPromission) {
             $companies = User::All()->where('company_service_id', '<>', null);
         }
+
         return [
             "can_show_company" => !!$switchPromission,
             "can_edit_fee"     => $user->hasAccess('logQuery.editFeeInfo') || $user->hasAccess('logQuery'),
@@ -76,6 +78,7 @@ class AuthcodeController extends Controller
             'amount'   => $amount,
             'can_edit' => $can_edit
         ];
+
         return $result;
     }
 
@@ -83,6 +86,7 @@ class AuthcodeController extends Controller
     {
 //        return view('admin.trade.showTradeLogModal', compact('authcode'));
         $authcode->load(['currency', 'tradeType']);
+
         return [
             'authcode' => $authcode
         ];
@@ -119,6 +123,7 @@ class AuthcodeController extends Controller
                 $payments = $paymentsSQL->get();
             }
         }
+
         return $this->makeFeeDatatable($payments);
     }
 
@@ -127,6 +132,7 @@ class AuthcodeController extends Controller
         $user = Sentinel::getUser();
         $can_edit = $user->hasAccess('logQuery') || ($user->hasAccess('logQuery.editFeeInfo') &&
                 $user->hasAccess('logQuery.updateFeeInfo'));
+
         return DataTables::of($payments)
             ->editColumn('can_edit', function ($payment) use ($can_edit) {
                 return $can_edit;
@@ -147,6 +153,7 @@ class AuthcodeController extends Controller
                 if ($user->hasAccess('logQuery') || ($user->hasAccess('logQuery.editFeeInfo') && $user->hasAccess('logQuery.updateFeeInfo'))) {
                     $action .= $editLink;
                 }
+
                 return $action;
             })
             ->rawColumns(['actions'])
@@ -160,6 +167,7 @@ class AuthcodeController extends Controller
             ->join('payments as p', 'p.id', '=', 'f.payment_id')
             ->where('f.id', $id)
             ->first();
+
 //        return view('admin.trade.showFeeModal', compact('payment'));
         return [
             'payment' => $payment
@@ -173,6 +181,7 @@ class AuthcodeController extends Controller
             ->join('payments as p', 'p.id', '=', 'f.payment_id')
             ->where('f.id', $id)
             ->first();
+
 //        return view('admin.trade.editFeeModal', compact('payment'));
         return [
             'payment' => $payment
@@ -210,6 +219,7 @@ class AuthcodeController extends Controller
         if (!$user->hasAccess('users.dataSwitch') && $user->tradeLogs()->where('id', '=',
                 request()->id)->first() == null) {
             $this->errorLog($user->email . '手动回调一笔不属于齐权限的订单: ' . request()->id);
+
             return $this->errorResponse('请求发生错误，请联络客服人员');
         }
         if (env('APP_inLocal')) {
@@ -226,6 +236,7 @@ class AuthcodeController extends Controller
         if ($response != 'success') {
             return $this->errorResponse('回调失败，请联络客服人员');
         }
+
         //success
         return Response::json([
             'Result' => 'OK'
@@ -241,6 +252,7 @@ class AuthcodeController extends Controller
             3 => '交易结束',
             4 => '交易失败'
         ];
+
 //        return view('admin.trade.stateEditModal', compact('authcode', 'stateList'));
         return [
             'authcode'  => $authcode,
@@ -274,6 +286,17 @@ class AuthcodeController extends Controller
         activity($user->email)
             ->causedBy($user)
             ->log('修改订单:' . $authcode->trade_seq . ' 状态,由"' . $oldState . '"修改至"' . $authcode->pay_summary . '"');
+
         return Response::json($authcode);
+    }
+
+    /**
+     * 訂單交易資訊
+     * @param AuthCodeOrderSearchRequest $request
+     * @return Authcode
+     */
+    public function orderTradeInfo(AuthCodeOrderSearchRequest $request)
+    {
+        return AuthCodeService::getInstance(Sentinel::getUser())->orderTradeInfo($request);
     }
 }

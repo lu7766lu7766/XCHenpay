@@ -23,7 +23,8 @@ class tradeLogPermission
             'feeData',
             'showFeeInfo',
             'callNotify',
-            'showInfo'
+            'showInfo',
+            'orderTradeInfo'
         ];
         $protectOthers = [
         ];
@@ -41,6 +42,7 @@ class tradeLogPermission
         if ($user->hasAccess('logQuery.' . $method)) {
             return $next($request);
         }
+
         // Execute this code if the permission check failed
         return redirect()->route('admin.authcode.index')->with('error', "您所造访的页面不存在");
     }

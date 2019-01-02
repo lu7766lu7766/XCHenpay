@@ -14,7 +14,7 @@
                                 </div>
                                 <div class="text-white">
                                     <h6 class="text-uppercase mb-3">交易成功</h6>
-                                    <h4>0.00</h4>
+                                    <h4>{{ count.successful_deal | numFormat('0,0.000') }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="text-white">
                                     <h6 class="text-uppercase mb-3">交易失敗</h6>
-                                    <h4>0.00</h4>
+                                    <h4>{{ count.failure_deal | numFormat('0,0.000') }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -227,7 +227,9 @@
             },
             count: {
                 amount: 0,
-                fee: 0
+                fee: 0,
+                successful_deal: 0,
+                failure_deal: 0
             }
         }),
         watch: {
@@ -239,10 +241,13 @@
             getTotal() {
             },
             onGetList(res) {
-                this.datas = res.data
-                this.count.amount = res.amount
-                this.count.fee = res.fee
-                this.paginate.total = res.total
+                this.datas = res[0].data
+                this.paginate.total = res[0].total
+
+                this.count.successful_deal = res[1].data.successful_deal
+                this.count.failure_deal = res[1].data.failure_deal
+                this.count.amount = res[1].data.amount
+                this.count.fee = res[1].data.fee
             },
             showInfo(id) {
                 this.$root.$emit('orderInfo.show', id)

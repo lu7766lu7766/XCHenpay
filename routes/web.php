@@ -158,6 +158,8 @@ Route::group(
         Route::get('logQuery/editFeeInfo/{payment}', 'AuthcodeController@editFeeInfo')->name('authcode.editFeeInfo');
         Route::post('logQuery/updateFeeInfo', 'AuthcodeController@updateFeeInfo')->name('authcode.updateFeeInfo');
         Route::post('logQuery/callNotify', 'AuthcodeController@callNotify')->name('authcode.callNotify');
+        // @todo branch funny#36
+        Route::post('orderTradeInfo', 'AuthcodeController@orderTradeInfo')->middleware('json_api');
     }
 );
 #lendList (下發列表)
