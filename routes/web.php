@@ -145,20 +145,24 @@ Route::group(
 );
 #tradeQuery  (index)
 Route::group(
-    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'tradeLog'], 'as' => 'admin.'],
+    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin', 'as' => 'admin.'],
     function () {
-        Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
-        Route::get('logQuery/dataInit', 'AuthcodeController@dataInit')->name('authcode.dataInit');
-        Route::post('data', 'AuthcodeController@data')->name('authcode.data');
-        Route::get('logQuery/showInfo/{authcode}', 'AuthcodeController@showInfo')->name('authcode.showInfo');
-        Route::get('logQuery/showState/{authcode}', 'AuthcodeController@showState')->name('authcode.showState');
-        Route::post('logQuery/updateState', 'AuthcodeController@updateState')->name('authcode.stateUpdate');
-        Route::post('logQuery/feeData', 'AuthcodeController@feeData')->name('authcode.feeData');
-        Route::get('logQuery/showFeeInfo/{payment}', 'AuthcodeController@showFeeInfo')->name('authcode.showFeeInfo');
-        Route::get('logQuery/editFeeInfo/{payment}', 'AuthcodeController@editFeeInfo')->name('authcode.editFeeInfo');
-        Route::post('logQuery/updateFeeInfo', 'AuthcodeController@updateFeeInfo')->name('authcode.updateFeeInfo');
-        Route::post('logQuery/callNotify', 'AuthcodeController@callNotify')->name('authcode.callNotify');
-        // @todo branch funny#36
+        Route::group(['middleware' => 'tradeLog'], function () {
+            Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
+            Route::get('logQuery/dataInit', 'AuthcodeController@dataInit')->name('authcode.dataInit');
+            Route::post('data', 'AuthcodeController@data')->name('authcode.data');
+            Route::get('logQuery/showInfo/{authcode}', 'AuthcodeController@showInfo')->name('authcode.showInfo');
+            Route::get('logQuery/showState/{authcode}', 'AuthcodeController@showState')->name('authcode.showState');
+            Route::post('logQuery/updateState', 'AuthcodeController@updateState')->name('authcode.stateUpdate');
+            Route::post('logQuery/feeData', 'AuthcodeController@feeData')->name('authcode.feeData');
+            Route::get('logQuery/showFeeInfo/{payment}', 'AuthcodeController@showFeeInfo')
+                ->name('authcode.showFeeInfo');
+            Route::get('logQuery/editFeeInfo/{payment}', 'AuthcodeController@editFeeInfo')
+                ->name('authcode.editFeeInfo');
+            Route::post('logQuery/updateFeeInfo', 'AuthcodeController@updateFeeInfo')
+                ->name('authcode.updateFeeInfo');
+            Route::post('logQuery/callNotify', 'AuthcodeController@callNotify')->name('authcode.callNotify');
+        });
         Route::post('orderTradeInfo', 'AuthcodeController@orderTradeInfo')->middleware('json_api');
     }
 );

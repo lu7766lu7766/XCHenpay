@@ -23,8 +23,7 @@ class tradeLogPermission
             'feeData',
             'showFeeInfo',
             'callNotify',
-            'showInfo',
-            'orderTradeInfo'
+            'showInfo'
         ];
         $protectOthers = [
         ];

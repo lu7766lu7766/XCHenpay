@@ -57,7 +57,7 @@ class AuthcodeController extends Controller
             $company = $request->get('company', $company);
         }
         /** @var Collection $authCode */
-        [$authCode, $totalRecords, $fee, $amount] = $authCodes->companyDataWithReport(
+        $authCode = $authCodes->companyDataWithReport(
             $company,
             $request->get('start'),
             $request->get('end'),
@@ -72,10 +72,7 @@ class AuthcodeController extends Controller
         $can_edit = $user->hasAccess('logQuery') || ($user->hasAccess('logQuery.showState') &&
                 $user->hasAccess('logQuery.updateState'));
         $result = [
-            'data'     => $authCode->all(),
-            'total'    => $totalRecords,
-            'fee'      => $fee,
-            'amount'   => $amount,
+            'data'     => $authCode,
             'can_edit' => $can_edit
         ];
 

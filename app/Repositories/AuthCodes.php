@@ -52,7 +52,7 @@ class AuthCodes
      * @param int|null $paymentType
      * @param string $sort 排序欄位
      * @param string $direction 排序規格
-     * @return array array of the key => [orders , count].
+     * @return Collection|Authcode[]
      */
     public function companyDataWithReport(
         int $company,
@@ -82,15 +82,12 @@ class AuthCodes
             $query->where('payment_type', $paymentType);
         }
         $query->whereBetween('created_at', [$startDate, $endDate]);
-        $count = $query->count();
-        $fee = $query->sum('fee');
-        $amount = $query->sum('amount');
         $orders = $query->with(['i6payment', 'company', 'currency'])
             ->orderBy($sort, $direction)
             ->forPage($page, $perpage)
             ->get($this->getCol);
 
-        return [$orders, $count, $fee, $amount];
+        return $orders;
     }
 
     public function makeSimpleDatatable($authCodes, $totalRecords)
