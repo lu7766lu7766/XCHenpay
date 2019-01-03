@@ -25,17 +25,19 @@ export default {
             column: '',
             direction: 'desc'
         },
-        confirmDeleteConf: {
-            title: '删除用户',
-            text: "你确定要删除这个用户吗？ 这个操作是不可逆转的。",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'm-l-10',
-            confirmButtonColor: '#3eb7ba',
-            cancelButtonColor: '#6c757d',
-            cancelButtonText: '取消',
-            confirmButtonText: '删除'
+        config: {
+            delete: {
+                title: '删除用户',
+                text: "你确定要删除这个用户吗？ 这个操作是不可逆转的。",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonClass: 'btn btn-success',
+                cancelButtonClass: 'm-l-10',
+                confirmButtonColor: '#3eb7ba',
+                cancelButtonColor: '#6c757d',
+                cancelButtonText: '取消',
+                confirmButtonText: '删除'
+            }
         }
     }),
     methods: {

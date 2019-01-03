@@ -138,7 +138,7 @@
                 this.datas = res.data
             },
             confirmDelete(id) {
-                swal(this.confirmDeleteConf).then(() => {
+                swal(this.config.delete).then(() => {
                     this.doDelete(id)
                 }).catch(err => {
                 })

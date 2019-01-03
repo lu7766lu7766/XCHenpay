@@ -12,4 +12,15 @@ class UserStatusConstants
 {
     const ON = 'on';
     const OFF = 'off';
+
+    /**
+     * @return array
+     */
+    public static function enum()
+    {
+        return [
+            self::ON,
+            self::OFF
+        ];
+    }
 }

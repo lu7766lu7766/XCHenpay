@@ -244,6 +244,38 @@ export default {
             method: 'delete'
         }
     },
+    /** 帳號管理 */
+    accountManage: {
+        dataInit: {
+            uri: '/admin/systemSetting/getRolesList',
+            method: 'get'
+        },
+        list: {
+            uri: '/admin/systemSetting/userList',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/systemSetting/userTotal',
+            method: 'post'
+        },
+        detail: {
+            uri: '/admin/systemSetting/userDetail',
+            method: 'post'
+        },
+        create: {
+            uri: '/admin/systemSetting/userAdd',
+            method: 'post'
+        },
+        update: {
+            uri: '/admin/systemSetting/userUpdate',
+            method: 'post'
+        },
+        delete:
+        {
+            uri: '/admin/systemSetting/userDel',
+            method: 'post'
+        }
+    },
     /** 補單管理 */
     replenishment: {
         list: {

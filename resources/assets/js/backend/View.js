@@ -17,6 +17,7 @@ if ($app) {
             ReportSearch: () => import('./pages/Report/Search'),
             CompanyManage: () => import('./pages/CompanyManage'),
             WhiteList: () => import('./pages/WhiteList'),
+            AccountManage: () => import('./pages/AccountManage'),
             Replenishment: () => import('./pages/Replenishment')
             // ActivityLog: resolve => {
             //     require(['./pages/ActivityLog'], resolve)
