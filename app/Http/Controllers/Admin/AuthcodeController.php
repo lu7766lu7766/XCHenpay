@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthCodeOrderNotifyRequest;
 use App\Http\Requests\AuthCodeOrderSearchRequest;
 use App\Models\Authcode;
 use App\Models\Payment;
 use App\Models\PaymentFees;
 use App\Repositories\AuthCodes;
+use App\Service\OrderService;
 use App\Repositories\UserRepo;
 use App\Service\AuthCodeService;
 use App\User;
@@ -211,34 +213,13 @@ class AuthcodeController extends Controller
         $paymentFee->save();
     }
 
-    public function callNotify()
+    /**
+     * @param AuthCodeOrderNotifyRequest $request
+     * @return array
+     */
+    public function callNotify(AuthCodeOrderNotifyRequest $request)
     {
-        $user = Sentinel::getUser();
-        if (!$user->hasAccess('users.dataSwitch') && $user->tradeLogs()->where('id', '=',
-                request()->id)->first() == null) {
-            $this->errorLog($user->email . '手动回调一笔不属于齐权限的订单: ' . request()->id);
-
-            return $this->errorResponse('请求发生错误，请联络客服人员');
-        }
-        if (env('APP_inLocal')) {
-            $notifyUrl = 'http://ThirdPPAPI.test/api/v1.0/notifyAgain';
-        } else {
-            $notifyUrl = 'http://' . request()->getHost() . '/ThirdPartyPayAPI/public/api/v1.0/notifyAgain';
-        }
-        $notify = new Curl();
-        $notify->get($notifyUrl . '/' . request()->id);
-        $response = $notify->response;
-        if ($notify->error) {
-            return $this->errorResponse('与服务器沟通错误，请联络客服人员');
-        }
-        if ($response != 'success') {
-            return $this->errorResponse('回调失败，请联络客服人员');
-        }
-
-        //success
-        return Response::json([
-            'Result' => 'OK'
-        ]);
+        return ['data' => OrderService::getInstance()->callNotify($request)];
     }
 
     public function showState(Authcode $authcode)

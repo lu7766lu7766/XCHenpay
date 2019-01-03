@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Authcode
  * @package App\Models
+ * @property int pay_state
  * @property string trade_seq
  * @property string trade_type
  * @property TradeType tradeType

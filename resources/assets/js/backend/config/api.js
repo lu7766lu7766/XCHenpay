@@ -1,4 +1,8 @@
 export default {
+    userInfo: {
+        uri: '/admin/user/info',
+        method: 'get'
+    },
     /** 帳戶歷程 */
     activityLog: {
         list: {
@@ -31,6 +35,10 @@ export default {
             },
             update: {
                 uri: '/admin/logQuery/updateState',
+                method: 'post'
+            },
+            notify: {
+                uri: '/admin/logQuery/callNotify',
                 method: 'post'
             }
         },

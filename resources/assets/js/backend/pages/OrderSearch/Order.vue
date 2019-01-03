@@ -153,6 +153,11 @@
                                 <a @click="showState(data.id)" v-if="$parent.canEditOrder">
                                     <i class="mdi mdi-pencil-box-outline"></i>
                                 </a>
+                                <a class="back"
+                                   v-if="needNotify(data.pay_state) && hasPermission(Permission.OrderNotify)"
+                                   @click="confirmNotify(data.id)" >
+                                    <i class="far fa-caret-square-down text-orange"></i>
+                                </a>
                             </td>
                         </tr>
                         </tbody>
@@ -230,6 +235,31 @@
                 fee: 0,
                 successful_deal: 0,
                 failure_deal: 0
+            },
+            config: {
+                notify: {
+                    title: '是否确认回调',
+                    text: '',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn btn-success',
+                    cancelButtonClass: 'm-l-10',
+                    confirmButtonColor: '#3eb7ba',
+                    cancelButtonColor: '#6c757d',
+                    cancelButtonText: '取消',
+                    confirmButtonText: '确认'
+                },
+                success: {
+                    title: '已回调',
+                    text: '',
+                    type: 'success',
+                },
+                fail: {
+                    title: '回调失败',
+                    text: '',
+                    type: 'error',
+                },
+                notifyState: [2, 3]
             }
         }),
         watch: {
@@ -254,6 +284,16 @@
             },
             showState(id) {
                 this.$root.$emit('orderState.show', id)
+            },
+            confirmNotify(id) {
+                swal(this.config.notify).then(() => {
+                    this.proccessAjax('notify', {id}, res => {
+                        swal(res.data ? this.config.success : this.config.fail)
+                    })
+                }).catch(_ => {})
+            },
+            needNotify(state) {
+                return this.config.notifyState.indexOf(state) > -1
             }
         },
         computed: {

@@ -3,9 +3,12 @@ import './init'
 import './outer' // 外部前端(不在vue component範疇中)
 
 var $app = document.querySelector('#app')
+import UserMixins from 'mixins/user'
+
 if ($app) {
     new Vue({
         el: '#app',
+        mixins: [UserMixins],
         components: {
             ActivityLog: () => import('./pages/ActivityLog'),
             OrderSearch: () => import('./pages/OrderSearch'),

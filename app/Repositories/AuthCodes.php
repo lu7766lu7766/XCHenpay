@@ -222,6 +222,15 @@ class AuthCodes
     }
 
     /**
+     * @param int $id
+     * @return Authcode|null
+     */
+    public function find(int $id)
+    {
+        return Authcode::find($id);
+    }
+
+    /**
      * 訂單交易資訊
      * @param int $company
      * @param string $startDate

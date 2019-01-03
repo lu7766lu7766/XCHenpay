@@ -167,10 +167,11 @@ Route::group(
                 ->name('authcode.editFeeInfo');
             Route::post('logQuery/updateFeeInfo', 'AuthcodeController@updateFeeInfo')
                 ->name('authcode.updateFeeInfo');
-            Route::post('logQuery/callNotify', 'AuthcodeController@callNotify')->name('authcode.callNotify');
         });
         Route::get('logQuery/dataInit', 'AuthcodeController@dataInit')->name('authcode.dataInit');
         Route::post('orderTradeInfo', 'AuthcodeController@orderTradeInfo')->middleware('json_api');
+        Route::post('logQuery/callNotify', 'AuthcodeController@callNotify')->name('authcode.callNotify')
+            ->middleware(['json_api', 'has:authority,CallNotifyPolicy']);
     }
 );
 #lendList (下發列表)
@@ -275,6 +276,10 @@ Route::group([
             Route::delete('/', 'WhitelistController@delete')->name('delete');
         });
     });
+});
+#user info
+Route::group(['prefix' => 'admin/user', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
+    Route::get('info', 'UserController@info')->middleware('json_api')->name('info');
 });
 #fill order
 Route::group(

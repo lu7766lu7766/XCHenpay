@@ -1,7 +1,8 @@
 import ReqMixins from 'mixins/request'
+import PermissionMixins from 'mixins/permission'
 
 export default {
-    mixins: [ReqMixins],
+    mixins: [ReqMixins, PermissionMixins],
     data: () => ({
         data: {}
     }),

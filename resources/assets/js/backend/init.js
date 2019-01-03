@@ -3,20 +3,31 @@ window.Vue = require('vue')
 window.moment = require('moment')
 window.axios = require('axios')
 
+// permission constant global
+import Permission from 'config/permission'
+window.Permission = Permission
+Vue.prototype.Permission = Permission
 
-// 匯入 Report.vue 檔，不需加副檔名
+// number format
 import numFormat from 'vue-filter-number-format'
-
-Vue.config.productionTip = false
 Vue.filter('numFormat', numFormat)
+
+// vue init
+Vue.config.productionTip = false
+
+// lodash instance
 Vue.prototype._ = _
+
+// moment instance
 Vue.prototype.moment = moment
 
+// vue ajax loading
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 
 Vue.use(Loading)
 
+// call api setting
 import apiConfs from 'config/api'
 
 var $csrf = document.head.querySelector('meta[name="csrf-token"]')
