@@ -14,7 +14,7 @@ class SystemSettingController extends BaseController
 {
     /**
      * 帳號管理view
-     * @return view
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index()
     {
