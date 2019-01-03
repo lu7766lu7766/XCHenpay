@@ -10,7 +10,8 @@
                         <div class="search-select">
                             <select class="form-control" v-model="searchData.company_service_id">
                                 <option value="">请选择商户</option>
-                                <option v-for="company in options.companies" :key="company.id" :value="company.id">
+                                <option v-for="company in options.companies" :key="company.id"
+                                        :value="company.company_service_id">
                                     {{ company.company_name }}
                                 </option>
                             </select>
