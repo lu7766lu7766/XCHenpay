@@ -64,7 +64,6 @@ class Kernel extends HttpKernel
         'admin'          => \App\Http\Middleware\SentinelAdmin::class,
         'users'          => \App\Http\Middleware\usersPermission::class,
         'lendList'       => \App\Http\Middleware\LendListPermission::class,
-        'lendManage'     => \App\Http\Middleware\lendManagePermission::class,
         'account'        => \App\Http\Middleware\accountPermission::class,
         'tradeLog'       => \App\Http\Middleware\tradeLogPermission::class,
         'search'         => \App\Http\Middleware\SearchPermission::class,

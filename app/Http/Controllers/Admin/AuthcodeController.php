@@ -8,6 +8,7 @@ use App\Models\Authcode;
 use App\Models\Payment;
 use App\Models\PaymentFees;
 use App\Repositories\AuthCodes;
+use App\Repositories\UserRepo;
 use App\Service\AuthCodeService;
 use App\User;
 use Curl\Curl;
@@ -30,7 +31,7 @@ class AuthcodeController extends Controller
         $user = Sentinel::getUser();
         $switchPromission = $user->hasAccess('users.dataSwitch');
         if ($switchPromission) {
-            $companies = User::All()->where('company_service_id', '<>', null);
+            $companies = app(UserRepo::class)->getCompanies();
         }
 
         return [

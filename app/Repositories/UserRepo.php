@@ -180,6 +180,17 @@ class UserRepo
     }
 
     /**
+     * 取得商戶
+     * @return Collection|User[]
+     */
+    public function getCompanies()
+    {
+        return User::query()->whereHas('roles', function (Builder $builder) {
+            $builder->where('slug', RolesConstants::USER);
+        })->get();
+    }
+
+    /**
      * @param int $page
      * @param int $perpage
      * @param string|null $status

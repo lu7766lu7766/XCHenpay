@@ -11,4 +11,5 @@ namespace App\Constants;
 class PermissionSubjectConstants
 {
     const FILL_ORDER = 'fill_order';
+    const LEND_MANAGE = 'lendManage';
 }

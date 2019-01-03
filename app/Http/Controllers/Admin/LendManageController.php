@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Repositories\UserRepo;
 use App\Service\LendManageService;
 use App\User;
+use Illuminate\View\View;
 
 class LendManageController extends BaseController
 {
@@ -21,7 +23,7 @@ class LendManageController extends BaseController
     public function dataInit()
     {
         return [
-            'companies'  => User::all()->where('company_service_id', '<>', null),
+            'companies'  => app(UserRepo::class)->getCompanies(),
             'lendStatus' => [
                 '0' => '下发中',
                 '1' => '完成下发',
