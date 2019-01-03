@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Constants\TradeTypesConstants;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models
  * @property string trade_seq
  * @property string trade_type
+ * @property TradeType tradeType
+ * @property string pay_end_time
  */
 class Authcode extends Model
 {
@@ -66,5 +69,17 @@ class Authcode extends Model
     public function tradeType()
     {
         return $this->belongsTo(TradeType::class, 'trade_type', 'id');
+    }
+
+    /**
+     * @return $this
+     */
+    public function fillCopyTime()
+    {
+        if ($this->tradeType->name == TradeTypesConstants::FILL_ORDER) {
+            $this->setCreatedAt($this->pay_end_time);
+        }
+
+        return $this;
     }
 }

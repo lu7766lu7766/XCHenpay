@@ -84,7 +84,7 @@ class FillOrderRepo
                 })->find($id);
             }
             if (!is_null($result)) {
-                $result->fill($data)->save();
+                $result->fill($data)->fillCopyTime()->save();
                 $this->generateTradeSeq($result, $key);
             }
         } catch (\Throwable $e) {
@@ -198,7 +198,7 @@ class FillOrderRepo
                     $builder->where('trade_seq', $keyword)->orWhere('trade_service_id', $keyword);
                 });
             }
-            $result = $builder->whereBetween('pay_end_time', [$start, $end])
+            $result = $builder->whereBetween('created_at', [$start, $end])
                 ->forPage($page, $perpage)
                 ->get();
         } catch (\Throwable $e) {
@@ -249,7 +249,7 @@ class FillOrderRepo
                     $builder->where('trade_seq', $keyword)->orWhere('trade_service_id', $keyword);
                 });
             }
-            $result = $builder->whereBetween('pay_end_time', [$start, $end])
+            $result = $builder->whereBetween('created_at', [$start, $end])
                 ->count();
         } catch (\Throwable $e) {
             $result = 0;

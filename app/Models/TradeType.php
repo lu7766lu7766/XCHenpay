@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string name
+ */
 class TradeType extends Model
 {
     protected $table = 'trade_types';
