@@ -214,11 +214,7 @@ class AuthCodes
         return Authcode::query()
             ->select(\DB::raw('IFNULL(SUM(amount),0 )as totalMoney'), \DB::raw('IFNULL(SUM(fee),0) as totalFee'))
             ->whereIn('company_service_id', $companyServiceId)
-            ->whereIn('pay_state', [
-                OrderStatusConstants::ALL_DONE_CODE,
-                OrderStatusConstants::ACCEPT_CODE,
-                OrderStatusConstants::DENY_CODE
-            ])->first();
+            ->where('pay_state', OrderStatusConstants::ALL_DONE_CODE)->first();
     }
 
     /**
