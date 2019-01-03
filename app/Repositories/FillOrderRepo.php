@@ -199,6 +199,7 @@ class FillOrderRepo
                 });
             }
             $result = $builder->whereBetween('created_at', [$start, $end])
+                ->orderBy('created_at', 'desc')
                 ->forPage($page, $perpage)
                 ->get();
         } catch (\Throwable $e) {
