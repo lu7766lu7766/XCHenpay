@@ -1,9 +1,9 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: ed
- * Date: 2018/12/28
- * Time: 上午 11:11
+ * User: derek
+ * Date: 2018/12/24
+ * Time: 下午 01:32
  */
 
 namespace App\Repositories;
@@ -14,6 +14,15 @@ use Illuminate\Support\Collection;
 
 class RoleRepo
 {
+    /**
+     * @param array $slug
+     * @return EloquentRole[]|Collection
+     */
+    public function findBySlug(array $slug)
+    {
+        return EloquentRole::query()->whereIn('slug', $slug)->get();
+    }
+
     /**
      * 取得所有角色清單(排除商戶角色)
      * @return EloquentRole[]|Collection

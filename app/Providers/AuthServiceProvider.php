@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Policies\CallNotifyPolicy;
 use App\Policies\FillOrderPolicy;
 use App\Policies\LendManagePolicy;
+use App\Policies\MerchantsPolicy;
+use App\Policies\TrashedMerchantsPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,10 +17,12 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model'            => 'App\Policies\ModelPolicy',
-        'LendManagePolicy'     => LendManagePolicy::class,
-        FillOrderPolicy::class => FillOrderPolicy::class,
-        'CallNotifyPolicy'     => CallNotifyPolicy::class
+        'App\Model'              => 'App\Policies\ModelPolicy',
+        'LendManagePolicy'       => LendManagePolicy::class,
+        FillOrderPolicy::class   => FillOrderPolicy::class,
+        'MerchantsPolicy'        => MerchantsPolicy::class,
+        'TrashedMerchantsPolicy' => TrashedMerchantsPolicy::class,
+        'CallNotifyPolicy'       => CallNotifyPolicy::class
     ];
 
     /**

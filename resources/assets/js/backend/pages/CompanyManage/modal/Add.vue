@@ -51,17 +51,6 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 control-label required">权限 <b>*</b></label>
-                            <div class="col-md-9">
-                                <select class="form-control" v-model="data.role_id">
-                                    <option value="">请选择</option>
-                                    <option v-for="role in $parent.options.roleList" :key="role.id" :value="role.id">
-                                        {{ role.name }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-md-3 control-label required">密码<b>*</b></label>
                             <div class="col-md-9">
                                 <input type="password" class="form-control" v-model="data.password">
@@ -70,7 +59,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 control-label required">确认密码<b>*</b></label>
                             <div class="col-md-9">
-                                <input type="password" class="form-control" v-model="data.password_confirm">
+                                <input type="password" class="form-control" v-model="data.password_confirmation">
                             </div>
                         </div>
                     </form>
@@ -87,10 +76,60 @@
 
 <script>
     import DetailMixins from 'mixins/detail'
-    import ThisMixins from './mixins'
 
     export default {
-        mixins: [DetailMixins, ThisMixins],
+        mixins: [DetailMixins],
+        rules: {
+            'data.password': {
+                min: {
+                    value: 4,
+                    message: '密码 长度须大于4'
+                },
+                max: {
+                    value: 6,
+                    message: '密码 长度须小于6'
+                }
+            },
+            'data.password_confirmation': {
+                equal: {
+                    value: 'data.password',
+                    message: '确认密码 内容与密码不符合'
+                }
+            },
+            'data.company_name': {
+                require: {
+                    message: '商户名称 不得为空白'
+                }
+            },
+            'data.mobile': {
+                require: {
+                    message: '联络电话 不得为空白'
+                }
+            },
+            'data.email': {
+                require: {
+                    message: '电子邮箱 不得为空白'
+                },
+                email: {
+                    message: '电子邮箱 不符合规定'
+                }
+            },
+            'data.status': {
+                require: {
+                    message: '状态 不得为空白'
+                }
+            },
+            'data.apply_status': {
+                require: {
+                    message: '下发状态 不得为空白'
+                }
+            },
+            'data.QQ_id': {
+                require: {
+                    message: 'QQ号 不得为空白'
+                }
+            }
+        },
         methods: {
             create() {
                 try {
@@ -107,23 +146,17 @@
         },
         mounted() {
             this.$root.$on('companyManageAdd.show', () => {
-                this.data = {
-                    role_id: ''
-                }
+                this.data = {}
                 $(this.$refs.modal).modal('show')
-                _.assign(this.$options.rules, {
+                this.conbineRules({
                     'data.password': {
                         require: {
                             message: '密码 不得为空白'
                         }
                     },
-                    'data.password_confirm': {
+                    'data.password_confirmation': {
                         require: {
                             message: '确认密码 不得为空白'
-                        },
-                        equal: {
-                            value: 'data.password',
-                            message: '确认密码 内容与密码不符合'
                         }
                     }
                 })

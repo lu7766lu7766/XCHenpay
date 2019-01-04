@@ -8,71 +8,29 @@
 
 namespace App\Repositories;
 
+use Activation;
 use App\Constants\Roles\RolesConstants;
 use App\User;
-use Cartalyst\Sentinel\Laravel\Facades\Activation;
-use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
-use XC\Independent\Kit\Support\Scalar\ArrayMaster;
+use Sentinel;
 
 class UserRepo
 {
     /**
      * 角色
      * @param string $role
-     * @param string $status
-     * @param array $userId
-     * @return User[]|Collection
+     * @param int $userId
+     * @return User|null
      */
-    public function findRole(string $role, string $status, array $userId = [])
+    public function findRole(string $role, int $userId)
     {
-        $query = User::query()
-            ->select('id', 'company_service_id', 'company_name', 'status', 'apply_status')->where('status', $status);
-        if (ArrayMaster::isList($userId)) {
-            $query->whereIn('id', $userId);
-        }
-        $query->whereHas('roles', function (Builder $query) use ($role) {
+        $query = User::query()->whereHas('roles', function (Builder $query) use ($role) {
             $query->where('slug', $role);
-        });
+        })->where('id', $userId);
 
-        return $query->get();
-    }
-
-    /**
-     * 取得商戶列表資訊
-     * @param int $page
-     * @param int $perpage
-     * @param null|string $status
-     * @param null|string $applyStatus
-     * @param null|string $keyword
-     * @return User[]
-     */
-    public function getUserData(
-        int $page = 1,
-        int $perpage = 10,
-        string $status = null,
-        string $applyStatus = null,
-        $keyword = null
-    ) {
-        $builder = $this->getUserDataQuery($status, $applyStatus, $keyword);
-
-        return $builder->forPage($page, $perpage)->get();
-    }
-
-    /**
-     * 取得商戶列表資料總筆數
-     * @param null|string $status
-     * @param null|string $applyStatus
-     * @param null|string $keyword
-     * @return int
-     */
-    public function getUserDataTotal(string $status = null, string $applyStatus = null, string $keyword = null)
-    {
-        $builder = $this->getUserDataQuery($status, $applyStatus, $keyword);
-
-        return $builder->count();
+        return $query->first();
     }
 
     /**
@@ -89,76 +47,141 @@ class UserRepo
                     'name',
                 ]);
             }
-        ])
-            ->where('id', $userId)
-            ->first();
+        ])->where('id', $userId)->first();
     }
 
     /**
      * 查詢已刪除帳號列表
      * @param int $page
      * @param int $perpage
-     * @return mixed
+     * @return User[]|Collection
      */
-    public function getTrashedUserData(int $page = 1, int $perpage = 10)
+    public function getTrashedMerchants($page = 1, $perpage = 10)
     {
-        return $this->getTrashedDataQuery()
+        return $this->getTrashedMerchantsQuery()
             ->forPage($page, $perpage)
             ->get();
     }
 
     /**
-     * 查詢已刪除帳號列表總筆數
-     * @return mixed
+     * 查詢已刪除商家帳號列表總筆數
+     * @return int
      */
-    public function getTrashedUserDataTotal()
+    public function getTrashedMerchantsTotal()
     {
-        return $this->getTrashedDataQuery()->count();
+        return $this->getTrashedMerchantsQuery()->count();
     }
 
     /**
-     * 取得已刪除帳號列表語法
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     * 查詢已刪除商家 Builder
+     * @return Builder
      */
-    private function getTrashedDataQuery()
+    private function getTrashedMerchantsQuery()
     {
-        return User::onlyTrashed()
-            ->select(
-                'id',
-                'company_name',
-                'email',
-                'deleted_at'
-            );
+        return User::query()->whereHas('roles', function (Builder $query) {
+            $query->where('roles.slug', RolesConstants::USER);
+        })->onlyTrashed();
     }
 
     /**
-     * 取得商路列表資訊查詢語法
-     * @param null|string $status
-     * @param null|string $applyStatus
-     * @param null|string $keyword
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder
+     * @param int $page
+     * @param int $perpage
+     * @param string|null $status 啟用狀態
+     * @param string|null $applyStatus
+     * @param string|null $keyWord
+     * @return User[]|Collection
+     * @see UserStatusConstants $status 啟用狀態定義 請看 UserStatusConstants
      */
-    private function getUserDataQuery(string $status = null, string $applyStatus = null, string $keyword = null)
-    {
-        $builder = User::query();
-        if (!is_null($status)) {
-            $builder->where('status', $status);
-        }
-        if (!is_null($applyStatus)) {
-            $builder->where('apply_status', $applyStatus);
-        }
-        if (!is_null($keyword)) {
-            $builder->where('company_name', $keyword);
-        }
+    public function findMerchantsList(
+        int $page = 1,
+        int $perpage = 10,
+        string $status = null,
+        string $applyStatus = null,
+        string $keyWord = null
+    ) {
+        return $this->getMerchantsListQuery($status, $applyStatus, $keyWord)
+            ->orderBy('id', 'DESC')
+            ->forPage($page, $perpage)
+            ->get();
+    }
 
-        return $builder->select(
+    /**
+     * @param string|null $status
+     * @param string|null $applyStatus
+     * @param string|null $keyWord
+     * @return Builder
+     */
+    private function getMerchantsListQuery(
+        string $status = null,
+        string $applyStatus = null,
+        string $keyWord = null
+    ) {
+        $query = User::query()->select(
             'id',
             'email',
             'QQ_id',
             'company_name',
             'status',
             'apply_status'
-        );
+        )->whereHas('roles', function (Builder $query) {
+            $query->where('roles.slug', RolesConstants::USER);
+        });
+        if (!is_null($status)) {
+            $query->where('status', $status);
+        }
+        if (!is_null($applyStatus)) {
+            $query->where('apply_status', $applyStatus);
+        }
+        if (!is_null($keyWord)) {
+            $query->where('company_name', $keyWord);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param string|null $status
+     * @param string|null $applyStatus
+     * @param string|null $keyWord
+     * @return int
+     */
+    public function merchantsTotal(
+        string $status = null,
+        string $applyStatus = null,
+        string $keyWord = null
+    ) {
+        return $this->getMerchantsListQuery($status, $applyStatus, $keyWord)->count();
+    }
+
+    /**
+     * @param int $id
+     * @return User|null
+     */
+    public function findTrashed(int $id)
+    {
+        return User::withTrashed()->find($id);
+    }
+
+    /**
+     * @param User $user
+     * @param array $data
+     * @return bool
+     */
+    public function update(User $user, array $data)
+    {
+        return $user->update($data);
+    }
+
+    /**
+     * @param User $user
+     * @return bool|null
+     * @throws \Exception
+     */
+    public function delete(User $user)
+    {
+        $user->activations()->delete();
+
+        return $user->delete();
     }
 
     /**
@@ -177,6 +200,22 @@ class UserRepo
     public function total()
     {
         return User::count();
+    }
+
+    /**
+     * @param int $id
+     * @return User|null
+     */
+    public function restore(int $id)
+    {
+        $user = $this->findTrashed($id);
+        if (!is_null($user)) {
+            $user->restore();
+            $activation = Activation::create($user);
+            Activation::complete($user, $activation->getCode());
+        }
+
+        return $user;
     }
 
     /**

@@ -109,7 +109,6 @@
         data: () => ({
             userInfo: {},
             options: {
-                roleList: [],
                 status: {
                     'on': '开启',
                     'off': '关闭'
@@ -127,9 +126,8 @@
         }),
         methods: {
             async dataInit() {
-                var {0: userRes, 1: roleRes} = await this.$callApi(`${this.apiKey}:dataInit`)
-                this.userInfo = userRes.data
-                this.options.roleList = roleRes.data
+                var res = await this.$callApi(`${this.apiKey}:dataInit`)
+                this.userInfo = res.data
             },
             onGetTotal(res) {
                 this.paginate.total = res.data.total

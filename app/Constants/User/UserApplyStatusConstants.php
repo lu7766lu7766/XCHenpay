@@ -6,7 +6,7 @@
  * Time: 下午 02:08
  */
 
-namespace App\Constants;
+namespace App\Constants\User;
 
 class UserApplyStatusConstants
 {

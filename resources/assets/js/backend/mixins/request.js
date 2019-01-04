@@ -92,6 +92,11 @@ export default {
                 })
             })
             if (message) throw message
+        },
+        conbineRules(rules) {
+            _.mergeWith(this.$options.rules, rules, (oValue, nValue) => {
+                return _.assign(oValue, nValue);
+            })
         }
     },
     computed: {

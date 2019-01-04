@@ -13,4 +13,7 @@ class PermissionSubjectConstants
     const FILL_ORDER = 'fill_order';
     const CALL_NOTIFY = 'logQuery.callNotify';
     const LEND_MANAGE = 'lendManage';
+    const MERCHANTS = 'merchants';
+    const TRASHED_MERCHANTS = 'trashed.merchants';
+    const MERCHANTS_VIEW = 'merchants.view';
 }

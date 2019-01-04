@@ -1,22 +1,24 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: derek
- * Date: 2018/11/20
- * Time: 下午 04:29
+ * User: ed
+ * Date: 2018/11/22
+ * Time: 下午 02:08
  */
 
 namespace App\Constants\User;
 
 class UserStatusConstants
 {
+    //啟用
     const ON = 'on';
+    //停用
     const OFF = 'off';
 
     /**
      * @return array
      */
-    public static function enum()
+    public static function enum(): array
     {
         return [
             self::ON,

@@ -189,47 +189,47 @@ export default {
     /** 商戶管理 */
     companyManage: {
         dataInit: {
-            uri: ['/admin/users/getThisUser', '/admin/users/getRolesList'],
+            uri: '/admin/users/getThisUser',
             method: 'get'
         },
         list: {
-            uri: '/admin/users/data',
+            uri: '/admin/merchants',
             method: 'post'
         },
         total: {
-            uri: '/admin/users/dataTotal',
+            uri: '/admin/merchants/total',
             method: 'post'
         },
         create: {
-            uri: '/admin/users/dataAdd',
+            uri: '/admin/merchants/maintain',
             method: 'post'
         },
         info: {
-            uri: '/admin/users/dataDetail',
-            method: 'post'
+            uri: '/admin/merchants/maintain/{id}',
+            method: 'get'
         },
         update: {
-            uri: '/admin/users/dataUpdate',
-            method: 'post'
+            uri: '/admin/merchants/maintain',
+            method: 'put'
         },
         delete: {
-            uri: '/admin/users/dataDel',
-            method: 'post'
+            uri: '/admin/merchants/maintain',
+            method: 'delete'
         },
         updateStatus: {
-            uri: '/admin/users/applyStatusUpdate',
-            method: 'post'
+            uri: '/admin/merchants/maintain/applyStatus',
+            method: 'put'
         },
         trashedList: {
-            uri: '/admin/users/dataTrashed',
+            uri: '/admin/trashedMerchants',
             method: 'post'
         },
         trashedTotal: {
-            uri: '/admin/users/dataTrashedTotal',
+            uri: '/admin/trashedMerchants/total',
             method: 'post'
         },
         restore: {
-            uri: '/admin/users/dataRestore',
+            uri: '/admin/trashedMerchants/restore',
             method: 'post'
         }
     },

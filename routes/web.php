@@ -64,49 +64,7 @@ Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'users'], 'as' => 'admin.'],
     function () {
         Route::group(['prefix' => 'users'], function () {
-            Route::get('/', 'UsersController@index')
-                ->name('users.index');
             Route::group(['middleware' => 'json_api'], function () {
-                // @todo branch ed#14,請實作view, 新增商戶資料.
-                // post filed 請參照 App\Http\Requests\UsersDataAddRequest::rules().
-                Route::post('dataAdd', 'UsersController@dataAdd')
-                    ->name('users.dataAdd');
-                // @todo branch ed#14,請實作view, api 是下列uri中有data字段的route,一個是資料一個是資料總筆數.
-                // post filed 請參照 App\Http\Requests\UsersDataRequest::rules().
-                Route::post('data', 'UsersController@data')
-                    ->name('users.data');
-                Route::post('dataTotal', 'UsersController@dataTotal')
-                    ->name('users.dataTotal');
-                // @todo branch ed#14,請實作view, 商戶資料明細.
-                // post filed 請參照 App\Http\Requests\UsersDataDetailRequest::rules().
-                Route::post('dataDetail', 'UsersController@dataDetail')
-                    ->name('users.dataDetail');
-                // @todo branch ed#14,請實作view, 更新商戶資料.
-                // post filed 請參照 App\Http\Requests\userDataUpdate::rules().
-                Route::post('dataUpdate', 'UsersController@dataUpdate')
-                    ->name('users.dataUpdate');
-                // @todo branch ed#14,請實作view, 刪除商戶資料.
-                // post filed 請參照 App\Http\Requests\UsersDataDelRequest::rules().
-                Route::post('dataDel', 'UsersController@dataDel')
-                    ->name('users.delete');
-                // @todo branch ed#14,請實作view, 更新商戶下發狀態.
-                // post filed 請參照 App\Http\Requests\applyStatusUpdate::rules().
-                Route::post('applyStatusUpdate', 'UsersController@applyStatusUpdate')
-                    ->name('users.applyStatusUpdate');
-                // @todo branch ed#14,請實作view, 已刪除帳號列表.
-                // post filed 請參照 App\Http\Requests\UsersDataTrashedRequest::rules().
-                Route::post('dataTrashed', 'UsersController@dataTrashed')
-                    ->name('users.dataTrashed');
-                // @todo branch ed#14,請實作view, 已刪除帳號列表總筆數.
-                Route::post('dataTrashedTotal', 'UsersController@dataTrashedTotal')
-                    ->name('users.dataTrashedTotal');
-                // @todo branch ed#14,請實作view, 還原已刪除帳號.
-                // post filed 請參照 App\Http\Requests\userDataRestore::rules().
-                Route::post('dataRestore', 'UsersController@dataRestore')
-                    ->name('users.restore');
-                // @todo branch ed#14,請實作view, 取得所有角色清單.
-                Route::get('getRolesList', 'UsersController@getRolesList')
-                    ->name('users.getRolesList');
                 Route::get('getThisUser', 'UsersController@getThisUser')
                     ->name('users.getThisUser');
             });
@@ -119,6 +77,42 @@ Route::group(
         Route::post('{id}/lockscreen', 'UsersController@postLockscreen')->name('post-lockscreen');
     }
 );
+#商戶管理
+Route::group(
+    [
+        'prefix'     => 'admin/merchants',
+        'namespace'  => 'Admin',
+        'middleware' => ['admin', 'has:view,MerchantsPolicy'],
+        'as'         => 'admin.merchants.'
+    ],
+    function () {
+        Route::get('/', 'MerchantsController@indexView')->name('view');
+        Route::group(['middleware' => 'json_api'], function () {
+            Route::post('/', 'MerchantsController@index')->name('index');
+            Route::post('/total', 'MerchantsController@total')->name('total');
+            Route::group(['prefix' => 'maintain'], function () {
+                Route::put('/applyStatus', 'MerchantsController@updateApplyStatus')->name('applyStatus');
+                Route::group(['middleware' => 'has:management,MerchantsPolicy'], function () {
+                    Route::get('{id}', 'MerchantsController@info')->name('info');
+                    Route::post('/', 'MerchantsController@create')->name('create');
+                    Route::put('/', 'MerchantsController@update')->name('update');
+                    Route::delete('/', 'MerchantsController@delete')->name('delete');
+                });
+            });
+        });
+    }
+);
+#刪除商戶列表
+Route::group([
+    'prefix'     => 'admin/trashedMerchants',
+    'namespace'  => 'Admin',
+    'as'         => 'trashed.merchants.',
+    'middleware' => ['admin', 'has:management,TrashedMerchantsPolicy', 'json_api']
+], function () {
+    Route::post('/', 'TrashedMerchantsController@index')->name('index');
+    Route::post('/total', 'TrashedMerchantsController@total')->name('total');
+    Route::post('/restore', 'TrashedMerchantsController@restore')->name('restore');
+});
 #Account
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'account'], 'as' => 'admin.'],
