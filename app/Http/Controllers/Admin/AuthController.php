@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Constants\User\UserStatusConstants;
 use App\Http\Controllers\JoshController;
 use App\Http\Requests\ConfirmPasswordRequest;
 use App\Http\Requests\ForgotRequest;
@@ -43,9 +44,10 @@ class AuthController extends JoshController
     {
         try {
             $userConfig = $request->only(['email', 'password']);
+            $userConfig['status'] = UserStatusConstants::ON;
             $isRememberMe = $request->get('remember-me', false);
             /** @var User|bool $user */
-            if (($user = Sentinel::authenticate($userConfig, $isRememberMe)) && $user->status == 'on') {
+            if (($user = Sentinel::authenticate($userConfig, $isRememberMe))) {
                 if ($this->isAllowIp($user, $request->getClientIp())) {
                     //Activity log
                     activity($user->email)

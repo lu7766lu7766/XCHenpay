@@ -62,6 +62,7 @@ class User extends EloquentUser
      */
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+    protected $loginNames = ['email', 'status'];
 
     public function fees()
     {
