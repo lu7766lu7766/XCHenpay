@@ -156,7 +156,6 @@ Route::group(
     function () {
         Route::group(['middleware' => 'tradeLog'], function () {
             Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
-            Route::post('data', 'AuthcodeController@data')->name('authcode.data');
             Route::get('logQuery/showInfo/{authcode}', 'AuthcodeController@showInfo')->name('authcode.showInfo');
             Route::get('logQuery/showState/{authcode}', 'AuthcodeController@showState')->name('authcode.showState');
             Route::post('logQuery/updateState', 'AuthcodeController@updateState')->name('authcode.stateUpdate');
@@ -168,6 +167,9 @@ Route::group(
             Route::post('logQuery/updateFeeInfo', 'AuthcodeController@updateFeeInfo')
                 ->name('authcode.updateFeeInfo');
         });
+        Route::post('data', 'AuthcodeController@data')->name('authcode.data');
+        //@todo funny#58
+        Route::post('dataTotal', 'AuthcodeController@dataTotal')->middleware('json_api');
         Route::get('logQuery/dataInit', 'AuthcodeController@dataInit')->name('authcode.dataInit');
         Route::post('orderTradeInfo', 'AuthcodeController@orderTradeInfo')->middleware('json_api');
         Route::post('logQuery/callNotify', 'AuthcodeController@callNotify')->name('authcode.callNotify')

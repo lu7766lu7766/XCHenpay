@@ -18,7 +18,6 @@ class tradeLogPermission
     {
         $openSource = [
             'index',
-            'data',
             'feeData',
             'showFeeInfo',
             'showInfo'

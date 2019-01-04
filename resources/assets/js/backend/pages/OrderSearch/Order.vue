@@ -268,16 +268,16 @@
             }
         },
         methods: {
-            getTotal() {
-            },
             onGetList(res) {
                 this.datas = res[0].data
-                this.paginate.total = res[0].total
 
                 this.count.successful_deal = res[1].data.successful_deal
                 this.count.failure_deal = res[1].data.failure_deal
                 this.count.amount = res[1].data.amount
                 this.count.fee = res[1].data.fee
+            },
+            onGetTotal(res) {
+                this.paginate.total = res.data
             },
             showInfo(id) {
                 this.$root.$emit('orderInfo.show', id)

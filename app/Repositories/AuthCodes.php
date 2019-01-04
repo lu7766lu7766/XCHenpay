@@ -9,10 +9,6 @@ use App\Models\LendRecord;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Sentinel;
-use Yajra\DataTables\CollectionDataTable;
-use Yajra\DataTables\DataTables;
-use function trans;
 
 class AuthCodes
 {
@@ -90,41 +86,41 @@ class AuthCodes
         return $orders;
     }
 
-    public function makeSimpleDatatable($authCodes, $totalRecords)
-    {
-        /** @var CollectionDataTable $orm */
-        $orm = DataTables::of($authCodes);
-        $result = $orm->addColumn('payment_name', function ($authCode) {
-            return $authCode->i6payment->name;
-        })
-            ->addColumn('currency_name', function ($authCode) {
-                return $authCode->currency->name;
-            })
-            ->addColumn('company_name', function ($authCode) {
-                return $authCode->company->company_name;
-            })
-            ->addColumn('actions', function ($authCode) {
-                $callBackLink = '<a href="javascript: void(0);" data-callUrl="' . $authCode->id . '" class="notifyBtn"><i class="livicon" data-name="rocket" data-size="18" data-loop="true" data-c="#e9573f" data-hc="#e9573f" title=' . trans('Trade/LogQuery/form.callBackTitle') . '></i></a>';
-                $infoLink = '<a href='
-                    . route('admin.authcode.showInfo', ['authcode' => $authCode->id])
-                    . ' data-toggle="modal" data-target="#show_Info">
-                    <i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title=' . trans('Trade/LogQuery/form.showModalTitle') . '></i></a>';
-                $editLink = '<a href=' . route('admin.authcode.showState',
-                        ['authcode' => $authCode->id]) . ' data-toggle="modal" data-target="#stateEditModal"><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#f56954" data-hc="#f56954" title="订单状态修改"></i></a>';
-                $action = $infoLink;
-                $user = Sentinel::getUser();
-                if ($user->hasAccess('logQuery')) {
-                    $action .= $editLink;
-                }
-                if ($authCode->pay_state == $this::SUCCESS_STATE) {
-                    $action .= $callBackLink;
-                }
-
-                return $action;
-            })
-            ->setTotalRecords($totalRecords)
-            ->rawColumns(['actions'])
-            ->make(true);
+    /**
+     * 商戶注單總數
+     * @param int $company
+     * @param string $startDate
+     * @param string $endDate
+     * @param int|null $payState
+     * @param string|null $keyword 關鍵字
+     * @param int|null $paymentType
+     * @return int
+     */
+    public function companyDataWithReportTotal(
+        int $company,
+        string $startDate,
+        string $endDate,
+        int $payState = null,
+        string $keyword = null,
+        int $paymentType = 0
+    ) {
+        $query = Authcode::query()->whereHas('company', function (Builder $builder) use ($company) {
+            $builder->where('id', $company);
+        });
+        if (!is_null($payState)) {
+            $query->where('pay_state', $payState);
+        }
+        if (!is_null($keyword)) {
+            $query->where(function (Builder $b) use ($keyword) {
+                $b->where('trade_seq', $keyword)
+                    ->orWhere('trade_service_id', $keyword);
+            });
+        }
+        if ($paymentType > 0) {
+            $query->where('payment_type', $paymentType);
+        }
+        $query->whereBetween('created_at', [$startDate, $endDate]);
+        $result = $query->count();
 
         return $result;
     }
@@ -242,7 +238,6 @@ class AuthCodes
             ->select(
                 \DB::raw('IFNULL(SUM(amount),0)as amount'),
                 \DB::raw('IFNULL(SUM(fee),0)as fee'),
-                \DB::raw('COUNT(*)as total'),
                 \DB::raw('IFNULL(SUM(IF(pay_state=' . self::ALL_DONE_STATE . ',amount,0)),0) as successful_deal'),
                 \DB::raw('IFNULL(SUM(IF(pay_state!=' . self::ALL_DONE_STATE . ',amount,0)),0) as failure_deal')
             )

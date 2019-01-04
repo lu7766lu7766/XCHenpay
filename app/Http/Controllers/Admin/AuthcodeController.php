@@ -9,11 +9,10 @@ use App\Models\Authcode;
 use App\Models\Payment;
 use App\Models\PaymentFees;
 use App\Repositories\AuthCodes;
-use App\Service\OrderService;
 use App\Repositories\UserRepo;
 use App\Service\AuthCodeService;
+use App\Service\OrderService;
 use App\User;
-use Curl\Curl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Response;
@@ -277,5 +276,15 @@ class AuthcodeController extends Controller
     public function orderTradeInfo(AuthCodeOrderSearchRequest $request)
     {
         return AuthCodeService::getInstance(Sentinel::getUser())->orderTradeInfo($request);
+    }
+
+    /**
+     * 商戶注單總數
+     * @param AuthCodeOrderSearchRequest $request
+     * @return int
+     */
+    public function dataTotal(AuthCodeOrderSearchRequest $request)
+    {
+        return AuthCodeService::getInstance(Sentinel::getUser())->total($request);
     }
 }

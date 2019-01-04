@@ -42,4 +42,26 @@ class AuthCodeService
 
         return app(AuthCodes::class)->orderTradeInfo($company, $request->get('start'), $request->get('end'));
     }
+
+    /**
+     * @param AuthCodeOrderSearchRequest $request
+     * @return int
+     */
+    public function total(AuthCodeOrderSearchRequest $request)
+    {
+        $company = $this->user->getKey();
+        // 如果有擁有可選擇商戶的權限
+        if ($this->user->hasAccess('users.dataSwitch')) {
+            $company = $request->get('company', $company);
+        }
+
+        return app(AuthCodes::class)->companyDataWithReportTotal(
+            $company,
+            $request->get('start'),
+            $request->get('end'),
+            $request->get('pay_state'),
+            $request->get('keyword'),
+            $request->get('payment_type', 0)
+        );
+    }
 }

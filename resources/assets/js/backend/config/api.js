@@ -25,6 +25,10 @@ export default {
                 uri: ['/admin/data', '/admin/orderTradeInfo'],
                 method: 'post'
             },
+            total: {
+                uri: '/admin/dataTotal',
+                method: 'post'
+            },
             info: {
                 uri: '/admin/logQuery/showInfo/{authcode}',
                 method: 'get'
