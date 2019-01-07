@@ -117,7 +117,6 @@ Route::group([
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'account'], 'as' => 'admin.'],
     function () {
-        // @todo branch funny#11+12 請實作view, api
         Route::group(['prefix' => 'account'], function () {
             //view
             Route::get('/', 'AccountController@index')->name('account.index');
@@ -162,9 +161,10 @@ Route::group(
                 ->name('authcode.updateFeeInfo');
         });
         Route::post('data', 'AuthcodeController@data')->name('authcode.data');
-        //@todo funny#58
         Route::post('dataTotal', 'AuthcodeController@dataTotal')->middleware('json_api');
         Route::get('logQuery/dataInit', 'AuthcodeController@dataInit')->name('authcode.dataInit');
+        //@todo funny#61 增加 pay_state ,payment_type 兩個請求參數
+        /**@see AuthCodeOrderSearchRequest::rules() */
         Route::post('orderTradeInfo', 'AuthcodeController@orderTradeInfo')->middleware('json_api');
         Route::post('logQuery/callNotify', 'AuthcodeController@callNotify')->name('authcode.callNotify')
             ->middleware(['json_api', 'has:authority,CallNotifyPolicy']);

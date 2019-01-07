@@ -61,7 +61,13 @@ class AuthCodeService
             $company = $request->get('company', $company);
         }
 
-        return app(AuthCodes::class)->orderTradeInfo($company, $request->get('start'), $request->get('end'));
+        return app(AuthCodes::class)->orderTradeInfo(
+            $company,
+            $request->get('start'),
+            $request->get('end'),
+            $request->get('pay_state'),
+            $request->get('payment_type', 0)
+        );
     }
 
     /**

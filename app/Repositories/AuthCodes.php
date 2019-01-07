@@ -278,23 +278,35 @@ class AuthCodes
      * @param int $company
      * @param string $startDate
      * @param string $endDate
+     * @param int|null $payState
+     * @param int $paymentType
      * @return Authcode
      */
     public function orderTradeInfo(
         int $company,
         string $startDate,
-        string $endDate
+        string $endDate,
+        int $payState = null,
+        int $paymentType = 0
     ) {
-        $result = Authcode::query()
+        $query = Authcode::query()
             ->select(
-                \DB::raw('IFNULL(SUM(amount),0)as amount'),
-                \DB::raw('IFNULL(SUM(fee),0)as fee'),
-                \DB::raw('IFNULL(SUM(IF(pay_state=' . self::ALL_DONE_STATE . ',amount,0)),0) as successful_deal'),
-                \DB::raw('IFNULL(SUM(IF(pay_state!=' . self::ALL_DONE_STATE . ',amount,0)),0) as failure_deal')
+                \DB::raw('IFNULL(ROUND(SUM(amount),3),0)as amount'),
+                \DB::raw('IFNULL(ROUND(SUM(fee),3),0)as fee'),
+                \DB::raw('IFNULL(ROUND(SUM(IF(pay_state=' . self::ALL_DONE_STATE . ',amount,0)),3),0)
+                 as successful_deal'),
+                \DB::raw('IFNULL(ROUND(SUM(IF(pay_state!=' . self::ALL_DONE_STATE . ',amount,0)),3),0) as failure_deal')
             )
             ->whereHas('company', function (Builder $builder) use ($company) {
                 $builder->where('id', $company);
-            })->whereBetween('created_at', [$startDate, $endDate])->first();
+            })->whereBetween('created_at', [$startDate, $endDate]);
+        if (!is_null($payState)) {
+            $query->where('pay_state', $payState);
+        }
+        if ($paymentType > 0) {
+            $query->where('payment_type', $paymentType);
+        }
+        $result = $query->first();
 
         return $result;
     }
