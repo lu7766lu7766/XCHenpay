@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: derek
- * Date: 2018/12/26
- * Time: 下午 06:26
+ * Date: 2019/1/2
+ * Time: 上午 11:38
  */
 
 namespace App\Repositories;
@@ -15,6 +15,14 @@ use Illuminate\Support\Collection;
 
 class PaymentRepo
 {
+    /**
+     * @return Collection|Payment[]
+     */
+    public function allActive()
+    {
+        return Payment::query()->where('i6pay_id', '!=', 0)->where('activate', 1)->get();
+    }
+
     /**
      * @param int $userId
      * @param bool $activate

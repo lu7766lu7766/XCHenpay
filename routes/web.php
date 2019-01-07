@@ -160,6 +160,7 @@ Route::group(
             Route::post('logQuery/updateFeeInfo', 'AuthcodeController@updateFeeInfo')
                 ->name('authcode.updateFeeInfo');
         });
+        Route::get('logQuery/payment', 'AuthcodeController@payment')->middleware('json_api')->name('authcode.payment');
         Route::post('data', 'AuthcodeController@data')->name('authcode.data');
         Route::post('dataTotal', 'AuthcodeController@dataTotal')->middleware('json_api');
         Route::get('logQuery/dataInit', 'AuthcodeController@dataInit')->name('authcode.dataInit');

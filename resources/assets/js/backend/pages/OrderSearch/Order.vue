@@ -84,9 +84,9 @@
                     </div>
                     <div class="search-select">
                         <select class="form-control" v-model="searchData.payment_type">
-                            <option v-for="(name, val) in options.paymentType"
+                            <option v-for="(payment, val) in options.paymentType"
                                     :key="val"
-                                    :value="val">{{ name }}
+                                    :value="val">{{ payment.name }}
                             </option>
                         </select>
                     </div>
@@ -140,9 +140,13 @@
                             <td>{{ data.trade_service_id }}</td>
                             <td class="text-right">{{ data.amount | numFormat('0,0.00') }}</td>
                             <td>
-                                {{ data.payment_type == 0
+                                {{
+                                data.payment_type == 0
                                 ? '-'
-                                : options.paymentType[data.payment_type] }}
+                                : options.paymentType[data.payment_type]
+                                ? options.paymentType[data.payment_type].name
+                                : ''
+                                }}
                             </td>
                             <td class="text-right">{{ data.fee | numFormat('0,0.000') }}</td>
                             <td>{{ data.created_at }}</td>
@@ -194,6 +198,7 @@
 
 <script>
     import ListMixins from 'mixins/list'
+    import PayState from 'config/payState'
 
     export default {
         api: "order",
@@ -204,21 +209,8 @@
         },
         data: () => ({
             options: {
-                payState: {
-                    0: '申請成功',
-                    1: '交易中',
-                    2: '交易成功,未回調',
-                    3: '交易結束',
-                    4: '交易失敗'
-                },
-                paymentType: {
-                    0: '支付方式',
-                    6: 'QQ扫码',
-                    9: '银联扫码',
-                    20: '支付宝扫码',
-                    21: '支付宝WAP',
-                    30: '微信扫码'
-                }
+                payState: PayState.summaryMap(),
+                paymentType: {}
             },
             sort: {
                 column: 'created_at'
@@ -268,6 +260,13 @@
             }
         },
         methods: {
+            dataInit() {
+                this.proccessAjax('dataInit', {}, res => {
+                    this.options.paymentType = _.assign(_.keyBy(res.data, 'i6pay_id'), {0: {name: '支付方式'}})
+                })
+            },
+            getTotal() {
+            },
             onGetList(res) {
                 this.datas = res[0].data
 
@@ -309,6 +308,7 @@
             }
         },
         mounted() {
+            this.dataInit()
             this.search()
         }
     }

@@ -21,6 +21,10 @@ export default {
             method: 'get'
         },
         order: {
+            dataInit: {
+                uri: '/admin/logQuery/payment',
+                method: 'get'
+            },
             list: {
                 uri: ['/admin/data', '/admin/orderTradeInfo'],
                 method: 'post'
