@@ -311,6 +311,21 @@ export default {
             method: 'get'
         }
     },
+    /** 手續費管理 */
+    feeManage: {
+        dataInit: {
+            uri: '/admin/channel/feeManagement/merchantList',
+            method: 'get'
+        },
+        list: {
+            uri: '/admin/channel/feeManagement',
+            method: 'post'
+        },
+        update: {
+            uri: '/admin/channel/feeManagement/maintain',
+            method: 'put'
+        }
+    },
     /** 外部view */
     outer: {
         /** 下發申請數量 */

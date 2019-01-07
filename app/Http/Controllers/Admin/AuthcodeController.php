@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthCodeOrderNotifyRequest;
 use App\Http\Requests\AuthCodeOrderSearchRequest;
 use App\Models\Authcode;
-use App\Models\Payment;
 use App\Models\PaymentFees;
 use App\Repositories\AuthCodes;
 use App\Repositories\UserRepo;
@@ -18,7 +17,6 @@ use Illuminate\Support\Collection;
 use Response;
 use Sentinel;
 use Validator;
-use Yajra\DataTables\DataTables;
 
 class AuthcodeController extends Controller
 {
@@ -89,74 +87,6 @@ class AuthcodeController extends Controller
         return [
             'authcode' => $authcode
         ];
-    }
-
-    public function feeData()
-    {
-        $payments = [];
-        if (isset(request()->company)) {
-            $id = request()->company;
-            $paysCount = Payment::where('id', '>', 1)->count();
-            $paymentsSQL = PaymentFees::from('payment_fees as f')
-                ->select('f.id', 'p.i6pay_id', 'p.name', 'f.fee', 'f.status', 'p.id as pid')
-                ->join('payments as p', 'p.id', '=', 'f.payment_id')
-                ->where('f.user_id', $id);
-            $payments = $paymentsSQL->get();
-            /* 檢查 payments 是否有新通道 */
-            if (count($payments) != $paysCount) {
-                $payment = Payment::select('id as payment_id', 'fee')
-                    ->where('id', '>', 1)
-                    ->get()
-                    ->keyBy('payment_id');
-                $diff = $payment->pluck('payment_id')->diff($payments->pluck('pid'));
-                $diffData = [];
-                foreach ($diff as $d) {
-                    $p = $payment[$d];
-                    $diffData[] = [
-                        'payment_id' => $p->payment_id,
-                        'fee'        => $p->fee
-                    ];
-                }
-                $user = User::find($id);
-                $user->fees()->createMany($diffData);
-                $payments = $paymentsSQL->get();
-            }
-        }
-
-        return $this->makeFeeDatatable($payments);
-    }
-
-    private function makeFeeDatatable($payments)
-    {
-        $user = Sentinel::getUser();
-        $can_edit = $user->hasAccess('logQuery') || ($user->hasAccess('logQuery.editFeeInfo') &&
-                $user->hasAccess('logQuery.updateFeeInfo'));
-
-        return DataTables::of($payments)
-            ->editColumn('can_edit', function ($payment) use ($can_edit) {
-                return $can_edit;
-            })
-            ->editColumn('fee', function ($payment) {
-                return $payment->fee . '%';
-            })
-            ->editColumn('status', function ($payment) {
-                return ($payment->status == 1) ? trans('Trade/LendManage/form.status_enable') : trans('Trade/LendManage/form.status_disable');
-            })
-            ->addColumn('actions', function ($payment) {
-                $infoLink = '<a href=' . route('admin.authcode.showFeeInfo',
-                        ['payment' => $payment->id]) . ' data-toggle="modal" data-target="#show_FeeInfo"><i class="livicon" data-name="info" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="通道讯息"></i></a>';
-                $editLink = '<a href=' . route('admin.authcode.editFeeInfo',
-                        ['payment' => $payment->id]) . ' data-toggle="modal" data-target="#edit_FeeInfo"><i class="livicon" data-name="edit" data-size="18" data-loop="true" data-c="#428BCA" data-hc="#428BCA" title="编辑通道"></i></a>';
-                $action = $infoLink;
-                $user = Sentinel::getUser();
-                if ($user->hasAccess('logQuery') || ($user->hasAccess('logQuery.editFeeInfo') && $user->hasAccess('logQuery.updateFeeInfo'))) {
-                    $action .= $editLink;
-                }
-
-                return $action;
-            })
-            ->rawColumns(['actions'])
-            ->make(true);
     }
 
     public function showFeeInfo($id)

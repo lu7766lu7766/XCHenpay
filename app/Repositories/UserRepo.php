@@ -34,6 +34,25 @@ class UserRepo
     }
 
     /**
+     * 角色
+     * @param string $role
+     * @param int $userId
+     * @return User[]|Collection
+     */
+    public function getRole(string $role, int $userId = null)
+    {
+        $query = User::query();
+        if (!is_null($userId)) {
+            $query->where('id', $userId);
+        }
+        $query->whereHas('roles', function (Builder $query) use ($role) {
+            $query->where('slug', $role);
+        });
+
+        return $query->get();
+    }
+    
+    /**
      * 取得指定商戶列表資料明細
      * @param int $userId
      * @return User

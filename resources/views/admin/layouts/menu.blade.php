@@ -32,6 +32,14 @@
             </ul>
         </li>
 
+        <li class="has-submenu">
+            @if(Sentinel::getUser()->hasAccess('channel.feeManagement'))
+                <a href="#"><i class="ti-direction-alt"></i>通道设置</a>
+                <ul class="submenu">
+                    <li><a href="{{route('admin.channel.feeManagement.view')}}">手续费管理</a></li>
+                </ul>
+            @endif
+        </li>
 
         <li class="has-submenu">
             <a href="#"><i class="ti-search"></i>查询功能</a>

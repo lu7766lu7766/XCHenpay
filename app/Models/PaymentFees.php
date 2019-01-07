@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class PaymentFees extends Model
 {
@@ -11,7 +10,8 @@ class PaymentFees extends Model
     protected $fillable = [
         'user_id',
         'payment_id',
-        'fee'
+        'fee',
+        'status'
     ];
 
     public function payment()
