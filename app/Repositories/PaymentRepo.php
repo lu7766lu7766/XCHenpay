@@ -21,10 +21,8 @@ class PaymentRepo
      * @return Payment[]|Collection
      * @see PaymentFeeStatusConstants paymentFeeStatus 定義看 PaymentFeeStatusConstants
      */
-    public function feeManagementList(
-        int $userId,
-        bool $activate = true
-    ) {
+    public function list(int $userId, bool $activate = true)
+    {
         return Payment::with([
             'paymentFee' => function (HasMany $query) use ($userId) {
                 $query->where('user_id', $userId);
@@ -36,20 +34,15 @@ class PaymentRepo
      * @param int $id
      * @param int $userId
      * @param bool $activate
-     * @param string $paymentFeeStatus
      * @return Payment|null
      */
-    public function info(
-        int $id,
-        int $userId,
-        bool $activate = true,
-        string $paymentFeeStatus = PaymentFeeStatusConstants::ON
-    ) {
+    public function info(int $id, int $userId, bool $activate = true)
+    {
         return Payment::with([
-            'paymentFee' => function (HasMany $query) use ($userId, $paymentFeeStatus) {
-                $query->where('user_id', $userId)->where('status', $paymentFeeStatus);
+            'paymentFee' => function (HasMany $query) use ($userId) {
+                $query->where('user_id', $userId);
             }
-        ])->where('activate', $activate)->where('id', $id)->getKey();
+        ])->where('activate', $activate)->where('id', $id)->first();
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Policies\CallNotifyPolicy;
+use App\Policies\FeeListPolicy;
 use App\Policies\FeeManagementPolicy;
 use App\Policies\FillOrderPolicy;
 use App\Policies\LendManagePolicy;
@@ -24,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         'FeeManagementPolicy'    => FeeManagementPolicy::class,
         'MerchantsPolicy'        => MerchantsPolicy::class,
         'TrashedMerchantsPolicy' => TrashedMerchantsPolicy::class,
+        'FeeListPolicy'          => FeeListPolicy::class,
         'CallNotifyPolicy'       => CallNotifyPolicy::class
     ];
 

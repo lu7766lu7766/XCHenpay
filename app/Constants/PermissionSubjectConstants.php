@@ -12,6 +12,7 @@ class PermissionSubjectConstants
 {
     const FILL_ORDER = 'fill_order';
     const CHANNEL_FEE_MANAGEMENT = 'channel.feeManagement';
+    const CHANNEL_FEE_LIST = 'channel.feeList';
     const CALL_NOTIFY = 'logQuery.callNotify';
     const LEND_MANAGE = 'lendManage';
     const MERCHANTS = 'merchants';

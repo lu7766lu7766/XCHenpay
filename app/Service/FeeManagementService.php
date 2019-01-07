@@ -29,7 +29,7 @@ class FeeManagementService
      */
     public function list(FeeManagementIndexRequest $request)
     {
-        return app(PaymentRepo::class)->feeManagementList($request->getMerchantId());
+        return app(PaymentRepo::class)->list($request->getMerchantId());
     }
 
     /**

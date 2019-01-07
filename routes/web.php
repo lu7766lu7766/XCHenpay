@@ -280,6 +280,19 @@ Route::group([
         });
     });
 });
+#feeList
+Route::group([
+    'prefix'     => 'admin/channel/feeList',
+    'namespace'  => 'Admin',
+    'middleware' => 'admin',
+    'as'         => 'admin.channel.feeList.'
+], function () {
+    Route::get('/', 'FeeListController@indexView')->name('view')->middleware('has:management,FeeListPolicy');
+    Route::group(['middleware' => ['json_api', 'has:management,FeeListPolicy']], function () {
+        Route::get('/{id}', 'FeeListController@info')->name('info');
+        Route::post('/', 'FeeListController@index')->name('index');
+    });
+});
 #feeManagement
 Route::group([
     'prefix'     => 'admin/channel/feeManagement',

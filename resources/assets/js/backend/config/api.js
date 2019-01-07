@@ -311,6 +311,13 @@ export default {
             method: 'get'
         }
     },
+    /** 手續費列表 */
+    feeList: {
+        list: {
+            uri: '/admin/channel/feeList',
+            method: 'post'
+        }
+    },
     /** 手續費管理 */
     feeManage: {
         dataInit: {

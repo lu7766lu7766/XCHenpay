@@ -22,6 +22,7 @@ if ($app) {
             WhiteList: () => import('./pages/WhiteList'),
             Replenishment: () => import('./pages/Replenishment'),
             AccountManage: () => import('./pages/AccountManage'),
+            FeeList: () => import('./pages/FeeList'),
             FeeManage: () => import('./pages/FeeManage'),
             // ActivityLog: resolve => {
             //     require(['./pages/ActivityLog'], resolve)
