@@ -332,6 +332,10 @@ export default {
         lendApplyNotify: {
             uri: '/admin/lendManage/applyNotice',
             method: 'get'
+        },
+        headerInfo: {
+            uri: '/admin/tradeInfoOnToday',
+            method: 'get'
         }
     }
 }

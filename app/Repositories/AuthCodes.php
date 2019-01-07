@@ -4,9 +4,11 @@ namespace App\Repositories;
 
 use App\Constants\Order\OrderStatusConstants;
 use App\Constants\Roles\RolesConstants;
+use App\Constants\User\UserStatusConstants;
 use App\Models\Authcode;
 use App\Models\LendRecord;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
@@ -220,6 +222,55 @@ class AuthCodes
     public function find(int $id)
     {
         return Authcode::find($id);
+    }
+
+    /**
+     * 使用user id尋找商戶
+     * @param int $userId 商戶id
+     * @return User
+     */
+    public function findMerchantByUserId(int $userId)
+    {
+        $result = User::query()
+            ->where('status', UserStatusConstants::ON)
+            ->where('id', $userId)
+            ->whereHas('roles', function (Builder $builder) {
+                $builder->where('slug', RolesConstants::USER);
+            })->first();
+
+        return $result;
+    }
+
+    /**
+     * 取得當日交易資訊(交易成功金額,手續費,筆數)
+     * @param string|null $companyServiceId
+     * @return Authcode
+     */
+    public function getTradeInfoOnToday(string $companyServiceId = null)
+    {
+        try {
+            $query = Authcode::query()
+                ->select(
+                    \DB::raw('IFNULL(SUM(amount),0 )as totalMoney'),
+                    \DB::raw('IFNULL(SUM(fee),0) as totalFee'),
+                    \DB::raw('count(*) as totalNum')
+                )
+                ->where('pay_end_time', '>=', Carbon::today()->startOfDay()->toDateTimeString())
+                ->where('pay_end_time', '<=', Carbon::today()->endOfDay()->toDateTimeString())
+                ->whereIn('pay_state', [
+                    OrderStatusConstants::ALL_DONE_CODE,
+                    OrderStatusConstants::SUCCESS_CODE,
+                ]);
+            if (!is_null($companyServiceId)) {
+                $query->where('company_service_id', $companyServiceId);
+            }
+            $result = $query->first();
+        } catch (\Exception $e) {
+            $result = null;
+            \Log::log('debug', $e->getMessage());
+        }
+
+        return $result;
     }
 
     /**

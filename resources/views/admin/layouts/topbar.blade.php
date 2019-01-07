@@ -1,12 +1,12 @@
 <div class="menu-extras topbar-custom">
     <ul class="float-right list-unstyled mb-0 ">
+        <span id="headerInfo">
+            <header-info/>
+        </span>
         @if(Sentinel::getUser()->hasAccess('lendManage.index') || Sentinel::getUser()->hasAccess('lendManage'))
-            <li class="dropdown notification-list">
-                <a class="nav-link arrow-none waves-effect" href="{{ URL::to('admin/lendManage') }}">
-                    <i class="ti-bell noti-icon"></i>
-                    <span id="lendApplyNotifyCount">0</span>
-                </a>
-            </li>
+            <span id="lendNotify">
+                <lend-notify link="{{ URL::to('admin/lendManage') }}"/>
+            </span>
         @endif
 
         <li class="dropdown notification-list">

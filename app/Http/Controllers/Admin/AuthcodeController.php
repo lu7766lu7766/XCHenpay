@@ -199,6 +199,15 @@ class AuthcodeController extends Controller
     }
 
     /**
+     * 取得當日交易資訊(交易成功金額,手續費,筆數)
+     * @return array
+     */
+    public function tradeInfoOnToday()
+    {
+        return AuthCodeService::getInstance(Sentinel::getUser())->tradeInfoOnToday();
+    }
+
+    /**
      * 訂單交易資訊
      * @param AuthCodeOrderSearchRequest $request
      * @return Authcode

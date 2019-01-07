@@ -255,6 +255,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
     Route::get('permissionSwitch', 'PermissionController@permissionSwitch')->name('permission.switch');
     Route::post('permissionSwitch', 'PermissionController@update')->name('permission.update');
 });
+#headerInfo
+Route::group(
+    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'json_api'], 'as' => 'admin.'],
+    function () {
+        Route::get('tradeInfoOnToday', 'AuthcodeController@tradeInfoOnToday');
+    }
+);
 #whitelist
 Route::group([
     'prefix'     => 'admin/whitelist',

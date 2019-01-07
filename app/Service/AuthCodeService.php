@@ -28,6 +28,27 @@ class AuthCodeService
     }
 
     /**
+     * 取得當日交易資訊(交易成功金額,手續費,筆數)
+     * @return array
+     */
+    public function tradeInfoOnToday()
+    {
+        $companyServiceId = null;
+        $merchant = app(AuthCodes::class)->findMerchantByUserId($this->user->id);
+        if (!is_null($merchant)) {
+            $companyServiceId = $merchant->company_service_id;
+        }
+        $tradeInfo = app(AuthCodes::class)->getTradeInfoOnToday($companyServiceId);
+
+        return [
+            'totalMoney' => $tradeInfo->totalMoney,
+            'totalFee'   => $tradeInfo->totalFee,
+            'totalNum'   => $tradeInfo->totalNum,
+            'ip'         => \Request::getClientIp()
+        ];
+    }
+
+    /**
      * 訂單交易資訊
      * @param AuthCodeOrderSearchRequest $request
      * @return \App\Models\Authcode
