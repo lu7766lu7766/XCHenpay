@@ -59,7 +59,7 @@ class ActivityRepository
      * @param string $start
      * @param string $end
      * @param string $type
-     * @param string|null $companyName
+     * @param string|null $description
      * @param int|null $userId
      * @return int
      */
@@ -67,16 +67,16 @@ class ActivityRepository
         string $start,
         string $end,
         string $type,
-        string $companyName = null,
+        string $description = null,
         int $userId = null
     ) {
         $result = 0;
         try {
-            $builder = Activity::query()
+            $builder = Activity::with(['causerWithTrashed'])
                 ->whereBetween('created_at', [$start, $end])
                 ->where('causer_type', $type);
-            if (!is_null($companyName)) {
-                $builder->where('log_name', 'like', "%{$companyName}%");
+            if (!is_null($description)) {
+                $builder->where('description', 'like', "%{$description}%");
             }
             if (!is_null($userId)) {
                 $builder->where('causer_id', $userId);
