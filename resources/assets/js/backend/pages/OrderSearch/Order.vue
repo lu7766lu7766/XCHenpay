@@ -265,8 +265,6 @@
                     this.options.paymentType = _.assign(_.keyBy(res.data, 'i6pay_id'), {0: {name: '支付方式'}})
                 })
             },
-            getTotal() {
-            },
             onGetList(res) {
                 this.datas = res[0].data
 
