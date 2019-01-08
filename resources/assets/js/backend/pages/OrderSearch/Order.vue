@@ -108,6 +108,7 @@
                         <tr>
                             <th class="width-40">#</th>
                             <th>交易状态</th>
+                            <th>商户名称</th>
                             <th>系统交易号</th>
                             <th>商户交易号</th>
                             <th class="sorting sorting" @click="changeSort('amount')" :class="{
@@ -136,6 +137,7 @@
                                       v-else>{{ options.payState[data.pay_state] }}
                                 </span>
                             </td>
+                            <td>{{ data.company.company_name }}</td>
                             <td>{{ data.trade_seq }}</td>
                             <td>{{ data.trade_service_id }}</td>
                             <td class="text-right">{{ data.amount | numFormat('0,0.00') }}</td>
@@ -167,7 +169,9 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="3" class="text-right">小计</td>
+                            <td colspan="2" class="text-right">小计</td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td class="text-right">
                                 {{
@@ -255,8 +259,10 @@
             }
         }),
         watch: {
-            company_id() {
-                this.datas = []
+            company_id(nValue) {
+                if (nValue !== -1) {
+                    this.search()
+                }
             }
         },
         methods: {

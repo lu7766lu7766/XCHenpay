@@ -55,13 +55,13 @@ class AuthcodeController extends Controller
         $company = $user->getKey();
         // 如果有擁有可選擇商戶的權限
         if ($user->hasAccess('users.dataSwitch')) {
-            $company = $request->get('company', $company);
+            $company = $request->get('company');
         }
         /** @var Collection $authCode */
         $authCode = $authCodes->companyDataWithReport(
-            $company,
             $request->get('start'),
             $request->get('end'),
+            $company,
             $request->get('page', 1),
             $request->get('perpage', 20),
             $request->get('pay_state'),

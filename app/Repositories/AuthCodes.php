@@ -40,9 +40,9 @@ class AuthCodes
 
     /**
      * 商戶注單
-     * @param int $company
      * @param string $startDate
      * @param string $endDate
+     * @param int|null $company
      * @param int $page
      * @param int $perpage
      * @param int|null $payState
@@ -53,9 +53,9 @@ class AuthCodes
      * @return Collection|Authcode[]
      */
     public function companyDataWithReport(
-        int $company,
         string $startDate,
         string $endDate,
+        int $company = null,
         int $page = 1,
         int $perpage = 20,
         int $payState = null,
@@ -65,7 +65,12 @@ class AuthCodes
         string $direction = 'desc'
     ) {
         $query = Authcode::query()->whereHas('company', function (Builder $builder) use ($company) {
-            $builder->where('id', $company);
+            if (!is_null($company)) {
+                $builder->where('id', $company);
+            }
+            $builder->whereHas('roles', function (Builder $builder) {
+                $builder->where('slug', RolesConstants::USER);
+            });
         });
         if (!is_null($payState)) {
             $query->where('pay_state', $payState);
@@ -90,24 +95,29 @@ class AuthCodes
 
     /**
      * 商戶注單總數
-     * @param int $company
      * @param string $startDate
      * @param string $endDate
+     * @param int|null $company
      * @param int|null $payState
      * @param string|null $keyword 關鍵字
      * @param int|null $paymentType
      * @return int
      */
     public function companyDataWithReportTotal(
-        int $company,
         string $startDate,
         string $endDate,
+        int $company = null,
         int $payState = null,
         string $keyword = null,
         int $paymentType = 0
     ) {
         $query = Authcode::query()->whereHas('company', function (Builder $builder) use ($company) {
-            $builder->where('id', $company);
+            if (!is_null($company)) {
+                $builder->where('id', $company);
+            }
+            $builder->whereHas('roles', function (Builder $builder) {
+                $builder->where('slug', RolesConstants::USER);
+            });
         });
         if (!is_null($payState)) {
             $query->where('pay_state', $payState);
@@ -275,17 +285,17 @@ class AuthCodes
 
     /**
      * 訂單交易資訊
-     * @param int $company
      * @param string $startDate
      * @param string $endDate
+     * @param int|null $company
      * @param int|null $payState
      * @param int $paymentType
      * @return Authcode
      */
     public function orderTradeInfo(
-        int $company,
         string $startDate,
         string $endDate,
+        int $company = null,
         int $payState = null,
         int $paymentType = 0
     ) {
@@ -298,7 +308,12 @@ class AuthCodes
                 \DB::raw('IFNULL(ROUND(SUM(IF(pay_state!=' . self::ALL_DONE_STATE . ',amount,0)),3),0) as failure_deal')
             )
             ->whereHas('company', function (Builder $builder) use ($company) {
-                $builder->where('id', $company);
+                if (!is_null($company)) {
+                    $builder->where('id', $company);
+                }
+                $builder->whereHas('roles', function (Builder $builder) {
+                    $builder->where('slug', RolesConstants::USER);
+                });
             })->whereBetween('created_at', [$startDate, $endDate]);
         if (!is_null($payState)) {
             $query->where('pay_state', $payState);

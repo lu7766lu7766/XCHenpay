@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <company-selector v-model="searchData.user_id" :options="options.companies"/>
             <!-- card end -->
-            <div class="card m-b-30" v-if="searchData.user_id">
+            <div class="card m-b-30" v-if="searchData.user_id !== -1">
                 <div class="card-header">
                     卡号列表
                     <span class="refresh" @click="refresh">
@@ -80,7 +80,7 @@
                 companies: []
             },
             searchData: {
-                user_id: '',
+                user_id: -1,
                 search: ''
             },
             sort: {
@@ -89,7 +89,7 @@
         }),
         watch: {
             'searchData.user_id'() {
-                if (this.searchData.user_id) {
+                if (this.searchData.user_id !== -1) {
                     this.search()
                 }
             }

@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <company-selector v-model="searchData.user_id" :options="options.companies"/>
             <!-- card end -->
-            <div v-if="searchData.user_id">
+            <div v-if="searchData.user_id !== -1">
                 <div class="card m-b-30">
                     <div class="card-header">
                         下发资讯
@@ -183,7 +183,7 @@
                 lendStatus: []
             },
             searchData: {
-                user_id: '',
+                user_id: -1,
                 start_date: moment().startOf('day'),
                 end_date: moment().endOf('day'),
                 keyword: '',
@@ -200,7 +200,7 @@
         }),
         watch: {
             'searchData.user_id'() {
-                if (this.searchData.user_id) {
+                if (this.searchData.user_id !== -1) {
                     this.search()
                 }
             }
