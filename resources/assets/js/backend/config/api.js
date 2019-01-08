@@ -260,6 +260,17 @@ export default {
             method: 'delete'
         }
     },
+    /** 回调错误记录 */
+    notifyOrderFail: {
+        list: {
+            uri: '/admin/notifyOrderFail',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/notifyOrderFail/total',
+            method: 'post'
+        }
+    },
     /** 帳號管理 */
     accountManage: {
         dataInit: {
@@ -287,10 +298,10 @@ export default {
             method: 'post'
         },
         delete:
-        {
-            uri: '/admin/systemSetting/userDel',
-            method: 'post'
-        }
+            {
+                uri: '/admin/systemSetting/userDel',
+                method: 'post'
+            }
     },
     /** 補單管理 */
     replenishment: {

@@ -21,7 +21,7 @@ class ActivityHistoryController extends Controller
      */
     public function view()
     {
-        return view('admin.activity_log');
+        return view('admin.log.activity');
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Policies\FeeManagementPolicy;
 use App\Policies\FillOrderPolicy;
 use App\Policies\LendManagePolicy;
 use App\Policies\MerchantsPolicy;
+use App\Policies\NotifyOrderFailPolicy;
 use App\Policies\TrashedMerchantsPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -26,7 +27,8 @@ class AuthServiceProvider extends ServiceProvider
         'MerchantsPolicy'        => MerchantsPolicy::class,
         'TrashedMerchantsPolicy' => TrashedMerchantsPolicy::class,
         'FeeListPolicy'          => FeeListPolicy::class,
-        'CallNotifyPolicy'       => CallNotifyPolicy::class
+        'CallNotifyPolicy'       => CallNotifyPolicy::class,
+        'NotifyOrderFailPolicy'  => NotifyOrderFailPolicy::class,
     ];
 
     /**

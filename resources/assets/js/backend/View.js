@@ -20,6 +20,7 @@ if ($app) {
             ReportSearch: () => import('./pages/Report/Search'),
             CompanyManage: () => import('./pages/CompanyManage'),
             WhiteList: () => import('./pages/WhiteList'),
+            NotifyOrderFailLog: () => import('./pages/NotifyOrderFailLog'),
             Replenishment: () => import('./pages/Replenishment'),
             AccountManage: () => import('./pages/AccountManage'),
             FeeList: () => import('./pages/FeeList'),

@@ -70,6 +70,9 @@
             <a href="#"><i class="ti-write"></i>历程记录</a>
             <ul class="submenu">
                 <li><a href="{{ URL::to('admin/activity_log') }}">帐户历程</a></li>
+                @if(Sentinel::getUser()->hasAccess('notify.order.fail'))
+                    <li><a href="{{ route('admin.order.fail.view') }}">回调错误记录</a></li>
+                @endif
             </ul>
         </li>
 

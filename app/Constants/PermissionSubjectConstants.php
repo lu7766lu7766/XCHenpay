@@ -18,4 +18,7 @@ class PermissionSubjectConstants
     const MERCHANTS = 'merchants';
     const TRASHED_MERCHANTS = 'trashed.merchants';
     const MERCHANTS_VIEW = 'merchants.view';
+    const NOTIFY_ORDER_FAIL = 'notify.order.fail';
 }
+
+
