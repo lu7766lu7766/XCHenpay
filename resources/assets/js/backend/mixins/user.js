@@ -6,6 +6,7 @@ export default {
         async getUserInfo() {
             const res = await this.$callApi('userInfo')
             this.userInfo = res.data
+            this.$root.$emit('userInfo.init')
         }
     },
     computed: {
@@ -16,6 +17,10 @@ export default {
         }
     },
     mounted() {
+        this.$root.$on('getUserInfo', this.getUserInfo)
         this.getUserInfo()
+    },
+    destroyed() {
+        this.$root.$off('getUserInfo')
     }
 }

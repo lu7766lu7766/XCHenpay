@@ -9,15 +9,6 @@ use Sentinel;
 class UsersController extends BaseController
 {
     /**
-     * 取得所有角色資訊
-     * @return array| EloquentRole[]
-     */
-    public function getThisUser()
-    {
-        return Sentinel::getUser();
-    }
-
-    /**
      * Show a list of all the deleted users.
      *
      * @return View
@@ -29,17 +20,6 @@ class UsersController extends BaseController
 
         // Show the page
         return view('admin.users.deleted_users', compact('users'));
-    }
-
-    /**
-     * @return \Illuminate\View\View
-     */
-    public function showProfile()
-    {
-        /**@var User $user */
-        $user = Sentinel::getUser();
-
-        return view('admin.users.show', compact('user'));
     }
 
     public function passwordreset(Request $request)
@@ -81,11 +61,4 @@ class UsersController extends BaseController
         }
     }
 
-    public function getUserInfo(Request $request)
-    {
-        $id = $request->id;
-        $user = Sentinel::findUserById($id);
-
-        return $user;
-    }
 }

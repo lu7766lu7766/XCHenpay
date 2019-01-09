@@ -81,6 +81,9 @@ class MerchantsService
                     if (!is_null($password = $request->getPassword())) {
                         $data['password'] = Hash::make($password);
                     }
+                    if (!is_null($secretCode = $request->getSecretCode())) {
+                        $data['secret_code'] = Hash::make($secretCode);
+                    }
                     $result = $userRepo->update($user, $data);
                     if ($result) {
                         app(ActivityRepository::class)->addActivityLog($user->email, $user, '更新了联络信息');
@@ -190,6 +193,7 @@ class MerchantsService
                 'company_service_id' => md5(str_random(32) . env('APP_KEY')),
                 'lend_fee'           => LendRecords::FEE,
                 'sceret_key'         => md5(str_random(32)),
+                'secret_code'        => Hash::make($request->getSecretCode()),
             ];
             \DB::transaction(function () use ($insert, $request, &$result) {
                 $roles = app(RoleRepo::class)->findBySlug([RolesConstants::USER]);

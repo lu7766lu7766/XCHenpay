@@ -7,7 +7,7 @@
                 <span>商戶功能</span>
             </a>
             <ul class="submenu">
-                <li><a href="{{ URL::route('admin.users.showProfile') }}">商户资料</a></li>
+                <li><a href="{{ URL::route('admin.user.view') }}">商户资料</a></li>
                 @if(Sentinel::getUser()->hasAccess('merchants') || Sentinel::getUser()->hasAccess('merchants.view'))
                     <li><a href="{{ route('admin.merchants.view') }}">商户管理</a></li>
                 @endif

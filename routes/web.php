@@ -59,19 +59,10 @@ Route::group(
         });
     }
 );
-# User Management
+
 Route::group(
-    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'users'], 'as' => 'admin.'],
+    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin'], 'as' => 'admin.'],
     function () {
-        Route::group(['prefix' => 'users'], function () {
-            Route::group(['middleware' => 'json_api'], function () {
-                Route::get('getThisUser', 'UsersController@getThisUser')
-                    ->name('users.getThisUser');
-            });
-            Route::get('showProfile', 'UsersController@showProfile')->name('users.showProfile');
-            Route::post('passwordreset', 'UsersController@passwordreset')->name('passwordreset');
-            Route::get('getUserInfo', 'UsersController@getUserInfo')->name('users.getUserInfo');
-        });
         # Lock screen
         Route::get('{id}/lockscreen', 'UsersController@lockscreen')->name('lockscreen');
         Route::post('{id}/lockscreen', 'UsersController@postLockscreen')->name('post-lockscreen');
@@ -321,9 +312,12 @@ Route::group([
         Route::put('maintain/', 'FeeManagementController@edit')->name('edit');
     });
 });
-#user info
-Route::group(['prefix' => 'admin/user', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
-    Route::get('info', 'UserController@info')->middleware('json_api')->name('info');
+#user info 商戶資料
+Route::group(['prefix' => 'admin/user', 'namespace' => 'Admin', 'as' => 'admin.user.'], function () {
+    Route::get('index', 'ProfileController@indexView')->name('view');
+    Route::get('info', 'ProfileController@info')->middleware('json_api')->name('info');
+    Route::put('profile/password', 'ProfileController@update')->name('update')
+        ->middleware('json_api');
 });
 #fill order
 Route::group(

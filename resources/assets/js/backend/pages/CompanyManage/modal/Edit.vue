@@ -51,7 +51,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label">密码</label>
+                            <label class="col-sm-3 control-label">登入密码</label>
                             <div class="col-sm-9">
                                 <input type="password" class="form-control" v-model="data.password">
                                 <div class="tips">
@@ -60,9 +60,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-3 control-label">密码确认</label>
+                            <label class="col-sm-3 control-label">安全码</label>
                             <div class="col-sm-9">
-                                <input type="password" class="form-control" v-model="data.password_confirmation">
+                                <input type="password" class="form-control" v-model="data.secret_code">
                             </div>
                         </div>
                     </form>
@@ -84,19 +84,27 @@
         mixins: [DetailMixins],
         rules: {
             'data.password': {
+                sometimes: '',
+                alpha_dash: {
+                    message: '登入密码 内含不合法字元'
+                },
                 min: {
                     value: 4,
-                    message: '密码 长度须大于4'
-                },
-                max: {
-                    value: 6,
-                    message: '密码 长度须小于6'
+                    message: '登入密码 长度须大于4'
                 }
             },
-            'data.password_confirmation': {
-                equal: {
-                    value: 'data.password',
-                    message: '确认密码 内容与密码不符合'
+            'data.secret_code': {
+                sometimes: '',
+                alpha_dash: {
+                    message: '安全码 内含不合法字元'
+                },
+                min: {
+                    value: 4,
+                    message: '安全码 长度须大于4'
+                },
+                max: {
+                    value: 10,
+                    message: '安全码 长度须小于10'
                 }
             },
             'data.company_name': {
@@ -139,7 +147,7 @@
             },
             onGetDetail(res) {
                 res.data.password = ''
-                res.data.password_confirmation = ''
+                res.data.secret_code = ''
                 this.data = res.data
             },
             update() {
@@ -151,6 +159,9 @@
                 this.proccessAjax('update', this.data, this.onUpdate)
             },
             onUpdate() {
+                if (this.data.id === this.$root.userInfo.id) {
+                    this.$root.$emit('getUserInfo')
+                }
                 this.updateSuccess()
                 $(this.$refs.modal).modal('hide')
             }
@@ -158,11 +169,6 @@
         mounted() {
             this.$root.$on('companyManageEdit.show', id => {
                 this.getDetail(id)
-                this.conbineRules({
-                    'data.password': {
-                        sometimes: ''
-                    }
-                })
                 $(this.$refs.modal).modal('show')
             })
         },

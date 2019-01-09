@@ -51,15 +51,15 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 control-label required">密码<b>*</b></label>
+                            <label class="col-md-3 control-label required">登入密码<b>*</b></label>
                             <div class="col-md-9">
                                 <input type="password" class="form-control" v-model="data.password">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 control-label required">确认密码<b>*</b></label>
+                            <label class="col-md-3 control-label required">安全码<b>*</b></label>
                             <div class="col-md-9">
-                                <input type="password" class="form-control" v-model="data.password_confirmation">
+                                <input type="password" class="form-control" v-model="data.secret_code">
                             </div>
                         </div>
                     </form>
@@ -81,19 +81,31 @@
         mixins: [DetailMixins],
         rules: {
             'data.password': {
+                require: {
+                    message: '登入密码 不得为空白'
+                },
+                alpha_dash: {
+                    message: '登入密码 内含不合法字元'
+                },
                 min: {
                     value: 4,
-                    message: '密码 长度须大于4'
-                },
-                max: {
-                    value: 6,
-                    message: '密码 长度须小于6'
+                    message: '登入密码 长度须大于4'
                 }
             },
-            'data.password_confirmation': {
-                equal: {
-                    value: 'data.password',
-                    message: '确认密码 内容与密码不符合'
+            'data.secret_code': {
+                require: {
+                    message: '安全码 不得为空白'
+                },
+                alpha_dash: {
+                    message: '安全码 内含不合法字元'
+                },
+                min: {
+                    value: 4,
+                    message: '安全码 长度须大于4'
+                },
+                max: {
+                    value: 10,
+                    message: '安全码 长度须小于10'
                 }
             },
             'data.company_name': {
@@ -148,18 +160,6 @@
             this.$root.$on('companyManageAdd.show', () => {
                 this.data = {}
                 $(this.$refs.modal).modal('show')
-                this.conbineRules({
-                    'data.password': {
-                        require: {
-                            message: '密码 不得为空白'
-                        }
-                    },
-                    'data.password_confirmation': {
-                        require: {
-                            message: '确认密码 不得为空白'
-                        }
-                    }
-                })
             })
 
         },

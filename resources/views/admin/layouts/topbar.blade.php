@@ -17,7 +17,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                     <!-- item-->
-                    <a class="dropdown-item" href="{{ URL::route('admin.users.showProfile') }}"><i
+                    <a class="dropdown-item" href="{{ route('admin.user.view') }}"><i
                                 class="mdi mdi-account-circle m-r-5"></i> 商户资料</a>
                     <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> 锁定</a>
                     <div class="dropdown-divider"></div>

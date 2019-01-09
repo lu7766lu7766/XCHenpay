@@ -25,6 +25,7 @@ if ($app) {
             AccountManage: () => import('./pages/AccountManage'),
             FeeList: () => import('./pages/FeeList'),
             FeeManage: () => import('./pages/FeeManage'),
+            CompanyData: () => import('./pages/CompanyData'),
             // ActivityLog: resolve => {
             //     require(['./pages/ActivityLog'], resolve)
             // }

@@ -95,6 +95,7 @@
 
 <script>
     import ListMixins from 'mixins/list'
+    import Roles from 'config/roles'
 
     export default {
         api: "companyManage",
@@ -107,7 +108,6 @@
             CompanyManageApplyEdit: require('./modal/ApplyEdit'),
         },
         data: () => ({
-            userInfo: {},
             options: {
                 status: {
                     'on': '开启',
@@ -125,10 +125,6 @@
             }
         }),
         methods: {
-            async dataInit() {
-                var res = await this.$callApi(`${this.apiKey}:dataInit`)
-                this.userInfo = res.data
-            },
             onGetTotal(res) {
                 this.paginate.total = res.data.total
             },
@@ -162,14 +158,13 @@
         },
         computed: {
             isAdmin() {
-                return this.userInfo.roles && this.userInfo.roles[0].id === 1
+                return this.$parent.userInfo.roles && this.$parent.userInfo.roles[0].slug === Roles.ADMIN
             },
             isFinancial() {
-                return this.userInfo.roles && this.userInfo.roles[0].id === 3
+                return this.$parent.userInfo.roles && this.$parent.userInfo.roles[0].slug === Roles.FINANCE
             }
         },
         mounted() {
-            this.dataInit()
             this.search()
         }
     }

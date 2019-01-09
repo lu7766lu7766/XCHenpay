@@ -192,10 +192,6 @@ export default {
     },
     /** 商戶管理 */
     companyManage: {
-        dataInit: {
-            uri: '/admin/users/getThisUser',
-            method: 'get'
-        },
         list: {
             uri: '/admin/merchants',
             method: 'post'
@@ -345,6 +341,13 @@ export default {
         },
         update: {
             uri: '/admin/channel/feeManagement/maintain',
+            method: 'put'
+        }
+    },
+    /** 商戶資料 */
+    companyData: {
+        update: {
+            uri: '/admin/user/profile/password',
             method: 'put'
         }
     },

@@ -74,6 +74,14 @@ class MerchantsUpdateRequest extends FormRequest
     }
 
     /**
+     * @return string|null
+     */
+    public function getSecretCode()
+    {
+        return $this->get('secret_code', null);
+    }
+
+    /**
      * @return bool
      */
     public function authorize()
@@ -101,7 +109,8 @@ class MerchantsUpdateRequest extends FormRequest
             'status'       => 'required|' . Rule::in(UserStatusConstants::enum()),
             'apply_status' => 'required|' . Rule::in(UserApplyStatusConstants::enum()),
             'QQ_id'        => 'required|alpha_num|max:15',
-            'password'     => 'sometimes|required|alpha_dash|between:4,16|confirmed',
+            'password'     => 'sometimes|required|alpha_dash|min:4',
+            'secret_code'  => 'sometimes|required|alpha_dash|min:4',
         ];
     }
 }
