@@ -8,7 +8,6 @@
 
 namespace App\Service;
 
-use App\Constants\Common\SendVerifyErrorConstants;
 use App\Constants\Lend\LendStatusConstants;
 use App\Constants\User\UserStatusConstants;
 use App\Exceptions\ApiErrorCodeException;
@@ -45,15 +44,13 @@ class LendListService
         $withdrawal = 0;
         $accepted = 0;
         if (!is_null($user)) {
-            $orderAmount = app(AuthCodes::class)->getTotalMoneyAndTotalFee([$user->company_service_id]);
+            $orderAmount = app(AuthCodes::class)->getTotalMoneyAndTotalFee($user->getKey());
             $lendAmount = app(LendRecords::class)->getApplyingAndWithdrawalAmount([$user->getKey()]);
-            $withdrawal = round(
-                round($totalMoney = $orderAmount->totalMoney, 3) -
-                round($totalFee = $orderAmount->totalFee, 3) -
-                round($applying = $lendAmount->totalApply, 3) -
-                round($accepted = $lendAmount->totalAccept, 3),
-                3
-            );
+            $totalMoney = round($orderAmount->totalMoney, 3);
+            $totalFee = round($orderAmount->totalFee, 3);
+            $applying = round($lendAmount->totalApply, 3);
+            $accepted = round($lendAmount->totalAccept, 3);
+            $withdrawal = round($totalMoney - $totalFee - $applying - $accepted, 3);
         }
         $result = [
             'totalMoney' => $totalMoney,

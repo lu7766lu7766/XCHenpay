@@ -10,27 +10,6 @@ use Illuminate\Foundation\Http\FormRequest;
  */
 class AuthCodeOrderSearchRequest extends FormRequest
 {
-    public function initialize(
-        array $query = [],
-        array $request = [],
-        array $attributes = [],
-        array $cookies = [],
-        array $files = [],
-        array $server = [],
-        $content = null
-    ) {
-        parent::initialize(
-            $query,
-            $request,
-            $attributes,
-            $cookies,
-            $files,
-            $server,
-            $content
-        );
-        request()->headers->set('Accept', 'application/json');
-    }
-
     /**
      * Determine if the user is authorized to make this request.
      *

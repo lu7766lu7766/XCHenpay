@@ -11,6 +11,32 @@
                     <div class="card-body">
                         <div class="row delivery-amount">
                             <div class="col-sm">
+                                <div class="card mini-stat bg-primary">
+                                    <div class="card-body mini-stat-img">
+                                        <div class="mini-stat-icon">
+                                            <i class="mdi mdi-cube-outline float-right"></i>
+                                        </div>
+                                        <div class="text-white">
+                                            <h6 class="text-uppercase mb-3">总交易金额</h6>
+                                            <h4>{{ count.total | numFormat('0,0.000') }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="card mini-stat bg-primary" style="background-color: #ffb000 !important;">
+                                    <div class="card-body mini-stat-img">
+                                        <div class="mini-stat-icon">
+                                            <i class="mdi mdi-clock-fast float-right"></i>
+                                        </div>
+                                        <div class="text-white">
+                                            <h6 class="text-uppercase mb-3">总通道手续费</h6>
+                                            <h4>{{ count.totalFee | numFormat('0,0.000') }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm">
                                 <div class="card mini-stat bg-primary" style="background-color: #fb5597 !important;">
                                     <div class="card-body mini-stat-img">
                                         <div class="mini-stat-icon">
@@ -24,6 +50,19 @@
                                 </div>
                             </div>
                             <div class="col-sm">
+                                <div class="card mini-stat bg-primary" style="background-color: #5271af !important;">
+                                    <div class="card-body mini-stat-img">
+                                        <div class="mini-stat-icon">
+                                            <i class="mdi mdi-credit-card float-right"></i>
+                                        </div>
+                                        <div class="text-white">
+                                            <h6 class="text-uppercase mb-3">已提现金额</h6>
+                                            <h4>{{ count.totalAccepted | numFormat('0,0.000') }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm">
                                 <div class="card mini-stat bg-primary" style="background-color: #7d6cc4 !important;">
                                     <div class="card-body mini-stat-img">
                                         <div class="mini-stat-icon">
@@ -32,19 +71,6 @@
                                         <div class="text-white">
                                             <h6 class="text-uppercase mb-3">可提领金额</h6>
                                             <h4>{{ count.totalWithdrawal | numFormat('0,0.000') }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm">
-                                <div class="card mini-stat bg-primary">
-                                    <div class="card-body mini-stat-img">
-                                        <div class="mini-stat-icon">
-                                            <i class="mdi mdi-cube-outline float-right"></i>
-                                        </div>
-                                        <div class="text-white">
-                                            <h6 class="text-uppercase mb-3">总计</h6>
-                                            <h4>{{ count.total | numFormat('0,0.000') }}</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -193,8 +219,10 @@
                 column: 'created_at'
             },
             count: {
+                totalAccepted: 0,
                 totalApplying: 0,
                 totalWithdrawal: 0,
+                totalFee: 0,
                 total: 0
             }
         }),
@@ -217,7 +245,9 @@
                 const {0: totalRes, 1: applyTotalRes} = res
                 this.paginate.total = totalRes.data.total
                 this.count.total = applyTotalRes.data.total
+                this.count.totalFee = applyTotalRes.data.totalFee
                 this.count.totalApplying = applyTotalRes.data.totalApplying
+                this.count.totalAccepted = applyTotalRes.data.totalAccepted
                 this.count.totalWithdrawal = applyTotalRes.data.totalWithdrawal
             },
             onGetList(res) {

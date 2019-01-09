@@ -124,27 +124,6 @@ class LendRecords
     }
 
     /**
-     * @param string $startDate
-     * @param string $endDate
-     * @param string|null $userId
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
-    public function getTotal(
-        string $startDate,
-        string $endDate,
-        string $userId = null
-    ) {
-        $query = LendRecord::query()->whereBetween('created_at', [$startDate, $endDate]);
-        if (!is_null($userId)) {
-            $query->where('user_id', $userId);
-        }
-        $query->select(\DB::raw('sum(amount-fee) as total'));
-        $result = $query->first();
-
-        return $result;
-    }
-
-    /**
      * @param array $userId
      * @return LendRecord
      */
@@ -395,6 +374,32 @@ class LendRecords
         } catch (\Exception $e) {
             \Log::log('debug', $e->getMessage());
         }
+
+        return $result;
+    }
+
+    /**
+     * 取得下發total資訊:總金額(totalLendRecords),申請中金额(totalApplying),可提現金額(totalAccept)
+     * @param int|null $userId
+     * @return LendRecord
+     */
+    public function getLendRecordTotalInfo(int $userId = null)
+    {
+        $result = LendRecord::query()
+            ->whereHas('user', function (Builder $builder) use ($userId) {
+                if (!is_null($userId)) {
+                    $builder->where('id', $userId);
+                }
+            })
+            ->whereIn('lend_state', [LendRecords::APPLY_STATE, LendRecords::ACCEPT_STATE])
+            ->select(
+                \DB::raw('IFNULL(SUM(case when lend_state=0 then amount else 0 end),0) as totalApplying'),
+                \DB::raw('IFNULL(SUM(amount),0) as totalLendRecords'),
+                \DB::raw(
+                    'IFNULL(SUM(CASE WHEN lend_state=' . LendRecords::ACCEPT_STATE . ' THEN amount ELSE 0 END),0) 
+                    AS totalAccept'
+                )
+            )->first();
 
         return $result;
     }

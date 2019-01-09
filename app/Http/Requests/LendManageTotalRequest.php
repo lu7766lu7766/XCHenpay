@@ -19,22 +19,6 @@ class LendManageTotalRequest extends HandleInvalidRequest
     }
 
     /**
-     * @return string
-     */
-    public function getStartDate()
-    {
-        return $this->request['start_date'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getEndDate()
-    {
-        return $this->request['end_date'];
-    }
-
-    /**
      * Request args validate rules.
      * @link https://laravel.com/docs/master/validation lookup link and know how to write rule.
      * @return array
@@ -43,9 +27,7 @@ class LendManageTotalRequest extends HandleInvalidRequest
     protected function rules()
     {
         return [
-            'user_id'    => 'sometimes|required|integer',
-            'start_date' => 'required|date|date_format:Y-m-d H:i:s',
-            'end_date'   => 'required|date|date_format:Y-m-d H:i:s|after:start_date'
+            'user_id' => 'sometimes|required|integer',
         ];
     }
 
@@ -59,15 +41,8 @@ class LendManageTotalRequest extends HandleInvalidRequest
     protected function messages()
     {
         return [
-            'userId.required'       => '商户ID必填',
-            'userId.integer'        => '商户ID为数字',
-            'startDate.required'    => '开始时间为必填',
-            'startDate.date'        => '开始时间非日期格式',
-            'startDate.date_format' => '开始时间日期格式错误',
-            'endDate.required'      => '结束时间为必填',
-            'endDate.date'          => '结束时间非日期格式',
-            'endDate.date_format'   => '结束时间日期格式错误',
-            'endDate.after'         => '结束时间要晚于开始时间'
+            'userId.required' => '商户ID必填',
+            'userId.integer'  => '商户ID为数字',
         ];
     }
 }

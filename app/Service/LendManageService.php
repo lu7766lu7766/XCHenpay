@@ -99,7 +99,7 @@ class LendManageService
     }
 
     /**
-     * 下發管理申請列表申請中金额(totalApplying).可提現金額(totalWithdrawal)與小計(sum)
+     * 下發管理申請列表總金額,總手序費,申請中金额(totalApplying).可提現金額(totalWithdrawal)與小計(sum)
      * @return array
      */
     public function lendManageTotal()
@@ -107,18 +107,15 @@ class LendManageService
         $result = null;
         try {
             $handle = LendManageTotalRequest::getHandle($this->data);
-            $sum = app(LendRecords::class)
-                ->getTotal(
-                    $handle->getStartDate(),
-                    $handle->getEndDate(),
-                    $handle->getUserId()
-                );
-            list($lendRecords, $tradeLogs) = app(AuthCodes::class)->applyingAndWithdrawalAmount($handle->getUserId());
-            $totalRealMoney = round($tradeLogs['totalRealMoney'], 3);
-            $totalLendRecords = round($lendRecords['totalLendRecords'], 3);
+            $sum = app(AuthCodes::class)->getTotalMoneyAndTotalFee($handle->getUserId());
+            $totalRealMoney = round(app(AuthCodes::class)->getTotalRealMoney($handle->getUserId())->totalRealMoney, 3);
+            $lendRecords = app(LendRecords::class)->getLendRecordTotalInfo($handle->getUserId());
+            $totalLendRecords = round($lendRecords->totalLendRecords, 3);
             $result = [
-                'total'           => round($sum['total'], 3),
-                'totalApplying'   => round($lendRecords['totalApplying'], 3),
+                'total'           => round($sum->totalMoney, 3),
+                'totalFee'        => round($sum->totalFee, 3),
+                'totalApplying'   => round($lendRecords->totalApplying, 3),
+                'totalAccepted'   => round($lendRecords->totalAccept, 3),
                 'totalWithdrawal' => round($totalRealMoney - $totalLendRecords, 3)
             ];
         } catch (ValidationException $e) {

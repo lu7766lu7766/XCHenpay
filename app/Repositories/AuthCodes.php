@@ -6,7 +6,6 @@ use App\Constants\Order\OrderStatusConstants;
 use App\Constants\Roles\RolesConstants;
 use App\Constants\User\UserStatusConstants;
 use App\Models\Authcode;
-use App\Models\LendRecord;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -138,25 +137,12 @@ class AuthCodes
     }
 
     /**
-     * 申請中金额,可提現金額
      * @param int|null $userId
-     * @return array
+     * @return Authcode
      */
-    public function applyingAndWithdrawalAmount(int $userId = null)
+    public function getTotalRealMoney(int $userId = null)
     {
-        $lendRecords = LendRecord::query()
-            ->whereHas('user', function (Builder $builder) use ($userId) {
-                if (!is_null($userId)) {
-                    $builder->where('id', $userId);
-                }
-            })
-            ->whereIn('lend_state', [LendRecords::APPLY_STATE, LendRecords::ACCEPT_STATE])
-            ->select(
-                \DB::raw('IFNULL(SUM(case when lend_state=0 then amount else 0 end),0) as totalApplying'),
-                \DB::raw('IFNULL(SUM(amount),0) as totalLendRecords')
-            )
-            ->first();
-        $tradeLogs = Authcode::query()
+        $result = Authcode::query()
             ->whereHas('company', function (Builder $builder) use ($userId) {
                 if (!is_null($userId)) {
                     $builder->where('id', $userId);
@@ -166,7 +152,7 @@ class AuthCodes
             ->select(\DB::raw('IFNULL(SUM(amount - fee),0) as totalRealMoney'))
             ->first();
 
-        return [$lendRecords, $tradeLogs];
+        return $result;
     }
 
     /**
@@ -214,15 +200,24 @@ class AuthCodes
 
     /**
      * 得到指定對象的總加合
-     * @param array $companyServiceId
+     * @param int|null $userId
      * @return Authcode
      */
-    public function getTotalMoneyAndTotalFee(array $companyServiceId)
+    public function getTotalMoneyAndTotalFee(int $userId = null)
     {
         return Authcode::query()
-            ->select(\DB::raw('IFNULL(SUM(amount),0 )as totalMoney'), \DB::raw('IFNULL(SUM(fee),0) as totalFee'))
-            ->whereIn('company_service_id', $companyServiceId)
-            ->where('pay_state', OrderStatusConstants::ALL_DONE_CODE)->first();
+            ->select(
+                \DB::raw('IFNULL(SUM(amount),0 )as totalMoney'),
+                \DB::raw('IFNULL(SUM(fee),0) as totalFee')
+            )
+            ->whereHas('company', function (Builder $builder) use ($userId) {
+                $builder->whereHas('roles', function (Builder $b) {
+                    $b->where('slug', RolesConstants::USER);
+                });
+                if (!is_null($userId)) {
+                    $builder->where('id', $userId);
+                }
+            })->where('pay_state', OrderStatusConstants::ALL_DONE_CODE)->first();
     }
 
     /**
