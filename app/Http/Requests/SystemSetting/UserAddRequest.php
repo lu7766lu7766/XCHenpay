@@ -8,7 +8,7 @@
 
 namespace App\Http\Requests\SystemSetting;
 
-use App\Constants\UserStatusConstants;
+use App\Constants\User\UserStatusConstants;
 use App\Http\Requests\HandleInvalidRequest;
 use Illuminate\Validation\Rule;
 

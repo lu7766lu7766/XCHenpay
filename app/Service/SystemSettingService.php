@@ -8,7 +8,7 @@
 
 namespace App\Service;
 
-use App\Constants\UserApplyStatusConstants;
+use App\Constants\User\UserApplyStatusConstants;
 use App\Http\Requests\SystemSetting\UserAddRequest;
 use App\Http\Requests\SystemSetting\UserDelRequest;
 use App\Http\Requests\SystemSetting\UserDetailRequest;
