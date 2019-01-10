@@ -8,9 +8,10 @@
 
 namespace App\Service;
 
+use App\Constants\ErrorCode\Article\OOO3LendListErrorCodes;
 use App\Constants\Lend\LendStatusConstants;
 use App\Constants\User\UserStatusConstants;
-use App\Exceptions\ApiErrorCodeException;
+use App\Exceptions\ApiErrorScalarCodeException;
 use App\Http\Requests\LendList\LendListApplyRequest;
 use App\Http\Requests\LendList\LendListIndexRequest;
 use App\Http\Requests\LendListInfoRequest;
@@ -22,7 +23,7 @@ use App\Repositories\LendRecords;
 use App\Traits\SendVerifyCodeTraits;
 use App\Traits\Singleton;
 use App\User;
-use App\Validator\CodeValidator;
+use App\Validator\SecurityCodeValidator;
 use Carbon\Carbon;
 use Cartalyst\Sentinel\Users\UserInterface;
 
@@ -99,11 +100,12 @@ class LendListService
         $item = null;
         $user = \Sentinel::getUser();
         if (!is_null($user)) {
-            $validator = new CodeValidator(
-                app(LendRecords::class)->findValidateCode($user, $request->getValidateCode())
-            );
-            if (!$validator->success()) {
-                throw new ApiErrorCodeException($validator->getErrMsg(), $validator->getErrCode());
+            $validator = new SecurityCodeValidator($user, $request->getSecurityCode());
+            if (!$validator->isSuccess()) {
+                throw new ApiErrorScalarCodeException(
+                    '安全码错误',
+                    OOO3LendListErrorCodes::SECURITY_CODE_ERROR
+                );
             }
             $accountId = $request->getTargetId();
             $bankAccounts = app(BankAccountRep::class)->findUser($user->getKey(), $accountId);

@@ -64,7 +64,7 @@ class LendListController extends Controller
      */
     public function apply(LendListApplyRequest $request)
     {
-        return ['data' => LendListService::getInstance()->apply($request)];
+        return LendListService::getInstance()->apply($request);
     }
 
     /**

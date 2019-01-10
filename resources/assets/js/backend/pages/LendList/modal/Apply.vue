@@ -10,12 +10,9 @@
                 <div class="modal-body">
                     <form class="form-horizontal delivery-form">
                         <div class="form-group row">
-                            <label class="col-md-3 control-label required">驗證碼<b>*</b></label>
+                            <label class="col-md-3 control-label required">安全码<b>*</b></label>
                             <div class="col-md-9">
-                                <div class="code">
-                                    <input type="text" class="form-control" v-model="verify_code">
-                                    <button type="button" class="btn btn-code" @click="sendVerifyCode">獲取驗證碼</button>
-                                </div>
+                                <input type="password" class="form-control" v-model="code">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -70,7 +67,7 @@
             target_id: '',
             amount: '',
             note: '',
-            verify_code: ''
+            code: ''
         }),
         rules: {
             amount: {
@@ -90,9 +87,9 @@
                     message: '下发金额 最大不可超过 50000'
                 }
             },
-            verify_code: {
+            code: {
                 require: {
-                    message: '验证码 不得为空白'
+                    message: '安全码 不得为空白'
                 }
             }
         },
@@ -101,12 +98,7 @@
                 this.target_id = ''
                 this.amount = ''
                 this.note = ''
-                this.verify_code = ''
-            },
-            onApply() {
-                this.createSuccess()
-                this.$parent.amountInit()
-                $(this.$refs.modal).modal('hide')
+                this.code = ''
             },
             apply() {
                 try {
@@ -114,19 +106,16 @@
                 } catch (e) {
                     return alert(e)
                 }
-                this.proccessAjax('apply', {
-                    target_id: this.target_id, //	下發帳戶ID
-                    amount: this.amount, //	下發金額
-                    note: this.note, //
-                    code: this.verify_code
-                }, this.onApply)
+                this.proccessAjax('apply', _.pick(this, ['target_id', 'amount', 'note', 'code']), this.onApply)
             },
-            sendVerifyCode() {
-                this.proccessAjax('sendVerifyCode', {}, res => {
-                    if (res.data.result == 'success') {
-                        alert('验证码已发送至您的手机，请留意讯息')
-                    }
-                })
+            onApply(res) {
+                if (res.data) {
+                    this.createSuccess()
+                    this.$parent.amountInit()
+                    $(this.$refs.modal).modal('hide')
+                } else {
+                    return alert('新增失败，请确认该帐户可提领金额是否足够')
+                }
             }
         },
         computed: {

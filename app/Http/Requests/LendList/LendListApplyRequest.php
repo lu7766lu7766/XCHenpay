@@ -33,7 +33,7 @@ class LendListApplyRequest extends FormRequest
     /**
      * @return string
      */
-    public function getValidateCode()
+    public function getSecurityCode()
     {
         return $this->get('code');
     }
