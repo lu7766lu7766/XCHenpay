@@ -158,7 +158,7 @@ Route::group(
         Route::post('data', 'AuthcodeController@data')->name('authcode.data');
         Route::get('logQuery/dataInit', 'AuthcodeController@dataInit')->name('authcode.dataInit');
         Route::post('logQuery/callNotify', 'AuthcodeController@callNotify')->name('authcode.callNotify')
-            ->middleware(['json_api', 'has:authority,CallNotifyPolicy']);
+            ->middleware(['json_api']);
     }
 );
 #lendList (下發列表)

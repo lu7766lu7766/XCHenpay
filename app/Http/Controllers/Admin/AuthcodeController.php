@@ -149,7 +149,7 @@ class AuthcodeController extends Controller
      */
     public function callNotify(AuthCodeOrderNotifyRequest $request)
     {
-        return ['data' => OrderService::getInstance()->callNotify($request)];
+        return ['data' => OrderService::getInstance(Sentinel::getUser())->callNotify($request)];
     }
 
     public function showState(Authcode $authcode)

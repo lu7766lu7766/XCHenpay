@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Policies\CallNotifyPolicy;
 use App\Policies\FeeListPolicy;
 use App\Policies\FeeManagementPolicy;
 use App\Policies\FillOrderPolicy;
 use App\Policies\LendManagePolicy;
 use App\Policies\MerchantsPolicy;
+use App\Policies\OrderNotifyPolicy;
 use App\Policies\NotifyOrderFailPolicy;
 use App\Policies\TrashedMerchantsPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         'MerchantsPolicy'        => MerchantsPolicy::class,
         'TrashedMerchantsPolicy' => TrashedMerchantsPolicy::class,
         'FeeListPolicy'          => FeeListPolicy::class,
-        'CallNotifyPolicy'       => CallNotifyPolicy::class,
+        'OrderNotifyPolicy'      => OrderNotifyPolicy::class,
         'NotifyOrderFailPolicy'  => NotifyOrderFailPolicy::class,
     ];
 

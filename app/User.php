@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 
 /**
  * Class User
@@ -37,6 +38,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class User extends EloquentUser
 {
+    use Authorizable;
     /**
      * The database table used by the model.
      *

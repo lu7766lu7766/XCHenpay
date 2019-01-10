@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string trade_type
  * @property TradeType tradeType
  * @property string pay_end_time
+ * @property string company_service_id
  */
 class Authcode extends Model
 {

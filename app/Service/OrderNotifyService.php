@@ -8,6 +8,7 @@
 
 namespace App\Service;
 
+use App\Constants\Order\OrderStatusConstants;
 use App\Constants\OrderNotify\OrderNotifyStatus;
 use App\Models\Authcode;
 use XC\Independent\Kit\Network\Curl\Curl;
@@ -34,12 +35,13 @@ class OrderNotifyService
     public function notify(Authcode $authcode)
     {
         $result = false;
-        $response = $this->curl->get($this->url . '/' . $authcode->getKey());
-        if ($response->isSuccess()) {
-            if ($response->body() == OrderNotifyStatus::SUCCESS) {
-                $result = true;
-            }
-        };
+        if (($authcode->pay_state == OrderStatusConstants::SUCCESS_CODE) ||
+            ($authcode->pay_state == OrderStatusConstants::ALL_DONE_CODE)) {
+            $response = $this->curl->get($this->url . '/' . $authcode->getKey());
+            if ($response->isSuccess()) {
+                $result = $response->body() == OrderNotifyStatus::SUCCESS;
+            };
+        }
 
         return $result;
     }

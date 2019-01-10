@@ -8,14 +8,24 @@
 
 namespace App\Service;
 
-use App\Constants\Order\OrderStatusConstants;
 use App\Http\Requests\AuthCodeOrderNotifyRequest;
 use App\Repositories\AuthCodes;
 use App\Traits\Singleton;
+use App\User;
 
 class OrderService
 {
     use Singleton;
+    /** @var User $user */
+    private $user;
+
+    /**
+     * @param User $user
+     */
+    public function init(User $user)
+    {
+        $this->user = $user;
+    }
 
     /**
      * @param AuthCodeOrderNotifyRequest $request
@@ -25,8 +35,7 @@ class OrderService
     {
         $result = false;
         $order = app(AuthCodes::class)->find($request->getId());
-        if (!is_null($order) && ($order->pay_state == OrderStatusConstants::SUCCESS_CODE) ||
-            ($order->pay_state == OrderStatusConstants::ALL_DONE_CODE)) {
+        if (!is_null($order) && $this->user->can('notify', ['OrderNotifyPolicy', $order])) {
             $result = app(OrderNotifyService::class)->notify($order);
         }
 
