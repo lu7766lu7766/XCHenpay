@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-12">
             <company-selector v-model="company_id" :options="companies"/>
-            <div class="card m-b-30" v-if="company_id !== ''">
+            <div class="card m-b-30" v-if="company_id !== -1">
                 <div class="card-header">
                     手续费列表
                 </div>
@@ -73,12 +73,12 @@
                     {val: '0', name: '取消'}
                 ]
             },
-            company_id: '',
+            company_id: -1,
             companies: []
         }),
         watch: {
             company_id(nValue) {
-                if (nValue != '') {
+                if (nValue !== -1) {
                     this.search()
                 }
             }
