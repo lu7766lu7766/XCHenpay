@@ -70,13 +70,17 @@
             code: ''
         }),
         rules: {
+            target_id: {
+                require: {
+                    message: '下发帐号 不得为空白'
+                }
+            },
             amount: {
                 require: {
                     message: '下发金额 不得为空白'
                 },
-                type: {
-                    value: 'number',
-                    message: '下发金额 请输入数字'
+                integer: {
+                    message: '下发金额 请输入整数'
                 },
                 min: {
                     value: 1000,
@@ -108,14 +112,10 @@
                 }
                 this.proccessAjax('apply', _.pick(this, ['target_id', 'amount', 'note', 'code']), this.onApply)
             },
-            onApply(res) {
-                if (res.data) {
-                    this.createSuccess()
-                    this.$parent.amountInit()
-                    $(this.$refs.modal).modal('hide')
-                } else {
-                    return alert('新增失败，请确认该帐户可提领金额是否足够')
-                }
+            onApply() {
+                this.createSuccess()
+                this.$parent.amountInit()
+                $(this.$refs.modal).modal('hide')
             }
         },
         computed: {

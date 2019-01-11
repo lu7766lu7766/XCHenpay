@@ -20,17 +20,14 @@ use App\Models\LendRecord;
 use App\Repositories\AuthCodes;
 use App\Repositories\BankAccountRep;
 use App\Repositories\LendRecords;
-use App\Traits\SendVerifyCodeTraits;
 use App\Traits\Singleton;
 use App\User;
 use App\Validator\SecurityCodeValidator;
 use Carbon\Carbon;
-use Cartalyst\Sentinel\Users\UserInterface;
 
 class LendListService
 {
     use Singleton;
-    use SendVerifyCodeTraits;
 
     /**
      * @return array
@@ -113,31 +110,38 @@ class LendListService
             $enableWithdrawal = $this->amountInfo()['withdrawal'];
             $lendFee = $user->lend_fee * $applyAmount;
             $withdrawal = $lendFee + $applyAmount;
-            if ($enableWithdrawal >= $withdrawal &&
-                $bankAccounts->isNotEmpty() &&
-                $user->apply_status == UserStatusConstants::ON
-            ) {
-                \DB::beginTransaction();
-                $item = app(LendRecords::class)->create(
-                    [
-                        'record_seq'   => Carbon::now('Asia/Taipei')->format('YmdHis'),
-                        'user_id'      => $user->getKey(),
-                        'account_id'   => $accountId,
-                        'amount'       => $withdrawal,
-                        'fee'          => $lendFee,
-                        'lend_state'   => LendStatusConstants::APPLY_CODE,
-                        'lend_summary' => LendStatusConstants::APPLY,
-                        'description'  => $request->getNote()
-                    ]
+            if ($enableWithdrawal <= $withdrawal) {
+                throw new ApiErrorScalarCodeException('可提领金额不足', OOO3LendListErrorCodes::ENABLE_WITHDRAWAL_NOT_ENOUGH);
+            }
+            if ($bankAccounts->isEmpty()) {
+                throw new ApiErrorScalarCodeException('银行卡为空', OOO3LendListErrorCodes::BANK_CARD_IS_EMPTY);
+            }
+            if ($user->apply_status == UserStatusConstants::OFF) {
+                throw new ApiErrorScalarCodeException(
+                    '请确认否有申请权限',
+                    OOO3LendListErrorCodes::PLEASE_CHECK_APPLY_PERMISSION
                 );
-                if (!is_null($item)) {
-                    activity($user->email)
-                        ->causedBy($user)
-                        ->log('提交一笔下发申请，单号：' . $item->record_seq);
-                    \DB::commit();
-                } else {
-                    \DB::rollBack();
-                }
+            }
+            \DB::beginTransaction();
+            $item = app(LendRecords::class)->create(
+                [
+                    'record_seq'   => Carbon::now('Asia/Taipei')->format('YmdHis'),
+                    'user_id'      => $user->getKey(),
+                    'account_id'   => $accountId,
+                    'amount'       => $withdrawal,
+                    'fee'          => $lendFee,
+                    'lend_state'   => LendStatusConstants::APPLY_CODE,
+                    'lend_summary' => LendStatusConstants::APPLY,
+                    'description'  => $request->getNote()
+                ]
+            );
+            if (!is_null($item)) {
+                activity($user->email)
+                    ->causedBy($user)
+                    ->log('提交一笔下发申请，单号：' . $item->record_seq);
+                \DB::commit();
+            } else {
+                \DB::rollBack();
             }
         }
 
@@ -195,13 +199,5 @@ class LendListService
         }
 
         return $result;
-    }
-
-    /**
-     * @return UserInterface|User
-     */
-    public function getReceiver()
-    {
-        return \Sentinel::getUser();
     }
 }

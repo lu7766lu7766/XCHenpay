@@ -33,6 +33,9 @@ export default {
                         case 'number':
                             proccessValidate(isNaN(parseInt(realVar)), rule.message)
                             break
+                        case 'integer':
+                            proccessValidate(realVar !== parseInt(realVar, 10), rule.message)
+                            break
                         case 'min':
                             if (typeof realVar == 'number') {
                                 proccessValidate(realVar < rule.value, rule.message)

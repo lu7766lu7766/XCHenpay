@@ -59,7 +59,6 @@ Route::group(
         });
     }
 );
-
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin'], 'as' => 'admin.'],
     function () {
@@ -175,7 +174,6 @@ Route::group(
             Route::post('/apply', 'LendListController@apply');
             Route::post('/total', 'LendListController@total');
             Route::get('/{id}', 'LendListController@info');
-            Route::post('sendVerifyCode', 'LendListController@sendVerifyCode');
         });
     }
 );
