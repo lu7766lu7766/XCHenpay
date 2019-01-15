@@ -2,7 +2,7 @@
     <li class="dropdown notification-list">
         <a class="nav-link arrow-none waves-effect" :href="link">
             <i class="ti-bell noti-icon"></i>
-            <span id="lendApplyNotifyCount">{{ count }}</span>
+            <span class="badge badge-pill badge-danger noti-icon-badge">{{ count }}</span>
         </a>
     </li>
 </template>
