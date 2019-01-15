@@ -14,11 +14,11 @@
                 </span>
                 <span>
                     <i class="ti-timer noti-icon"></i>
-                    <span>手續費: {{ totalFee | numFormat('0,0.000') }}</span>
+                    <span>手续费: {{ totalFee | numFormat('0,0.000') }}</span>
                 </span>
                 <span>
                     <i class="ti-clipboard noti-icon"></i>
-                    <span>筆數: {{ totalNum }}</span>
+                    <span>笔数: {{ totalNum }}</span>
                 </span>
             </a>
         </div>
