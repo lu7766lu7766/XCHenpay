@@ -254,18 +254,21 @@ class AuthCodes
     public function getTradeInfoOnToday(string $companyServiceId = null)
     {
         try {
+            $time = Carbon::today();
             $query = Authcode::query()
                 ->select(
-                    \DB::raw('IFNULL(SUM(amount),0 )as totalMoney'),
-                    \DB::raw('IFNULL(SUM(fee),0) as totalFee'),
+                    \DB::raw('IFNULL(round(SUM(amount),2),0)as totalMoney'),
+                    \DB::raw('IFNULL(round(SUM(fee),2),0) as totalFee'),
                     \DB::raw('count(*) as totalNum')
                 )
-                ->where('pay_end_time', '>=', Carbon::today()->startOfDay()->toDateTimeString())
-                ->where('pay_end_time', '<=', Carbon::today()->endOfDay()->toDateTimeString())
-                ->whereIn('pay_state', [
-                    OrderStatusConstants::ALL_DONE_CODE,
-                    OrderStatusConstants::SUCCESS_CODE,
-                ]);
+                ->where('created_at', '>=', $time->startOfDay()->toDateTimeString())
+                ->where('created_at', '<=', $time->endOfDay()->toDateTimeString())
+                ->where('pay_state', OrderStatusConstants::ALL_DONE_CODE)
+                ->whereHas('company', function (Builder $builder) {
+                    $builder->whereHas('roles', function (Builder $b) {
+                        $b->where('slug', RolesConstants::USER);
+                    });
+                });
             if (!is_null($companyServiceId)) {
                 $query->where('company_service_id', $companyServiceId);
             }
