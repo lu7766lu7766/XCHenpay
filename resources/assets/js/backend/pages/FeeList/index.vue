@@ -3,7 +3,7 @@
         <div class="col-lg-12">
             <div class="card m-b-30">
                 <div class="card-header">
-                    手续费列表
+                    通道列表
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

@@ -36,12 +36,12 @@
                 <a href="#"><i class="ti-direction-alt"></i>通道设置</a>
                 @if(Sentinel::getUser()->hasAccess('channel.feeManagement'))
                     <ul class="submenu">
-                        <li><a href="{{route('admin.channel.feeManagement.view')}}">手续费管理</a></li>
+                        <li><a href="{{route('admin.channel.feeManagement.view')}}">通道管理</a></li>
                     </ul>
                 @endif
                 @if(Sentinel::getUser()->hasAccess('channel.feeList'))
                     <ul class="submenu">
-                        <li><a href="{{route('admin.channel.feeList.view')}}">手续费列表</a></li>
+                        <li><a href="{{route('admin.channel.feeList.view')}}">通道列表</a></li>
                     </ul>
                 @endif
             </li>

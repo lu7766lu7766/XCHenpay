@@ -4,7 +4,7 @@
             <company-selector v-model="company_id" :options="companies"/>
             <div class="card m-b-30" v-if="company_id !== -1">
                 <div class="card-header">
-                    手续费列表
+                    通道列表
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

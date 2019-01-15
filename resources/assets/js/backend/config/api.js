@@ -322,14 +322,14 @@ export default {
             method: 'get'
         }
     },
-    /** 手續費列表 */
+    /** 通道列表 */
     feeList: {
         list: {
             uri: '/admin/channel/feeList',
             method: 'post'
         }
     },
-    /** 手續費管理 */
+    /** 通道管理 */
     feeManage: {
         dataInit: {
             uri: '/admin/channel/feeManagement/merchantList',
