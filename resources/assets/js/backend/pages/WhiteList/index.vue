@@ -83,7 +83,7 @@
 </script>
 
 <style>
-    .badge.badge-info.badge-pill:not(:first-child) {
-        margin-left: 3px;
+    .badge.badge-info.badge-pill {
+        margin-right: 3px;
     }
 </style>
