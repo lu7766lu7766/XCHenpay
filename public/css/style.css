@@ -110,8 +110,9 @@ body {
   word-break: break-all;
 }
 
-.text-grey {
+.text-uncontrol {
   color: #999;
+  cursor: no-drop;
 }
 
 .text-lg {
@@ -243,7 +244,7 @@ body {
   }
 }
 
-.notification-list .ti-email, .notification-list .ti-bell, .notification-list .ti-calendar {
+.notification-list .noti-icon {
   font-size: 30px;
 }
 
@@ -275,6 +276,7 @@ body {
   display: inline-block;
   vertical-align: middle;
   margin-right: 3px;
+  font-size: 20px;
 }
 
 .topbar-custom .ip {
@@ -298,6 +300,10 @@ body {
 .topbar-custom .pc-today-list > span > span {
   display: inline-block;
   vertical-align: middle;
+}
+
+.topbar-custom .pc-today-list > span > span i.noti-icon {
+  font-size: 20px;
 }
 
 .topbar-custom .pc-today-list > span:nth-child(1) {

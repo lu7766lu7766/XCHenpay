@@ -35,11 +35,8 @@ class AuthcodeController extends Controller
         }
 
         return [
-            "can_show_company" => !!$switchPromission,
-            "can_edit_fee"     => $user->hasAccess('logQuery.editFeeInfo') || $user->hasAccess('logQuery'),
-            "can_edit_order"   => $user->hasAccess('logQuery.showState') || $user->hasAccess('logQuery'),
-            "companies"        => $companies ?? [],
-            "user"             => $user
+            "companies" => $companies ?? [],
+            "user"      => $user
         ];
     }
 

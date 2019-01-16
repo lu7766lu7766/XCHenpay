@@ -156,13 +156,16 @@
                                 <a @click="showInfo(data.id)">
                                     <i class="mdi mdi-information-outline text-blue"></i>
                                 </a>
-                                <a @click="showState(data.id)" v-if="$parent.canEditOrder">
+                                <a v-if="hasPermission(Permission.OrderEdit) || hasPermission(Permission.OrderSearch)"
+                                   @click="showState(data.id)">
                                     <i class="mdi mdi-pencil-box-outline"></i>
                                 </a>
-                                <a class="back"
-                                   v-if="needNotify(data.pay_state) && hasPermission(Permission.OrderNotify)"
-                                   @click="confirmNotify(data.id)" >
-                                    <i class="far fa-caret-square-down text-orange"></i>
+                                <a class="back">
+                                    <i v-if="needNotify(data.pay_state) && hasPermission(Permission.OrderNotify)"
+                                       @click="confirmNotify(data.id)"
+                                       class="far fa-caret-square-down text-orange"></i>
+                                    <i v-else
+                                       class="far fa-caret-square-down text-uncontrol"></i>
                                 </a>
                             </td>
                         </tr>
