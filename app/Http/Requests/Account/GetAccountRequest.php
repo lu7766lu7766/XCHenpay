@@ -8,6 +8,7 @@
 
 namespace App\Http\Requests\Account;
 
+use App\Constants\Account\AccountStatusConstants;
 use App\Http\Requests\HandleInvalidRequest;
 use Illuminate\Validation\Rule;
 
@@ -18,7 +19,7 @@ class GetAccountRequest extends HandleInvalidRequest
      */
     public function getUserId()
     {
-        return $this->request['user_id'];
+        return $this->request['user_id'] ?? null;
     }
 
     /**
@@ -54,6 +55,14 @@ class GetAccountRequest extends HandleInvalidRequest
     }
 
     /**
+     * @return string|null
+     */
+    public function getStatus()
+    {
+        return $this->request['status'] ?? null;
+    }
+
+    /**
      * Request args validate rules.
      * @link https://laravel.com/docs/master/validation lookup link and know how to write rule.
      * @return array
@@ -62,11 +71,12 @@ class GetAccountRequest extends HandleInvalidRequest
     protected function rules()
     {
         return [
-            'user_id' => 'required|integer',
+            'user_id' => 'sometimes|required|integer',
             'search'  => 'sometimes|required|string',
             'page'    => 'sometimes|required|integer|min:1',
             'perpage' => 'sometimes|required|integer|between:1,100',
             'sort'    => 'required|' . Rule::in(['ASC', 'DESC']),
+            'status'  => 'sometimes|required|' . Rule::in(AccountStatusConstants::enum()),
         ];
     }
 

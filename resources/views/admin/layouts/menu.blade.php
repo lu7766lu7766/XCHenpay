@@ -11,12 +11,11 @@
                 @if(Sentinel::getUser()->hasAccess('merchants') || Sentinel::getUser()->hasAccess('merchants.view'))
                     <li><a href="{{ route('admin.merchants.view') }}">商户管理</a></li>
                 @endif
-                @if(Sentinel::getUser()->hasAccess('account.index') || Sentinel::getUser()->hasAccess('account'))
-                    <li><a href="{{ URL::to('admin/account') }}">行卡列表</a></li>
+                @if(Sentinel::getUser()->can('management','BankCardListPolicy'))
+                    <li><a href="{{ route('admin.bankCard.view') }}">行卡列表</a></li>
                 @endif
-
-                @if(Sentinel::getUser()->hasAccess('account.createAccount') || Sentinel::getUser()->hasAccess('account'))
-                    <li><a href="{{ URL::to('admin/account/createAccount') }}">行卡绑定</a></li>
+                @if(Sentinel::getUser()->can('management','BindBankCardPolicy'))
+                    <li><a href="{{ route('user.bankCard.bind.view') }}">行卡绑定</a></li>
                 @endif
 
                 @if(Sentinel::getUser()->hasAccess('lendManage.index') || Sentinel::getUser()->hasAccess('lendManage'))

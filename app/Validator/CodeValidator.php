@@ -16,9 +16,13 @@ use Carbon\Carbon;
 
 class CodeValidator
 {
+    /** @var bool */
     private $success = true;
+    /** @var string $errorMsg */
     private $errorMsg = '';
-    private $errorCode;
+    /** @var int|null $errorCode */
+    private $errorCode = null;
+    /** @var verifyCode|null $item */
     private $item;
 
     /**
@@ -50,7 +54,7 @@ class CodeValidator
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getErrCode()
     {
@@ -65,9 +69,6 @@ class CodeValidator
         return $this->success;
     }
 
-    /**
-     * @throws ApiErrorCodeException
-     */
     private function check()
     {
         if (is_null($this->item)) {

@@ -2,13 +2,15 @@
 
 namespace App\Providers;
 
+use App\Policies\BankCardListPolicy;
+use App\Policies\BindBankCardPolicy;
 use App\Policies\FeeListPolicy;
 use App\Policies\FeeManagementPolicy;
 use App\Policies\FillOrderPolicy;
 use App\Policies\LendManagePolicy;
 use App\Policies\MerchantsPolicy;
-use App\Policies\OrderNotifyPolicy;
 use App\Policies\NotifyOrderFailPolicy;
+use App\Policies\OrderNotifyPolicy;
 use App\Policies\TrashedMerchantsPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -29,6 +31,8 @@ class AuthServiceProvider extends ServiceProvider
         'FeeListPolicy'          => FeeListPolicy::class,
         'OrderNotifyPolicy'      => OrderNotifyPolicy::class,
         'NotifyOrderFailPolicy'  => NotifyOrderFailPolicy::class,
+        'BindBankCardPolicy'     => BindBankCardPolicy::class,
+        'BankCardListPolicy'     => BankCardListPolicy::class,
     ];
 
     /**

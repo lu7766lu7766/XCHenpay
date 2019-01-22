@@ -9,7 +9,9 @@
 namespace App\Repositories;
 
 use Activation;
+use App\Constants\Common\VerifyType;
 use App\Constants\Roles\RolesConstants;
+use App\Models\verifyCode;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -51,7 +53,7 @@ class UserRepo
 
         return $query->get();
     }
-    
+
     /**
      * 取得指定商戶列表資料明細
      * @param int $userId
@@ -421,6 +423,26 @@ class UserRepo
             Activation::where('user_id', $userId)->delete();
         } catch (\Throwable $e) {
             $result = false;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param User $user
+     * @param string $code
+     * @return verifyCode|null
+     */
+    public function findValidateCode(User $user, string $code)
+    {
+        $result = null;
+        try {
+            $result = $user->verifyCodes()
+                ->where('code', $code)
+                ->where('type', VerifyType::ACCOUNT)
+                ->first();
+        } catch (\Exception $e) {
+            \Log::log('debug', $e->getMessage());
         }
 
         return $result;

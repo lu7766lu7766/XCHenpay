@@ -13,20 +13,11 @@ use App\Http\Requests\HandleInvalidRequest;
 class DeleteAccountRequest extends HandleInvalidRequest
 {
     /**
-     * @return int|null
-     */
-    public function getUserId()
-    {
-        return $this->request['user_id'] ?? null;
-    }
-
-    /**
-     * 銀行帳號流水號
      * @return int
      */
-    public function getBankAccountId()
+    public function getId()
     {
-        return $this->request['bank_account_id'];
+        return $this->request['id'];
     }
 
     /**
@@ -38,8 +29,7 @@ class DeleteAccountRequest extends HandleInvalidRequest
     protected function rules()
     {
         return [
-            'user_id'         => 'sometimes|required|integer',
-            'bank_account_id' => 'required|integer',
+            'id' => 'required|integer',
         ];
     }
 
@@ -53,9 +43,8 @@ class DeleteAccountRequest extends HandleInvalidRequest
     protected function messages()
     {
         return [
-            'user_id.integer'          => 'user_id为int',
-            'bank_account_id.required' => 'bank_account_id为必填',
-            'bank_account_id.integer'  => 'bank_account_id为int',
+            'id.required' => 'id为必填',
+            'id.integer'  => 'id为int',
         ];
     }
 }

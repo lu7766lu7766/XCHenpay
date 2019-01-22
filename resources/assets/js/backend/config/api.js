@@ -137,43 +137,51 @@ export default {
     /** 行卡列表 */
     bankAccountList: {
         dataInit: {
-            uri: '/admin/account/getCompany',
+            uri: ['/admin/bankCard/getCompany', '/admin/bankCard/status'],
             method: 'get'
         },
         list: {
-            uri: '/admin/account/accountData',
+            uri: '/admin/bankCard',
             method: 'post'
         },
         total: {
-            uri: '/admin/account/total',
+            uri: '/admin/bankCard/total',
             method: 'post'
         },
+        update: {
+            uri: '/admin/bankCard',
+            method: 'put'
+        },
         delete: {
-            uri: '/admin/account/deleteAccount',
+            uri: '/admin/bankCard',
             method: 'delete'
         }
     },
     /** 行卡綁定 */
     bankAccountBind: {
+        dataInit: {
+            uri: '/user/bankCard/bind/status',
+            method: 'get'
+        },
         list: {
-            uri: '/admin/account/accountList',
+            uri: '/user/bankCard/bind',
             method: 'post'
         },
         total: {
-            uri: '/admin/account/listTotal',
+            uri: '/user/bankCard/bind/total',
+            method: 'post'
+        },
+        info: {
+            uri: '/user/bankCard/bind/info',
             method: 'post'
         },
         create: {
-            uri: '/admin/account/addAccount',
+            uri: '/user/bankCard/bind/binding',
             method: 'post'
         },
         verify: {
-            uri: '/admin/account/sendVerifyCode',
+            uri: '/user/bankCard/bind/sendVerifyCode',
             method: 'post'
-        },
-        delete: {
-            uri: '/admin/account/deleteAccountData',
-            method: 'delete'
         }
     },
     /** 報表統計 */

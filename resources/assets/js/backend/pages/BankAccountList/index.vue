@@ -12,7 +12,14 @@
                 </div>
                 <div class="card-body">
                     <div class="search-box">
-
+                        <div class="search-select">
+                            <select class="form-control" v-model="searchData.status">
+                                <option value="">核卡状态</option>
+                                <option v-for="key in options.status" :key="key" :value="key">
+                                    {{ config.BankCardStatusSummary[key] }}
+                                </option>
+                            </select>
+                        </div>
                         <div class="search-input">
                             <input type="text" class="form-control" placeholder="关键字" v-model="searchData.search">
                         </div>
@@ -29,6 +36,8 @@
                             <thead>
                             <tr>
                                 <th class="width-40">#</th>
+                                <th>核卡状态</th>
+                                <th>商户名称</th>
                                 <th>开户名</th>
                                 <th>银行卡号</th>
                                 <th>银行名</th>
@@ -44,12 +53,29 @@
                             <tbody>
                             <tr v-for="(data, index) in datas" :key="index">
                                 <td>{{ startIndex + index }}</td>
+                                <td>
+                                    <span class="badge badge-pill"
+                                          :class="{
+                                            'badge-warning': data.status == config.BankCardStatus.PENDING,
+                                            'badge-danger': data.status == config.BankCardStatus.REJECT,
+                                            'badge-success': data.status == config.BankCardStatus.APPROVAL
+                                          }">
+                                        {{ config.BankCardStatusSummary[data.status] }}
+                                    </span>
+                                </td>
+                                <td>{{ data.user.company_name }}</td>
                                 <td>{{ data.name }}</td>
                                 <td>{{ data.account }}</td>
                                 <td>{{ data.bank_name }}</td>
                                 <td>{{ data.bank_branch }}</td>
                                 <td>{{ data.created_at }}</td>
                                 <td class="width-control">
+                                    <a @click="$root.$emit('bankAccountListInfo.show', data)">
+                                        <i class="mdi mdi-information-outline text-blue"></i>
+                                    </a>
+                                    <a @click="$root.$emit('bankAccountListUpdate.show', data)">
+                                        <i class="mdi mdi-pencil-box-outline"></i>
+                                    </a>
                                     <a class="delete" @click="confirmDelete(data.id)">
                                         <i class="mdi mdi-delete-variant text-red"></i>
                                     </a>
@@ -63,28 +89,39 @@
             </div>
             <!-- card end -->
         </div>
+        <info/>
+        <update/>
     </div>
 </template>
 
 <script>
-    import ListMixins from "mixins/list"
+    import ListMixins from 'mixins/list'
+    import BankCardStatus from 'config/bankCardStatus'
 
     export default {
-        api: "bankAccountList",
+        api: 'bankAccountList',
         mixins: [ListMixins],
         components: {
-            CompanySelector: require('@/CompanySelector')
+            CompanySelector: require('@/CompanySelector'),
+            Info: require('./modal/Info'),
+            Update: require('./modal/Update')
         },
         data: () => ({
             options: {
+                status: [],
                 companies: []
             },
             searchData: {
                 user_id: -1,
-                search: ''
+                search: '',
+                status: ''
             },
             sort: {
                 column: 'created_at'
+            },
+            config: {
+                BankCardStatus: BankCardStatus,
+                BankCardStatusSummary: BankCardStatus.summaryMap()
             }
         }),
         watch: {
@@ -95,11 +132,11 @@
             }
         },
         methods: {
-            async dataInit() {
-                this.proccessAjax('dataInit', {}, this.onDataInit)
-            },
-            onDataInit(res) {
-                this.options.companies = res.data
+            dataInit() {
+                this.proccessAjax('dataInit', {}, res => {
+                    this.options.companies = _.concat({value: '', company_name: '全部'}, res[0].data)
+                    this.options.status = res[1].data
+                })
             },
             onGetTotal(res) {
                 this.paginate.total = res.data

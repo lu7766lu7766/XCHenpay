@@ -76,9 +76,9 @@
                     <div class="search-select">
                         <select class="form-control" v-model="searchData.pay_state">
                             <option value="">交易狀態</option>
-                            <option v-for="(name, val) in options.payState"
-                                    :key="val"
-                                    :value="val">{{ name }}
+                            <option v-for="code in options.payState"
+                                    :key="code"
+                                    :value="code">{{ config.payState[code] }}
                             </option>
                         </select>
                     </div>
@@ -134,7 +134,7 @@
                                 <span class="badge badge-danger badge-pill" v-else-if="data.pay_state == 4">交易失敗</span>
                                 <span class="badge badge-success badge-pill" v-else-if="data.pay_state == 3">交易结束</span>
                                 <span class="badge badge-info badge-pill"
-                                      v-else>{{ options.payState[data.pay_state] }}
+                                      v-else>{{ config.payState[data.pay_state] }}
                                 </span>
                             </td>
                             <td>{{ data.company.company_name }}</td>
@@ -216,7 +216,7 @@
         },
         data: () => ({
             options: {
-                payState: PayState.summaryMap(),
+                payState: PayState.enum(),
                 paymentType: {}
             },
             sort: {
@@ -236,6 +236,7 @@
                 failure_deal: 0
             },
             config: {
+                payState: PayState.summaryMap(),
                 notify: {
                     title: '是否确认回调',
                     text: '',

@@ -86,12 +86,6 @@
                 require: {
                     message: '开户支行 不得为空白'
                 }
-            },
-            '$parent.paginate.total': {
-                max: {
-                    value: (20 - 1), // 因20符合資格，還是可以送出，所以需要減一
-                    message: '行卡数量 不得大于20'
-                }
             }
         },
         methods: {

@@ -103,36 +103,46 @@ Route::group([
     Route::post('/total', 'TrashedMerchantsController@total')->name('total');
     Route::post('/restore', 'TrashedMerchantsController@restore')->name('restore');
 });
-#Account
+#bankCard list
 Route::group(
-    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'account'], 'as' => 'admin.'],
+    [
+        'prefix'     => 'admin',
+        'namespace'  => 'Admin',
+        'middleware' => ['admin', 'has:management,BankCardListPolicy'],
+        'as'         => 'admin.bankCard.'
+    ],
     function () {
-        Route::group(['prefix' => 'account'], function () {
-            //view
-            Route::get('/', 'AccountController@index')->name('account.index');
-            Route::get('createAccount', 'AccountController@createAccount')->name('account.createAccount');
-            //data
+        Route::group(['prefix' => 'bankCard'], function () {
+            Route::get('/', 'BankCardListController@view')->name('view');
             Route::group(['middleware' => 'json_api'], function () {
-                //no request.
-                Route::get('getCompany', 'AccountController@getCompany')->name('account.getCompany');
-                // post filed 請參照 App\Http\Requests\Account\GetAccountRequest::rules().
-                Route::post('accountData', 'AccountController@accountData')->name('account.data');
-                Route::post('total', 'AccountController@total')->name('account.total');
-                //no request.
-                Route::post('sendVerifyCode', 'AccountController@sendVerifyCode')->name('account.sendVerifyCode');
-                // post filed 請參照 App\Http\Requests\Account\AddAccountRequest::rules().
-                Route::post('addAccount', 'AccountController@addAccount')->name('account.addAccount');
-                // post filed 請參照 App\Http\Requests\Account\DeleteAccountRequest::rules().
-                Route::delete('deleteAccount', 'AccountController@deleteAccount')->name('account.delete');
-                Route::delete('deleteAccountData', 'AccountController@deleteAccountData')
-                    ->name('account.deleteAccountData');
-                // post filed 請參照 App\Http\Requests\Account\GetAccountRequest::rules().
-                Route::post('accountList', 'AccountController@accountList')->name('account.accountList');
-                Route::post('listTotal', 'AccountController@listTotal')->name('account.listTotal');
+                Route::get('getCompany', 'BankCardListController@getCompany')->name('getCompany');
+                Route::get('status', 'BankCardListController@status')->name('status');
+                Route::post('/', 'BankCardListController@index')->name('index');
+                Route::post('total', 'BankCardListController@total')->name('total');
+                Route::delete('/', 'BankCardListController@delete')->name('delete');
+                Route::get('{id}', 'BankCardListController@info')->name('info');
+                Route::put('/', 'BankCardListController@update')->name('update');
             });
         });
     }
 );
+#bank card bind 銀行卡綁定
+Route::group([
+    'prefix'     => 'user/bankCard/bind',
+    'namespace'  => 'User',
+    'middleware' => ['admin', 'has:management,BindBankCardPolicy'],
+    'as'         => 'user.bankCard.bind.'
+], function () {
+    Route::get('/', 'BindBankCardController@indexView')->name('view');
+    Route::group(['middleware' => 'json_api'], function () {
+        Route::post('/', 'BindBankCardController@index')->name('index');
+        Route::post('total', 'BindBankCardController@total')->name('total');
+        Route::get('status', 'BindBankCardController@status')->name('status');
+        Route::post('sendVerifyCode', 'BindBankCardController@sendVerifyCode')->name('sendVerifyCode');
+        Route::post('info', 'BindBankCardController@info')->name('info');
+        Route::post('binding', 'BindBankCardController@create')->name('create');
+    });
+});
 #tradeQuery  (index)
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin', 'as' => 'admin.'],
