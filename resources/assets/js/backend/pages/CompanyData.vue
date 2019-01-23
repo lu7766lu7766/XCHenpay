@@ -184,17 +184,22 @@
             },
         },
         data: () => ({
-            data: {}
+            data: {},
+            dataProperties: [
+                'old_password',
+                'password',
+                'password_confirmation',
+                'old_secret_code',
+                'secret_code',
+                'secret_code_confirmation'
+            ]
         }),
         methods: {
             dataInit() {
                 const data = _.cloneDeep(this.$parent.userInfo)
-                data.old_password = ''
-                data.password = ''
-                data.password_confirmation = ''
-                data.old_secret_code = ''
-                data.secret_code = ''
-                data.secret_code_confirmation = ''
+                _.forEach(this.dataProperties, property => {
+                    data[property] = ''
+                })
                 this.data = data
             },
             submit() {
@@ -203,25 +208,21 @@
                 } catch (e) {
                     return alert(e)
                 }
-                this.proccessAjax('update', _.pick(this.data, [
-                    'old_password',
-                    'password',
-                    'password_confirmation',
-                    'old_secret_code',
-                    'secret_code',
-                    'secret_code_confirmation'
-                ]), this.onSubmit)
-            },
-            onSubmit(res) {
-                res.data && this.dataInit()
-                alert('更新' + res.data ? '成功' : '失败')
+                this.proccessAjax('update', _.pick(this.data, this.dataProperties), res => {
+                    if (res.data) {
+                        this.dataInit()
+                        alert('更新成功')
+                    } else {
+                        alert('更新失败')
+                    }
+                })
             }
         },
         mounted() {
-            this.$root.$on('userInfo.init', this.dataInit)
+            this.$bus.on('userInfo.init', this.dataInit)
         },
         destroyed() {
-            this.$root.$off('userInfo.init')
+            this.$bus.off('userInfo.init')
         }
     }
 </script>
