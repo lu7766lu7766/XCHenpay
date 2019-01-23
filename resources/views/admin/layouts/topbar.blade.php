@@ -3,11 +3,11 @@
         <span id="headerInfo">
             <header-info/>
         </span>
-        @if(Sentinel::getUser()->hasAccess('lendManage.index') || Sentinel::getUser()->hasAccess('lendManage'))
-            <span id="lendNotify">
-                <lend-notify link="{{ URL::to('admin/lendManage') }}"/>
-            </span>
-        @endif
+        {{--@if(Sentinel::getUser()->hasAccess('lendManage.index') || Sentinel::getUser()->hasAccess('lendManage'))--}}
+        {{--<span id="lendNotify">--}}
+        {{--<lend-notify link="{{ URL::to('admin/lendManage') }}"/>--}}
+        {{--</span>--}}
+        {{--@endif--}}
 
         <li class="dropdown notification-list">
             <div class="dropdown notification-list nav-pro-img">

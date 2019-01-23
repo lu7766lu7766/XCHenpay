@@ -252,6 +252,8 @@ Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'json_api'], 'as' => 'admin.'],
     function () {
         Route::get('tradeInfoOnToday', 'AuthcodeController@tradeInfoOnToday');
+        Route::get('pendingCount', 'BankCardListController@pendingCount')
+            ->middleware('has:pendingCount,HeaderInfoPolicy');
     }
 );
 #whitelist

@@ -29,7 +29,6 @@
     import ReqMixins from 'mixins/request'
 
     export default {
-        api: "outer",
         mixins: [ReqMixins],
         data: () => ({
             ip: '',

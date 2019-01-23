@@ -357,11 +357,19 @@ export default {
     },
     /** 外部view */
     outer: {
-        /** 下發申請數量 */
-        lendApplyNotify: {
-            uri: '/admin/lendManage/applyNotice',
-            method: 'get'
+        notify: {
+            /** 下發申請數量 */
+            lendManage: {
+                uri: '/admin/lendManage/applyNotice',
+                method: 'get'
+            },
+            /** 行卡綁定處理中數量 */
+            bankAccountList: {
+                uri: '/admin/pendingCount',
+                method: 'get'
+            }
         },
+        /** 表頭資訊 */
         headerInfo: {
             uri: '/admin/tradeInfoOnToday',
             method: 'get'

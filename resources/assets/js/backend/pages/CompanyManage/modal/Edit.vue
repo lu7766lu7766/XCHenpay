@@ -160,7 +160,7 @@
             },
             onUpdate() {
                 if (this.data.id === this.$root.userInfo.id) {
-                    this.$root.$emit('getUserInfo')
+                    this.$bus.emit('getUserInfo')
                 }
                 this.updateSuccess()
                 $(this.$refs.modal).modal('hide')

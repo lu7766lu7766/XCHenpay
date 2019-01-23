@@ -1,26 +1,27 @@
 export default {
-    data: {
-        userInfo: {}
-    },
     methods: {
         async getUserInfo() {
-            const res = await this.$callApi('userInfo')
-            this.userInfo = res.data
-            this.$root.$emit('userInfo.init')
+            await this.$store.dispatch('getUserInfo')
+            this.$bus.emit('userInfo.init')
         }
     },
     computed: {
-        permissions() {
+        userInfo() {
+            return this.$store.state.userInfo
+        },
+        hasUserInfo() {
             return this.userInfo.roles && this.userInfo.roles[0]
+        },
+        permissions() {
+            return this.hasUserInfo
                 ? this.userInfo.roles[0].permissions
                 : {}
         }
     },
     mounted() {
-        this.$root.$on('getUserInfo', this.getUserInfo)
-        this.getUserInfo()
+        this.$bus.on('getUserInfo', this.getUserInfo)
     },
     destroyed() {
-        this.$root.$off('getUserInfo')
+        this.$bus.off('getUserInfo')
     }
 }

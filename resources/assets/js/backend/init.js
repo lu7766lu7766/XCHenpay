@@ -3,10 +3,18 @@ window.Vue = require('vue')
 window.moment = require('moment')
 window.axios = require('axios')
 
+// vue-bus
+window.Vue.use(require('vue-bus'))
+
 // permission constant global
 import Permission from 'config/permission'
 window.Permission = Permission
 Vue.prototype.Permission = Permission
+
+import Roles from 'config/roles'
+
+window.Roles = Roles
+Vue.prototype.Roles = Roles
 
 // number format
 import numFormat from 'vue-filter-number-format'
@@ -54,6 +62,13 @@ Vue.prototype.$callApi = async (key, data, loader) => {
         return axios.all(res)
     }
     return []
+}
+
+// linkTo instance func
+Vue.prototype.$linkTo = function (uri) {
+    setTimeout(() => {
+        location.href = location.origin + uri
+    })
 }
 
 // request.headers.set('X-CSRF-TOKEN', document.head.querySelector('meta[name="csrf-token"]').content);

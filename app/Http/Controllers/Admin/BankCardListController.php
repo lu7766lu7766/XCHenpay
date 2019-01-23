@@ -93,4 +93,13 @@ class BankCardListController extends Controller
     {
         return BankCardListService::getInstance()->info(AccountInfoRequest::getHandle(['id' => $id]));
     }
+
+    /**
+     * 處理中筆數
+     * @return int
+     */
+    public function pendingCount()
+    {
+        return BankCardListService::getInstance()->pendingCount();
+    }
 }

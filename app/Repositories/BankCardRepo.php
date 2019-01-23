@@ -9,6 +9,7 @@
 namespace App\Repositories;
 
 use App\Constants\Account\AccountStatusConstants;
+use App\Constants\Roles\RolesConstants;
 use App\Models\Account;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -245,5 +246,28 @@ class BankCardRepo
         return Account::query()->where('status', $status)->whereHas('user', function (Builder $query) use ($userId) {
             $query->where('id', $userId);
         })->get();
+    }
+
+    /**
+     * 處理中筆數
+     * @return int
+     */
+    public function pendingCount()
+    {
+        $result = 0;
+        try {
+            $result = Account::query()
+                ->whereHas('user', function (Builder $builder) {
+                    $builder->whereHas('roles', function (Builder $builder) {
+                        $builder->where('slug', RolesConstants::USER);
+                    });
+                })
+                ->where('status', AccountStatusConstants::PENDING)
+                ->count();
+        } catch (\Exception $e) {
+            \Log::log('debug', $e->getMessage());
+        }
+
+        return $result;
     }
 }

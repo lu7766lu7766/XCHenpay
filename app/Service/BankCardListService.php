@@ -125,4 +125,13 @@ class BankCardListService
     {
         return app(BankCardRepo::class)->find($request->getId());
     }
+
+    /**
+     * 處理中筆數
+     * @return int
+     */
+    public function pendingCount()
+    {
+        return app(BankCardRepo::class)->pendingCount();
+    }
 }

@@ -1,19 +1,12 @@
-var $lendNotify = document.querySelector('#lendNotify')
-if ($lendNotify) {
-    new Vue({
-        el: '#lendNotify',
-        components: {
-            LendNotify: require('./pages/outer/LendNotify')
-        }
-    })
-}
+import store from './store'
 
 var $headerInfo = document.querySelector('#headerInfo')
 if ($headerInfo) {
     new Vue({
         el: '#headerInfo',
+        store,
         components: {
-            HeaderInfo: require('./pages/outer/HeaderInfo')
+            HeaderInfo: require('./pages/HeaderInfo')
         }
     })
 }

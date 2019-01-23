@@ -5,10 +5,13 @@ import './outer' // 外部前端(不在vue component範疇中)
 var $app = document.querySelector('#app')
 import UserMixins from 'mixins/user'
 
+import store from './store'
+
 if ($app) {
     new Vue({
         el: '#app',
         mixins: [UserMixins],
+        store,
         components: {
             ActivityLog: () => import('./pages/ActivityLog'),
             OrderSearch: () => import('./pages/OrderSearch'),
@@ -29,6 +32,9 @@ if ($app) {
             // ActivityLog: resolve => {
             //     require(['./pages/ActivityLog'], resolve)
             // }
+        },
+        mounted() {
+            this.getUserInfo()
         }
     })
 }

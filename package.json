@@ -22,8 +22,11 @@
     "moment": "^2.22.2",
     "qs": "^6.5.2",
     "vue": "^2.5.7",
+    "vue-bus": "^1.2.0",
     "vue-filter-number-format": "^1.0.3",
     "vue-loading-overlay": "^3.1.0",
-    "vue-resource": "^1.5.1"
+    "vue-resource": "^1.5.1",
+    "vuex": "^3.1.0",
+    "vuex-persistedstate": "^2.5.4"
   }
 }
