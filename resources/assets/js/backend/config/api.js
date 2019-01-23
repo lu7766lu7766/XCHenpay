@@ -71,10 +71,6 @@ export default {
     },
     /** 下發列表 */
     lendList: {
-        userInfo: {
-            uri: '/admin/lendList/userInfo',
-            method: 'get'
-        },
         amountInfo: {
             uri: '/admin/lendList/amountInfo',
             method: 'get'
@@ -84,7 +80,7 @@ export default {
             method: 'get'
         },
         bankAccountInfo: {
-            uri: '/admin/lendList/backAccountInfo',
+            uri: '/admin/lendList/bankCardInfo',
             method: 'get'
         },
         list: {

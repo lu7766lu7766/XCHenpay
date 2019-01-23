@@ -36,7 +36,7 @@ class LendListController extends Controller
      */
     public function amountInfo()
     {
-        return LendListService::getInstance()->amountInfo();
+        return LendListService::getInstance(\Sentinel::getUser())->amountInfo();
     }
 
     /**
@@ -45,7 +45,7 @@ class LendListController extends Controller
      */
     public function index(LendListIndexRequest $request)
     {
-        return LendListService::getInstance()->index($request);
+        return LendListService::getInstance(\Sentinel::getUser())->index($request);
     }
 
     /**
@@ -63,7 +63,7 @@ class LendListController extends Controller
      */
     public function apply(LendListApplyRequest $request)
     {
-        return LendListService::getInstance()->apply($request);
+        return LendListService::getInstance(\Sentinel::getUser())->apply($request);
     }
 
     /**
@@ -72,7 +72,7 @@ class LendListController extends Controller
      */
     public function total(LendListTotalRequest $request)
     {
-        return LendListService::getInstance()->total($request);
+        return LendListService::getInstance(\Sentinel::getUser())->total($request);
     }
 
     /**
@@ -82,14 +82,14 @@ class LendListController extends Controller
      */
     public function info($id)
     {
-        return LendListService::getInstance()->info(LendListInfoRequest::getHandle(['id' => $id]));
+        return LendListService::getInstance(\Sentinel::getUser())->info(LendListInfoRequest::getHandle(['id' => $id]));
     }
 
     /**
      * @return array
      */
-    public function backAccountInfo()
+    public function bankCardInfo()
     {
-        return LendListService::getInstance()->backAccountInfo();
+        return LendListService::getInstance(\Sentinel::getUser())->bankCardInfo();
     }
 }

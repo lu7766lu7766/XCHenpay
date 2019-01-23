@@ -8,6 +8,7 @@
 
 namespace App\Repositories;
 
+use App\Constants\Account\AccountStatusConstants;
 use App\Models\Account;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
@@ -41,7 +42,11 @@ class BankCardRepo
                 }
             ]);
             if (!is_null($userId)) {
-                $query->where('user_id', $userId);
+                $query->whereHas('user', function (Builder $query) use ($userId) {
+                    $query->where('id', $userId);
+                });
+            } else {
+                $query->whereHas('user');
             }
             if (!is_null($search)) {
                 $query->where(function (Builder $builder) use ($search) {
@@ -81,7 +86,11 @@ class BankCardRepo
         try {
             $query = Account::query();
             if (!is_null($userId)) {
-                $query->where('user_id', $userId);
+                $query->whereHas('user', function (Builder $query) use ($userId) {
+                    $query->where('id', $userId);
+                });
+            } else {
+                $query->whereHas('user');
             }
             if (!is_null($search)) {
                 $query->where(function (Builder $builder) use ($search) {
@@ -112,7 +121,9 @@ class BankCardRepo
         try {
             $query = Account::query();
             if (!is_null($userId)) {
-                $query->where('user_id', $userId);
+                $query->whereHas('user', function (Builder $query) use ($userId) {
+                    $query->where('id', $userId);
+                });
             }
             if (!is_null($search)) {
                 $query->where(function (Builder $builder) use ($search) {
@@ -208,12 +219,31 @@ class BankCardRepo
     /**
      * @param int $id
      * @param int $userId
+     * @param string|null $status
      * @return Account|null
+     * @see AccountStatusConstants $status 定義請參照 AccountStatusConstants
      */
-    public function findOwner(int $id, int $userId)
+    public function findOwner(int $id, int $userId, string $status = null)
     {
-        return Account::query()->where('id', $id)->whereHas('user', function (Builder $query) use ($userId) {
+        $query = Account::query()->where('id', $id)->whereHas('user', function (Builder $query) use ($userId) {
             $query->where('id', $userId);
-        })->first();
+        });
+        if (!is_null($status)) {
+            $query->where('status', $status);
+        }
+
+        return $query->first();
+    }
+
+    /**
+     * @param int $userId
+     * @param string $status
+     * @return Account[]|Collection
+     */
+    public function getCardStatusByOwner(int $userId, string $status)
+    {
+        return Account::query()->where('status', $status)->whereHas('user', function (Builder $query) use ($userId) {
+            $query->where('id', $userId);
+        })->get();
     }
 }

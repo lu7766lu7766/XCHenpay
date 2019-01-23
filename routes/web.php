@@ -179,7 +179,7 @@ Route::group(
             Route::get('userInfo', 'LendListController@userInfo');
             Route::get('amountInfo', 'LendListController@amountInfo');
             Route::get('lendStatus', 'LendListController@lendStatus');
-            Route::get('backAccountInfo', 'LendListController@backAccountInfo');
+            Route::get('bankCardInfo', 'LendListController@bankCardInfo');
             Route::post('/', 'LendListController@index');
             Route::post('/apply', 'LendListController@apply');
             Route::post('/total', 'LendListController@total');

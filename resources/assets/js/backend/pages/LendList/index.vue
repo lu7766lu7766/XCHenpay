@@ -108,7 +108,8 @@
                     <!-- search-box end -->
                     <div class="row view-btn-box">
                         <div class="col-sm-6 view-btn">
-                            <button class="btn btn-application btn-full" v-if="canApply" @click="showApply">
+                            <button class="btn btn-application btn-full" v-if="canApply"
+                                    @click="$root.$emit('lendListApply.show')">
                                 申请
                             </button>
                         </div>
@@ -166,7 +167,8 @@
                                 <td>{{ data.created_at }}</td>
                                 <td class="width-control">
                                     <a data-toggle="modal" data-target="#info">
-                                        <i class="mdi mdi-information-outline text-blue" @click="showInfo(data.id)"></i>
+                                        <i class="mdi mdi-information-outline text-blue"
+                                           @click="$root.$emit('lendListInfo.show', data.id)"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -210,7 +212,6 @@
             LendListInfo: require('./modal/Info')
         },
         data: () => ({
-            userInfo: {},
             options: {
                 lendStatus: {},
                 bankAccount: []
@@ -234,49 +235,40 @@
         }),
         methods: {
             dataInit() {
-                this.userInfoInit()
                 this.amountInit()
                 this.statusInit()
                 this.bankAccountInit()
             },
-            async userInfoInit() {
-                var res = await this.$callApi(`${this.apiKey}:userInfo`)
-                this.userInfo = res.data
-            },
-            async amountInit() {
-                let loader = this.$loading.show({
-                    container: this.$el,
+            amountInit() {
+                this.proccessAjax('amountInfo', {}, res => {
+                    this.count.accepted = res.data.accepted
+                    this.count.applying = res.data.applying
+                    this.count.totalFee = res.data.totalFee
+                    this.count.totalMoney = res.data.totalMoney
+                    this.count.withdrawal = res.data.withdrawal
                 })
-                var res = await this.$callApi(`${this.apiKey}:amountInfo`)
-                this.count.accepted = res.data.accepted
-                this.count.applying = res.data.applying
-                this.count.totalFee = res.data.totalFee
-                this.count.totalMoney = res.data.totalMoney
-                this.count.withdrawal = res.data.withdrawal
-                loader.hide()
             },
-            async statusInit() {
-                var res = await this.$callApi(`${this.apiKey}:lendStatus`)
-                this.options.lendStatus = res.data
+            statusInit() {
+                this.proccessAjax('lendStatus', {}, res => {
+                    this.options.lendStatus = res.data
+                }, false)
             },
-            async bankAccountInit() {
-                var res = await this.$callApi(`${this.apiKey}:bankAccountInfo`)
-                this.options.bankAccount = res.data
+            bankAccountInit() {
+                this.proccessAjax('bankAccountInfo', {}, res => {
+                    this.options.bankAccount = res.data
+                }, false)
             },
             onGetTotal(res) {
                 this.paginate.total = res.data.count
             },
             onGetList(res) {
                 this.datas = res.data
-            },
-            showInfo(id) {
-                this.$root.$emit('lendListInfo.show', id)
-            },
-            showApply() {
-                this.$root.$emit('lendListApply.show')
             }
         },
         computed: {
+            userInfo() {
+                return this.$root.userInfo
+            },
             customGetReqBody() {
                 return {
                     sort: this.sort.direction.toUpperCase()
