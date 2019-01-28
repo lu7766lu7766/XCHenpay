@@ -254,10 +254,6 @@ export default {
         update: {
             uri: '/admin/whitelist/maintain',
             method: 'post'
-        },
-        delete: {
-            uri: '/admin/whitelist/maintain',
-            method: 'delete'
         }
     },
     /** 回调错误记录 */
@@ -297,11 +293,10 @@ export default {
             uri: '/admin/systemSetting/userUpdate',
             method: 'post'
         },
-        delete:
-            {
-                uri: '/admin/systemSetting/userDel',
-                method: 'post'
-            }
+        delete: {
+            uri: '/admin/systemSetting/userDel',
+            method: 'post'
+        }
     },
     /** 補單管理 */
     replenishment: {

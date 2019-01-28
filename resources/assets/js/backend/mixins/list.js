@@ -67,6 +67,10 @@ export default {
             }
             this.getList()
         },
+        deleteSuccess() {
+            alert(`删除成功`)
+            this.refresh()
+        },
         refresh() {
             this.getTotal()
             this.getList()

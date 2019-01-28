@@ -151,10 +151,7 @@
                 })
             },
             doDelete(id) {
-                this.proccessAjax('delete', {
-                    user_id: this.searchData.user_id,
-                    bank_account_id: id
-                }, this.refresh)
+                this.proccessAjax('delete', {id}, this.deleteSuccess)
             }
         },
         computed: {

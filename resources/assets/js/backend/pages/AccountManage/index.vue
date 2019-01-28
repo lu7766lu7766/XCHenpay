@@ -120,7 +120,7 @@
                 })
             },
             doDelete(id) {
-                this.proccessAjax('delete', {id}, this.refresh)
+                this.proccessAjax('delete', {id}, this.deleteSuccess)
             },
             canDelete(email) {
                 return email !== 'admin@admin.com'

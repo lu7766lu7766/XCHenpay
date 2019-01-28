@@ -138,7 +138,7 @@
                 })
             },
             doDelete(id) {
-                this.proccessAjax('delete', {id}, this.refresh)
+                this.proccessAjax('delete', {id}, this.deleteSuccess)
             },
             showAdd() {
                 this.$root.$emit('companyManageAdd.show')

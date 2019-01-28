@@ -5,7 +5,7 @@
         </div>
         <div class="card-body">
             <select class="form-control" v-model="company_id">
-                <option :value="-1">請選擇商戶</option>
+                <option :value="-1">请选择商户</option>
                 <option v-for="company in options" :value="company.id">{{ company.company_name }}</option>
             </select>
         </div>
