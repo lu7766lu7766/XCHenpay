@@ -75,7 +75,7 @@
                     <picker-button :startTime.sync="searchData.start" :endTime.sync="searchData.end"/>
                     <div class="search-select">
                         <select class="form-control" v-model="searchData.pay_state">
-                            <option value="">交易狀態</option>
+                            <option value="">交易状态</option>
                             <option v-for="code in options.payState"
                                     :key="code"
                                     :value="code">{{ config.payState[code] }}
