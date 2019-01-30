@@ -47,7 +47,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 control-label">备注</label>
-                            <div class="col-md-9 p-t-7">{{ data.description }}</div>
+                            <div class="col-md-9 p-t-7">{{ data.review_note }}</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 control-label">申请时间</label>

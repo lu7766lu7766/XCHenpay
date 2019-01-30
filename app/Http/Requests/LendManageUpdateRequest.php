@@ -22,6 +22,14 @@ class LendManageUpdateRequest extends HandleInvalidRequest
     }
 
     /**
+     * @return string|null
+     */
+    public function getNote()
+    {
+        return $this->request['note'] ?? null;
+    }
+
+    /**
      * @return int
      */
     public function getOperation()
@@ -41,7 +49,8 @@ class LendManageUpdateRequest extends HandleInvalidRequest
 
         return [
             'id'        => 'required|integer|exists:lend_records,id',
-            'operation' => 'required|' . Rule::in($lendState)
+            'operation' => 'required|' . Rule::in($lendState),
+            'note'      => 'sometimes|required|string',
         ];
     }
 

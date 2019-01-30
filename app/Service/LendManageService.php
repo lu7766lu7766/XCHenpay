@@ -16,6 +16,7 @@ use App\Models\LendRecord;
 use App\Repositories\AuthCodes;
 use App\Repositories\LendRecords;
 use App\Traits\Singleton;
+use App\User;
 use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
 use Illuminate\Validation\ValidationException;
 
@@ -137,12 +138,14 @@ class LendManageService
         try {
             $handle = LendManageUpdateRequest::getHandle($this->data);
             $record = LendRecord::query()->find($handle->getId());
+            /** @var User $user */
             $user = Sentinel::getUser();
             if ($handle->getOperation() == 1) {
                 $record->update(
                     [
                         'lend_state'   => LendRecords::ACCEPT_STATE,
-                        'lend_summary' => LendRecords::ACCEPT_SUMMARY
+                        'lend_summary' => LendRecords::ACCEPT_SUMMARY,
+                        'review_note'  => $handle->getNote(),
                     ]
                 );
                 activity($user->email)->causedBy($user)->log('准許一笔下发申请 ' . $record->record_seq);
@@ -150,7 +153,8 @@ class LendManageService
                 $record->update(
                     [
                         'lend_state'   => LendRecords::DENY_STATE,
-                        'lend_summary' => LendRecords::DENY_SUMMARY
+                        'lend_summary' => LendRecords::DENY_SUMMARY,
+                        'review_note'  => $handle->getNote(),
                     ]
                 );
                 activity($user->email)->causedBy($user)->log('拒绝一笔下发申请 ' . $record->record_seq);

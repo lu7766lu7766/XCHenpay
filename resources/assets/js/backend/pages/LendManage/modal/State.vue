@@ -17,6 +17,12 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 control-label">备注</label>
+                            <div class="col-md-9 p-t-7">
+                                <textarea class="form-control" rows="5" v-model="data.review_note"></textarea>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -50,7 +56,8 @@
             async update() {
                 this.proccessAjax('update', {
                     id: this.data.id,
-                    operation: this.data.lend_state
+                    operation: this.data.lend_state,
+                    note: this.data.review_note
                 }, this.onUpdate)
             }
         },

@@ -58,7 +58,8 @@ class LendRecords
                 'account_id',
                 'created_at',
                 'lend_state',
-                'description'
+                'description',
+                'review_note'
             ]);
     }
 
