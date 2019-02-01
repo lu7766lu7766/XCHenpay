@@ -45,6 +45,18 @@
                 @endif
             </li>
         @endif
+
+        @if(Sentinel::getUser()->can('management','CompanyAccountPolicy'))
+            <li class="has-submenu">
+                <a href="#"><i class="ti-direction-alt"></i>收款管理</a>
+                @if(Sentinel::getUser()->can('management','CompanyAccountPolicy'))
+                    <ul class="submenu">
+                        <li><a href="{{route('admin.cashier.company.view')}}">公司账户</a></li>
+                    </ul>
+                @endif
+            </li>
+        @endif
+
         <li class="has-submenu">
             <a href="#"><i class="ti-search"></i>查询功能</a>
             <ul class="submenu">

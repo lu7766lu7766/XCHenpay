@@ -21,6 +21,7 @@ class PermissionSubjectConstants
     const NOTIFY_ORDER_FAIL = 'notify.order.fail';
     const BIND_BANK_CARD = 'bank.card.bind';
     const BANK_CARD_LIST = 'bank.card.list';
+    const COMPANY_ACCOUNT = 'company.account';
 }
 
 

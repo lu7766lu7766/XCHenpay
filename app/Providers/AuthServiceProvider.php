@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Policies\BankCardListPolicy;
 use App\Policies\BindBankCardPolicy;
+use App\Policies\CompanyAccountPolicy;
 use App\Policies\FeeListPolicy;
 use App\Policies\FeeManagementPolicy;
 use App\Policies\FillOrderPolicy;
@@ -35,6 +36,7 @@ class AuthServiceProvider extends ServiceProvider
         'BindBankCardPolicy'     => BindBankCardPolicy::class,
         'BankCardListPolicy'     => BankCardListPolicy::class,
         'HeaderInfoPolicy'       => HeaderInfoPolicy::class,
+        'CompanyAccountPolicy'   => CompanyAccountPolicy::class
     ];
 
     /**

@@ -350,6 +350,29 @@ export default {
             method: 'put'
         }
     },
+    /** 商戶帳號 */
+    companyAccount: {
+        dataInit: {
+            uri: '/admin/cashier/company/channel',
+            method: 'get'
+        },
+        list: {
+            uri: '/admin/cashier/company',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/cashier/company/total',
+            method: 'post'
+        },
+        create: {
+            uri: '/admin/cashier/company/create',
+            method: 'post'
+        },
+        update: {
+            uri: '/admin/cashier/company',
+            method: 'put'
+        }
+    },
     /** 外部view */
     outer: {
         notify: {

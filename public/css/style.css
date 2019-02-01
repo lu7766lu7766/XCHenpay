@@ -20,6 +20,12 @@ body {
   color: #fff;
 }
 
+@media (max-width: 600px) {
+  .badge {
+    margin-bottom: 5px;
+  }
+}
+
 .badge-info {
   background-color: #29bbe3;
 }
@@ -38,6 +44,10 @@ body {
 
 .badge-payway {
   background-color: #81D3F8;
+}
+
+.badge-user {
+  background-color: #A6A8B1;
 }
 
 .code {
@@ -117,6 +127,11 @@ body {
 
 .text-lg {
   font-size: 20px;
+}
+
+.text-modal {
+  color: #337ab7;
+  cursor: pointer;
 }
 
 .btn-info-lighter {
@@ -851,6 +866,10 @@ body {
   padding-left: 0;
 }
 
+.day-list > div {
+  padding-top: 7px;
+}
+
 @media (max-width: 550px) {
   .day-list {
     padding-left: 15px;
@@ -862,7 +881,7 @@ body {
   margin-left: 8px;
 }
 
-#info i {
+#info i, #card i {
   font-style: normal;
 }
 

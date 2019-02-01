@@ -29,6 +29,7 @@ if ($app) {
             FeeList: () => import('./pages/FeeList'),
             FeeManage: () => import('./pages/FeeManage'),
             CompanyData: () => import('./pages/CompanyData'),
+            CompanyAccount: () => import('./pages/CompanyAccount'),
             // ActivityLog: resolve => {
             //     require(['./pages/ActivityLog'], resolve)
             // }
