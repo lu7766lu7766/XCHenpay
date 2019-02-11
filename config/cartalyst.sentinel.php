@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Part of the Sentinel package.
  *
@@ -17,9 +16,7 @@
  * @copyright  (c) 2011-2016, Cartalyst LLC
  * @link       http://cartalyst.com
  */
-
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Session Key
@@ -28,9 +25,7 @@ return [
     | Please provide your session key for Sentinel.
     |
     */
-
-    'session' => 'cartalyst_sentinel',
-
+    'session'      => 'cartalyst_sentinel',
     /*
     |--------------------------------------------------------------------------
     | Cookie Key
@@ -39,9 +34,7 @@ return [
     | Please provide your cookie key for Sentinel.
     |
     */
-
-    'cookie' => 'cartalyst_sentinel',
-
+    'cookie'       => 'cartalyst_sentinel',
     /*
     |--------------------------------------------------------------------------
     | Users
@@ -50,13 +43,9 @@ return [
     | Please provide the user model used in Sentinel.
     |
     */
-
-    'users' => [
-
+    'users'        => [
         'model' => 'App\User',
-
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Roles
@@ -65,13 +54,9 @@ return [
     | Please provide the role model used in Sentinel.
     |
     */
-
-    'roles' => [
-
+    'roles'        => [
         'model' => 'Cartalyst\Sentinel\Roles\EloquentRole',
-
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Permissions
@@ -92,13 +77,9 @@ return [
     | rejected on either the user or any of the assigned roles.
     |
     */
-
-    'permissions' => [
-
+    'permissions'  => [
         'class' => 'Cartalyst\Sentinel\Permissions\StandardPermissions',
-
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Persistences
@@ -108,15 +89,10 @@ return [
     | single persistence mode.
     |
     */
-
     'persistences' => [
-
-        'model' => 'Cartalyst\Sentinel\Persistences\EloquentPersistence',
-
+        'model'  => 'Cartalyst\Sentinel\Persistences\EloquentPersistence',
         'single' => false,
-
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Checkpoints
@@ -130,14 +106,10 @@ return [
     | these.
     |
     */
-
-    'checkpoints' => [
-
+    'checkpoints'  => [
         'throttle',
         'activation',
-
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Activations
@@ -149,17 +121,11 @@ return [
     | codes will be cleared automatically based on the provided odds.
     |
     */
-
-    'activations' => [
-
-        'model' => 'Cartalyst\Sentinel\Activations\EloquentActivation',
-
+    'activations'  => [
+        'model'   => 'Cartalyst\Sentinel\Activations\EloquentActivation',
         'expires' => 259200,
-
         'lottery' => [2, 100],
-
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Reminders
@@ -171,17 +137,11 @@ return [
     | codes will be cleared automatically based on the provided odds.
     |
     */
-
-    'reminders' => [
-
-        'model' => 'Cartalyst\Sentinel\Reminders\EloquentReminder',
-
+    'reminders'    => [
+        'model'   => 'Cartalyst\Sentinel\Reminders\EloquentReminder',
         'expires' => 14400,
-
         'lottery' => [2, 100],
-
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Throttling
@@ -223,15 +183,10 @@ return [
     | configurations are designed to be customized as your site grows.
     |
     */
-
-    'throttling' => [
-
-        'model' => 'Cartalyst\Sentinel\Throttling\EloquentThrottle',
-
+    'throttling'   => [
+        'model'  => 'Cartalyst\Sentinel\Throttling\EloquentThrottle',
         'global' => [
-
-            'interval' => 900,
-
+            'interval'   => 180,
             'thresholds' => [
                 10 => 1,
                 20 => 2,
@@ -240,25 +195,14 @@ return [
                 50 => 16,
                 60 => 12
             ],
-
         ],
-
-        'ip' => [
-
-            'interval' => 900,
-
+        'ip'     => [
+            'interval'   => 180,
             'thresholds' => 5,
-
         ],
-
-        'user' => [
-
-            'interval' => 900,
-
+        'user'   => [
+            'interval'   => 180,
             'thresholds' => 5,
-
         ],
-
     ],
-
 ];
