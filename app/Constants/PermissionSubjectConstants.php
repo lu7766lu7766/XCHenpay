@@ -22,6 +22,7 @@ class PermissionSubjectConstants
     const BIND_BANK_CARD = 'bank.card.bind';
     const BANK_CARD_LIST = 'bank.card.list';
     const COMPANY_ACCOUNT = 'company.account';
+    const PERSONAL_ACCOUNT = 'personal.account';
 }
 
 

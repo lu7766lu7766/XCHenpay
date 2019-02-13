@@ -10,7 +10,8 @@ namespace App\Repositories;
 
 use App\Constants\PaymentFee\PaymentFeeStatusConstants;
 use App\Models\Payment;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
 
 class PaymentRepo
@@ -27,13 +28,12 @@ class PaymentRepo
      * @param int $userId
      * @param bool $activate
      * @return Payment[]|Collection
-     * @see PaymentFeeStatusConstants paymentFeeStatus 定義看 PaymentFeeStatusConstants
      */
     public function list(int $userId, bool $activate = true)
     {
         return Payment::with([
-            'paymentFee' => function (HasMany $query) use ($userId) {
-                $query->where('user_id', $userId);
+            'userFee' => function (BelongsToMany $query) use ($userId) {
+                $query->where($query->getQualifiedRelatedPivotKeyName(), $userId);
             }
         ])->where('activate', $activate)->where('i6pay_id', '!=', 0)->get();
     }
@@ -47,8 +47,8 @@ class PaymentRepo
     public function info(int $id, int $userId, bool $activate = true)
     {
         return Payment::with([
-            'paymentFee' => function (HasMany $query) use ($userId) {
-                $query->where('user_id', $userId);
+            'userFee' => function (BelongsToMany $query) use ($userId) {
+                $query->where($query->getQualifiedRelatedPivotKeyName(), $userId);
             }
         ])->where('activate', $activate)->where('id', $id)->first();
     }
@@ -69,12 +69,24 @@ class PaymentRepo
         /** @var Payment|null $payment */
         $payment = Payment::query()->find($id);
         if (!is_null($payment)) {
-            $payment->paymentFee()->updateOrCreate(
-                ['user_id' => $userId],
+            $payment->userFee()->newPivotStatement()->updateOrInsert(
+                ['user_id' => $userId, 'payment_id' => $payment->getKey()],
                 ['fee' => $fee, 'status' => $paymentFeeStatus]
             );
         }
 
         return $payment;
+    }
+
+    /**
+     * @param int $userId
+     * @param bool $activate
+     * @return Payment[]|Collection
+     */
+    public function getUserActivePayment(int $userId, bool $activate = true)
+    {
+        return Payment::query()->whereDoesntHave('userClosedPayment', function (Builder $subQuery) use ($userId) {
+            $subQuery->where('users.id', $userId);
+        })->where('activate', $activate)->where('i6pay_id', '!=', 0)->get();
     }
 }

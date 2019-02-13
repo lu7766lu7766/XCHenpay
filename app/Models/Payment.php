@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use App\Constants\PaymentFee\PaymentFeeStatusConstants;
 use App\Pivot\PaymentBankAccount;
+use App\User;
 use Cartalyst\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class PaymentFee
  * @package App\Models
- * @property Collection|PaymentFees[] paymentFee
+ * @property Collection|User[] userFee
  * @property BankCardAccount[]|Collection bankAccount
  */
 class Payment extends Model
@@ -21,11 +22,20 @@ class Payment extends Model
     protected $guarded = [];
 
     /**
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function paymentFee()
+    public function userFee()
     {
-        return $this->hasMany(PaymentFees::class, 'payment_id', 'id');
+        return $this->belongsToMany(User::class, 'payment_fees', 'payment_id', 'user_id')->withPivot(['fee', 'status']);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function userClosedPayment()
+    {
+        return $this->belongsToMany(User::class, 'payment_fees', 'payment_id', 'user_id')
+            ->wherePivot('status', PaymentFeeStatusConstants::OFF);
     }
 
     /**

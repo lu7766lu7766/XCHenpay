@@ -13,6 +13,7 @@ use App\Policies\LendManagePolicy;
 use App\Policies\MerchantsPolicy;
 use App\Policies\NotifyOrderFailPolicy;
 use App\Policies\OrderNotifyPolicy;
+use App\Policies\PersonalAccountPolicy;
 use App\Policies\TrashedMerchantsPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -36,7 +37,8 @@ class AuthServiceProvider extends ServiceProvider
         'BindBankCardPolicy'     => BindBankCardPolicy::class,
         'BankCardListPolicy'     => BankCardListPolicy::class,
         'HeaderInfoPolicy'       => HeaderInfoPolicy::class,
-        'CompanyAccountPolicy'   => CompanyAccountPolicy::class
+        'CompanyAccountPolicy'   => CompanyAccountPolicy::class,
+        'PersonalAccountPolicy'  => PersonalAccountPolicy::class
     ];
 
     /**

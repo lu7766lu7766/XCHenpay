@@ -373,6 +373,28 @@ export default {
             method: 'put'
         }
     },
+    accountSetting: {
+        dataInit: {
+            uri: '/user/cashier/personal/channel',
+            method: 'get'
+        },
+        list: {
+            uri: '/user/cashier/personal',
+            method: 'post'
+        },
+        total: {
+            uri: '/user/cashier/personal/total',
+            method: 'post'
+        },
+        create: {
+            uri: '/user/cashier/personal/create',
+            method: 'post'
+        },
+        update: {
+            uri: '/user/cashier/personal',
+            method: 'put'
+        }
+    },
     /** 外部view */
     outer: {
         notify: {

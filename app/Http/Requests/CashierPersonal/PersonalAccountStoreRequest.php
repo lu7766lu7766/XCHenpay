@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\CashierCompany;
+namespace App\Http\Requests\CashierPersonal;
 
 use App\Constants\BankCardPayment\BankCardPaymentSettleDateConstants;
 use App\Constants\BankCardPayment\BankCardPaymentStatusConstants;
@@ -8,7 +8,11 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CompanyAccountStoreRequest extends FormRequest
+/**
+ * Class PersonalAccountStoreRequest
+ * @package App\Http\Requests\CashierPersonal
+ */
+class PersonalAccountStoreRequest extends FormRequest
 {
     /**
      * @return string|null

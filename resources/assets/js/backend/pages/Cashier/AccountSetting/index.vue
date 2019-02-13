@@ -2,6 +2,9 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card m-b-30">
+                <div class="card-header">
+                    帐户设置
+                </div>
                 <div class="card-body">
                     <div class="search-box">
                         <div class="search-select">
@@ -12,7 +15,7 @@
                             </select>
                         </div>
                         <div class="search-input">
-                            <input type="text" class="form-control" placeholder="关键字" v-model="searchData.keyword">
+                            <input type="text" class="form-control" placeholder="关键字" v-model="searchData.search">
                         </div>
                         <div>
                             <button type="button" class="btn btn-search" data-toggle="button" @click="search">搜寻
@@ -23,7 +26,7 @@
                     <div class="row view-btn-box">
                         <div class="col-sm-6 view-btn">
                             <button class="btn btn-add btn-half"
-                                    @click="$root.$emit('companyAccountAdd.show')">新增
+                                    @click="$root.$emit('accountSettingAdd.show')">新增
                             </button>
                         </div>
                         <per-page-selector v-model="paginate.perpage"/>
@@ -57,9 +60,9 @@
                                     <i class="mdi mdi-close-circle-outline text-red" v-else></i>
                                 </td>
                                 <td>
-                                    <a @click="$root.$emit('companyAccountInfo.show', data)">
+                                    <a @click="$root.$emit('accountSettingInfo.show', data)">
                                         <i class="mdi mdi-information-outline text-blue"></i></a>
-                                    <a @click="$root.$emit('companyAccountEdit.show', data)">
+                                    <a @click="$root.$emit('accountSettingEdit.show', data)">
                                         <i class="mdi mdi-pencil-box-outline"></i></a>
                                 </td>
                             </tr>
@@ -83,7 +86,7 @@
     import ThisMixins from './mixins'
 
     export default {
-        api: "companyAccount",
+        api: "accountSetting",
         mixins: [ListMixins, ThisMixins],
         components: {
             Info: require('./modal/Info'),
@@ -101,7 +104,7 @@
             searchData: {
                 status: '',
                 apply_status: '',
-                keyword: ''
+                search: ''
             }
         }),
         methods: {

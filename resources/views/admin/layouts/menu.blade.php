@@ -26,7 +26,7 @@
                     <li><a href="{{route('admin.lend.list.index')}}">下发申请</a></li>
                 @endif
                 @if(Sentinel::getUser()->hasAccess('whitelist'))
-                    <li><a href="{{route('admin.whitelist.view')}}">白名單設定</a></li>
+                    <li><a href="{{route('admin.whitelist.view')}}">白名单设定</a></li>
                 @endif
             </ul>
         </li>
@@ -46,12 +46,18 @@
             </li>
         @endif
 
-        @if(Sentinel::getUser()->can('management','CompanyAccountPolicy'))
+        @if(Sentinel::getUser()->can('management','CompanyAccountPolicy') ||
+            Sentinel::getUser()->can('management','PersonalAccountPolicy'))
             <li class="has-submenu">
                 <a href="#"><i class="ti-direction-alt"></i>收款管理</a>
                 @if(Sentinel::getUser()->can('management','CompanyAccountPolicy'))
                     <ul class="submenu">
-                        <li><a href="{{route('admin.cashier.company.view')}}">公司账户</a></li>
+                        <li><a href="{{route('admin.cashier.company.view')}}">公司帐户</a></li>
+                    </ul>
+                @endif
+                @if(Sentinel::getUser()->can('management','PersonalAccountPolicy'))
+                    <ul class="submenu">
+                        <li><a href="{{route('user.cashier.personal.view')}}">帐户设置</a></li>
                     </ul>
                 @endif
             </li>

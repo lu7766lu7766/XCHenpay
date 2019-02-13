@@ -23,7 +23,7 @@ class CompanyAccountController extends Controller
      */
     public function indexView()
     {
-        return view("admin.receipt.companyAccount");
+        return view("admin.cashier.companyAccount");
     }
 
     /**

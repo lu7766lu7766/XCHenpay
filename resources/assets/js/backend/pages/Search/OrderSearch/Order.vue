@@ -2,7 +2,7 @@
     <div>
         <div class="card m-b-30">
             <div class="card-header">
-                訂單資訊
+                订单资讯
             </div>
             <div class="card-body">
                 <div class="row delivery-amount">

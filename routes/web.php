@@ -340,6 +340,7 @@ Route::group(
         });
     }
 );
+#cashier company
 Route::group(
     [
         'prefix'     => 'admin/cashier/company',
@@ -356,6 +357,26 @@ Route::group(
             Route::get('/channel', 'CompanyAccountController@channel')->name('channel');
             Route::post('create', 'CompanyAccountController@create')->name('create');
             Route::put('/', 'CompanyAccountController@update')->name('update');
+        });
+    }
+);
+#cashier personal
+Route::group(
+    [
+        'prefix'     => 'user/cashier/personal',
+        'as'         => 'user.cashier.personal.',
+        'namespace'  => 'User\Cashier',
+        'middleware' => ['admin', 'has:management,PersonalAccountPolicy'],
+    ],
+    function () {
+        Route::get('/', 'PersonalAccountController@indexView')->name('view');
+        Route::group(['middleware' => ['json_api']], function () {
+            Route::post('/', 'PersonalAccountController@index')->name('index');
+            Route::post('total', 'PersonalAccountController@total')->name('total');
+            Route::get('{id}/info', 'PersonalAccountController@info')->name('info');
+            Route::get('/channel', 'PersonalAccountController@channel')->name('channel');
+            Route::post('create', 'PersonalAccountController@create')->name('create');
+            Route::put('/', 'PersonalAccountController@update')->name('update');
         });
     }
 );

@@ -32,10 +32,10 @@
                                     <i class="mdi mdi-close-circle-outline text-red" v-else></i>
                                 </td>
                                 <td class="width-control">
-                                    <a @click="showDetail(data)">
+                                    <a @click="$root.$emit('feeManageDetail.show', data)">
                                         <i class="mdi mdi-information-outline text-blue"></i>
                                     </a>
-                                    <a @click="showEdit(data)">
+                                    <a @click="$root.$emit('feeManageEdit.show', data)">
                                         <i class="mdi mdi-pencil-box-outline"></i>
                                     </a>
                                 </td>
@@ -57,10 +57,11 @@
 
 <script>
     import ListMixins from 'mixins/list'
+    import FeeMixins from '../FeeMixins'
 
     export default {
         api: "feeManage",
-        mixins: [ListMixins],
+        mixins: [ListMixins, FeeMixins],
         components: {
             CompanySelector: require('@/CompanySelector'),
             Detail: require('./modal/Detail'),
@@ -93,22 +94,6 @@
             },
             onGetList(res) {
                 this.datas = _.orderBy(res.data, x => +x.i6pay_id, 'asc')
-            },
-            getFee(data) {
-                return data.payment_fee[0]
-                    ? data.payment_fee[0].fee
-                    : data.fee
-            },
-            getStatus(data) {
-                return data.payment_fee[0]
-                    ? +data.payment_fee[0].status
-                    : data.activate
-            },
-            showDetail(data) {
-                this.$root.$emit('feeManageDetail.show', data)
-            },
-            showEdit(data) {
-                this.$root.$emit('feeManageEdit.show', data)
             }
         },
         computed: {

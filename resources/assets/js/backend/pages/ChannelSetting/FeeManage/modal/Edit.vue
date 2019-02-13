@@ -49,9 +49,10 @@
 
 <script>
     import DetailMixins from 'mixins/detail'
+    import FeeMixins from '../../FeeMixins'
 
     export default {
-        mixins: [DetailMixins],
+        mixins: [DetailMixins, FeeMixins],
         methods: {
             update() {
                 this.proccessAjax('update', {
@@ -63,23 +64,11 @@
                     this.updateSuccess()
                     $(this.$refs.modal).modal('hide')
                 })
-            },
-            hasCustom(data) {
-                data.fee = data.payment_fee[0].fee
-                data.status = data.payment_fee[0].status
-            },
-            nonCustom(data) {
-                data.fee = data.fee
-                data.status = data.activate
             }
         },
         mounted() {
             this.$root.$on('feeManageEdit.show', data => {
-                data = _.cloneDeep(data)
-                data.payment_fee && data.payment_fee[0]
-                    ? this.hasCustom(data)
-                    : this.nonCustom(data)
-                this.data = data
+                this.data = this.initData(data)
                 $(this.$refs.modal).modal('show')
             })
         },
