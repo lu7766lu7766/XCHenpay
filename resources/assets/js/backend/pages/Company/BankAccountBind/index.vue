@@ -29,7 +29,8 @@
                     <!-- search-box end -->
                     <div class="row view-btn-box card-box">
                         <div class="col-sm-6 view-btn">
-                            <button class="btn btn-add btn-full" @click="showCreate">新增</button>
+                            <button class="btn btn-add btn-full" @click="$root.$emit('bankAccountBindCreate.show')">新增
+                            </button>
                         </div>
                         <per-page-selector v-model="paginate.perpage"/>
                     </div>
@@ -73,6 +74,8 @@
                                 <td class="width-control">
                                     <a @click="$root.$emit('bankAccountBindInfo.show', data)">
                                         <i class="mdi mdi-information-outline text-blue"></i></a>
+                                    <a class="delete" @click="confirmDelete(data.id)">
+                                        <i class="mdi mdi-delete-variant text-red"></i></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -127,8 +130,14 @@
             onGetList(res) {
                 this.datas = res.data
             },
-            showCreate() {
-                this.$root.$emit('bankAccountBindCreate.show')
+            confirmDelete(id) {
+                swal(this.getDeleteConfig('删除行卡', '你确定要删除这个行卡吗？ 这个操作是不可逆转的。')).then(() => {
+                    this.doDelete(id)
+                }).catch(err => {
+                })
+            },
+            doDelete(id) {
+                this.proccessAjax('delete', {id}, this.deleteSuccess)
             }
         },
         computed: {

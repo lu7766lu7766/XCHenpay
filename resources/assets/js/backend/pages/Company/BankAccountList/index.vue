@@ -145,7 +145,7 @@
                 this.datas = res.data
             },
             confirmDelete(id) {
-                swal(this.config.delete).then(() => {
+                swal(this.getDeleteConfig('删除行卡', '你确定要删除这个行卡吗？ 这个操作是不可逆转的。')).then(() => {
                     this.doDelete(id)
                 }).catch(err => {
                 })

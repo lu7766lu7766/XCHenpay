@@ -5,10 +5,11 @@ namespace App\Http\Controllers\User;
 use App\Constants\Account\AccountStatusConstants;
 use App\Constants\Common\VerifyType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\BindBankCard\BindBankCardCreateRequest;
+use App\Http\Requests\BindBankCard\BindBankCardDeleteRequest;
 use App\Http\Requests\BindBankCard\BindBankCardIndexRequest;
 use App\Http\Requests\BindBankCard\BindBankCardInfoRequest;
 use App\Http\Requests\BindBankCard\BindBankCardTotalRequest;
-use App\Http\Requests\BindBankCardCreateRequest;
 use App\Models\Account;
 use App\Service\BindBankCardService;
 use App\User;
@@ -52,7 +53,7 @@ class BindBankCardController extends Controller
     }
 
     /**
-     * @param BindBankCardCreateRequest $request
+     * @param \App\Http\Requests\BindBankCard\BindBankCardCreateRequest $request
      * @return array
      * @throws \App\Exceptions\ApiErrorCodeException
      * @throws \Throwable
@@ -78,5 +79,14 @@ class BindBankCardController extends Controller
     public function sendVerifyCode()
     {
         return BindBankCardService::getInstance(\Sentinel::getUser())->sendVerifyCode(VerifyType::ACCOUNT);
+    }
+
+    /**
+     * @param BindBankCardDeleteRequest $request
+     * @return array
+     */
+    public function delete(BindBankCardDeleteRequest $request)
+    {
+        return ['data' => BindBankCardService::getInstance(\Sentinel::getUser())->delete($request)];
     }
 }

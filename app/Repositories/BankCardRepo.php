@@ -270,4 +270,22 @@ class BankCardRepo
 
         return $result;
     }
+
+    /**
+     * @param int $id
+     * @param int $userId
+     * @return bool
+     */
+    public function deleteByUser(int $id, int $userId)
+    {
+        $result = false;
+        $count = Account::query()->where('id', $id)->whereHas('user', function (Builder $query) use ($userId) {
+            $query->where('id', $userId);
+        })->delete();
+        if ($count > 0) {
+            $result = true;
+        }
+
+        return $result;
+    }
 }

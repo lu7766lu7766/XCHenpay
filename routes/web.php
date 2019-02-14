@@ -141,6 +141,7 @@ Route::group([
         Route::post('sendVerifyCode', 'BindBankCardController@sendVerifyCode')->name('sendVerifyCode');
         Route::post('info', 'BindBankCardController@info')->name('info');
         Route::post('binding', 'BindBankCardController@create')->name('create');
+        Route::delete('/', 'BindBankCardController@delete')->name('delete');
     });
 });
 #tradeQuery  (index)

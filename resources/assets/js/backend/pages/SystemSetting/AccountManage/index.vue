@@ -114,7 +114,7 @@
                 this.$root.$emit('accountManageDetail.show', data)
             },
             confirmDelete(id) {
-                swal(this.config.delete).then(() => {
+                swal(this.getDeleteConfig()).then(() => {
                     this.doDelete(id)
                 }).catch(err => {
                 })

@@ -28,9 +28,6 @@ export default {
         },
         config: {
             delete: {
-                title: '删除用户',
-                text: "你确定要删除这个用户吗？ 这个操作是不可逆转的。",
-                type: 'warning',
                 showCancelButton: true,
                 confirmButtonClass: 'btn btn-success',
                 cancelButtonClass: 'm-l-10',
@@ -42,6 +39,11 @@ export default {
         }
     }),
     methods: {
+        getDeleteConfig(title = '删除用户', text = '你确定要删除这个用户吗？ 这个操作是不可逆转的。', type = 'warning') {
+            return Object.assign({}, {
+                title, text, type
+            }, this.config.delete)
+        },
         onGetList() {
         },
         onGetTotal() {

@@ -9,10 +9,11 @@
 namespace App\Service;
 
 use App\Exceptions\ApiErrorCodeException;
+use App\Http\Requests\BindBankCard\BindBankCardCreateRequest;
+use App\Http\Requests\BindBankCard\BindBankCardDeleteRequest;
 use App\Http\Requests\BindBankCard\BindBankCardIndexRequest;
 use App\Http\Requests\BindBankCard\BindBankCardInfoRequest;
 use App\Http\Requests\BindBankCard\BindBankCardTotalRequest;
-use App\Http\Requests\BindBankCardCreateRequest;
 use App\Models\Account;
 use App\Repositories\BankCardRepo;
 use App\Repositories\UserRepo;
@@ -75,7 +76,7 @@ class BindBankCardService
     }
 
     /**
-     * @param BindBankCardCreateRequest $handle
+     * @param \App\Http\Requests\BindBankCard\BindBankCardCreateRequest $handle
      * @return bool
      * @throws ApiErrorCodeException
      * @throws \Throwable
@@ -111,5 +112,14 @@ class BindBankCardService
     public function getReceiver()
     {
         return $this->user;
+    }
+
+    /**
+     * @param BindBankCardDeleteRequest $request
+     * @return bool
+     */
+    public function delete(BindBankCardDeleteRequest $request)
+    {
+        return app(BankCardRepo::class)->deleteByUser($request->getId(), $this->user->getKey());
     }
 }

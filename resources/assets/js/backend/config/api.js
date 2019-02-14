@@ -178,6 +178,10 @@ export default {
         verify: {
             uri: '/user/bankCard/bind/sendVerifyCode',
             method: 'post'
+        },
+        delete: {
+            uri: '/user/bankCard/bind',
+            method: 'delete'
         }
     },
     /** 報表統計 */
