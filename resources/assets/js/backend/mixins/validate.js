@@ -41,6 +41,8 @@ export default {
                                 proccessValidate(realVar < rule.value, rule.message)
                             } else if (typeof realVar == 'string') {
                                 proccessValidate(realVar.length < rule.value, rule.message)
+                            } else if (typeof realVar == 'object') {
+                                proccessValidate(Object.keys(realVar).length < rule.value, rule.message)
                             }
                             break
                         case 'max':
@@ -48,6 +50,8 @@ export default {
                                 proccessValidate(realVar > rule.value, rule.message)
                             } else if (typeof realVar == 'string') {
                                 proccessValidate(realVar.length > rule.value, rule.message)
+                            } else if (typeof realVar == 'object') {
+                                proccessValidate(Object.keys(realVar).length > rule.value, rule.message)
                             }
                             break
                         case 'email':

@@ -377,6 +377,7 @@ export default {
             method: 'put'
         }
     },
+    /** 帳號設置 */
     accountSetting: {
         dataInit: {
             uri: '/user/cashier/personal/channel',
@@ -397,6 +398,52 @@ export default {
         update: {
             uri: '/user/cashier/personal',
             method: 'put'
+        }
+    },
+    /** 信息管理 */
+    messageManage: {
+        dataInit: {
+            uri: ['/admin/informationManage/roles', '/admin/informationManage/category'],
+            method: 'get'
+        },
+        list: {
+            uri: '/admin/informationManage',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/informationManage/total',
+            method: 'post'
+        },
+        create: {
+            uri: '/admin/informationManage/notify',
+            method: 'post'
+        },
+        delete: {
+            uri: '/admin/informationManage',
+            method: 'delete'
+        }
+    },
+    /** 信息列表 */
+    messageList: {
+        dataInit: {
+            uri: '/user/informationLists/category',
+            method: 'get'
+        },
+        list: {
+            uri: '/user/informationLists',
+            method: 'post'
+        },
+        total: {
+            uri: '/user/informationLists/total',
+            method: 'post'
+        },
+        info: {
+            uri: '/user/informationLists/{id}/info',
+            method: 'get'
+        },
+        delete: {
+            uri: '/user/informationLists',
+            method: 'delete'
         }
     },
     /** 外部view */

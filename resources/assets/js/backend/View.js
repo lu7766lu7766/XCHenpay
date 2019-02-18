@@ -24,6 +24,9 @@ if ($app) {
             /** 通道管理 */
             FeeList: () => import('./pages/ChannelSetting/FeeList'), // 通道列表
             FeeManage: () => import('./pages/ChannelSetting/FeeManage'), // 通道管理
+            /** 信息通知 */
+            MessageList: () => import('./pages/MessageNotify/List'), // 信息列表
+            MessageManage: () => import('./pages/MessageNotify/Manage'), // 信息管理
             /** 收款管理 */
             CompanyAccount: () => import('./pages/Cashier/CompanyAccount'),
             AccountSetting: () => import('./pages/Cashier/AccountSetting'),

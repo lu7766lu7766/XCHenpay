@@ -196,7 +196,7 @@ class MerchantsService
                 'secret_code'        => Hash::make($request->getSecretCode()),
             ];
             \DB::transaction(function () use ($insert, $request, &$result) {
-                $roles = app(RoleRepo::class)->findBySlug([RolesConstants::USER]);
+                $roles = app(RoleRepo::class)->getBySlug([RolesConstants::USER]);
                 if ($roles->isNotEmpty()) {
                     $role = $roles->first();
                     /** @var User $user */

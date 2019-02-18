@@ -38,15 +38,11 @@ class UserRepo
     /**
      * 角色
      * @param string $role
-     * @param int $userId
      * @return User[]|Collection
      */
-    public function getRole(string $role, int $userId = null)
+    public function getRole(string $role)
     {
         $query = User::query();
-        if (!is_null($userId)) {
-            $query->where('id', $userId);
-        }
         $query->whereHas('roles', function (Builder $query) use ($role) {
             $query->where('slug', $role);
         });

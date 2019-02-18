@@ -6,7 +6,7 @@ use App\Repositories\RoleRepo;
 use Cartalyst\Sentinel\Roles\EloquentRole;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateRolePermissionAddCompanyAccount extends Migration
+class UpdateRolePermissionsAddInformationList extends Migration
 {
     /**
      * Run the migrations.
@@ -15,9 +15,13 @@ class UpdateRolePermissionAddCompanyAccount extends Migration
      */
     public function up()
     {
-        $roles = app(RoleRepo::class)->getBySlug([RolesConstants::CUSTOMER, RolesConstants::FINANCE]);
+        $roles = app(RoleRepo::class)->getBySlug([
+            RolesConstants::CUSTOMER,
+            RolesConstants::FINANCE,
+            RolesConstants::USER
+        ]);
         $roles->map(function (EloquentRole $role) {
-            $role->addPermission(PermissionSubjectConstants::COMPANY_ACCOUNT);
+            $role->addPermission(PermissionSubjectConstants::INFORMATION_LIST);
             $role->save();
         });
     }
@@ -29,9 +33,13 @@ class UpdateRolePermissionAddCompanyAccount extends Migration
      */
     public function down()
     {
-        $roles = app(RoleRepo::class)->getBySlug([RolesConstants::CUSTOMER, RolesConstants::FINANCE]);
+        $roles = app(RoleRepo::class)->getBySlug([
+            RolesConstants::CUSTOMER,
+            RolesConstants::FINANCE,
+            RolesConstants::USER
+        ]);
         $roles->map(function (EloquentRole $role) {
-            $role->removePermission(PermissionSubjectConstants::COMPANY_ACCOUNT);
+            $role->removePermission(PermissionSubjectConstants::INFORMATION_LIST);
             $role->save();
         });
     }

@@ -9,6 +9,8 @@ use App\Policies\FeeListPolicy;
 use App\Policies\FeeManagementPolicy;
 use App\Policies\FillOrderPolicy;
 use App\Policies\HeaderInfoPolicy;
+use App\Policies\InformationListsPolicy;
+use App\Policies\InformationManagePolicy;
 use App\Policies\LendManagePolicy;
 use App\Policies\MerchantsPolicy;
 use App\Policies\NotifyOrderFailPolicy;
@@ -25,20 +27,22 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model'              => 'App\Policies\ModelPolicy',
-        'LendManagePolicy'       => LendManagePolicy::class,
-        FillOrderPolicy::class   => FillOrderPolicy::class,
-        'FeeManagementPolicy'    => FeeManagementPolicy::class,
-        'MerchantsPolicy'        => MerchantsPolicy::class,
-        'TrashedMerchantsPolicy' => TrashedMerchantsPolicy::class,
-        'FeeListPolicy'          => FeeListPolicy::class,
-        'OrderNotifyPolicy'      => OrderNotifyPolicy::class,
-        'NotifyOrderFailPolicy'  => NotifyOrderFailPolicy::class,
-        'BindBankCardPolicy'     => BindBankCardPolicy::class,
-        'BankCardListPolicy'     => BankCardListPolicy::class,
-        'HeaderInfoPolicy'       => HeaderInfoPolicy::class,
-        'CompanyAccountPolicy'   => CompanyAccountPolicy::class,
-        'PersonalAccountPolicy'  => PersonalAccountPolicy::class
+        'App\Model'               => 'App\Policies\ModelPolicy',
+        'LendManagePolicy'        => LendManagePolicy::class,
+        FillOrderPolicy::class    => FillOrderPolicy::class,
+        'FeeManagementPolicy'     => FeeManagementPolicy::class,
+        'MerchantsPolicy'         => MerchantsPolicy::class,
+        'TrashedMerchantsPolicy'  => TrashedMerchantsPolicy::class,
+        'FeeListPolicy'           => FeeListPolicy::class,
+        'OrderNotifyPolicy'       => OrderNotifyPolicy::class,
+        'NotifyOrderFailPolicy'   => NotifyOrderFailPolicy::class,
+        'BindBankCardPolicy'      => BindBankCardPolicy::class,
+        'BankCardListPolicy'      => BankCardListPolicy::class,
+        'HeaderInfoPolicy'        => HeaderInfoPolicy::class,
+        'CompanyAccountPolicy'    => CompanyAccountPolicy::class,
+        'InformationListsPolicy'  => InformationListsPolicy::class,
+        'InformationManagePolicy' => InformationManagePolicy::class,
+        'PersonalAccountPolicy'   => PersonalAccountPolicy::class
     ];
 
     /**

@@ -45,11 +45,24 @@
                 @endif
             </li>
         @endif
-
+        @if(Sentinel::getUser()->can('management','InformationManagePolicy') ||
+            Sentinel::getUser()->can('management','InformationListsPolicy'))
+            <li class="has-submenu">
+                <a href="#"><i class="ti-email"></i>信息通知</a>
+                <ul class="submenu">
+                    @if(Sentinel::getUser()->can('management','InformationManagePolicy'))
+                        <li><a href="{{route('admin.information.publish.view')}}">信息管理</a></li>
+                    @endif
+                    @if(Sentinel::getUser()->can('management','InformationListsPolicy'))
+                        <li><a href="{{route('user.information.list.view')}}">信息列表</a></li>
+                    @endif
+                </ul>
+            </li>
+        @endif
         @if(Sentinel::getUser()->can('management','CompanyAccountPolicy') ||
             Sentinel::getUser()->can('management','PersonalAccountPolicy'))
             <li class="has-submenu">
-                <a href="#"><i class="ti-direction-alt"></i>收款管理</a>
+                <a href="#"><i class="ti-money"></i>收款管理</a>
                 @if(Sentinel::getUser()->can('management','CompanyAccountPolicy'))
                     <ul class="submenu">
                         <li><a href="{{route('admin.cashier.company.view')}}">公司帐户</a></li>
@@ -62,7 +75,6 @@
                 @endif
             </li>
         @endif
-
         <li class="has-submenu">
             <a href="#"><i class="ti-search"></i>查询功能</a>
             <ul class="submenu">

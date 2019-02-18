@@ -15,7 +15,7 @@ class UpdateRolePermissionsAddMerchants extends Migration
      */
     public function up()
     {
-        $items = app(RoleRepo::class)->findBySlug([RolesConstants::ADMIN, RolesConstants::FINANCE]);
+        $items = app(RoleRepo::class)->getBySlug([RolesConstants::ADMIN, RolesConstants::FINANCE]);
         $items->map(function (EloquentRole $item) {
             if ($item->slug == RolesConstants::ADMIN) {
                 $item->addPermission(PermissionSubjectConstants::MERCHANTS);
@@ -38,7 +38,7 @@ class UpdateRolePermissionsAddMerchants extends Migration
      */
     public function down()
     {
-        $items = app(RoleRepo::class)->findBySlug([RolesConstants::ADMIN, RolesConstants::FINANCE]);
+        $items = app(RoleRepo::class)->getBySlug([RolesConstants::ADMIN, RolesConstants::FINANCE]);
         $items->map(function (EloquentRole $item) {
             if ($item->slug == RolesConstants::ADMIN) {
                 $item->removePermission(PermissionSubjectConstants::MERCHANTS);

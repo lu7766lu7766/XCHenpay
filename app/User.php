@@ -5,8 +5,10 @@ namespace App;
 use App\Models\Account;
 use App\Models\Activity;
 use App\Models\Authcode;
+use App\Models\InformationNotify;
 use App\Models\LendRecord;
 use App\Models\PaymentFees;
+use App\Models\Role;
 use App\Models\verifyCode;
 use App\Models\Whitelist;
 use Cartalyst\Sentinel\Users\EloquentUser;
@@ -14,6 +16,7 @@ use Cviebrock\EloquentTaggable\Taggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 
@@ -32,6 +35,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  * @property string status
  * @property string password
  * @property string secret_code
+ * @property Collection|Role[] roles
  * @method bool hasAccess(array | string $permissions)
  * @method bool hasAnyAccess(array | string $permissions)
  * @mixin Builder
@@ -67,6 +71,7 @@ class User extends EloquentUser
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $loginNames = ['email', 'status'];
+    protected static $rolesModel = Role::class;
 
     public function fees()
     {
@@ -109,7 +114,7 @@ class User extends EloquentUser
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return MorphMany
      */
     public function activityLogs()
     {
@@ -122,5 +127,13 @@ class User extends EloquentUser
     public function whitelist()
     {
         return $this->hasOne(WhiteList::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function informationNotify()
+    {
+        return $this->morphMany(InformationNotify::class, 'owner');
     }
 }

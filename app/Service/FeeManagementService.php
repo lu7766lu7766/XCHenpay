@@ -56,8 +56,8 @@ class FeeManagementService
     public function createOrUpdateByFee(FeeManagementStoreRequest $request)
     {
         $result = null;
-        $userItem = app(UserRepo::class)->getRole(RolesConstants::USER, $request->getMerchantId());
-        if ($userItem->isNotEmpty()) {
+        $user = app(UserRepo::class)->findRole(RolesConstants::USER, $request->getMerchantId());
+        if (!is_null($user)) {
             $result = app(PaymentRepo::class)->createOrUpdateByFee(
                 $request->getId(),
                 $request->getMerchantId(),

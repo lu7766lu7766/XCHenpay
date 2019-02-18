@@ -19,6 +19,8 @@ class PermissionSubjectConstants
     const TRASHED_MERCHANTS = 'trashed.merchants';
     const MERCHANTS_VIEW = 'merchants.view';
     const NOTIFY_ORDER_FAIL = 'notify.order.fail';
+    const INFORMATION_PUBLISH = 'Information.publish';
+    const INFORMATION_LIST = 'Information.list';
     const BIND_BANK_CARD = 'bank.card.bind';
     const BANK_CARD_LIST = 'bank.card.list';
     const COMPANY_ACCOUNT = 'company.account';

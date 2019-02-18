@@ -15,7 +15,7 @@ class UpdateRolePermissionAddBankCardList extends Migration
      */
     public function up()
     {
-        $roles = app(RoleRepo::class)->findBySlug([RolesConstants::CUSTOMER, RolesConstants::FINANCE]);
+        $roles = app(RoleRepo::class)->getBySlug([RolesConstants::CUSTOMER, RolesConstants::FINANCE]);
         $roles->map(function (EloquentRole $role) {
             $role->addPermission(PermissionSubjectConstants::BANK_CARD_LIST);
             $role->save();
@@ -29,7 +29,7 @@ class UpdateRolePermissionAddBankCardList extends Migration
      */
     public function down()
     {
-        $roles = app(RoleRepo::class)->findBySlug([RolesConstants::CUSTOMER, RolesConstants::FINANCE]);
+        $roles = app(RoleRepo::class)->getBySlug([RolesConstants::CUSTOMER, RolesConstants::FINANCE]);
         $roles->map(function (EloquentRole $role) {
             $role->removePermission(PermissionSubjectConstants::BANK_CARD_LIST);
             $role->save();

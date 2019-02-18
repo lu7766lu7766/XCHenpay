@@ -9,18 +9,19 @@
 namespace App\Repositories;
 
 use App\Constants\Roles\RolesConstants;
+use App\Models\Role;
 use Cartalyst\Sentinel\Roles\EloquentRole;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 class RoleRepo
 {
     /**
      * @param array $slug
-     * @return EloquentRole[]|Collection
+     * @return Role[]|Collection
      */
-    public function findBySlug(array $slug)
+    public function getBySlug(array $slug)
     {
-        return EloquentRole::query()->whereIn('slug', $slug)->get();
+        return Role::query()->whereIn('slug', $slug)->get();
     }
 
     /**

@@ -100,6 +100,10 @@ body {
   width: 350px;
 }
 
+.width-tag {
+  width: 150px;
+}
+
 .text-green {
   color: #3bb563;
 }

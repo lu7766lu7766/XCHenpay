@@ -16,6 +16,9 @@
  * @copyright  (c) 2011-2016, Cartalyst LLC
  * @link       http://cartalyst.com
  */
+
+use App\Models\Role;
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +28,7 @@ return [
     | Please provide your session key for Sentinel.
     |
     */
-    'session'      => 'cartalyst_sentinel',
+    'session' => 'cartalyst_sentinel',
     /*
     |--------------------------------------------------------------------------
     | Cookie Key
@@ -34,7 +37,7 @@ return [
     | Please provide your cookie key for Sentinel.
     |
     */
-    'cookie'       => 'cartalyst_sentinel',
+    'cookie'  => 'cartalyst_sentinel',
     /*
     |--------------------------------------------------------------------------
     | Users
@@ -43,7 +46,7 @@ return [
     | Please provide the user model used in Sentinel.
     |
     */
-    'users'        => [
+    'users'   => [
         'model' => 'App\User',
     ],
     /*
@@ -55,7 +58,7 @@ return [
     |
     */
     'roles'        => [
-        'model' => 'Cartalyst\Sentinel\Roles\EloquentRole',
+        'model' => Role::class,
     ],
     /*
     |--------------------------------------------------------------------------
@@ -137,7 +140,7 @@ return [
     | codes will be cleared automatically based on the provided odds.
     |
     */
-    'reminders'    => [
+    'reminders'  => [
         'model'   => 'Cartalyst\Sentinel\Reminders\EloquentReminder',
         'expires' => 14400,
         'lottery' => [2, 100],
@@ -183,7 +186,7 @@ return [
     | configurations are designed to be customized as your site grows.
     |
     */
-    'throttling'   => [
+    'throttling' => [
         'model'  => 'Cartalyst\Sentinel\Throttling\EloquentThrottle',
         'global' => [
             'interval'   => 180,

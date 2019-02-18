@@ -18,4 +18,17 @@ class RolesConstants
     const FINANCE = 'finance';
     //商户
     const USER = 'user';
+
+    /**
+     * @return array
+     */
+    public static function enum()
+    {
+        return [
+            self::ADMIN,
+            self::CUSTOMER,
+            self::FINANCE,
+            self::USER,
+        ];
+    }
 }
