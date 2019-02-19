@@ -76,7 +76,7 @@ class CompanyAccountService
             'bank_name' => $request->getBankName(),
             'status'    => $request->getStatus(),
         ];
-        $detail = ['card_Id' => $request->getCardId()];
+        $detail = ['card_id' => $request->getCardId()];
         $service = BankCardDetectorFactory::make($request->getChannel());
         if (!is_null($service)) {
             try {

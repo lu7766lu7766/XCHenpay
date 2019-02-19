@@ -97,7 +97,7 @@ class PersonalBankCardAccountService
             'maximum_amount'  => $request->getMaximumAmount(),
             'statistics_type' => $request->getStatisticsType(),
         ];
-        $detail = ['card_Id' => $request->getCardId()];
+        $detail = ['card_id' => $request->getCardId()];
         $service = BankCardDetectorFactory::make($request->getChannel());
         if (!is_null($service)) {
             try {
