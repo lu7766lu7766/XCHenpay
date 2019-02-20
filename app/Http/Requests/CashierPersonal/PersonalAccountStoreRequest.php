@@ -63,7 +63,7 @@ class PersonalAccountStoreRequest extends FormRequest
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function getMinimumAmount()
     {
@@ -71,7 +71,7 @@ class PersonalAccountStoreRequest extends FormRequest
     }
 
     /**
-     * @return int|null
+     * @return int
      */
     public function getMaximumAmount()
     {
@@ -114,8 +114,8 @@ class PersonalAccountStoreRequest extends FormRequest
                     )
             ],
             'status'          => 'required|' . Rule::in(BankCardPaymentStatusConstants::enum()),
-            'minimum_amount'  => 'sometimes|required|numeric',
-            'maximum_amount'  => 'sometimes|required|numeric',
+            'minimum_amount'  => 'required|integer|max:' . $this->getMaximumAmount(),
+            'maximum_amount'  => 'required|integer',
             'statistics_type' => 'sometimes|required|' . Rule::in(BankCardPaymentSettleDateConstants::enum()),
         ];
     }

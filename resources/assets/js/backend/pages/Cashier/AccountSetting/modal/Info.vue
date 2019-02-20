@@ -47,15 +47,15 @@
                                 <i class="mdi mdi-close-circle-outline text-red text-lg" v-else></i>
                             </div>
                         </div>
-                        <!--<div class="form-group row">-->
-                        <!--<label class="col-sm-3 control-label">限制金额</label>-->
-                        <!--<div class="col-sm-9 p-t-7">-->
-                        <!--<div class="stored-txt">-->
-                        <!--<span>最低储值:<i class="text-red price">100</i></span>-->
-                        <!--<span>最高储值:<i class="text-red price">30,000</i></span>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</div>-->
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label">限制金额</label>
+                            <div class="col-sm-9 p-t-7">
+                                <div class="stored-txt">
+                                    <span>最低储值:<i class="text-red price">{{ data.minimum_amount }}</i></span>
+                                    <span>最高储值:<i class="text-red price">{{ data.maximum_amount }}</i></span>
+                                </div>
+                            </div>
+                        </div>
                         <!--<div class="form-group row">-->
                         <!--<label class="col-sm-3 control-label">总储值金额</label>-->
                         <!--<div class="col-sm-9 p-t-7">-->

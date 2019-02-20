@@ -25,6 +25,22 @@ class CompanyAccountUpdateRequest extends FormRequest
     }
 
     /**
+     * @return int
+     */
+    public function getMinimumAmount()
+    {
+        return $this->get('minimum_amount', null);
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaximumAmount()
+    {
+        return $this->get('maximum_amount', null);
+    }
+
+    /**
      * @return bool
      */
     public function authorize()
@@ -38,8 +54,10 @@ class CompanyAccountUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'     => 'required|integer',
-            'status' => 'required|' . Rule::in(BankCardPaymentStatusConstants::enum())
+            'id'             => 'required|integer',
+            'status'         => 'required|' . Rule::in(BankCardPaymentStatusConstants::enum()),
+            'minimum_amount' => 'required|integer|max:' . $this->getMaximumAmount(),
+            'maximum_amount' => 'required|integer',
         ];
     }
 }

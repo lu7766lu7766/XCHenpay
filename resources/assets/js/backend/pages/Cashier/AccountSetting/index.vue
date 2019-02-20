@@ -84,6 +84,7 @@
 <script>
     import ListMixins from 'mixins/list'
     import ThisMixins from './mixins'
+    import CashierStatisticsType from 'config/CashierStatisticsType'
 
     export default {
         api: "accountSetting",
@@ -99,7 +100,8 @@
                     'Y': '开启',
                     'N': '关闭'
                 },
-                channel: []
+                channel: [],
+                CashierStatisticsTypeSummary: CashierStatisticsType.summaryMap()
             },
             searchData: {
                 status: '',

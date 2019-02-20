@@ -71,10 +71,12 @@ class CompanyAccountService
     {
         $result = null;
         $data = [
-            'user_name' => $request->getUserName(),
-            'card_no'   => $request->getCardNo(),
-            'bank_name' => $request->getBankName(),
-            'status'    => $request->getStatus(),
+            'user_name'      => $request->getUserName(),
+            'card_no'        => $request->getCardNo(),
+            'bank_name'      => $request->getBankName(),
+            'status'         => $request->getStatus(),
+            'minimum_amount' => $request->getMinimumAmount(),
+            'maximum_amount' => $request->getMaximumAmount(),
         ];
         $detail = ['card_id' => $request->getCardId()];
         $service = BankCardDetectorFactory::make($request->getChannel());
@@ -99,7 +101,14 @@ class CompanyAccountService
      */
     public function update(CompanyAccountUpdateRequest $request)
     {
-        return app(BankCardAccountRepo::class)->companyUpdate($request->getId(), ['status' => $request->getStatus()]);
+        return app(BankCardAccountRepo::class)->companyUpdate(
+            $request->getId(),
+            [
+                'status'         => $request->getStatus(),
+                'minimum_amount' => $request->getMinimumAmount(),
+                'maximum_amount' => $request->getMaximumAmount(),
+            ]
+        );
     }
 
     /**

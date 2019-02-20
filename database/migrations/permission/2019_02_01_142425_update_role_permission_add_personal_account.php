@@ -15,7 +15,7 @@ class UpdateRolePermissionAddPersonalAccount extends Migration
      */
     public function up()
     {
-        $roles = app(RoleRepo::class)->findBySlug([RolesConstants::USER]);
+        $roles = app(RoleRepo::class)->getBySlug([RolesConstants::USER]);
         $roles->map(function (EloquentRole $role) {
             $role->addPermission(PermissionSubjectConstants::PERSONAL_ACCOUNT);
             $role->save();
@@ -29,7 +29,7 @@ class UpdateRolePermissionAddPersonalAccount extends Migration
      */
     public function down()
     {
-        $roles = app(RoleRepo::class)->findBySlug([RolesConstants::USER]);
+        $roles = app(RoleRepo::class)->getBySlug([RolesConstants::USER]);
         $roles->map(function (EloquentRole $role) {
             $role->removePermission(PermissionSubjectConstants::PERSONAL_ACCOUNT);
             $role->save();

@@ -128,7 +128,11 @@ class PersonalBankCardAccountService
         return app(PersonalBankCardAccountRepo::class)->update(
             $this->user->getKey(),
             $request->getId(),
-            ['status' => $request->getStatus()]
+            [
+                'status'         => $request->getStatus(),
+                'minimum_amount' => $request->getMinimumAmount(),
+                'maximum_amount' => $request->getMaximumAmount(),
+            ]
         );
     }
 

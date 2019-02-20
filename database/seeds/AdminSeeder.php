@@ -4,11 +4,6 @@ class AdminSeeder extends DatabaseSeeder
 {
     public function run()
     {
-        DB::table('users')->truncate(); // Using truncate function so all info will be cleared when re-seeding.
-        DB::table('roles')->truncate();
-        DB::table('role_users')->truncate();
-        DB::table('activations')->truncate();
-        DB::table('payment_fees')->truncate();
         $admin = Sentinel::registerAndActivate([
             'email'    => 'admin@admin.com',
             'password' => "admin",

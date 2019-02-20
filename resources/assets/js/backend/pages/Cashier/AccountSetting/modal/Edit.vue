@@ -49,25 +49,25 @@
                                 </label>
                             </div>
                         </div>
-                        <!--<div class="form-group row">-->
-                        <!--<label class="col-md-3 control-label required">限制金额 <b>*</b></label>-->
-                        <!--<div class="col-md-9">-->
-                        <!--<div class="row stored-box">-->
-                        <!--<div class="form-group col-md row">-->
-                        <!--<label class="col-md-4 control-label required p-r-0">最低储值 <b>*</b></label>-->
-                        <!--<div class="col-md control-box">-->
-                        <!--<input type="text" class="form-control" disabled>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-md row">-->
-                        <!--<label class="col-md-4 control-label required p-r-0">最高储值 <b>*</b></label>-->
-                        <!--<div class="col-md control-box">-->
-                        <!--<input type="text" class="form-control" disabled>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</div>-->
+                        <div class="form-group row">
+                            <label class="col-md-3 control-label required">限制金额 <b>*</b></label>
+                            <div class="col-md-9">
+                                <div class="row stored-box">
+                                    <div class="form-group col-md row">
+                                        <label class="col-md-4 control-label required p-r-0">最低储值 <b>*</b></label>
+                                        <div class="col-md control-box">
+                                            <input type="text" class="form-control" v-model="data.minimum_amount">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md row">
+                                        <label class="col-md-4 control-label required p-r-0">最高储值 <b>*</b></label>
+                                        <div class="col-md control-box">
+                                            <input type="text" class="form-control" v-model="data.maximum_amount">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!--<div class="form-group row">-->
                         <!--<label class="col-md-3 control-label required">总储值金额 <b>*</b></label>-->
                         <!--<div class="col-md-9">-->
@@ -79,14 +79,11 @@
                         <!--</div>-->
                         <!--<div class="form-group col-md day-list">-->
                         <!--<div class="">-->
-                        <!--<label class="radio-inline">-->
-                        <!--<input type="radio" value="option1" disabled> 每日计算-->
-                        <!--</label>-->
-                        <!--<label class="radio-inline">-->
-                        <!--<input type="radio" value="option2" disabled> 每周计算-->
-                        <!--</label>-->
-                        <!--<label class="radio-inline">-->
-                        <!--<input type="radio" value="option2" disabled> 每月计算-->
+                        <!--<label class="radio-inline"-->
+                        <!--v-for="(name, val) in $parent.options.CashierStatisticsTypeSummary"-->
+                        <!--:key="val">-->
+                        <!--<input type="radio" :value="val" v-model="data.statistics_type">-->
+                        <!--{{ name }}-->
                         <!--</label>-->
                         <!--</div>-->
                         <!--</div>-->
@@ -115,6 +112,22 @@
                 require: {
                     message: '状态 不得为空白'
                 }
+            },
+            "data.minimum_amount": {
+                require: {
+                    message: '最低储值 不得为空白'
+                },
+                number: {
+                    message: '最低储值 请输入数字'
+                }
+            },
+            "data.maximum_amount": {
+                require: {
+                    message: '最高储值 不得为空白'
+                },
+                number: {
+                    message: '最高储值 请输入数字'
+                }
             }
         },
         methods: {
@@ -124,7 +137,7 @@
                 } catch (e) {
                     return alert(e)
                 }
-                this.proccessAjax('update', _.pick(this.data, ['id', 'status']), this.onUpdate)
+                this.proccessAjax('update', _.pick(this.data, ['id', 'status', 'minimum_amount', 'maximum_amount']), this.onUpdate)
             },
             onUpdate() {
                 this.updateSuccess()
