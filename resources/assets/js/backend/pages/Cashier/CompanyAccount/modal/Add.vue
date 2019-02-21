@@ -140,7 +140,7 @@
                     message: '状态 不得为空白'
                 }
             },
-            "data.minimum_amount": {
+            'data.minimum_amount': {
                 require: {
                     message: '最低储值 不得为空白'
                 },
@@ -148,12 +148,16 @@
                     message: '最低储值 请输入数字'
                 }
             },
-            "data.maximum_amount": {
+            'data.maximum_amount': {
                 require: {
                     message: '最高储值 不得为空白'
                 },
                 number: {
                     message: '最高储值 请输入数字'
+                },
+                min: {
+                    value: 'data.minimum_amount',
+                    message: '最高储值 不可低于 最低储值'
                 }
             }
         },

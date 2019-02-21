@@ -115,32 +115,32 @@
     export default {
         mixins: [DetailMixins],
         rules: {
-            "data.user_name": {
+            'data.user_name': {
                 require: {
                     message: '开户名 不得为空白'
                 }
             },
-            "data.card_no": {
+            'data.card_no': {
                 require: {
                     message: '银行卡号 不得为空白'
                 }
             },
-            "data.bank_name": {
+            'data.bank_name': {
                 require: {
                     message: '银行名 不得为空白'
                 }
             },
-            "data.channel": {
+            'data.channel': {
                 require: {
                     message: '通道类型 不得为空白'
                 }
             },
-            "data.status": {
+            'data.status': {
                 require: {
                     message: '状态 不得为空白'
                 }
             },
-            "data.minimum_amount": {
+            'data.minimum_amount': {
                 require: {
                     message: '最低储值 不得为空白'
                 },
@@ -148,12 +148,16 @@
                     message: '最低储值 请输入数字'
                 }
             },
-            "data.maximum_amount": {
+            'data.maximum_amount': {
                 require: {
                     message: '最高储值 不得为空白'
                 },
                 number: {
                     message: '最高储值 请输入数字'
+                },
+                min: {
+                    value: 'data.minimum_amount',
+                    message: '最高储值 不可低于 最低储值'
                 }
             }
         },
