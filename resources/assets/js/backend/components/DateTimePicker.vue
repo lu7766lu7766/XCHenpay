@@ -1,6 +1,8 @@
 <template>
     <div class="date-select">
-        <date-time-picker :type="type" :placeholder="placeholder" v-model="value"/>
+        <date-time-picker :type="type"
+                          :placeholder="placeholder" :value="value"
+                          @input="newVal => $emit('input', newVal)"/>
     </div>
 </template>
 <script>
@@ -20,11 +22,6 @@
             value: {
                 type: Object,
                 requered: true
-            }
-        },
-        watch: {
-            value(newValue) {
-                this.$emit('input', newValue)
             }
         }
     }
