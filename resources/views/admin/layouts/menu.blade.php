@@ -63,16 +63,14 @@
             Sentinel::getUser()->can('management','PersonalAccountPolicy'))
             <li class="has-submenu">
                 <a href="#"><i class="ti-money"></i>收款管理</a>
-                @if(Sentinel::getUser()->can('management','CompanyAccountPolicy'))
-                    <ul class="submenu">
+                <ul class="submenu">
+                    @if(Sentinel::getUser()->can('management','CompanyAccountPolicy'))
                         <li><a href="{{route('admin.cashier.company.view')}}">公司帐户</a></li>
-                    </ul>
-                @endif
-                @if(Sentinel::getUser()->can('management','PersonalAccountPolicy'))
-                    <ul class="submenu">
+                    @endif
+                    @if(Sentinel::getUser()->can('management','PersonalAccountPolicy'))
                         <li><a href="{{route('user.cashier.personal.view')}}">帐户设置</a></li>
-                    </ul>
-                @endif
+                    @endif
+                </ul>
             </li>
         @endif
         <li class="has-submenu">
