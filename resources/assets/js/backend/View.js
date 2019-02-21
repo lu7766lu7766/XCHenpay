@@ -40,6 +40,7 @@ if ($app) {
             NotifyOrderFailLog: () => import('./pages/History/NotifyOrderFailLog'),
             /** 系統設置 */
             AccountManage: () => import('./pages/SystemSetting/AccountManage'),
+            PaymentManage: () => import('./pages/SystemSetting/PaymentManage'),
             // ActivityLog: resolve => {
             //     require(['./pages/ActivityLog'], resolve)
             // }

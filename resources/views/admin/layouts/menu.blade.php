@@ -105,11 +105,15 @@
 
         <li class="has-submenu ml-auto"></li>
 
-        @if (Sentinel::getUser()->hasAccess('systemSetting'))
+        @if (Sentinel::getUser()->hasAccess('systemSetting') ||
+            Sentinel::getUser()->can('management','PaymentManagePolicy'))
             <li class="has-submenu">
                 <a href="#"><i class="ti-settings"></i>系统设置</a>
                 <ul class="submenu">
-                    <li><a href="{{ route('admin.systemSetting.accountManage')  }}">帐号管理</a></li>
+                    <li><a href="{{ route('admin.systemSetting.accountManage') }}">帐号管理</a></li>
+                    @if(Sentinel::getUser()->can('management','PaymentManagePolicy'))
+                        <li><a href="{{ route('admin.systemSetting.paymentManage.view')  }}">金流管理</a></li>
+                    @endif
                     {{--<li><a href="#">群组设定</a></li>--}}
                     {{--<li><a href="#">权限设定</a></li>--}}
                 </ul>

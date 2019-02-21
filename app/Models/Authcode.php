@@ -84,4 +84,17 @@ class Authcode extends Model
 
         return $this;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function authCodesPaymentAccount()
+    {
+        return $this->belongsToMany(
+            UserPaymentAccount::class,
+            'authcodes_payment_account',
+            'authcodes_id',
+            'payment_account_id'
+        );
+    }
 }

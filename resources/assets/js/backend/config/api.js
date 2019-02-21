@@ -446,6 +446,33 @@ export default {
             method: 'delete'
         }
     },
+    /** 金流管理 */
+    paymentManage: {
+        list: {
+            uri: '/admin/payment/manage/dataList',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/payment/manage/dataTotal',
+            method: 'post'
+        },
+        detail: {
+            uri: '/admin/payment/manage/detail',
+            method: 'post'
+        },
+        create: {
+            uri: '/admin/payment/manage/add',
+            method: 'post'
+        },
+        update: {
+            uri: '/admin/payment/manage/update',
+            method: 'post'
+        },
+        delete: {
+            uri: '/admin/payment/manage/del',
+            method: 'post'
+        }
+    },
     /** 外部view */
     outer: {
         notify: {

@@ -9,6 +9,7 @@ use App\Models\InformationNotify;
 use App\Models\LendRecord;
 use App\Models\PaymentFees;
 use App\Models\Role;
+use App\Models\UserPaymentAccount;
 use App\Models\verifyCode;
 use App\Models\Whitelist;
 use Cartalyst\Sentinel\Users\EloquentUser;
@@ -127,6 +128,14 @@ class User extends EloquentUser
     public function whitelist()
     {
         return $this->hasOne(WhiteList::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function userPaymentAccount()
+    {
+        return $this->hasMany(UserPaymentAccount::class, 'user_id', 'id');
     }
 
     /**
