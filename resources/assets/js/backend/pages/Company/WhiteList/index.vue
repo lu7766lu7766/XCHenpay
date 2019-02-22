@@ -67,7 +67,7 @@
         },
         methods: {
             onGetTotal(res) {
-                this.paginate.total = res.data
+                this.paginate.total = res.data.count
             },
             onGetList(res) {
                 this.datas = res.data
