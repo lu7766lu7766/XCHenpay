@@ -25,6 +25,8 @@ class UpdateAuthcodesTableStep2 extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('authcodes', function (Blueprint $table) {
+            $table->dropColumn('remark');
+        });
     }
 }
