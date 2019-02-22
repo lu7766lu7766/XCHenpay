@@ -258,6 +258,10 @@ export default {
         update: {
             uri: '/admin/whitelist/maintain',
             method: 'post'
+        },
+        delete: {
+            uri: '/admin/whitelist/maintain',
+            method: 'delete'
         }
     },
     /** 回调错误记录 */
