@@ -60,10 +60,14 @@
             </li>
         @endif
         @if(Sentinel::getUser()->can('management','CompanyAccountPolicy') ||
-            Sentinel::getUser()->can('management','PersonalAccountPolicy'))
+            Sentinel::getUser()->can('management','PersonalAccountPolicy') ||
+            Sentinel::getUser()->can('management', 'BankCardAccountManagePolicy'))
             <li class="has-submenu">
                 <a href="#"><i class="ti-money"></i>收款管理</a>
                 <ul class="submenu">
+                    @if(Sentinel::getUser()->can('management', 'BankCardAccountManagePolicy'))
+                        <li><a href="{{route('admin.cashier.manage.view')}}">帐户管理</a></li>
+                    @endif
                     @if(Sentinel::getUser()->can('management','CompanyAccountPolicy'))
                         <li><a href="{{route('admin.cashier.company.view')}}">公司帐户</a></li>
                     @endif

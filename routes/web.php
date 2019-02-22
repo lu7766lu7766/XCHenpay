@@ -398,7 +398,7 @@ Route::group(
         });
     }
 );
-#cashier company
+#公司帳戶
 Route::group(
     [
         'prefix'     => 'admin/cashier/company',
@@ -418,7 +418,7 @@ Route::group(
         });
     }
 );
-#cashier personal
+#帳戶設置
 Route::group(
     [
         'prefix'     => 'user/cashier/personal',
@@ -435,6 +435,24 @@ Route::group(
             Route::get('/channel', 'PersonalAccountController@channel')->name('channel');
             Route::post('create', 'PersonalAccountController@create')->name('create');
             Route::put('/', 'PersonalAccountController@update')->name('update');
+        });
+    }
+);
+#帳戶管理
+Route::group(
+    [
+        'prefix'     => 'admin/cashier/manage',
+        'as'         => 'admin.cashier.manage.',
+        'namespace'  => 'Manage\Cashier',
+        'middleware' => ['admin', 'has:management,BankCardAccountManagePolicy'],
+    ],
+    function () {
+        Route::get('/', 'AccountManageController@indexView')->name('view');
+        Route::group(['middleware' => ['json_api']], function () {
+            Route::get('/merchant', 'AccountManageController@merchant')->name('merchant');
+            Route::post('/', 'AccountManageController@index')->name('index');
+            Route::post('total', 'AccountManageController@total')->name('total');
+            Route::post('/info', 'AccountManageController@info')->name('info');
         });
     }
 );

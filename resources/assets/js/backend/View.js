@@ -30,6 +30,7 @@ if ($app) {
             /** 收款管理 */
             CompanyAccount: () => import('./pages/Cashier/CompanyAccount'),
             AccountSetting: () => import('./pages/Cashier/AccountSetting'),
+            CashierAccountSetting: () => import('./pages/Cashier/AccountManage'),
             /** 查詢功能 */
             OrderSearch: () => import('./pages/Search/OrderSearch'),
             ReportStatistics: () => import('./pages/Search/Report/Statistics'), // 報表統計

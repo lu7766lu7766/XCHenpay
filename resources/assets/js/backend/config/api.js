@@ -381,7 +381,7 @@ export default {
             method: 'put'
         }
     },
-    /** 帳號設置 */
+    /** 帳戶設置 */
     accountSetting: {
         dataInit: {
             uri: '/user/cashier/personal/channel',
@@ -402,6 +402,25 @@ export default {
         update: {
             uri: '/user/cashier/personal',
             method: 'put'
+        }
+    },
+    /** 帳戶管理 */
+    cashierAccountManage: {
+        dataInit: {
+            uri: '/admin/cashier/manage/merchant',
+            method: 'get'
+        },
+        list: {
+            uri: '/admin/cashier/manage',
+            method: 'post'
+        },
+        total: {
+            uri: '/admin/cashier/manage/total',
+            method: 'post'
+        },
+        info: {
+            uri: '/admin/cashier/manage/info',
+            method: 'post'
         }
     },
     /** 信息管理 */
