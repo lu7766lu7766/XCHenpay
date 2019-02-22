@@ -20,4 +20,13 @@ class InformationCategoryRepo
     {
         return InformationCategory::all();
     }
+
+    /**
+     * @param int $code
+     * @return InformationCategory|null
+     */
+    public function findCode(int $code)
+    {
+        return InformationCategory::query()->where('code', $code)->first();
+    }
 }

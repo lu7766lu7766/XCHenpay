@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models
  * @mixin Builder
  * @property array ip
+ * @property integer user_id
  */
 class Whitelist extends Model
 {

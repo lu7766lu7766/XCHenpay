@@ -18,6 +18,7 @@ use App\Models\InformationNotify;
 use App\Repositories\InformationCategoryRepo;
 use App\Repositories\InformationNotifyManageRepo;
 use App\Repositories\RoleRepo;
+use App\Repositories\UserRepo;
 use App\Traits\Singleton;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -56,23 +57,66 @@ class InformationManageService
     public function notifyRole(InformationManageStoreRequest $request)
     {
         $result = null;
-        $data = [
-            'category_id' => $request->getCategoryId(),
-            'subject'     => $request->getSubject(),
-            'content'     => $request->getInfoContent(),
-        ];
         try {
-            \DB::transaction(function () use ($data, $request, &$result) {
-                $informationRepo = app(InformationNotifyManageRepo::class);
-                $notifyInfo = $informationRepo->create($data);
+            \DB::transaction(function () use ($request, &$result) {
+                $notifyInfo = $this->create($request->getCategoryId(), $request->getSubject(), $request->getContent());
                 if (!is_null($notifyInfo)) {
-                    $notifyTarget = app(RoleRepo::class)->getBySlug($request->getRole());
-                    $result = $informationRepo->notifyRoles($notifyTarget, $notifyInfo);
+                    $this->attachRoles($notifyInfo, $request->getRole());
                 }
             });
         } catch (\Throwable $e) {
             \Log::debug($e->getMessage());
         }
+
+        return $result;
+    }
+
+    /**
+     * @param InformationNotify $notify
+     * @param array $roles
+     * @return InformationNotify
+     */
+    public function attachRoles(InformationNotify $notify, array $roles)
+    {
+        $notifyTarget = app(RoleRepo::class)->getBySlug($roles);
+        if ($notifyTarget->isNotEmpty()) {
+            $notify = app(InformationNotifyManageRepo::class)->notifyRoles($notifyTarget, $notify);
+        }
+
+        return $notify;
+    }
+
+    /**
+     * @param InformationNotify $notify
+     * @param int $userId
+     * @return InformationNotify
+     */
+    public function attachUser(InformationNotify $notify, int $userId)
+    {
+        $user = app(UserRepo::class)->find($userId);
+        if (!is_null($user)) {
+            return app(InformationNotifyManageRepo::class)->notifyPersonal($user, $notify);
+        }
+
+        return $notify;
+    }
+
+    /**
+     * 新增訊息
+     * @param int $categoryId
+     * @param string $subject
+     * @param string $content
+     * @return InformationNotify|null
+     */
+    public function create(int $categoryId, string $subject, string $content)
+    {
+        $data = [
+            'category_id' => $categoryId,
+            'subject'     => $subject,
+            'content'     => $content,
+        ];
+        $informationRepo = app(InformationNotifyManageRepo::class);
+        $result = $informationRepo->create($data);
 
         return $result;
     }

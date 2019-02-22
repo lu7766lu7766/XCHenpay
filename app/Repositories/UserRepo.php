@@ -443,4 +443,13 @@ class UserRepo
 
         return $result;
     }
+
+    /**
+     * @param int $Id
+     * @return User|null
+     */
+    public function find(int $Id)
+    {
+        return User::find($Id);
+    }
 }

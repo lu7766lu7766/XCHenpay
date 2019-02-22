@@ -8,6 +8,8 @@
 
 namespace App\Service;
 
+use App\Contract\Information\INotify;
+use App\Events\Information\Notify\WhiteListEdited;
 use App\Http\Requests\Whitelist\WhitelistDeleteRequest;
 use App\Http\Requests\Whitelist\WhitelistIndexRequest;
 use App\Http\Requests\Whitelist\WhitelistInfoRequest;
@@ -56,8 +58,10 @@ class WhitelistService
     public function createOrUpdate(WhitelistStoreRequest $request)
     {
         $data = ['ip' => $request->getIps()];
+        $result = app(WhitelistRepo::class)->createOrUpdate($request->getUserId(), $data);
+        event(INotify::class, new WhiteListEdited($result));
 
-        return app(WhitelistRepo::class)->createOrUpdate($request->getUserId(), $data);
+        return $result;
     }
 
     /**

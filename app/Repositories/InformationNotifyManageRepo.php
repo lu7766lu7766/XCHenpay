@@ -9,6 +9,7 @@
 namespace App\Repositories;
 
 use App\Models\InformationNotify;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -88,6 +89,23 @@ class InformationNotifyManageRepo
             $information->setRelation('roleGroup', $roles);
         } catch (\Throwable $e) {
             \Log::debug($e->getMessage());
+        }
+
+        return $information;
+    }
+
+    /**
+     * @param User $user
+     * @param InformationNotify $information
+     * @return InformationNotify
+     */
+    public function notifyPersonal(User $user, InformationNotify $information)
+    {
+        try {
+            $information->personal()->attach($user);
+            $information->setRelation('personal', $user);
+        } catch (\Throwable $e) {
+            \Log::error($e->getMessage());
         }
 
         return $information;
