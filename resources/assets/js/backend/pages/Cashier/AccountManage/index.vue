@@ -81,6 +81,7 @@
 <script>
     import ListMixins from 'mixins/list'
     import ThisMixins from './mixins'
+    import CashierStatisticsType from 'config/CashierStatisticsType'
 
     export default {
         api: "cashierAccountManage",
@@ -95,12 +96,16 @@
                     'Y': '开启',
                     'N': '关闭'
                 },
-                companies: []
+                companies: [],
+                CashierStatisticsTypeSummary: CashierStatisticsType.summaryMap()
             },
             searchData: {
                 status: '',
                 user_id: -1,
                 search: ''
+            },
+            config: {
+                CashierStatisticsType
             }
         }),
         watch: {

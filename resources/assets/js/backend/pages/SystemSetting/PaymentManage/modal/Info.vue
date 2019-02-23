@@ -1,5 +1,5 @@
 <template>
-    <div ref="modal" class="modal fade info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div ref="modal" id="info" class="modal fade info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -34,7 +34,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 control-label">总储值金额</label>
                             <div class="col-sm-9 p-t-7">
-                                <i class="text-red price">{{ data.total_deposit | numFormat('0,0') }}</i>
+                                <i class="text-red price">{{ data.total_deposit | numFormat('0,0') }}</i>&nbsp
                                 <span class="badge" :class="{
                                     'badge-day' : data.deposit_type == $parent.config.PaymentManageDepositType.DAILY,
                                     'badge-week' : data.deposit_type == $parent.config.PaymentManageDepositType.WEEKLY,

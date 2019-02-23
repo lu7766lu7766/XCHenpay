@@ -79,11 +79,19 @@ class PersonalAccountStoreRequest extends FormRequest
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getStatisticsType()
     {
-        return $this->get('statistics_type', null);
+        return $this->get('statistics_type');
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalAmount()
+    {
+        return $this->get('total_amount');
     }
 
     /**
@@ -100,11 +108,11 @@ class PersonalAccountStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'card_id'         => 'sometimes|required|string',
-            'user_name'       => 'required|string',
-            'card_no'         => 'required|string',
-            'bank_name'       => 'required|string',
-            'channel'         => [
+            'card_id'        => 'sometimes|required|string',
+            'user_name'      => 'required|string',
+            'card_no'        => 'required|string',
+            'bank_name'      => 'required|string',
+            'channel'        => [
                 'required',
                 Rule::exists('payments', 'i6pay_id')
                     ->where(
@@ -113,10 +121,11 @@ class PersonalAccountStoreRequest extends FormRequest
                         }
                     )
             ],
-            'status'          => 'required|' . Rule::in(BankCardPaymentStatusConstants::enum()),
-            'minimum_amount'  => 'required|integer|max:' . $this->getMaximumAmount(),
-            'maximum_amount'  => 'required|integer',
-            'statistics_type' => 'sometimes|required|' . Rule::in(BankCardPaymentSettleDateConstants::enum()),
+            'status'         => 'required|' . Rule::in(BankCardPaymentStatusConstants::enum()),
+            'minimum_amount' => 'required|integer|max:' . $this->getMaximumAmount(),
+            'maximum_amount' => 'required|integer',
+            'total_amount'   => 'required|integer',
+            'statistics_type' => 'required|' . Rule::in(BankCardPaymentSettleDateConstants::enum()),
         ];
     }
 }

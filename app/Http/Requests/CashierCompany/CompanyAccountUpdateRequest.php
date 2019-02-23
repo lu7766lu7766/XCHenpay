@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\CashierCompany;
 
+use App\Constants\BankCardPayment\BankCardPaymentSettleDateConstants;
 use App\Constants\BankCardPayment\BankCardPaymentStatusConstants;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -41,6 +42,22 @@ class CompanyAccountUpdateRequest extends FormRequest
     }
 
     /**
+     * @return string
+     */
+    public function getStatisticsType()
+    {
+        return $this->get('statistics_type');
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalAmount()
+    {
+        return $this->get('total_amount');
+    }
+
+    /**
      * @return bool
      */
     public function authorize()
@@ -54,10 +71,12 @@ class CompanyAccountUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id'             => 'required|integer',
-            'status'         => 'required|' . Rule::in(BankCardPaymentStatusConstants::enum()),
-            'minimum_amount' => 'required|integer|max:' . $this->getMaximumAmount(),
-            'maximum_amount' => 'required|integer',
+            'id'              => 'required|integer',
+            'status'          => 'required|' . Rule::in(BankCardPaymentStatusConstants::enum()),
+            'minimum_amount'  => 'required|integer|max:' . $this->getMaximumAmount(),
+            'maximum_amount'  => 'required|integer',
+            'total_amount'    => 'required|integer',
+            'statistics_type' => 'required|' . Rule::in(BankCardPaymentSettleDateConstants::enum()),
         ];
     }
 }

@@ -36,7 +36,7 @@ class BankCardAccount extends Model
         'total_amount',
         'minimum_amount',
         'maximum_amount',
-        'settle_date',
+        'statistics_type',
     ];
     protected $casts = [];
 

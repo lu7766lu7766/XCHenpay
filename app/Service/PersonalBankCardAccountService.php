@@ -96,6 +96,7 @@ class PersonalBankCardAccountService
             'minimum_amount'  => $request->getMinimumAmount(),
             'maximum_amount'  => $request->getMaximumAmount(),
             'statistics_type' => $request->getStatisticsType(),
+            'total_amount'    => $request->getTotalAmount(),
         ];
         $detail = ['card_id' => $request->getCardId()];
         $service = BankCardDetectorFactory::make($request->getChannel());
@@ -129,9 +130,11 @@ class PersonalBankCardAccountService
             $this->user->getKey(),
             $request->getId(),
             [
-                'status'         => $request->getStatus(),
-                'minimum_amount' => $request->getMinimumAmount(),
-                'maximum_amount' => $request->getMaximumAmount(),
+                'status'          => $request->getStatus(),
+                'minimum_amount'  => $request->getMinimumAmount(),
+                'maximum_amount'  => $request->getMaximumAmount(),
+                'statistics_type' => $request->getStatisticsType(),
+                'total_amount'    => $request->getTotalAmount(),
             ]
         );
     }

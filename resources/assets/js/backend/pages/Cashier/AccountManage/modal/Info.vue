@@ -1,5 +1,5 @@
 <template>
-    <div ref="modal" class="modal fade info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div ref="modal" id="info" class="modal fade info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -58,24 +58,27 @@
                             <label class="col-sm-3 control-label">限制金额</label>
                             <div class="col-sm-9 p-t-7">
                                 <div class="stored-txt">
-                                    <span>最低储值:
-                                        <i class="text-red price"> {{ data.minimum_amount | numFormat('0,0') }} </i>
+                                    <span>最低储值:<i class="text-red price">
+                                        {{ data.minimum_amount | numFormat('0,0') }} </i>
                                     </span>
-                                    <span>最高储值:
-                                        <i class="text-red price"> {{ data.maximum_amount | numFormat('0,0') }} </i>
+                                    <span>最高储值:<i class="text-red price">
+                                        {{ data.maximum_amount | numFormat('0,0') }} </i>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="form-group row">-->
-                        <!--<label class="col-sm-3 control-label">总储值金额</label>-->
-                        <!--<div class="col-sm-9 p-t-7">-->
-                        <!--<i class="text-red price">3,000,000</i>-->
-                        <!--<span class="badge badge-day">每日计算</span>-->
-                        <!--&lt;!&ndash; <span class="badge badge-week">每周计算</span>-->
-                        <!--<span class="badge badge-month">每月计算</span> &ndash;&gt;-->
-                        <!--</div>-->
-                        <!--</div>-->
+                        <div class="form-group row">
+                            <label class="col-sm-3 control-label">总储值金额</label>
+                            <div class="col-sm-9 p-t-7">
+                                <i class="text-red price">{{ data.total_amount | numFormat('0,0') }}</i>&nbsp;
+                                <span class="badge"
+                                      :class="{
+                                        'badge-day': data.statistics_type == $parent.config.CashierStatisticsType.DAY,
+                                        'badge-week': data.statistics_type == $parent.config.CashierStatisticsType.WEEK,
+                                        'badge-month': data.statistics_type == $parent.config.CashierStatisticsType.MONTH
+                                      }">{{ $parent.options.CashierStatisticsTypeSummary[data.statistics_type] }}</span>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

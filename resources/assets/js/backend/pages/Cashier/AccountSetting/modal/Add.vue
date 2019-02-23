@@ -64,40 +64,40 @@
                                     <div class="form-group col-md row">
                                         <label class="col-md-4 control-label required p-r-0">最低储值 <b>*</b></label>
                                         <div class="col-md control-box">
-                                            <input type="text" class="form-control" disabled>
+                                            <input type="text" class="form-control" v-model="data.minimum_amount">
                                         </div>
                                     </div>
                                     <div class="form-group col-md row">
                                         <label class="col-md-4 control-label required p-r-0">最高储值 <b>*</b></label>
                                         <div class="col-md control-box">
-                                            <input type="text" class="form-control" disabled>
+                                            <input type="text" class="form-control" v-model="data.maximum_amount">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="form-group row">-->
-                        <!--<label class="col-md-3 control-label required">总储值金额 <b>*</b></label>-->
-                        <!--<div class="col-md-9">-->
-                        <!--<div class="row stored-total-box">-->
-                        <!--<div class="form-group col-md">-->
-                        <!--<div class="control-box">-->
-                        <!--<input type="text" class="form-control" disabled>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group col-md day-list">-->
-                        <!--<div class="p-t-7">-->
-                        <!--<label class="radio-inline"-->
-                        <!--v-for="(name, val) in $parent.options.CashierStatisticsTypeSummary"-->
-                        <!--:key="val">-->
-                        <!--<input type="radio" :value="val" v-model="data.statistics_type">-->
-                        <!--{{ name }}-->
-                        <!--</label>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</div>-->
+                        <div class="form-group row">
+                            <label class="col-md-3 control-label required">总储值金额 <b>*</b></label>
+                            <div class="col-md-9">
+                                <div class="row stored-total-box">
+                                    <div class="form-group col-md">
+                                        <div class="control-box">
+                                            <input type="text" class="form-control" v-model="data.total_amount">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md day-list">
+                                        <div class="p-t-7">
+                                            <label class="radio-inline"
+                                                   v-for="(name, val) in $parent.options.CashierStatisticsTypeSummary"
+                                                   :key="val">
+                                                <input type="radio" :value="val" v-model="data.statistics_type">
+                                                {{ name }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -159,6 +159,14 @@
                     value: 'data.minimum_amount',
                     message: '最高储值 不可低于 最低储值'
                 }
+            },
+            'data.total_amount': {
+                require: {
+                    message: '总储值金额 不得为空白'
+                },
+                number: {
+                    message: '总储值金额 请输入数字'
+                }
             }
         },
         methods: {
@@ -176,7 +184,9 @@
                     'channel',
                     'status',
                     'minimum_amount',
-                    'maximum_amount'
+                    'maximum_amount',
+                    'total_amount',
+                    'statistics_type',
                 ]), this.onCreate)
             },
             onCreate() {
@@ -188,7 +198,8 @@
             this.$root.$on('accountSettingAdd.show', () => {
                 this.data = {
                     channel: '',
-                    status: 'Y'
+                    status: 'Y',
+                    statistics_type: this.$parent.config.CashierStatisticsType.DAY
                 }
                 $(this.$refs.modal).modal('show')
             })

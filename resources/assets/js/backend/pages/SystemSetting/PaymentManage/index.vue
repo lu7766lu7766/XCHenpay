@@ -46,10 +46,10 @@
                                 <td>{{ startIndex + index }}</td>
                                 <td>{{ data.name }}</td>
                                 <td>{{ options.PaymentManageSummary[data.vendor] }}</td>
-                                <td>{{ data.min_deposit }}</td>
-                                <td>{{ data.max_deposit }}</td>
-                                <td>{{ data.total_deposit }}</td>
-                                <td>{{ data.withdraw }}</td>
+                                <td>{{ data.min_deposit | numFormat('0,0') }}</td>
+                                <td>{{ data.max_deposit | numFormat('0,0') }}</td>
+                                <td>{{ data.total_deposit | numFormat('0,0') }}</td>
+                                <td>{{ data.withdraw | numFormat('0,0') }}</td>
                                 <td>
                                     <i class="mdi mdi-check-circle-outline text-green" v-if="data.status == 'on'"></i>
                                     <i class="mdi mdi-close-circle-outline text-red" v-else></i>

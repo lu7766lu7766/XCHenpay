@@ -107,6 +107,9 @@
                 status: '',
                 apply_status: '',
                 keyword: ''
+            },
+            config: {
+                CashierStatisticsType
             }
         }),
         methods: {
