@@ -404,6 +404,15 @@ export default {
             method: 'put'
         }
     },
+    /** 行動支付轉銀行卡 */
+    gateway: {
+        alipay: {
+            data: {
+                uri: '/pay/gateway/to_bank_card/data',
+                method: 'get'
+            }
+        }
+    },
     /** 帳戶管理 */
     cashierAccountManage: {
         dataInit: {

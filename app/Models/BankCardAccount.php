@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Pivot\BankCardGateway;
 use App\Pivot\PaymentBankAccount;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Collection;
 
 /**
@@ -21,6 +23,7 @@ use Illuminate\Support\Collection;
  * @property string settle_date
  * @property User[]|Collection personal
  * @property Payment[]|Collection payment
+ * @property BankCardGateway gatewayUri
  */
 class BankCardAccount extends Model
 {

@@ -34,7 +34,7 @@ export default {
     computed: {
         apiKey() {
             let res = this.$options.api ? [this.$options.api] : [], $parent = this.$parent
-            while ($parent.$options.api) {
+            while ($parent && $parent.$options.api) {
                 res.push($parent.$options.api)
                 $parent = $parent.$parent
             }

@@ -1,6 +1,7 @@
 import './init'
 
 import './outer' // 外部前端(不在vue component範疇中)
+import './Gateway' // 行動支付轉銀行卡(全新頁面)
 
 var $app = document.querySelector('#app')
 import UserMixins from 'mixins/user'

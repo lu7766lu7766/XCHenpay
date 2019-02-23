@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Constants\TradeTypesConstants;
+use App\Pivot\BankCardGateway;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,6 +17,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property TradeType tradeType
  * @property string pay_end_time
  * @property string company_service_id
+ * @property string trade_service_id
+ * @property float amount
+ * @property Carbon created_at
  */
 class Authcode extends Model
 {
@@ -88,6 +93,12 @@ class Authcode extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
+    public function bankCardAccount()
+    {
+        return $this->belongsToMany(BankCardAccount::class, 'bank_card_gateway', 'authcode_id', 'bank_card_id')
+            ->using(BankCardGateway::class)->withPivot('uri')->as('gatewayUri');
+    }
+
     public function authCodesPaymentAccount()
     {
         return $this->belongsToMany(

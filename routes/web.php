@@ -418,6 +418,15 @@ Route::group(
         });
     }
 );
+Route::group(
+    ['prefix' => 'pay/gateway/to_bank_card', 'namespace' => 'BankCardGateway'],
+    function () {
+        //todo funny#89
+        Route::get('/', 'GatewayController@indexView');
+        Route::get('data', 'GatewayController@index')->middleware('json_api');
+    }
+);
+#cashier personal
 #帳戶設置
 Route::group(
     [

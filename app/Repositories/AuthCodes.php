@@ -323,4 +323,24 @@ class AuthCodes
 
         return $result;
     }
+
+    /**
+     * @param string $tradeSeq
+     * @return Authcode|null
+     */
+    public function getPayGateway(string $tradeSeq)
+    {
+        $result = null;
+        try {
+            $result = Authcode::query()
+                ->with('bankCardAccount')
+                ->where('trade_seq', $tradeSeq)
+                ->where('created_at', '>=', Carbon::now()->subMinute(5)->toDateTimeString())
+                ->first();
+        } catch (\Exception $e) {
+            \Log::log('debug', $e->getMessage());
+        }
+
+        return $result;
+    }
 }

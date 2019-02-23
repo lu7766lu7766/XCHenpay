@@ -42,7 +42,7 @@ var $csrf = document.head.querySelector('meta[name="csrf-token"]')
 axios.defaults.headers.common['X-CSRF-TOKEN'] = $csrf ? $csrf.content : ''
 
 var qs = require('qs')
-Vue.prototype.$callApi = async (key, data, loader) => {
+Vue.prototype.$callApi = async (key, data, loader, option = {}) => {
     let apiConf = apiConfs
     key.split(':').forEach(apiKey => {
         apiConf = apiConf[apiKey]
@@ -50,11 +50,11 @@ Vue.prototype.$callApi = async (key, data, loader) => {
     // console.log(apiKey, target, data, apiGroup, apiConf)
 
     if (typeof apiConf.uri == 'string') {
-        return doRequest(apiConf.uri, apiConf.method, data, loader)
+        return doRequest(apiConf.uri, apiConf.method, data, loader, option)
     } else if (typeof apiConf.uri == 'object') {
         let res = []
         for (const uri of apiConf.uri) {
-            res.push(doRequest(uri, apiConf.method, data, loader))
+            res.push(doRequest(uri, apiConf.method, data, loader, option))
         }
         // apiConf.uri.forEach(async uri => {
         //     res.push(await doRequest(uri, apiConf.method, data, loader))
@@ -96,7 +96,7 @@ axios.interceptors.response.use((response) => {
     return Promise.reject(error.response)
 })
 
-async function doRequest(uri, method, data, loader) {
+async function doRequest(uri, method, data, loader, option) {
     let axiosBody = {
         url: replaceMatchData(uri, data),
         method: method,
@@ -105,6 +105,8 @@ async function doRequest(uri, method, data, loader) {
         //     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
         // }
     }
+
+    const {isShowAlert = true, throwRes = false} = option
 
     data = _.pickBy(data, x => x !== '' && !_.isNull(x) && !_.isUndefined(x))
     const isSendData = method === 'put' || method === 'post'
@@ -116,19 +118,21 @@ async function doRequest(uri, method, data, loader) {
         : data
 
     const res = await axios(axiosBody).catch(err => {
-        if (err.data && err.data.code) {
+        if (err.data && err.data.code && isShowAlert) {
             alert(errorCode[err.data.code] ? errorCode[err.data.code] : '伺服器忙碌中')
-        } else {
+        } else if (isShowAlert) {
             alert('伺服器忙碌中')
         }
         if (loader) loader.hide()
-        throw 'network error'
+        throw throwRes ? err.data : 'network error'
     })
 
     if (res.data && res.data.code && !_.includes([0, 200], res.data.code)) {
-        alert(errorCode[res.data.code] ? errorCode[res.data.code] : '与服务器沟通错误')
+        if (isShowAlert) {
+            alert(errorCode[res.data.code] ? errorCode[res.data.code] : '与服务器沟通错误')
+        }
         if (loader) loader.hide()
-        throw 'service error'
+        throw throwRes ? res.data : 'service error'
     }
     // console.log(res)
 
