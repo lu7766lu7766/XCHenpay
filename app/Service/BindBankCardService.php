@@ -8,7 +8,9 @@
 
 namespace App\Service;
 
+use App\Constants\ErrorCode\Article\OOO7BindBankCardErrorCodes;
 use App\Exceptions\ApiErrorCodeException;
+use App\Exceptions\ApiErrorScalarCodeException;
 use App\Http\Requests\BindBankCard\BindBankCardCreateRequest;
 use App\Http\Requests\BindBankCard\BindBankCardDeleteRequest;
 use App\Http\Requests\BindBankCard\BindBankCardIndexRequest;
@@ -117,9 +119,20 @@ class BindBankCardService
     /**
      * @param BindBankCardDeleteRequest $request
      * @return bool
+     * @throws ApiErrorScalarCodeException
      */
     public function delete(BindBankCardDeleteRequest $request)
     {
-        return app(BankCardRepo::class)->deleteByUser($request->getId(), $this->user->getKey());
+        $bankCardRepo = app(BankCardRepo::class);
+        $bankCard = $bankCardRepo->findNotLendingStatus($request->getId(), $this->user->getKey());
+        if (is_null($bankCard)) {
+            throw new ApiErrorScalarCodeException(
+                "指定绑定的银行卡,尚还有存在着下发申请,故不能删除此卡片",
+                OOO7BindBankCardErrorCodes::BIND_BANK_CARD_STILL_EXIST_LEND_APPLY_STATUS
+            );
+        }
+        $result = $bankCardRepo->deleteOrm($bankCard);
+
+        return $result;
     }
 }

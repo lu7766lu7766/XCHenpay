@@ -84,6 +84,7 @@ class BindBankCardController extends Controller
     /**
      * @param BindBankCardDeleteRequest $request
      * @return array
+     * @throws \App\Exceptions\ApiErrorScalarCodeException
      */
     public function delete(BindBankCardDeleteRequest $request)
     {

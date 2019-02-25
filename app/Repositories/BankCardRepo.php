@@ -9,6 +9,7 @@
 namespace App\Repositories;
 
 use App\Constants\Account\AccountStatusConstants;
+use App\Constants\Lend\LendStatusConstants;
 use App\Constants\Roles\RolesConstants;
 use App\Models\Account;
 use App\User;
@@ -274,16 +275,32 @@ class BankCardRepo
     /**
      * @param int $id
      * @param int $userId
+     * @return Account|null
+     */
+    public function findNotLendingStatus(int $id, int $userId)
+    {
+        return Account::query()->where('id', $id)
+            ->whereHas('user', function (Builder $query) use ($userId) {
+                $query->where('id', $userId);
+            })->whereDoesntHave('lendRecords', function (Builder $query) {
+                $query->where('lend_state', LendStatusConstants::APPLY_CODE);
+            })->first();
+    }
+
+    /**
+     * @param Account $account
      * @return bool
      */
-    public function deleteByUser(int $id, int $userId)
+    public function deleteOrm(Account $account)
     {
         $result = false;
-        $count = Account::query()->where('id', $id)->whereHas('user', function (Builder $query) use ($userId) {
-            $query->where('id', $userId);
-        })->delete();
-        if ($count > 0) {
-            $result = true;
+        try {
+            $count = $account->delete();
+            if ($count > 0) {
+                $result = true;
+            }
+        } catch (\Throwable $e) {
+            \Log::error($e->getMessage());
         }
 
         return $result;
