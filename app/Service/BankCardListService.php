@@ -9,6 +9,8 @@
 namespace App\Service;
 
 use App\Constants\Roles\RolesConstants;
+use App\Contract\Information\INotify;
+use App\Events\Information\Notify\AccountStatusUpdate;
 use App\Http\Requests\Account\AccountInfoRequest;
 use App\Http\Requests\Account\AccountUpdateRequest;
 use App\Http\Requests\Account\DeleteAccountRequest;
@@ -104,8 +106,13 @@ class BankCardListService
             'status' => $request->getStatus(),
             'note'   => $request->getNote()
         ];
-        $result = app(BankCardRepo::class)->update($request->getId(), $data);
+        $bankCardRepo = app(BankCardRepo::class);
+        $result = $bankCardRepo->update($request->getId(), $data);
         if ($result) {
+            event(
+                INotify::class,
+                new AccountStatusUpdate($bankCardRepo->find($request->getId()))
+            );
             /** @var User $user */
             $user = \Sentinel::getUser();
             activity($user->email)

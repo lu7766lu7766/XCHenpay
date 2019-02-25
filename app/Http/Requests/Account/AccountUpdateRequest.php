@@ -47,7 +47,7 @@ class AccountUpdateRequest extends FormRequest
     {
         return [
             'id'     => 'required|integer',
-            'status' => 'required|' . Rule::in(AccountStatusConstants::enum()),
+            'status' => 'required|' . Rule::in([AccountStatusConstants::REJECT, AccountStatusConstants::APPROVAL]),
             'note'   => 'sometimes|required'
         ];
     }
