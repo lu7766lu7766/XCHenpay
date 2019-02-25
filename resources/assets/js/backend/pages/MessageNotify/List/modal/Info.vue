@@ -25,8 +25,8 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 control-label">內容</label>
-                            <div class="col-md-9 p-t-7">
-                                {{ data.content }}
+                            <div class="col-md-9 p-t-7 msg-content">
+                                <pre>{{ data.content }}</pre>
                             </div>
                         </div>
                     </form>
@@ -61,3 +61,15 @@
     }
 </script>
 
+<style scoped>
+    .msg-content {
+        margin-right: 0;
+    }
+
+    .msg-content pre {
+        white-space: pre-line;
+        font-size: inherit;
+        font-family: 'Microsoft JhengHei', "Poppins", sans-serif;
+        color: inherit;
+    }
+</style>

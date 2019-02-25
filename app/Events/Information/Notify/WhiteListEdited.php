@@ -51,8 +51,12 @@ class WhiteListEdited implements INotify
     public function getContent(): string
     {
         $ipsContent = implode(", ", $this->data->ip);
+        $content = <<<content
+        {$this->subject}
+        -白名單IP:{$ipsContent}
+content;
 
-        return $this->subject . "-白名單IP:{$ipsContent}";
+        return $content;
     }
 
     /**
