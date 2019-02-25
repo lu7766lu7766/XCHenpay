@@ -149,7 +149,7 @@
                                     <td class="text-right">{{ (data.amount - data.fee) | numFormat('0,0.000') }}</td>
                                     <td class="width-status">
                                         <i class="mdi mdi-check-circle-outline text-green"
-                                           v-if="!data.account.delete_at"></i>
+                                           v-if="!data.account.deleted_at"></i>
                                         <i class="mdi mdi-close-circle-outline text-red" v-else></i>
                                     </td>
                                     <td>{{ data.created_at }}</td>
