@@ -10,8 +10,8 @@ use App\Models\PaymentFees;
 use App\Repositories\AuthCodes;
 use App\Repositories\UserRepo;
 use App\Service\AuthCodeService;
-use App\Service\PaymentService;
 use App\Service\OrderService;
+use App\Service\PaymentService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -203,6 +203,7 @@ class AuthcodeController extends Controller
     {
         return ['data' => PaymentService::getInstance()->all()];
     }
+
     /**
      * 取得當日交易資訊(交易成功金額,手續費,筆數)
      * @return array

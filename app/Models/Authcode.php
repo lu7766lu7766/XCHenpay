@@ -11,14 +11,27 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Authcode
  * @package App\Models
+ * @property int id
  * @property int pay_state
+ * @property string pay_summary
+ * @property string auth_code
  * @property string trade_seq
- * @property string trade_type
- * @property TradeType tradeType
- * @property string pay_end_time
  * @property string company_service_id
  * @property string trade_service_id
+ * @property string trade_type
+ * @property string customer_id
+ * @property string item_code
+ * @property string item_name
  * @property float amount
+ * @property float fee
+ * @property int currency_id
+ * @property string nonce_str
+ * @property string finish_url
+ * @property string notify_url
+ * @property string account
+ * @property int payment_type
+ * @property TradeType tradeType
+ * @property User company
  * @property Carbon created_at
  */
 class Authcode extends Model

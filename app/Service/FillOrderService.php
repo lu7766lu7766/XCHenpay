@@ -10,6 +10,8 @@ namespace App\Service;
 
 use App\Constants\ErrorCode\Article\OOO1FillOrderErrorCodes;
 use App\Constants\Order\OrderStatusConstants;
+use App\Contract\Information\INotify;
+use App\Events\Information\Notify\FillOrderEdited;
 use App\Exceptions\ApiErrorScalarCodeException;
 use App\Http\Requests\FillOrderEditRequest;
 use App\Http\Requests\FillOrderInfoRequest;
@@ -124,6 +126,8 @@ class FillOrderService
             }
             $merchant->tradeLogs()->save($result);
             $result->load(['company', 'payment']);
+            $action = is_null($request->getId()) ? FillOrderEdited::ADD : FillOrderEdited::UPDATE;
+            event(INotify::class, new FillOrderEdited($result, $action));
         });
 
         return $result;
