@@ -33,17 +33,19 @@
         api: 'notify',
         mixins: [ReqMixins, PermissionMixins],
         data: () => ({
-            // 防止突然消失問題
-            isGetUserInfo: false,
             count: {
                 lend: 0,
                 bankAccount: 0
             },
             timer: null
         }),
+        watch: {
+            userInfo() {
+                this.getNotifyCount()
+            }
+        },
         methods: {
             async getNotifyCount() {
-                this.isGetUserInfo = true
                 this.canBankAccountList && this.proccessAjax('bankAccountList', {}, res => {
                     this.count.bankAccount = res.data
                 }, false)
@@ -53,19 +55,18 @@
             }
         },
         computed: {
+            userInfo() {
+                return this.$store.state.userInfo
+            },
             canBankAccountList() {
-                return this.isGetUserInfo && (this.hasPermission(Permission.BankAccountList) || this.isRole(Roles.ADMIN))
+                return (this.hasPermission(Permission.BankAccountList) || this.isRole(Roles.ADMIN))
             },
             canLendManage() {
-                return this.isGetUserInfo && (this.hasPermission(Permission.LendManageIndex) || this.hasPermission(Permission.LendManage))
+                return (this.hasPermission(Permission.LendManageIndex) || this.hasPermission(Permission.LendManage))
             }
         },
         mounted() {
-            this.$bus.on('userInfo.init', this.getNotifyCount)
             this.timer = setInterval(this.getNotifyCount, 10 * 1000)
-        },
-        destroyed() {
-            this.$bus.off('userInfo.init')
         }
     }
 </script>

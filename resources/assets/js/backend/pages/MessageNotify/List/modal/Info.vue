@@ -47,9 +47,10 @@
         mixins: [DetailMixins],
         mounted() {
             this.$root.$on('messageListInfo.show', data => {
+                this.data = {}
                 this.proccessAjax('info', {id: data.id}, res => {
-                    this.data = data
-                    this.$parent.refresh()
+                    if (!data.seen_by_user[0]) this.$parent.refresh()
+                    this.data = res.data
                 })
                 $(this.$refs.modal).modal('show')
             })

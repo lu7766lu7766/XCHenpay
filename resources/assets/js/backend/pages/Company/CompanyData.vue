@@ -194,9 +194,14 @@
                 'secret_code_confirmation'
             ]
         }),
+        watch: {
+            userInfo(newVal, oldVal) {
+                _.isEqual(newVal, oldVal) ? '' : this.dataInit()
+            }
+        },
         methods: {
             dataInit() {
-                const data = _.cloneDeep(this.$parent.userInfo)
+                const data = _.cloneDeep(this.userInfo)
                 _.forEach(this.dataProperties, property => {
                     data[property] = ''
                 })
@@ -218,11 +223,13 @@
                 })
             }
         },
-        mounted() {
-            this.$bus.on('userInfo.init', this.dataInit)
+        computed: {
+            userInfo() {
+                return this.$store.state.userInfo
+            },
         },
-        destroyed() {
-            this.$bus.off('userInfo.init')
+        mounted() {
+            this.dataInit()
         }
     }
 </script>

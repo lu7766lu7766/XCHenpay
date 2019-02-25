@@ -29,8 +29,11 @@
                     <!-- search-box end -->
                     <div class="row view-btn-box">
                         <div class="col-sm-6 view-btn">
-                            <button class="btn btn-add btn-half" v-if="isAdmin" @click="showAdd">新增</button>
-                            <button class="btn btn-replay btn-half" v-if="isAdmin" @click="showRestore">回复
+                            <button class="btn btn-add btn-half" v-if="isAdmin"
+                                    @click="$root.$emit('companyManageAdd.show')">新增
+                            </button>
+                            <button class="btn btn-replay btn-half" v-if="isAdmin"
+                                    @click="$root.$emit('companyManageRestore.show')">回复
                             </button>
                         </div>
                         <per-page-selector v-model="paginate.perpage"/>
@@ -66,13 +69,14 @@
                                     <i class="mdi mdi-close-circle-outline text-red" v-else></i>
                                 </td>
                                 <td>
-                                    <a v-if="isAdmin" @click="showInfo(data.id)">
+                                    <a v-if="isAdmin" @click="$root.$emit('companyManageInfo.show', data.id)">
                                         <i class="mdi mdi-information-outline text-blue"></i></a>
-                                    <a v-if="isAdmin" @click="showEdit(data.id)">
+                                    <a v-if="isAdmin" @click="$root.$emit('companyManageEdit.show', data.id)">
                                         <i class="mdi mdi-pencil-box-outline"></i></a>
                                     <a v-if="isAdmin" class="delete" @click="confirmDelete(data.id)">
                                         <i class="mdi mdi-delete-variant text-red"></i></a>
-                                    <a v-if="isAdmin || isFinancial" @click="showApplyEdit(data)">
+                                    <a v-if="isAdmin || isFinancial"
+                                       @click="$root.$emit('companyManageApplyEdit.show', data)">
                                         <i class="mdi mdi-database text-orange"></i></a>
                                 </td>
                             </tr>
@@ -139,29 +143,14 @@
             },
             doDelete(id) {
                 this.proccessAjax('delete', {id}, this.deleteSuccess)
-            },
-            showAdd() {
-                this.$root.$emit('companyManageAdd.show')
-            },
-            showRestore() {
-                this.$root.$emit('companyManageRestore.show')
-            },
-            showInfo(id) {
-                this.$root.$emit('companyManageInfo.show', id)
-            },
-            showEdit(data) {
-                this.$root.$emit('companyManageEdit.show', data)
-            },
-            showApplyEdit(data) {
-                this.$root.$emit('companyManageApplyEdit.show', data)
             }
         },
         computed: {
             isAdmin() {
-                return this.$parent.userInfo.roles && this.$parent.userInfo.roles[0].slug === Roles.ADMIN
+                return this.$root.userInfo.roles && this.$parent.userInfo.roles[0].slug === Roles.ADMIN
             },
             isFinancial() {
-                return this.$parent.userInfo.roles && this.$parent.userInfo.roles[0].slug === Roles.FINANCE
+                return this.$root.userInfo.roles && this.$parent.userInfo.roles[0].slug === Roles.FINANCE
             }
         },
         mounted() {

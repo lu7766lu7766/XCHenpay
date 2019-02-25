@@ -1,8 +1,7 @@
 export default {
     methods: {
-        async getUserInfo() {
-            await this.$store.dispatch('getUserInfo')
-            this.$bus.emit('userInfo.init')
+        getUserInfo() {
+            this.$store.dispatch('getUserInfo')
         }
     },
     computed: {
