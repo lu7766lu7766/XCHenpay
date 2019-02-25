@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Model;
  * Class LendRecord
  * @package App\Models
  * @property string record_seq
+ * @property int lend_state
+ * @property User|null user
+ * @property Account|null account
+ * @property float amount
+ * @property string review_note
+ * @property int user_id
  */
 class LendRecord extends Model
 {

@@ -105,7 +105,7 @@ class InformationNotifyManageRepo
             $information->personal()->attach($user);
             $information->setRelation('personal', $user);
         } catch (\Throwable $e) {
-            \Log::error($e->getMessage());
+            \Log::debug($e->getMessage());
         }
 
         return $information;

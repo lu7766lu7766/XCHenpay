@@ -8,11 +8,12 @@
 
 namespace App\Service;
 
+use App\Contract\Information\INotify;
+use App\Events\Information\Notify\LendRecordUpdated;
 use App\Http\Requests\LendManageDataRequest;
 use App\Http\Requests\LendManageDataTotalRequest;
 use App\Http\Requests\LendManageTotalRequest;
 use App\Http\Requests\LendManageUpdateRequest;
-use App\Models\LendRecord;
 use App\Repositories\AuthCodes;
 use App\Repositories\LendRecords;
 use App\Traits\Singleton;
@@ -137,7 +138,7 @@ class LendManageService
         $result = null;
         try {
             $handle = LendManageUpdateRequest::getHandle($this->data);
-            $record = LendRecord::query()->find($handle->getId());
+            $record = app(LendRecords::class)->find($handle->getId());
             /** @var User $user */
             $user = Sentinel::getUser();
             if ($handle->getOperation() == 1) {
@@ -160,6 +161,7 @@ class LendManageService
                 activity($user->email)->causedBy($user)->log('拒绝一笔下发申请 ' . $record->record_seq);
             }
             $result = [];
+            event(INotify::class, new LendRecordUpdated($record));
         } catch (ValidationException $e) {
             $result = ["code" => 1000, "data" => $e->validator->getMessageBag()->getMessages()];
         } catch (\Throwable $e) {

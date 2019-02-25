@@ -404,4 +404,13 @@ class LendRecords
 
         return $result;
     }
+
+    /**
+     * @param int $id
+     * @return LendRecord|null
+     */
+    public function find(int $id)
+    {
+        return LendRecord::find($id);
+    }
 }
