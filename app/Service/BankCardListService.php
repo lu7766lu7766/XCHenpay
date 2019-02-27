@@ -8,9 +8,11 @@
 
 namespace App\Service;
 
+use App\Constants\ErrorCode\Article\OOO7BindBankCardErrorCodes;
 use App\Constants\Roles\RolesConstants;
 use App\Contract\Information\INotify;
 use App\Events\Information\Notify\AccountStatusUpdate;
+use App\Exceptions\ApiErrorScalarCodeException;
 use App\Http\Requests\Account\AccountInfoRequest;
 use App\Http\Requests\Account\AccountUpdateRequest;
 use App\Http\Requests\Account\DeleteAccountRequest;
@@ -74,12 +76,21 @@ class BankCardListService
     /**
      * @param DeleteAccountRequest $handle
      * @return bool
+     * @throws ApiErrorScalarCodeException
      */
     public function delete(DeleteAccountRequest $handle)
     {
         $result = false;
+        $bankCardRepo = app(BankCardRepo::class);
+        $bankCard = $bankCardRepo->findNoLendRecordBankCard($handle->getId());
+        if (is_null($bankCard)) {
+            throw new ApiErrorScalarCodeException(
+                "指定绑定的银行卡,尚还有存在着下发申请,故不能删除此卡片",
+                OOO7BindBankCardErrorCodes::BIND_BANK_CARD_STILL_EXIST_LEND_APPLY_STATUS
+            );
+        }
         try {
-            $result = app(BankCardRepo::class)->delete($handle->getId());
+            $result = $bankCardRepo->deleteOrm($bankCard);
             if ($result) {
                 $activity = activity($result->user->email)
                     ->performedOn($result->user)

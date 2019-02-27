@@ -305,4 +305,16 @@ class BankCardRepo
 
         return $result;
     }
+
+    /**
+     * @param int $id
+     * @return Account|null
+     */
+    public function findNoLendRecordBankCard(int $id)
+    {
+        return Account::query()->where('id', $id)
+            ->whereDoesntHave('lendRecords', function (Builder $query) {
+                $query->where('lend_state', LendStatusConstants::APPLY_CODE);
+            })->first();
+    }
 }
