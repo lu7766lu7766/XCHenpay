@@ -208,7 +208,7 @@ class AuthCodes
     {
         return Authcode::query()
             ->select(
-                \DB::raw('IFNULL(SUM(amount),0 )as totalMoney'),
+                \DB::raw('IFNULL(SUM(real_paid_amount),0 )as totalMoney'),
                 \DB::raw('IFNULL(SUM(fee),0) as totalFee')
             )
             ->whereHas('company', function (Builder $builder) use ($userId) {
@@ -300,9 +300,8 @@ class AuthCodes
     ) {
         $query = Authcode::query()
             ->select(
-                \DB::raw('IFNULL(ROUND(SUM(amount),3),0)as amount'),
                 \DB::raw('IFNULL(ROUND(SUM(fee),3),0)as fee'),
-                \DB::raw('IFNULL(ROUND(SUM(IF(pay_state=' . self::ALL_DONE_STATE . ',amount,0)),3),0)
+                \DB::raw('IFNULL(ROUND(SUM(IF(pay_state=' . self::ALL_DONE_STATE . ',real_paid_amount,0)),3),0)
                  as successful_deal'),
                 \DB::raw('IFNULL(ROUND(SUM(IF(pay_state!=' . self::ALL_DONE_STATE . ',amount,0)),3),0) as failure_deal')
             )

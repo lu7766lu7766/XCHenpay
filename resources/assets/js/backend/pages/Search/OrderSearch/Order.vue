@@ -53,7 +53,9 @@
                                 </div>
                                 <div class="text-white">
                                     <h6 class="text-uppercase mb-3">总金额</h6>
-                                    <h4>{{ count.amount | numFormat('0,0.00') }}</h4>
+                                    <h4>
+                                        {{ (+count.successful_deal) + (+count.failure_deal) | numFormat('0,0.00') }}
+                                    </h4>
                                 </div>
                             </div>
                         </div>
