@@ -258,7 +258,7 @@ class AuthCodes
             $time = Carbon::today();
             $query = Authcode::query()
                 ->select(
-                    \DB::raw('IFNULL(round(SUM(amount),2),0)as totalMoney'),
+                    \DB::raw('IFNULL(round(SUM(real_paid_amount),2),0)as totalMoney'),
                     \DB::raw('IFNULL(round(SUM(fee),2),0) as totalFee'),
                     \DB::raw('count(*) as totalNum')
                 )
