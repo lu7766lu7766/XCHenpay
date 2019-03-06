@@ -108,4 +108,13 @@ class BankCardAccountRepo
     {
         return BankCardAccount::query()->whereDoesntHave('personal')->where('id', $id)->update($data);
     }
+
+    /**
+     * @param int $id
+     * @return BankCardAccount|null
+     */
+    public function infoWithPayment(int $id)
+    {
+        return BankCardAccount::with('payment')->find($id);
+    }
 }

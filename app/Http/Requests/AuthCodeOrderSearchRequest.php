@@ -11,6 +11,86 @@ use Illuminate\Foundation\Http\FormRequest;
 class AuthCodeOrderSearchRequest extends FormRequest
 {
     /**
+     * @return string
+     */
+    public function getStatTime()
+    {
+        return $this->get('start');
+    }
+
+    /**
+     * @return string
+     */
+    public function getEndTime()
+    {
+        return $this->get('end');
+    }
+
+    /**
+     * @return int
+     */
+    public function getPage()
+    {
+        return $this->get('page', 1);
+    }
+
+    /**
+     * @return int
+     */
+    public function getPerpage()
+    {
+        return $this->get('perpage', 25);
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTargetId()
+    {
+        return $this->get('company', null);
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPayState()
+    {
+        return $this->get('pay_state', null);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getKeyword()
+    {
+        return $this->get('keyword', null);
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaymentType()
+    {
+        return $this->get('payment_type', 0);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSort()
+    {
+        return $this->get('sort', 'created_at');
+    }
+
+    /**
+     * @return string
+     */
+    public function getDirection()
+    {
+        return $this->get('direction', 'desc');
+    }
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool

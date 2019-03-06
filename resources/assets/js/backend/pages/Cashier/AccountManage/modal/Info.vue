@@ -92,10 +92,10 @@
 
 <script>
     import DetailMixins from 'mixins/detail'
-    import ThisMixins from '../mixins'
+    import PaymentMixins from 'mixins/payment'
 
     export default {
-        mixins: [DetailMixins, ThisMixins],
+        mixins: [DetailMixins, PaymentMixins],
         mounted() {
             this.$root.$on('accountManageInfo.show', data => {
                 this.proccessAjax('info', {id: data.id}, res => {

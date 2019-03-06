@@ -118,6 +118,7 @@
                                 'sort-desc': this.sort.column == 'amount' && this.sort.direction == 'desc'
                             }">金额
                             </th>
+                            <th>实付金额</th>
                             <th>支付方式</th>
                             <th>手续费</th>
                             <th class="width-date sorting" @click="changeSort('created_at')" :class="{
@@ -131,7 +132,7 @@
                         <tbody>
                         <tr v-for="(data, index) in datas" :key="index">
                             <td>{{ startIndex + index }}</td>
-                            <td>
+                            <td alt="交易状态">
                                 <span class="badge badge-warning badge-pill" v-if="data.pay_state == 1">交易中</span>
                                 <span class="badge badge-danger badge-pill" v-else-if="data.pay_state == 4">交易失敗</span>
                                 <span class="badge badge-success badge-pill" v-else-if="data.pay_state == 3">交易结束</span>
@@ -139,27 +140,25 @@
                                       v-else>{{ config.payState[data.pay_state] }}
                                 </span>
                             </td>
-                            <td>{{ data.company.company_name }}</td>
-                            <td>{{ data.trade_seq }}</td>
-                            <td>{{ data.trade_service_id }}</td>
-                            <td class="text-right">{{ data.amount | numFormat('0,0.00') }}</td>
-                            <td>
-                                {{
-                                data.payment_type == 0
-                                ? '-'
-                                : options.paymentType[data.payment_type]
-                                ? options.paymentType[data.payment_type].name
-                                : ''
-                                }}
+                            <td alt="商户名称">{{ data.company.company_name }}</td>
+                            <td alt="系统交易号">{{ data.trade_seq }}</td>
+                            <td alt="商户交易号">{{ data.trade_service_id }}</td>
+                            <td alt="金额" class="text-right">{{ data.amount | numFormat('0,0.00') }}</td>
+                            <td alt="实付金额" class="text-right">{{ data.real_paid_amount | numFormat('0,0.00') }}</td>
+                            <td alt="支付方式">
+                                <span :class="data.bank_card_account[0] ? 'text-modal' : ''"
+                                      @click="$root.$emit('orderAccountInfo.show', data.bank_card_account[0])">
+                                    {{ getPaymentTypeName(data.payment_type) }}
+                                </span>
                             </td>
-                            <td class="text-right">{{ data.fee | numFormat('0,0.000') }}</td>
-                            <td>{{ data.created_at }}</td>
-                            <td class="width-control">
-                                <a @click="showInfo(data.id)">
+                            <td alt="手续费" class="text-right">{{ data.fee | numFormat('0,0.000') }}</td>
+                            <td alt="申请时间">{{ data.created_at }}</td>
+                            <td alt="操作" class="width-control">
+                                <a @click="$root.$emit('orderInfo.show', data.id)">
                                     <i class="mdi mdi-information-outline text-blue"></i>
                                 </a>
                                 <a v-if="UserInfo.this().has(Permission.OrderEdit) || UserInfo.this().has(Permission.OrderSearch)"
-                                   @click="showState(data.id)">
+                                   @click="$root.$emit('orderState.show', data.id)">
                                     <i class="mdi mdi-pencil-box-outline"></i>
                                 </a>
                                 <a class="back">
@@ -202,24 +201,28 @@
         </div>
         <order-info/>
         <order-state/>
+        <account-info/>
     </div>
 </template>
 
 <script>
     import ListMixins from 'mixins/list'
     import PayState from 'config/PayState'
+    import CashierStatisticsType from 'config/CashierStatisticsType'
 
     export default {
         api: "order",
         mixins: [ListMixins],
         components: {
             OrderInfo: require('./modal/OrderInfo'),
-            OrderState: require('./modal/OrderState')
+            OrderState: require('./modal/OrderState'),
+            AccountInfo: require('./modal/AccountInfo')
         },
         data: () => ({
             options: {
                 payState: PayState.enum(),
-                paymentType: {}
+                paymentType: {},
+                CashierStatisticsTypeSummary: CashierStatisticsType.summaryMap()
             },
             sort: {
                 column: 'created_at'
@@ -238,6 +241,7 @@
                 failure_deal: 0
             },
             config: {
+                CashierStatisticsType,
                 payState: PayState.summaryMap(),
                 notify: {
                     title: '是否确认回调',
@@ -288,12 +292,6 @@
             onGetTotal(res) {
                 this.paginate.total = res.data
             },
-            showInfo(id) {
-                this.$root.$emit('orderInfo.show', id)
-            },
-            showState(id) {
-                this.$root.$emit('orderState.show', id)
-            },
             confirmNotify(id) {
                 swal(this.config.notify).then(() => {
                     this.proccessAjax('notify', {id}, res => {
@@ -303,6 +301,13 @@
             },
             needNotify(state) {
                 return this.config.notifyState.indexOf(state) > -1
+            },
+            getPaymentTypeName(type) {
+                return type == 0
+                    ? '-'
+                    : this.options.paymentType[type]
+                        ? this.options.paymentType[type].name
+                        : ''
             }
         },
         computed: {

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\Roles\RolesConstants;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthCodeBankCardAccountInfoRequest;
 use App\Http\Requests\AuthCodeOrderNotifyRequest;
 use App\Http\Requests\AuthCodeOrderSearchRequest;
 use App\Models\Authcode;
@@ -13,8 +15,10 @@ use App\Service\AuthCodeService;
 use App\Service\OrderService;
 use App\Service\PaymentService;
 use App\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
+use Illuminate\Validation\ValidationException;
 use Response;
 use Sentinel;
 use Validator;
@@ -45,36 +49,48 @@ class AuthcodeController extends Controller
      * @param AuthCodes $authCodes
      * @return array
      */
-    public function data(AuthCodeOrderSearchRequest $request, AuthCodes $authCodes)
+    public function data(AuthCodeOrderSearchRequest $request)
     {
         /** @var User $user */
         $user = Sentinel::getUser();
+        $isMerchant = $user->inRole(RolesConstants::USER);
+        $authCodeRepo = app(AuthCodes::class);
+        $bankCardCondition = $user->getKey();
         $company = $user->getKey();
         // 如果有擁有可選擇商戶的權限
-        if ($user->hasAccess('users.dataSwitch')) {
-            $company = $request->get('company');
+        if ($user->hasAccess('users.dataSwitch') && !$isMerchant) {
+            $bankCardCondition = null;
+            $company = $request->getTargetId();
         }
-        /** @var Collection $authCode */
-        $authCode = $authCodes->companyDataWithReport(
-            $request->get('start'),
-            $request->get('end'),
+        $order = $authCodeRepo->list(
+            $request->getStatTime(),
+            $request->getEndTime(),
             $company,
-            $request->get('page', 1),
-            $request->get('perpage', 20),
-            $request->get('pay_state'),
-            $request->get('keyword'),
-            $request->get('payment_type', 0),
-            $request->get('sort', 'created_at'),
-            $request->get('direction', 'desc')
+            $request->getPage(),
+            $request->getPerpage(),
+            $request->getPayState(),
+            $request->getKeyword(),
+            $request->getPaymentType(),
+            $request->getSort(),
+            $request->getDirection()
         );
+        $order->load([
+            'bankCardAccount' => function (BelongsToMany $query) use ($bankCardCondition) {
+                if (!is_null($bankCardCondition)) {
+                    $query->whereHas('personal', function (Builder $q) use ($bankCardCondition) {
+                        $q->where('users.id', $bankCardCondition);
+                    });
+                }
+                $query->with('payment');
+            }
+        ]);
         $can_edit = $user->hasAccess('logQuery') || ($user->hasAccess('logQuery.showState') &&
                 $user->hasAccess('logQuery.updateState'));
-        $result = [
-            'data'     => $authCode,
+
+        return [
+            'data'     => $order,
             'can_edit' => $can_edit
         ];
-
-        return $result;
     }
 
     public function showInfo(Authcode $authcode)
@@ -231,5 +247,17 @@ class AuthcodeController extends Controller
     public function dataTotal(AuthCodeOrderSearchRequest $request)
     {
         return AuthCodeService::getInstance(Sentinel::getUser())->total($request);
+    }
+
+    /**
+     * @param $id
+     * @return \App\Models\BankCardAccount
+     * @throws ValidationException
+     */
+    public function bankCardAccountInfo($id)
+    {
+        return AuthCodeService::getInstance(Sentinel::getUser())->bankCardAccountInfo(
+            AuthCodeBankCardAccountInfoRequest::getHandle(['id' => $id])
+        );
     }
 }

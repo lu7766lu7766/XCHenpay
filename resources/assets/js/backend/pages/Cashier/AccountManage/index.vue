@@ -80,12 +80,12 @@
 
 <script>
     import ListMixins from 'mixins/list'
-    import ThisMixins from './mixins'
+    import PaymentMixins from 'mixins/payment'
     import CashierStatisticsType from 'config/CashierStatisticsType'
 
     export default {
         api: "cashierAccountManage",
-        mixins: [ListMixins, ThisMixins],
+        mixins: [ListMixins, PaymentMixins],
         components: {
             CompanySelector: require('@/CompanySelector'),
             Info: require('./modal/Info'),

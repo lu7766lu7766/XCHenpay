@@ -8,8 +8,13 @@
 
 namespace App\Service;
 
+use App\Http\Requests\AuthCodeBankCardAccountInfoRequest;
 use App\Http\Requests\AuthCodeOrderSearchRequest;
+use App\Models\Authcode;
+use App\Models\BankCardAccount;
 use App\Repositories\AuthCodes;
+use App\Repositories\BankCardAccountRepo;
+use App\Repositories\PersonalBankCardAccountRepo;
 use App\Traits\Singleton;
 use App\User;
 
@@ -51,7 +56,7 @@ class AuthCodeService
     /**
      * 訂單交易資訊
      * @param AuthCodeOrderSearchRequest $request
-     * @return \App\Models\Authcode
+     * @return Authcode
      */
     public function orderTradeInfo(AuthCodeOrderSearchRequest $request)
     {
@@ -90,5 +95,24 @@ class AuthCodeService
             $request->get('keyword'),
             $request->get('payment_type', 0)
         );
+    }
+
+    /**
+     * @param AuthCodeBankCardAccountInfoRequest $request
+     * @return BankCardAccount|null
+     */
+    public function bankCardAccountInfo(AuthCodeBankCardAccountInfoRequest $request)
+    {
+        // 如果有擁有可選擇商戶的權限
+        if ($this->user->hasAccess('users.dataSwitch')) {
+            $result = app(BankCardAccountRepo::class)->infoWithPayment($request->getId());
+        } else {
+            $result = app(PersonalBankCardAccountRepo::class)->infoWithPayment(
+                $request->getId(),
+                $this->user->getUserId()
+            );
+        }
+
+        return $result;
     }
 }

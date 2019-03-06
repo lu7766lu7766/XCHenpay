@@ -124,4 +124,19 @@ class PersonalBankCardAccountRepo
                 $subQuery->where('user_id', $userId);
             })->first();
     }
+
+    /**
+     * @param int $userId
+     * @param int $id
+     * @return BankCardAccount|null
+     */
+    public function infoWithPayment(int $userId, int $id)
+    {
+        return BankCardAccount::query()
+            ->with('payment')
+            ->where('id', $id)
+            ->whereHas('personal', function (Builder $subQuery) use ($userId) {
+                $subQuery->where('user_id', $userId);
+            })->first();
+    }
 }

@@ -83,12 +83,12 @@
 
 <script>
     import ListMixins from 'mixins/list'
-    import ThisMixins from './mixins'
+    import PaymentMixins from 'mixins/payment'
     import CashierStatisticsType from 'config/CashierStatisticsType'
 
     export default {
         api: "companyAccount",
-        mixins: [ListMixins, ThisMixins],
+        mixins: [ListMixins, PaymentMixins],
         components: {
             Info: require('./modal/Info'),
             Add: require('./modal/Add'),

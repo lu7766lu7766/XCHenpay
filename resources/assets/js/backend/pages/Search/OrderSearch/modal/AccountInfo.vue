@@ -1,10 +1,10 @@
 <template>
-    <div ref="modal" id="info" class="modal fade info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div ref="modal" id="card" class="modal fade info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title mt-0" id="myModalLabel">內容</h5>
+                    <h5 class="modal-title mt-0" id="myModalLabel">账户资讯</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
@@ -61,7 +61,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 control-label">总储值金额</label>
                             <div class="col-sm-9 p-t-7">
-                                <i class="text-red price">{{ data.total_amount | numFormat('0,0') }}</i>&nbsp;
+                                <i class="text-red price">{{ data.total_amount | numFormat('0,0') }}</i>
                                 <span class="badge"
                                       :class="{
                                         'badge-day': data.statistics_type == $parent.config.CashierStatisticsType.DAY,
@@ -78,7 +78,7 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div>
+    </div><!-- /.modal -->
 </template>
 
 <script>
@@ -88,13 +88,13 @@
     export default {
         mixins: [DetailMixins, PaymentMixins],
         mounted() {
-            this.$root.$on('accountSettingInfo.show', data => {
-                this.data = data
+            this.$root.$on('orderAccountInfo.show', data => {
+                this.data = _.cloneDeep(data)
                 $(this.$refs.modal).modal('show')
             })
         },
         destroyed() {
-            this.$root.$off('accountSettingInfo.show')
+            this.$root.$off('orderAccountInfo.show')
         }
     }
 </script>

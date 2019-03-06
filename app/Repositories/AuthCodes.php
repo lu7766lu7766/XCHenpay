@@ -9,7 +9,7 @@ use App\Models\Authcode;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 class AuthCodes
 {
@@ -34,7 +34,9 @@ class AuthCodes
         'fee',
         'created_at',
         'pay_start_time',
-        'pay_end_time'
+        'pay_end_time',
+        'real_paid_amount',
+        'rand_fee'
     ];
 
     /**
@@ -51,7 +53,7 @@ class AuthCodes
      * @param string $direction 排序規格
      * @return Collection|Authcode[]
      */
-    public function companyDataWithReport(
+    public function list(
         string $startDate,
         string $endDate,
         int $company = null,
@@ -84,8 +86,11 @@ class AuthCodes
             $query->where('payment_type', $paymentType);
         }
         $query->whereBetween('created_at', [$startDate, $endDate]);
-        $orders = $query->with(['i6payment', 'company', 'currency'])
-            ->orderBy($sort, $direction)
+        $orders = $query->with([
+            'i6payment',
+            'company',
+            'currency',
+        ])->orderBy($sort, $direction)
             ->forPage($page, $perpage)
             ->get($this->getCol);
 

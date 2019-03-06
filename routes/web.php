@@ -163,6 +163,7 @@ Route::group(
         Route::group(['middleware' => 'json_api'], function () {
             Route::post('dataTotal', 'AuthcodeController@dataTotal')->name('authcode.dataTotal');
             Route::post('orderTradeInfo', 'AuthcodeController@orderTradeInfo');
+            Route::get('{id}/bankCardAccountInfo', 'AuthcodeController@bankCardAccountInfo');
         });
         Route::get('logQuery/payment', 'AuthcodeController@payment')->middleware('json_api')->name('authcode.payment');
         Route::post('data', 'AuthcodeController@data')->name('authcode.data');
@@ -433,7 +434,6 @@ Route::group(
         Route::get('data', 'GatewayController@index')->middleware('json_api');
     }
 );
-#cashier personal
 #帳戶設置
 Route::group(
     [

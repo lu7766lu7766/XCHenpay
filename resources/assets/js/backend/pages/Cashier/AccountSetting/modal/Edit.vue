@@ -103,10 +103,10 @@
 
 <script>
     import DetailMixins from 'mixins/detail'
-    import ThisMixins from '../mixins'
+    import PaymentMixins from 'mixins/payment'
 
     export default {
-        mixins: [DetailMixins, ThisMixins],
+        mixins: [DetailMixins, PaymentMixins],
         rules: {
             "data.status": {
                 require: {
