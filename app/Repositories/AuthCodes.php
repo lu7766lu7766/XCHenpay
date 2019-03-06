@@ -18,7 +18,7 @@ class AuthCodes
     const SUCCESS_STATE = 2; //交易成功等待回調
     const ALL_DONE_STATE = 3; //交易結束
     const TRADE_FAIL_STATE = 4; //交易失敗
-    const PENDING_STATE = 5;
+    const AMOUNT_NOT_MATCH_STATE = 5;
     const ACCEPT_STATE = 6;
     const DENY_STATE = 7;
     private $getCol = [
@@ -171,6 +171,7 @@ class AuthCodes
                     $builder->with('payment')->selectRaw(
                         "IFNULL(round(sum(amount),2),0) as amount,
                         IFNULL(round(sum(authcodes.fee),2),0) as fee,
+                        IFNULL(round(sum(real_paid_amount),2),0) as real_paid_amount,
                         IFNULL(count(1), 0) as count ,                        
                         company_service_id,
                         pay_state,

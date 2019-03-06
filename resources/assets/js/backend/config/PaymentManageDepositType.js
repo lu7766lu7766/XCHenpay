@@ -1,27 +1,15 @@
 class PaymentManageDepositType {
-    static get DAILY() {
-        return 'daily'
-    }
+    static DAILY = 'daily'
 
-    static get WEEKLY() {
-        return 'weekly'
-    }
+    static WEEKLY = 'weekly'
 
-    static get MONTHLY() {
-        return 'monthly'
-    }
+    static MONTHLY = 'monthly'
 
-    static get DAILY_TXT() {
-        return '每日计算'
-    }
+    static DAILY_TXT = '每日计算'
 
-    static get WEEKLY_TXT() {
-        return '每周计算'
-    }
+    static WEEKLY_TXT = '每周计算'
 
-    static get MONTHLY_TXT() {
-        return '每月计算'
-    }
+    static MONTHLY_TXT = '每月计算'
 
     static summaryMap() {
         return {

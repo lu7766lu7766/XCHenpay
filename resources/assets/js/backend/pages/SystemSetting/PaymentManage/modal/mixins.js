@@ -59,9 +59,6 @@ export default {
         }
     },
     computed: {
-        user_id() {
-            return this.$root.userInfo ? this.$root.userInfo.id : ''
-        },
         connKeys() {
             return _.keys(this.$parent.config.PaymentManage.getCurrentConnKey(this.data.vendor))
         }

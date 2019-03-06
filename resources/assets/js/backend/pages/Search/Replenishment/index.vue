@@ -118,7 +118,7 @@
 
 <script>
     import ListMixins from 'mixins/list'
-    import PayState from 'config/payState'
+    import PayState from 'config/PayState'
 
     export default {
         api: "replenishment",

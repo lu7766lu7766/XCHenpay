@@ -214,9 +214,11 @@ Route::group(
     function () {
         Route::group(['prefix' => 'search'], function () {
             Route::get('report/view', 'SearchController@reportIndex')->name('search.reportIndex');
-            Route::post('reportQuery', 'SearchController@reportQuery')->name('search.reportQuery');
             Route::get('reportStat/view', 'SearchController@reportStatIndex')->name('search.reportStatIndex');
-            Route::post('reportStatQuery', 'SearchController@reportStatQuery')->name('search.reportStatQuery');
+            Route::group(['middleware' => ['json_api']], function () {
+                Route::post('reportQuery', 'SearchController@reportQuery')->name('search.reportQuery');
+                Route::post('reportStatQuery', 'SearchController@reportStatQuery')->name('search.reportStatQuery');
+            });
         });
     }
 );

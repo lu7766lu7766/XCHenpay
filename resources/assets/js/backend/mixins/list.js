@@ -1,8 +1,7 @@
 import ReqMixins from 'mixins/request'
-import PermissionMixins from 'mixins/permission'
 
 export default {
-    mixins: [ReqMixins, PermissionMixins],
+    mixins: [ReqMixins],
     components: {
         DateTimePicker: require('@/DateTimePicker'),
         Paginate: require('@/Paginate.vue'),

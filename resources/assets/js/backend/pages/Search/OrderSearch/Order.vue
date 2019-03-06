@@ -156,12 +156,12 @@
                                 <a @click="showInfo(data.id)">
                                     <i class="mdi mdi-information-outline text-blue"></i>
                                 </a>
-                                <a v-if="hasPermission(Permission.OrderEdit) || hasPermission(Permission.OrderSearch)"
+                                <a v-if="UserInfo.this().has(Permission.OrderEdit) || UserInfo.this().has(Permission.OrderSearch)"
                                    @click="showState(data.id)">
                                     <i class="mdi mdi-pencil-box-outline"></i>
                                 </a>
                                 <a class="back">
-                                    <i v-if="needNotify(data.pay_state) && hasPermission(Permission.OrderNotify)"
+                                    <i v-if="needNotify(data.pay_state) && UserInfo.this().has(Permission.OrderNotify)"
                                        @click="confirmNotify(data.id)"
                                        class="far fa-caret-square-down text-orange"></i>
                                     <i v-else
@@ -205,7 +205,7 @@
 
 <script>
     import ListMixins from 'mixins/list'
-    import PayState from 'config/payState'
+    import PayState from 'config/PayState'
 
     export default {
         api: "order",

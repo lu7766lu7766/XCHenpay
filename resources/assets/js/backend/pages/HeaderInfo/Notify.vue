@@ -27,12 +27,12 @@
 
 <script>
     import ReqMixins from 'mixins/request'
-    import PermissionMixins from 'mixins/permission'
 
     export default {
         api: 'notify',
-        mixins: [ReqMixins, PermissionMixins],
+        mixins: [ReqMixins],
         data: () => ({
+            isInit: false,
             count: {
                 lend: 0,
                 bankAccount: 0
@@ -46,6 +46,7 @@
         },
         methods: {
             async getNotifyCount() {
+                this.isInit = true
                 this.canBankAccountList && this.proccessAjax('bankAccountList', {}, res => {
                     this.count.bankAccount = res.data
                 }, false)
@@ -56,13 +57,13 @@
         },
         computed: {
             userInfo() {
-                return this.$store.state.userInfo
+                return UserInfo.this().getUser()
             },
             canBankAccountList() {
-                return (this.hasPermission(Permission.BankAccountList) || this.isRole(Roles.ADMIN))
+                return this.isInit && (UserInfo.this().has(Permission.BankAccountList) || UserInfo.this().is(Roles.ADMIN))
             },
             canLendManage() {
-                return (this.hasPermission(Permission.LendManageIndex) || this.hasPermission(Permission.LendManage))
+                return this.isInit && (UserInfo.this().has(Permission.LendManageIndex) || UserInfo.this().has(Permission.LendManage))
             }
         },
         mounted() {

@@ -1,37 +1,21 @@
 import PaymentConConfig from 'config/PaymentConnConfig'
 
 class PaymentManage {
-    static get ALI_PAY() {
-        return 'aliPay'
-    }
+    static ALI_PAY = 'aliPay'
 
-    static get WE_CHAT_PAY() {
-        return 'weChatPay'
-    }
+    static WE_CHAT_PAY = 'weChatPay'
 
-    static get UNION_PAY() {
-        return 'unionPay'
-    }
+    static UNION_PAY = 'unionPay'
 
-    static get QQ_PAY() {
-        return 'qqPay'
-    }
+    static QQ_PAY = 'qqPay'
 
-    static get ALI_PAY_TXT() {
-        return '支付宝'
-    }
+    static ALI_PAY_TXT = '支付宝'
 
-    static get WE_CHAT_PAY_TXT() {
-        return '微信'
-    }
+    static WE_CHAT_PAY_TXT = '微信'
 
-    static get UNION_PAY_TXT() {
-        return '银联卡'
-    }
+    static UNION_PAY_TXT = '银联卡'
 
-    static get QQ_PAY_TXT() {
-        return 'QQ钱包'
-    }
+    static QQ_PAY_TXT = 'QQ钱包'
 
     static enum() {
         return [

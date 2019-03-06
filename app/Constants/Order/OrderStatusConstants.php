@@ -15,7 +15,7 @@ class OrderStatusConstants
     const SUCCESS_CODE = 2;
     const ALL_DONE_CODE = 3;
     const FAILED_CODE = 4;
-    const PENDING_CODE = 5;
+    const AMOUNT_NOT_MATCH_CODE = 5;
     const ACCEPT_CODE = 6;
     const DENY_CODE = 7;
     const PREPARE = '申请成功';//交易申請成功
@@ -23,6 +23,7 @@ class OrderStatusConstants
     const SUCCESS = '交易成功,未回调';//成功接收金流通知，等待商户接收回调
     const ALL_DONE = '交易结束';//已可下发
     const FAILED = '交易失败';
+    const AMOUNT_NOT_MATCH = '交易失败,交易金额不合';
     const DENY = '拒绝下发';
 
     /**

@@ -225,7 +225,7 @@
         },
         computed: {
             userInfo() {
-                return this.$store.state.userInfo
+                return UserInfo.this().getUser()
             },
         },
         mounted() {

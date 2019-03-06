@@ -1,7 +1,8 @@
 <template>
     <div class="row">
         <div class="col-lg-12">
-            <company-selector v-if="hasPermission(Permission.CompanyChange)" v-model="company_id" :options="companies"/>
+            <company-selector v-if="UserInfo.this().has(Permission.CompanyChange)" v-model="company_id"
+                              :options="companies"/>
             <!-- fee start -->
 
             <!-- order start -->
@@ -13,11 +14,10 @@
 
 <script>
     import ReqMixins from 'mixins/request'
-    import PermissionMixins from 'mixins/permission'
 
     export default {
         api: "orderSearch",
-        mixins: [ReqMixins, PermissionMixins],
+        mixins: [ReqMixins],
         components: {
             CompanySelector: require('@/CompanySelector'),
             Order: require('./Order'),
@@ -29,7 +29,7 @@
         async mounted() {
             this.proccessAjax('dataInit', {}, res => {
                 this.companies = _.concat([{id: '', company_name: '全部'}], _.map(res.companies))
-                this.company_id = this.hasPermission(Permission.CompanyChange)
+                this.company_id = UserInfo.this().has(Permission.CompanyChange)
                     ? this.company_id
                     : res.user.id
             })

@@ -23,6 +23,7 @@
                                 <th>申請成功</th>
                                 <th>交易中</th>
                                 <th>交易成功(未回調)</th>
+                                <th>交易成功(金额不符)</th>
                                 <th>交易失败</th>
                                 <th>交易成功</th>
                                 <th>手续费</th>
@@ -35,102 +36,97 @@
                                 <td class="aisle-name">
                                     <a>{{ data.company_name }}</a>
                                 </td>
-                                <td class="text-red">
+                                <td alt="申請成功" class="text-red">
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.apply ? +x.amount : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
+                                        getAmountSumByState(data.trade_logs, config.PayState.PREPARE_CODE)
+                                        | numFormat('0,0.000')}}
                                     </div>
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.apply ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
+                                        getCountSumByState(data.trade_logs, config.PayState.PREPARE_CODE)
+                                        | numFormat('0,0')}}
                                     </div>
                                 </td>
-                                <td class="text-red">
+                                <td alt="交易中" class="text-red">
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.trading ? +x.amount : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
+                                        getAmountSumByState(data.trade_logs, config.PayState.OPERATING_CODE)
+                                        | numFormat('0,0.000')}}
                                     </div>
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.trading ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
+                                        getCountSumByState(data.trade_logs, config.PayState.OPERATING_CODE)
+                                        | numFormat('0,0')}}
                                     </div>
                                 </td>
-                                <td class="text-red">
+                                <td alt="交易成功(未回調)" class="text-red">
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.success ? +x.amount : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
+                                        getAmountSumByState(data.trade_logs, config.PayState.SUCCESS_CODE)
+                                        | numFormat('0,0.000')}}
                                     </div>
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.success ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
+                                        getCountSumByState(data.trade_logs, config.PayState.SUCCESS_CODE)
+                                        | numFormat('0,0')}}
                                     </div>
                                 </td>
-                                <td class="text-red">
+                                <td alt="交易成功(金额不符)" class="text-red">
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.fail ? +x.amount : 0 ) |
-                                        numFormat('0,0.000')
+                                        getAmountSumByState(data.trade_logs, config.PayState.AMOUNT_NOT_MATCH_CODE)
+                                        | numFormat('0,0.000')
                                         }}
                                     </div>
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.fail ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
-                                    </div>
-                                </td>
-                                <td class="text-green">
-                                    <div>
-                                        {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? +x.amount : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
-                                    </div>
-                                    <div>
-                                        {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
+                                        getCountSumByState(data.trade_logs, config.PayState.AMOUNT_NOT_MATCH_CODE)
+                                        | numFormat('0,0')}}
                                     </div>
                                 </td>
-                                <td>
+                                <td alt="交易失败" class="text-red">
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? +x.fee : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
+                                        getAmountSumByState(data.trade_logs, config.PayState.FAILED_CODE)
+                                        | numFormat('0,0.000')}}
                                     </div>
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
+                                        getCountSumByState(data.trade_logs, config.PayState.FAILED_CODE)
+                                        | numFormat('0,0')}}
                                     </div>
                                 </td>
-                                <td class="aisle-total">
+                                <td alt="交易成功" class="text-green">
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => +x.amount) |
-                                        numFormat('0,0.000')
-                                        }}
+                                        getAmountSumByState(data.trade_logs, config.PayState.ALL_DONE_CODE)
+                                        | numFormat('0,0.000')}}
                                     </div>
                                     <div>
                                         {{
-                                        _.sumBy(data.trade_logs, x => x.count) |
-                                        numFormat('0,0')
-                                        }}
+                                        getCountSumByState(data.trade_logs, config.PayState.ALL_DONE_CODE)
+                                        | numFormat('0,0')}}
+                                    </div>
+                                </td>
+                                <td alt="手续费">
+                                    <div>
+                                        {{
+                                        getFeeSumByState(data.trade_logs, config.PayState.ALL_DONE_CODE)
+                                        | numFormat('0,0.000')}}
+                                    </div>
+                                    <div>
+                                        {{
+                                        getCountSumByState(data.trade_logs, config.PayState.ALL_DONE_CODE)
+                                        | numFormat('0,0')}}
+                                    </div>
+                                </td>
+                                <td alt="总计" class="aisle-total">
+                                    <div>
+                                        {{ getTotalAmount(data.trade_logs) | numFormat('0,0.000') }}
+                                    </div>
+                                    <div>
+                                        {{ getTotalCount(data.trade_logs) | numFormat('0,0') }}
                                     </div>
                                 </td>
                             </tr>
@@ -139,208 +135,211 @@
                                 v-for="(details, payment_type) in _.groupBy(data.trade_logs, 'payment_type')"
                                 :key="payment_type">
                                 <td class="width-40"></td>
-                                <td>{{ details[0].payment.name }}</td>
-                                <td class="text-red">
-                                    <div>
-                                        {{
-                                        _.sumBy(details, x => x.pay_state == payState.apply ? +x.amount : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
-                                    </div>
-                                    <div>
-                                        {{
-                                        _.sumBy(details, x => x.pay_state == payState.apply ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
-                                    </div>
-                                </td>
-                                <td class="text-red">
-                                    <div>
-                                        {{
-                                        _.sumBy(details, x => x.pay_state == payState.trading ? +x.amount : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
-                                    </div>
-                                    <div>
-                                        {{
-                                        _.sumBy(details, x => x.pay_state == payState.trading ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
-                                    </div>
-                                </td>
-                                <td class="text-red">
-                                    <div>
-                                        {{
-                                        _.sumBy(details, x => x.pay_state == payState.success ? +x.amount : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
-                                    </div>
-                                    <div>
-                                        {{
-                                        _.sumBy(details, x => x.pay_state == payState.success ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
-                                    </div>
-                                </td>
-                                <td class="text-red">
-                                    <div>
-                                        {{
-                                        _.sumBy(details, x => x.pay_state == payState.fail ? +x.amount : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
-                                    </div>
-                                    <div>
-                                        {{
-                                        _.sumBy(details, x => x.pay_state == payState.fail ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
-                                    </div>
-                                </td>
-                                <td class="text-green">
-                                    <div>
-                                        {{
-                                        _.sumBy(details, x => x.pay_state == payState.done ? +x.amount : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
-                                    </div>
-                                    <div>
-                                        {{
-                                        _.sumBy(details, x => x.pay_state == payState.done ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
-                                    </div>
-                                </td>
                                 <td>
+                                    <span v-if="details[0].payment">{{ details[0].payment.name }}</span>
+                                </td>
+                                <td alt="申請成功" class="text-red">
                                     <div>
                                         {{
-                                        _.sumBy(details, x => x.pay_state == payState.done ? +x.fee : 0 ) |
-                                        numFormat('0,0.000')
-                                        }}
+                                        getAmountSumByState(details, config.PayState.PREPARE_CODE)
+                                        | numFormat('0,0.000') }}
                                     </div>
                                     <div>
                                         {{
-                                        _.sumBy(details, x => x.pay_state == payState.done ? x.count : 0 ) |
-                                        numFormat('0,0')
-                                        }}
+                                        getCountSumByState(details, config.PayState.PREPARE_CODE)
+                                        | numFormat('0,0') }}
                                     </div>
                                 </td>
-                                <td class="aisle-total">
+                                <td alt="交易中" class="text-red">
                                     <div>
                                         {{
-                                        _.sumBy(details, x => +x.amount ) |
-                                        numFormat('0,0.000')
-                                        }}
+                                        getAmountSumByState(details, config.PayState.OPERATING_CODE)
+                                        | numFormat('0,0.000') }}
                                     </div>
                                     <div>
                                         {{
-                                        _.sumBy(details, x => x.count ) |
-                                        numFormat('0,0')
-                                        }}
+                                        getCountSumByState(details, config.PayState.OPERATING_CODE)
+                                        | numFormat('0,0') }}
+                                    </div>
+                                </td>
+                                <td alt="交易成功(未回調)" class="text-red">
+                                    <div>
+                                        {{
+                                        getAmountSumByState(details, config.PayState.SUCCESS_CODE)
+                                        | numFormat('0,0.000') }}
+                                    </div>
+                                    <div>
+                                        {{ getCountSumByState(details, config.PayState.SUCCESS_CODE)
+                                        | numFormat('0,0') }}
+                                    </div>
+                                </td>
+                                <td alt="交易成功(金额不符)" class="text-red">
+                                    <div>
+                                        {{
+                                        getAmountSumByState(details, config.PayState.AMOUNT_NOT_MATCH_CODE)
+                                        | numFormat('0,0.000')}}
+                                    </div>
+                                    <div>
+                                        {{ getCountSumByState(details, config.PayState.AMOUNT_NOT_MATCH_CODE)
+                                        | numFormat('0,0') }}
+                                    </div>
+                                </td>
+                                <td alt="交易失败" class="text-red">
+                                    <div>
+                                        {{
+                                        getAmountSumByState(details, config.PayState.FAILED_CODE)
+                                        | numFormat('0,0.000') }}
+                                    </div>
+                                    <div>
+                                        {{ getCountSumByState(details, config.PayState.FAILED_CODE)
+                                        | numFormat('0,0') }}
+                                    </div>
+                                </td>
+                                <td alt="交易成功" class="text-green">
+                                    <div>
+                                        {{ getAmountSumByState(details, config.PayState.ALL_DONE_CODE)
+                                        | numFormat('0,0.000') }}
+                                    </div>
+                                    <div>
+                                        {{ getCountSumByState(details, config.PayState.ALL_DONE_CODE)
+                                        | numFormat('0,0') }}
+                                    </div>
+                                </td>
+                                <td alt="手续费">
+                                    <div>
+                                        {{ getFeeSumByState(details, config.PayState.ALL_DONE_CODE)
+                                        | numFormat('0,0.000') }}
+                                    </div>
+                                    <div>
+                                        {{ getCountSumByState(details, config.PayState.ALL_DONE_CODE)
+                                        | numFormat('0,0') }}
+                                    </div>
+                                </td>
+                                <td alt="总计" class="aisle-total">
+                                    <div>
+                                        {{ getTotalAmountFormat(details) | numFormat('0,0.000') }}
+                                    </div>
+                                    <div>
+                                        {{ getTotalCountFormat(details) | numFormat('0,0') }}
                                     </div>
                                 </td>
                             </tr>
                             </tbody>
                             <tfoot>
-                            <tr>
+                            <tr alt="总额">
                                 <td colspan="2">总额</td>
-                                <td>
+                                <td alt="申請成功">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.apply ? +x.amount : 0 )) |
+                                    getAmountSumByState(data.trade_logs, config.PayState.PREPARE_CODE)) |
                                     numFormat('0,0.000')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="交易中">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.trading ? +x.amount : 0 )) |
+                                    getAmountSumByState(data.trade_logs, config.PayState.OPERATING_CODE)) |
                                     numFormat('0,0.000')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="交易成功(未回調)">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.success ? +x.amount : 0 )) |
+                                    getAmountSumByState(data.trade_logs, config.PayState.SUCCESS_CODE)) |
                                     numFormat('0,0.000')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="交易成功(金额不符)">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.fail ? +x.amount : 0 )) |
+                                    getAmountSumByState(data.trade_logs, config.PayState.AMOUNT_NOT_MATCH_CODE)) |
                                     numFormat('0,0.000')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="交易失败">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? +x.amount : 0 )) |
+                                    getAmountSumByState(data.trade_logs, config.PayState.FAILED_CODE)) |
                                     numFormat('0,0.000')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="交易成功">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? +x.fee : 0)) |
+                                    getAmountSumByState(data.trade_logs, config.PayState.ALL_DONE_CODE)) |
                                     numFormat('0,0.000')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="手续费">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => +x.amount)) |
+                                    getFeeSumByState(data.trade_logs, config.PayState.ALL_DONE_CODE)) |
+                                    numFormat('0,0.000')
+                                    }}
+                                </td>
+                                <td alt="总计">
+                                    {{
+                                    _.sumBy(datas, data =>
+                                    getTotalAmount(data.trade_logs)) |
                                     numFormat('0,0.000')
                                     }}
                                 </td>
                             </tr>
-                            <tr>
+                            <tr alt="笔数">
                                 <td colspan="2">笔数</td>
-                                <td>
+                                <td alt="申請成功">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.apply ? x.count : 0 )) |
+                                    getCountSumByState(data.trade_logs, config.PayState.PREPARE_CODE)) |
                                     numFormat('0,0')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="交易中">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.trading ? x.count : 0 )) |
+                                    getCountSumByState(data.trade_logs, config.PayState.OPERATING_CODE)) |
                                     numFormat('0,0')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="交易成功(未回調)">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.success ? x.count : 0 )) |
+                                    getCountSumByState(data.trade_logs, config.PayState.SUCCESS_CODE)) |
                                     numFormat('0,0')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="交易成功(金额不符)">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.fail ? x.count : 0 )) |
+                                    getCountSumByState(data.trade_logs, config.PayState.AMOUNT_NOT_MATCH_CODE)) |
                                     numFormat('0,0')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="交易失败">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? x.count : 0 )) |
+                                    getCountSumByState(data.trade_logs, config.PayState.FAILED_CODE)) |
                                     numFormat('0,0')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="交易成功">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.pay_state == payState.done ? x.count : 0 )) |
+                                    getCountSumByState(data.trade_logs, config.PayState.ALL_DONE_CODE)) |
                                     numFormat('0,0')
                                     }}
                                 </td>
-                                <td>
+                                <td alt="手续费">
                                     {{
                                     _.sumBy(datas, data =>
-                                    _.sumBy(data.trade_logs, x => x.count)) |
+                                    getCountSumByState(data.trade_logs, config.PayState.ALL_DONE_CODE)) |
+                                    numFormat('0,0')
+                                    }}
+                                </td>
+                                <td alt="总计">
+                                    {{
+                                    _.sumBy(datas, data =>
+                                    getTotalCount(data.trade_logs)) |
                                     numFormat('0,0')
                                     }}
                                 </td>
@@ -357,21 +356,19 @@
 
 <script>
     import ListMixins from "mixins/list"
+    import PayState from 'config/PayState'
+    import numFormat from 'vue-filter-number-format'
 
     export default {
         api: "",
         mixins: [ListMixins],
         data: () => ({
-            payState: {
-                apply: 0,
-                trading: 1,
-                success: 2,
-                done: 3,
-                fail: 4
-            },
             searchData: {
                 startDate: moment().startOf('day'),
                 endDate: moment().endOf('day')
+            },
+            config: {
+                PayState
             }
         }),
         methods: {
@@ -382,7 +379,36 @@
                     data.isShowDetail = false
                 })
                 this.datas = res.data
-            }
+            },
+            ////
+            getCurrentPropByState(state) {
+                return state == PayState.ALL_DONE_CODE ? 'real_paid_amount' : 'amount'
+            },
+            getAmountSumByState(datas, state) {
+                return this.getSumByState(datas, state, this.getCurrentPropByState(state))
+            },
+            getFeeSumByState(datas, state) {
+                return this.getSumByState(datas, state, 'fee')
+            },
+            getCountSumByState(datas, state) {
+                return this.getSumByState(datas, state, 'count')
+            },
+            getSumByState(datas, state, prop) {
+                return _.sumBy(datas, x => x.pay_state == state ? +x[prop] : 0)
+            },
+            ////
+            getTotalAmount(datas) {
+                return _.sumBy(datas, x => +x[this.getCurrentPropByState(x.pay_state)])
+            },
+            getTotalAmountFormat(datas) {
+                return numFormat(this.getTotalAmount(datas), '0,0.000')
+            },
+            getTotalCount(datas) {
+                return _.sumBy(datas, x => +x.count)
+            },
+            getTotalCountFormat(datas) {
+                return numFormat(this.getTotalCount(datas), '0,0')
+            },
         },
         mounted() {
             this.search()

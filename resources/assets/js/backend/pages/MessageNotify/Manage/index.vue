@@ -75,8 +75,7 @@
 
 <script>
     import ListMixins from "mixins/list"
-    import Roles from 'config/roles'
-    import MessageCategory from 'config/messageCategory'
+    import MessageCategory from 'config/MessageCategory'
 
     export default {
         components: {

@@ -153,7 +153,7 @@
                                           v-else>{{ options.lendStatus[data.lend_state] }}
                                     </span>
                                 </td>
-                                <td>{{ userInfo.company_name }}</td>
+                                <td>{{ UserInfo.this().getCompanyName() }}</td>
                                 <td class="text-red">{{ data.record_seq }}</td>
                                 <td>{{ data.account.name }}</td>
                                 <td>{{ data.account.account }}</td>
@@ -266,16 +266,13 @@
             }
         },
         computed: {
-            userInfo() {
-                return this.$root.userInfo
-            },
             customGetReqBody() {
                 return {
                     sort: this.sort.direction.toUpperCase()
                 }
             },
             canApply() {
-                return this.userInfo.apply_status === 'on'
+                return UserInfo.this().getApplyStatus() === 'on'
             }
         },
         mounted() {

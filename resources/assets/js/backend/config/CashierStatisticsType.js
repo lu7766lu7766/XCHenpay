@@ -1,27 +1,15 @@
 class CashierStatisticsType {
-    static get DAY() {
-        return 'day'
-    }
+    static DAY = 'day'
 
-    static get WEEK() {
-        return 'week'
-    }
+    static WEEK = 'week'
 
-    static get MONTH() {
-        return 'month'
-    }
+    static MONTH = 'month'
 
-    static get DAY_TXT() {
-        return '每日计算'
-    }
+    static DAY_TXT = '每日计算'
 
-    static get WEEK_TXT() {
-        return '每周计算'
-    }
+    static WEEK_TXT = '每周计算'
 
-    static get MONTH_TXT() {
-        return '每月计算'
-    }
+    static MONTH_TXT = '每月计算'
 
     static enum() {
         return [

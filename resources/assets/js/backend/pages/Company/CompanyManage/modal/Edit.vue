@@ -159,7 +159,7 @@
                 this.proccessAjax('update', this.data, this.onUpdate)
             },
             onUpdate() {
-                if (this.data.id === this.$root.userInfo.id) {
+                if (this.data.id === UserInfo.this().getID()) {
                     this.$bus.emit('getUserInfo')
                 }
                 this.updateSuccess()

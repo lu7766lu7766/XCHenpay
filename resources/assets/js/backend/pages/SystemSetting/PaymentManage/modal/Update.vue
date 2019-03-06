@@ -117,7 +117,7 @@
                     return alert(e)
                 }
                 this.proccessAjax('update', {
-                    user_id: this.user_id,
+                    user_id: UserInfo.this().getID(),
                     ..._.pick(this.data, [
                         'id',
                         'name',

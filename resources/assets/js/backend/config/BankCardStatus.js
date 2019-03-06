@@ -1,27 +1,15 @@
 class BankCardStatus {
-    static get PENDING() {
-        return 'pending'
-    }
+    static PENDING = 'pending'
 
-    static get REJECT() {
-        return 'reject'
-    }
+    static REJECT = 'reject'
 
-    static get APPROVAL() {
-        return 'approval'
-    }
+    static APPROVAL = 'approval'
 
-    static get PENDING_TXT() {
-        return '处理中'
-    }
+    static PENDING_TXT = '处理中'
 
-    static get REJECT_TXT() {
-        return '不通过'
-    }
+    static REJECT_TXT = '不通过'
 
-    static get APPROVAL_TXT() {
-        return '已通过'
-    }
+    static APPROVAL_TXT = '已通过'
 
     static enum() {
         return [

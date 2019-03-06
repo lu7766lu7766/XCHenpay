@@ -75,7 +75,7 @@
                                         <i class="mdi mdi-pencil-box-outline"></i></a>
                                     <a v-if="isAdmin" class="delete" @click="confirmDelete(data.id)">
                                         <i class="mdi mdi-delete-variant text-red"></i></a>
-                                    <a v-if="isAdmin || isFinancial"
+                                    <a v-if="isAdmin || isFinance"
                                        @click="$root.$emit('companyManageApplyEdit.show', data)">
                                         <i class="mdi mdi-database text-orange"></i></a>
                                 </td>
@@ -99,7 +99,6 @@
 
 <script>
     import ListMixins from 'mixins/list'
-    import Roles from 'config/roles'
 
     export default {
         api: "companyManage",
@@ -147,10 +146,10 @@
         },
         computed: {
             isAdmin() {
-                return this.$root.userInfo.roles && this.$parent.userInfo.roles[0].slug === Roles.ADMIN
+                return UserInfo.this().is(Roles.ADMIN)
             },
-            isFinancial() {
-                return this.$root.userInfo.roles && this.$parent.userInfo.roles[0].slug === Roles.FINANCE
+            isFinance() {
+                return UserInfo.this().is(Roles.FINANCE)
             }
         },
         mounted() {

@@ -129,7 +129,10 @@
                 } catch (e) {
                     return alert(e)
                 }
-                this.proccessAjax('create', {user_id: this.user_id, ...this.data}, _ => {
+                this.proccessAjax('create', {
+                    user_id: UserInfo.this().getID(),
+                    ...this.data
+                }, _ => {
                     this.createSuccess()
                     $(this.$refs.modal).modal('hide')
                 })

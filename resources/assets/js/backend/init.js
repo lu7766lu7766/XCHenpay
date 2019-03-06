@@ -6,12 +6,19 @@ window.axios = require('axios')
 // vue-bus
 window.Vue.use(require('vue-bus'))
 
+// UserInfo constant global
+import UserInfo from 'config/UserInfo'
+
+window.UserInfo = UserInfo
+Vue.prototype.UserInfo = UserInfo
+
 // permission constant global
-import Permission from 'config/permission'
+import Permission from 'config/Permission'
 window.Permission = Permission
 Vue.prototype.Permission = Permission
 
-import Roles from 'config/roles'
+// Roles constant global
+import Roles from 'config/Roles'
 
 window.Roles = Roles
 Vue.prototype.Roles = Roles

@@ -20,7 +20,8 @@
                     <!-- search-box end -->
                     <div class="row view-btn-box">
                         <div class="col-sm-6 view-btn">
-                            <button class="btn btn-add btn-half" @click="showDetail()">新增</button>
+                            <button class="btn btn-add btn-half" @click="$root.$emit('accountManageDetail.show')">新增
+                            </button>
                         </div>
                         <per-page-selector v-model="paginate.perpage"/>
                     </div>
@@ -48,12 +49,12 @@
                                     <i class="mdi mdi-close-circle-outline text-red" v-else></i>
                                 </td>
                                 <td>
-                                    <a @click="showInfo(data)">
+                                    <a @click="$root.$emit('accountManageInfo.show', data)">
                                         <i class="mdi mdi-information-outline text-blue"></i></a>
-                                    <a @click="showDetail(data)">
+                                    <a @click="$root.$emit('accountManageDetail.show', data)">
                                         <i class="mdi mdi-pencil-box-outline"></i></a>
                                     <a class="delete"
-                                       v-if="canDelete(data.email)"
+                                       v-if="!UserInfo.setUser(data).is(Roles.ADMIN)"
                                        @click="confirmDelete(data.id)">
                                         <i class="mdi mdi-delete-variant text-red"></i></a>
                                 </td>
@@ -107,12 +108,6 @@
             onGetList(res) {
                 this.datas = res.data
             },
-            showInfo(data) {
-                this.$root.$emit('accountManageInfo.show', data)
-            },
-            showDetail(data) {
-                this.$root.$emit('accountManageDetail.show', data)
-            },
             confirmDelete(id) {
                 swal(this.getDeleteConfig()).then(() => {
                     this.doDelete(id)
@@ -121,9 +116,6 @@
             },
             doDelete(id) {
                 this.proccessAjax('delete', {id}, this.deleteSuccess)
-            },
-            canDelete(email) {
-                return email !== 'admin@admin.com'
             }
         },
         mounted() {

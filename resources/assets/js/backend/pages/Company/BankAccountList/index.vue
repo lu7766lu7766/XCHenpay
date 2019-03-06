@@ -96,7 +96,7 @@
 
 <script>
     import ListMixins from 'mixins/list'
-    import BankCardStatus from 'config/bankCardStatus'
+    import BankCardStatus from 'config/BankCardStatus'
 
     export default {
         api: 'bankAccountList',
