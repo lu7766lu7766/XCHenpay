@@ -295,7 +295,12 @@
             confirmNotify(id) {
                 swal(this.config.notify).then(() => {
                     this.proccessAjax('notify', {id}, res => {
-                        swal(res.data ? this.config.success : this.config.fail)
+                        if (res.data) {
+                            this.getList()
+                            swal(this.config.success)
+                        } else {
+                            swal(this.config.fail)
+                        }
                     })
                 }).catch(_ => {})
             },
