@@ -3819,7 +3819,7 @@ html body .fn-mt20 {
     width: auto;
     margin: 0;
     padding: 0;
-    margin-top: 75px;
+    margin-top: 45px;
     margin-bottom: 16px;
 }
 
@@ -4351,12 +4351,13 @@ body,
 }
 
 .cashiser-switch-wrapper {
-    width: 1800px;
+    
 }
 
 .cashier-center-view {
     position: relative;
     width: 803px;
+    margin:0 auto;
 }
 
 .cashier-center-view.view-pc {
@@ -4691,7 +4692,52 @@ body {
     color: red;
 }
 
+.miss {
+    font-size: 1.5rem;
+    padding: 45px;
+    color: #ff5e3c;
+    width: 50%;
+    margin: 30px;
+    margin-left:auto;
+    margin-right:auto;
+    border: 1px solid #fda296;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.miss .warning {
+    width:100px;
+    display: block;
+    margin:0px auto 30px auto;
+}
+
+.success {
+    font-size: 1.5rem;
+    padding: 45px;
+    color: #4CAF50;
+    width: 50%;
+    margin: 30px;
+    margin-left:auto;
+    margin-right:auto;
+    border: 1px solid #cacaca;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.success .s_ok {
+    width:100px;
+    display: block;
+    margin:0px auto 30px auto;
+}
 @media screen and (max-width: 760px) {
+    .miss,.success  {
+        font-size: 1.1rem;
+        padding: 45px;
+    }
+    .miss .warning,.success .s_ok {
+        width:80px;
+    }
+
     .commodity-message-row t {
         display: block;
         padding-left: 55px;

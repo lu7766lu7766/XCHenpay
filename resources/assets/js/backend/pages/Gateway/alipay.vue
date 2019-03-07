@@ -108,11 +108,11 @@
                                     <img src="/gateway/T13CpgXf8mXXXXXXXX.png" class="qrguide-area-img active"></div>
                             </div>
                             <!-- 已過期 --->
-                            <div class="cashier-center-view view-qrcode fn-left"
-                                 style="postion:relative;left:40px;text-align:center; top:50px;"
+                            <div class="cashier-center-view view-qrcode"
                                  v-else>
-                                <div class="ft-center qrcode-header-money">
-                                    {{ data.msg }}
+                                <div class="miss">
+                                    <img class="warning" src="/gateway/warning.png" alt="">
+                                    订单不存在或已经过期<br>请重新发起支付
                                 </div>
                             </div>
                         </div>
