@@ -7,6 +7,7 @@ use App\Pivot\BankCardGateway;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * Class Authcode
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property TradeType tradeType
  * @property User company
  * @property Carbon created_at
+ * @property PaymentWindow|null paymentWindow
  */
 class Authcode extends Model
 {
@@ -110,6 +112,14 @@ class Authcode extends Model
     {
         return $this->belongsToMany(BankCardAccount::class, 'bank_card_gateway', 'authcode_id', 'bank_card_id')
             ->using(BankCardGateway::class)->withPivot('uri')->as('gatewayUri');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function paymentWindow()
+    {
+        return $this->hasOne(PaymentWindow::class, 'authcode_id');
     }
 
     public function authCodesPaymentAccount()

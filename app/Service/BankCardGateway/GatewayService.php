@@ -44,4 +44,19 @@ class GatewayService
 
         return $result;
     }
+
+    /**
+     * @param GatewayRequest $request
+     * @return null|string
+     */
+    public function paymentGate(GatewayRequest $request)
+    {
+        $result = null;
+        $orderInfo = app(AuthCodes::class)->findPaymentWindow($request->getTradeSeq());
+        if (!is_null($orderInfo) && isset($orderInfo->paymentWindow)) {
+            $result = $orderInfo->paymentWindow->entrance;
+        }
+
+        return $result;
+    }
 }

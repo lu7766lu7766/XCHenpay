@@ -31,4 +31,18 @@ class GatewayController extends Controller
     {
         return GatewayService::getInstance()->gateway($request);
     }
+
+    /**
+     * @param GatewayRequest $request
+     * @return \Illuminate\Http\RedirectResponse|void
+     */
+    public function paymentView(GatewayRequest $request)
+    {
+        $entrance = GatewayService::getInstance()->paymentGate($request);
+        if (!is_null($entrance)) {
+            return \Redirect::to($entrance);
+        }
+
+        return;
+    }
 }
