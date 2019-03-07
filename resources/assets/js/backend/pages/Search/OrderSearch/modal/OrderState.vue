@@ -18,8 +18,17 @@
                             <div class="col-md-9 p-t-7">{{ data.trade_service_id }}</div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 control-label">金额</label>
-                            <div class="col-md-9 p-t-7">{{ data.amount }}</div>
+                            <label class="col-md-3 control-label">订单金额</label>
+                            <div class="col-md-9 p-t-7">{{ data.amount | numFormat('0,0.00') }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 control-label">应付金额</label>
+                            <div class="col-md-9 p-t-7">{{ +data.amount - (+data.rand_fee) | numFormat('0,0.00') }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 control-label">实付金额</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" v-model.number="data.real_paid_amount"></div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 control-label">交易状态</label>
@@ -50,22 +59,21 @@
             stateList: {}
         }),
         methods: {
-            onGetState(res) {
-                this.data = res.authcode
-                this.stateList = res.stateList
+            getState(data) {
+                this.proccessAjax('state', data, res => {
+                    this.data = res.authcode
+                    this.stateList = res.stateList
+                })
             },
-            onUpdate() {
-                this.updateSuccess()
-                $(this.$refs.modal).modal('hide')
-            },
-            async getState(data) {
-                this.proccessAjax('state', data, this.onGetState)
-            },
-            async update() {
+            update() {
                 this.proccessAjax('update', {
                     id: this.data.id,
-                    state: this.data.pay_state
-                }, this.onUpdate)
+                    state: this.data.pay_state,
+                    real_paid_amount: this.data.real_paid_amount
+                }, _ => {
+                    this.updateSuccess()
+                    $(this.$refs.modal).modal('hide')
+                })
             }
         },
         mounted() {

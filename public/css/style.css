@@ -598,6 +598,10 @@ body {
   position: relative;
 }
 
+.table-sort thead tr th.sorting {
+  padding: 8px 30px 8px 20px;
+}
+
 .table-sort thead tr th.sorting::before, .table-sort thead tr th.sorting::after {
   font-family: "dripicons-v2" !important;
   position: absolute;

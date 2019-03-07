@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property TradeType tradeType
  * @property User company
  * @property Carbon created_at
+ * @property float real_paid_amount
  * @property PaymentWindow|null paymentWindow
  */
 class Authcode extends Model

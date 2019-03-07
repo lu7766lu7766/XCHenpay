@@ -34,12 +34,20 @@
                             <div class="col-md-9 p-t-7">{{ data.item_name }}</div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 control-label">金额</label>
-                            <div class="col-md-9 p-t-7">{{ data.amount }}</div>
+                            <label class="col-md-3 control-label">订单金额</label>
+                            <div class="col-md-9 p-t-7">{{ data.amount | numFormat('0,0.00') }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 control-label">应付金额</label>
+                            <div class="col-md-9 p-t-7">{{ +data.amount - (+data.rand_fee) | numFormat('0,0.00') }}</div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 control-label">实付金额</label>
+                            <div class="col-md-9 p-t-7">{{ data.real_paid_amount | numFormat('0,0.00') }}</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 control-label">手续费</label>
-                            <div class="col-md-9 p-t-7">{{ data.fee }}</div>
+                            <div class="col-md-9 p-t-7">{{ data.fee | numFormat('0,0.000') }}</div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 control-label">币别</label>

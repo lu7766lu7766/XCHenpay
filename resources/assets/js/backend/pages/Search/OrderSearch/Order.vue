@@ -113,11 +113,11 @@
                             <th>商户名称</th>
                             <th>系统交易号</th>
                             <th>商户交易号</th>
-                            <th class="sorting sorting" @click="changeSort('amount')" :class="{
+                            <th class="sorting" @click="changeSort('amount')" :class="{
                                 'sort-asc': this.sort.column == 'amount' && this.sort.direction == 'asc',
                                 'sort-desc': this.sort.column == 'amount' && this.sort.direction == 'desc'
-                            }">金额
-                            </th>
+                            }">订单金额</th>
+                            <th>应付金额</th>
                             <th>实付金额</th>
                             <th>支付方式</th>
                             <th>手续费</th>
@@ -143,11 +143,13 @@
                             <td alt="商户名称">{{ data.company.company_name }}</td>
                             <td alt="系统交易号">{{ data.trade_seq }}</td>
                             <td alt="商户交易号">{{ data.trade_service_id }}</td>
-                            <td alt="金额" class="text-right">{{ data.amount | numFormat('0,0.00') }}</td>
+                            <td alt="订单金额" class="text-right">{{ data.amount | numFormat('0,0.00') }}</td>
+                            <td alt="应付金额" class="text-right">{{ +data.amount - (+data.rand_fee) | numFormat('0,0.00') }}</td>
                             <td alt="实付金额" class="text-right">{{ data.real_paid_amount | numFormat('0,0.00') }}</td>
                             <td alt="支付方式">
                                 <span :class="data.bank_card_account[0] ? 'text-modal' : ''"
-                                      @click="$root.$emit('orderAccountInfo.show', data.bank_card_account[0])">
+                                      @click="data.bank_card_account[0] &&
+                                        $root.$emit('orderAccountInfo.show', data.bank_card_account[0])">
                                     {{ getPaymentTypeName(data.payment_type) }}
                                 </span>
                             </td>
@@ -177,15 +179,25 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td class="text-right">
+                            <td alt="订单金额" class="text-right">
                                 {{
-                                _.sumBy(datas, x => + x.amount) | numFormat('0,0.00')
+                                _.sumBy(datas, x => +x.amount) | numFormat('0,0.00')
+                                }}
+                            </td>
+                            <td alt="应付金额" class="text-right">
+                                {{
+                                _.sumBy(datas, x => +x.amount - (+x.rand_fee)) | numFormat('0,0.00')
+                                }}
+                            </td>
+                            <td alt="实付金额" class="text-right">
+                                {{
+                                _.sumBy(datas, x => +x.real_paid_amount) | numFormat('0,0.00')
                                 }}
                             </td>
                             <td></td>
-                            <td class="text-right">
+                            <td alt="手续费" class="text-right">
                                 {{
-                                _.sumBy(datas, x => + x.fee) | numFormat('0,0.000')
+                                _.sumBy(datas, x => +x.fee) | numFormat('0,0.000')
                                 }}
                             </td>
                             <td></td>

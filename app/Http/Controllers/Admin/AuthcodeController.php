@@ -185,8 +185,9 @@ class AuthcodeController extends Controller
     public function updateState(Request $request)
     {
         $validator = Validator::make($request->toArray(), [
-            'id'    => 'required|integer|exists:authcodes,id',
-            'state' => 'required|integer|in:0,1,2,3,4'
+            'id'               => 'required|integer|exists:authcodes,id',
+            'state'            => 'required|integer|in:0,1,2,3,4',
+            'real_paid_amount' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/|min:0'
         ]);
         if ($validator->fails()) {
             return Response::json($validator->messages());
@@ -199,10 +200,12 @@ class AuthcodeController extends Controller
             3 => '交易结束',
             4 => '交易失败'
         ];
+        /** @var Authcode $authcode */
         $authcode = Authcode::find($request->id);
         $oldState = $authcode->pay_summary;
         $authcode->pay_state = $request->state;
         $authcode->pay_summary = $stateList[$request->state];
+        $authcode->real_paid_amount = $request->real_paid_amount;
         $authcode->manual_at = date('Y-m-d H:i:s');
         $authcode->save();
         activity($user->email)
