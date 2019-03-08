@@ -340,7 +340,7 @@ class AuthCodes
             $result = Authcode::query()
                 ->with('bankCardAccount')
                 ->where('trade_seq', $tradeSeq)
-                ->where('created_at', '>=', Carbon::now()->subMinute(5)->toDateTimeString())
+                ->where('created_at', '>=', Carbon::now()->subMinute(2)->toDateTimeString())
                 ->first();
         } catch (\Exception $e) {
             \Log::log('debug', $e->getMessage());
