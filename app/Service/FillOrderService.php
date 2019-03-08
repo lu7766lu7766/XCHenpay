@@ -119,6 +119,7 @@ class FillOrderService
                 'pay_end_time'     => $request->getPayTime(),
                 'currency_id'      => $currency->getKey(),
                 'remark'           => $request->getRemark(),
+                'real_paid_amount' => $request->getAmount()
             ];
             $result = $this->repo->saveOrder($key, $request->getId(), $data);
             if (is_null($result)) {

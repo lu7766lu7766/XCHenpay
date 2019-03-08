@@ -50,7 +50,8 @@ class Authcode extends Model
         'pay_end_time',
         'trade_type',
         'currency_id',
-        'remark'
+        'remark',
+        'real_paid_amount'
     ];
 
     /**
