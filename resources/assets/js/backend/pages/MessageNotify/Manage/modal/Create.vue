@@ -104,6 +104,7 @@
             onCreate() {
                 this.createSuccess()
                 $(this.$refs.modal).modal('hide')
+                this.$bus.emit('getUnreadCount')
             },
         },
         mounted() {

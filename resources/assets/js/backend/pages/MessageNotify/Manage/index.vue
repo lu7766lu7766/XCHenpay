@@ -56,7 +56,7 @@
                                 <td class="width-control">
                                     <a @click="$root.$emit('messageManageInfo.show', data)">
                                         <i class="mdi mdi-information-outline text-blue"></i></a>
-                                    <a class="delete" @click="confirmDelete(data.id)">
+                                    <a class="delete" @click="confirmDelete(data)">
                                         <i class="mdi mdi-delete-variant text-red"></i></a>
                                 </td>
                             </tr>
@@ -111,14 +111,19 @@
             onGetList(res) {
                 this.datas = res.data
             },
-            confirmDelete(id) {
+            confirmDelete(data) {
                 swal(this.getDeleteConfig('删除', '你确定要删除吗？')).then(() => {
-                    this.doDelete(id)
+                    this.doDelete(data)
                 }).catch(err => {
                 })
             },
-            doDelete(id) {
-                this.proccessAjax('delete', {id}, this.deleteSuccess)
+            doDelete(data) {
+                this.proccessAjax('delete', {id: data.id}, () => {
+                    if (!_.has(data, 'seen_by_user.0')) {
+                        this.$bus.emit('getUnreadCount')
+                    }
+                    this.deleteSuccess()
+                })
             }
         },
         mounted() {

@@ -58,6 +58,10 @@
         mixins: [DetailMixins],
         mounted() {
             this.$root.$on('messageManageInfo.show', data => {
+                if (!_.has(data, 'seen_by_user.0')) {
+                    this.$parent.refresh()
+                    this.$bus.emit('getUnreadCount')
+                }
                 this.data = data
                 $(this.$refs.modal).modal('show')
             })

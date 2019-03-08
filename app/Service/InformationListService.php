@@ -92,4 +92,12 @@ class InformationListService
     {
         return app(InformationCategoryRepo::class)->all();
     }
+
+    /**
+     * @return int
+     */
+    public function unreadCount()
+    {
+        return app(InformationNotifyListRepo::class)->total($this->user->getKey(), null, false);
+    }
 }

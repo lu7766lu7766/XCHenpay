@@ -64,9 +64,13 @@ class InformationNotifyListRepo
         }
         if (!is_null($read)) {
             if ($read) {
-                $query->whereHas('seenByUser');
+                $query->whereHas('seenByUser', function (Builder $subQuery) use ($userId) {
+                    $subQuery->where('users.id', $userId);
+                });
             } else {
-                $query->whereDoesntHave('seenByUser');
+                $query->whereDoesntHave('seenByUser', function (Builder $subQuery) use ($userId) {
+                    $subQuery->where('users.id', $userId);
+                });
             }
         }
 
@@ -88,9 +92,13 @@ class InformationNotifyListRepo
         }
         if (!is_null($read)) {
             if ($read) {
-                $query->whereHas('seenByUser');
+                $query->whereHas('seenByUser', function (Builder $subQuery) use ($userId) {
+                    $subQuery->where('users.id', $userId);
+                });
             } else {
-                $query->whereDoesntHave('seenByUser');
+                $query->whereDoesntHave('seenByUser', function (Builder $subQuery) use ($userId) {
+                    $subQuery->where('users.id', $userId);
+                });
             }
         }
 

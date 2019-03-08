@@ -69,4 +69,12 @@ class InformationListController extends Controller
     {
         return InformationListService::getInstance(\Sentinel::getUser())->category();
     }
+
+    /**
+     * @return int
+     */
+    public function unreadCount()
+    {
+        return InformationListService::getInstance(\Sentinel::getUser())->unreadCount();
+    }
 }

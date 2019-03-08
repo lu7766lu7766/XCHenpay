@@ -270,11 +270,16 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
 });
 #headerInfo
 Route::group(
-    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'json_api'], 'as' => 'admin.'],
+    ['prefix' => 'admin', 'middleware' => ['admin', 'json_api']],
     function () {
-        Route::get('tradeInfoOnToday', 'AuthcodeController@tradeInfoOnToday');
-        Route::get('pendingCount', 'BankCardListController@pendingCount')
-            ->middleware('has:pendingCount,HeaderInfoPolicy');
+        Route::group(['namespace' => 'Admin'], function () {
+            Route::get('tradeInfoOnToday', 'AuthcodeController@tradeInfoOnToday');
+            Route::get('pendingCount', 'BankCardListController@pendingCount')
+                ->middleware('has:pendingCount,HeaderInfoPolicy');
+        });
+        Route::group(['namespace' => 'User'], function () {
+            Route::get('unreadCount', 'InformationListController@unreadCount');
+        });
     }
 );
 #whitelist
@@ -429,7 +434,6 @@ Route::group(
 Route::group(
     ['prefix' => 'pay/gateway/', 'namespace' => 'BankCardGateway'],
     function () {
-        //todo funny#89
         Route::get('to_bank_card/', 'GatewayController@indexView');
         Route::get('to_bank_card/data', 'GatewayController@index')->middleware('json_api');
         Route::get('/', 'GatewayController@paymentView');

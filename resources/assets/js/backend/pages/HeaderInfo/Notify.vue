@@ -16,12 +16,13 @@
                 <span class="badge badge-pill badge-danger noti-icon-badge">{{ count.lend }}</span>
             </a>
         </li>
-        <!--<li class="dropdown notification-list">-->
-        <!--<a class="nav-link arrow-none waves-effect" href="">-->
-        <!--<i class="ti-email noti-icon"></i>-->
-        <!--<span class="badge badge-pill badge-danger noti-icon-badge">10</span>-->
-        <!--</a>-->
-        <!--</li>-->
+        <li class="dropdown notification-list"
+            @click="$linkTo('/user/informationLists')">
+            <a class="nav-link arrow-none waves-effect" href="">
+                <i class="ti-email noti-icon"></i>
+                <span class="badge badge-pill badge-danger noti-icon-badge">{{ count.unread }}</span>
+            </a>
+        </li>
     </span>
 </template>
 
@@ -35,23 +36,33 @@
             isInit: false,
             count: {
                 lend: 0,
-                bankAccount: 0
+                bankAccount: 0,
+                unread: 0
             },
-            timer: null
+            timer: null,
+            timer2: null,
         }),
         watch: {
             userInfo() {
                 this.getNotifyCount()
+                this.getUnreadCount()
             }
         },
         methods: {
-            async getNotifyCount() {
+            getNotifyCount() {
                 this.isInit = true
                 this.canBankAccountList && this.proccessAjax('bankAccountList', {}, res => {
                     this.count.bankAccount = res.data
                 }, false)
                 this.canLendManage && this.proccessAjax('lendManage', {}, res => {
                     this.count.lend = res.data.total
+                }, false)
+            },
+            getUnreadCount() {
+                clearInterval(this.timer2)
+                this.proccessAjax('unread', {}, res => {
+                    this.count.unread = res.data
+                    this.timer2 = setTimeout(this.getUnreadCount, 10 * 1000)
                 }, false)
             }
         },
@@ -68,6 +79,13 @@
         },
         mounted() {
             this.timer = setInterval(this.getNotifyCount, 10 * 1000)
+            this.timer2 = setTimeout(this.getUnreadCount, 10 * 1000)
+            this.$bus.on('getUnreadCount', this.getUnreadCount)
+        },
+        destroyed() {
+            clearInterval(this.timer)
+            clearTimeout(this.timer2)
+            this.$bus.off('getUnreadCount')
         }
     }
 </script>

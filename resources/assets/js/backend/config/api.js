@@ -517,6 +517,11 @@ export default {
             bankAccountList: {
                 uri: '/admin/pendingCount',
                 method: 'get'
+            },
+            /** 未讀訊息 */
+            unread: {
+                uri: '/admin/unreadCount',
+                method: 'get'
             }
         },
         /** 表頭資訊 */

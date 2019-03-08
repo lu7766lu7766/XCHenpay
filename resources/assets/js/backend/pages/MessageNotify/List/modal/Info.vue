@@ -49,8 +49,12 @@
             this.$root.$on('messageListInfo.show', data => {
                 this.data = {}
                 this.proccessAjax('info', {id: data.id}, res => {
-                    if (!data.seen_by_user[0]) this.$parent.refresh()
+                    if (!_.has(data, 'seen_by_user.0')) {
+                        this.$parent.refresh()
+                        this.$bus.emit('getUnreadCount')
+                    }
                     this.data = res.data
+
                 })
                 $(this.$refs.modal).modal('show')
             })
