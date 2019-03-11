@@ -59,7 +59,11 @@ class InformationManageService
         $result = null;
         try {
             \DB::transaction(function () use ($request, &$result) {
-                $notifyInfo = $this->create($request->getCategoryId(), $request->getSubject(), $request->getContent());
+                $notifyInfo = $this->create(
+                    $request->getCategoryId(),
+                    $request->getSubject(),
+                    $request->getInfoContent()
+                );
                 if (!is_null($notifyInfo)) {
                     $this->attachRoles($notifyInfo, $request->getRole());
                 }
