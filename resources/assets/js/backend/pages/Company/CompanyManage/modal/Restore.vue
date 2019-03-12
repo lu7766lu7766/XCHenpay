@@ -50,14 +50,9 @@
     import DetailMixins from 'mixins/detail'
 
     export default {
+        api: 'restore',
         mixins: [ListMixins, DetailMixins],
         methods: {
-            getList() {
-                this.proccessAjax('trashedList', {}, this.onGetList)
-            },
-            getTotal() {
-                this.$callApi(`${this.apiKey}:trashedTotal`).then(res => this.onGetTotal(res))
-            },
             onGetList(res) {
                 this.datas = res.data
             },
@@ -65,15 +60,15 @@
                 this.paginate.total = res.data.total
             },
             restore(id) {
-                this.proccessAjax('restore', {id}, this.onRestore)
-            },
-            onRestore() {
-                this.updateSuccess()
-                $(this.$refs.modal).modal('hide')
+                this.proccessAjax('restore', {id}, () => {
+                    this.updateSuccess()
+                    $(this.$refs.modal).modal('hide')
+                })
             }
         },
         mounted() {
             this.$root.$on('companyManageRestore.show', () => {
+                this.datas = []
                 this.search()
                 $(this.$refs.modal).modal('show')
             })

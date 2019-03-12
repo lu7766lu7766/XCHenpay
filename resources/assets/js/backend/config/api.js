@@ -228,17 +228,19 @@ export default {
             uri: '/admin/merchants/maintain/applyStatus',
             method: 'put'
         },
-        trashedList: {
-            uri: '/admin/trashedMerchants',
-            method: 'post'
-        },
-        trashedTotal: {
-            uri: '/admin/trashedMerchants/total',
-            method: 'post'
-        },
         restore: {
-            uri: '/admin/trashedMerchants/restore',
-            method: 'post'
+            list: {
+                uri: '/admin/trashedMerchants',
+                method: 'post'
+            },
+            total: {
+                uri: '/admin/trashedMerchants/total',
+                method: 'post'
+            },
+            restore: {
+                uri: '/admin/trashedMerchants/restore',
+                method: 'post'
+            }
         }
     },
     /** 白名單管理 */
