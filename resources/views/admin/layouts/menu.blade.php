@@ -125,7 +125,7 @@
         @endif
 
         <li class="has-submenu">
-            <a href="https://hackmd.io/s/S1hn8pDaX" target="_blank"><i class="ti-link"></i>串接文件</a>
+            <a href="https://xing99.hackmd.io/s/HyzvUz8vV" target="_blank"><i class="ti-link"></i>串接文件</a>
         </li>
     </ul>
     <!-- End navigation menu -->

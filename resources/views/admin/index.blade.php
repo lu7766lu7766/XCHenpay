@@ -50,7 +50,8 @@
                                     <div class="number" id="myTargetElement3">{{ $users->count() }}</div>
                                 </div>
                                 <span class="widget_circle3 pull-right">
-                                     <i class="livicon livicon-evo-holder " data-name="eye-open" data-l="true" data-c="#01BC8C"
+                                     <i class="livicon livicon-evo-holder " data-name="eye-open" data-l="true"
+                                        data-c="#01BC8C"
                                         data-hc="#01BC8C" data-s="40"></i>
                                 </span>
 
@@ -73,7 +74,8 @@
                                     <div class="number" id="myTargetElement4">{{ $users->count() }}</div>
                                 </div>
                                 <span class="widget_circle4 pull-right">
-                                     <i class="livicon livicon-evo-holder " data-name="user" data-l="true" data-c="#F89A14"
+                                     <i class="livicon livicon-evo-holder " data-name="user" data-l="true"
+                                        data-c="#F89A14"
                                         data-hc="#F89A14" data-s="40"></i>
                                 </span>
 
@@ -112,7 +114,8 @@
                         <div class="panel panel-border">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <i class="livicon" data-name="eye-open" data-size="16" data-loop="true" data-c="#EF6F6C"
+                                    <i class="livicon" data-name="eye-open" data-size="16" data-loop="true"
+                                       data-c="#EF6F6C"
                                        data-hc="#EF6F6C"></i>
                                     @lang('general.weekly_users')
                                 </h4>
@@ -147,7 +150,8 @@
                         <div class="panel panel-border">
                             <div class="panel-heading border-light">
                                 <h3 class="panel-title">
-                                    <i class="livicon" data-name="users" data-size="18" data-color="#00bc8c" data-hc="#00bc8c"
+                                    <i class="livicon" data-name="users" data-size="18" data-color="#00bc8c"
+                                       data-hc="#00bc8c"
                                        data-l="true"></i>
                                     @lang('general.recently_users')
                                 </h3>
@@ -204,7 +208,7 @@
 
 {{-- page level scripts --}}
 @section('footer_scripts')
-    <script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}"></script>
+    {{--<script type="text/javascript" src="{{ asset('assets/vendors/moment/js/moment.min.js') }}"></script>--}}
     <!--for calendar-->
     <script src="{{ asset('assets/vendors/moment/js/moment.min.js') }}" type="text/javascript"></script>
     <!-- Back to Top-->
