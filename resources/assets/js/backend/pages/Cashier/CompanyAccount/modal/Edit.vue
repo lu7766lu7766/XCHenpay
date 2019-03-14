@@ -12,7 +12,10 @@
                         <div class="form-group row">
                             <label class="col-md-3 control-label required">CardID</label>
                             <div class="col-md-9 p-t-7">
-                                {{ getCardID(data.payment) }}
+                                <input type="text" class="form-control" v-model="data.card_id">
+                                <div class="tips text-danger">
+                                    隐藏银行卡号使用, 若无输入, 则无法隐藏银行卡号 <a href="" class="text-blue">(支付宝获取说明)</a>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -151,6 +154,7 @@
                 }
                 this.proccessAjax('update', _.pick(this.data, [
                     'id',
+                    'card_id',
                     'status',
                     'minimum_amount',
                     'maximum_amount',
@@ -166,6 +170,7 @@
         mounted() {
             this.$root.$on('companyAccountEdit.show', data => {
                 this.data = _.cloneDeep(data)
+                this.data.card_id = this.getCardID(this.data.payment)
                 $(this.$refs.modal).modal('show')
             })
         },

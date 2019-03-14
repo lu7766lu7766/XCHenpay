@@ -10,6 +10,14 @@ use Illuminate\Validation\Rule;
 class CompanyAccountUpdateRequest extends FormRequest
 {
     /**
+     * @return string|null
+     */
+    public function getCardId()
+    {
+        return $this->get('card_id', null);
+    }
+
+    /**
      * @return string
      */
     public function getStatus()
@@ -72,6 +80,7 @@ class CompanyAccountUpdateRequest extends FormRequest
     {
         return [
             'id'              => 'required|integer',
+            'card_id'         => 'sometimes|required|string',
             'status'          => 'required|' . Rule::in(BankCardPaymentStatusConstants::enum()),
             'minimum_amount'  => 'required|integer|max:' . $this->getMaximumAmount(),
             'maximum_amount'  => 'required|integer',

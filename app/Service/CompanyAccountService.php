@@ -99,20 +99,33 @@ class CompanyAccountService
 
     /**
      * @param CompanyAccountUpdateRequest $request
-     * @return int
+     * @return BankCardAccount|null
      */
     public function update(CompanyAccountUpdateRequest $request)
     {
-        return app(BankCardAccountRepo::class)->companyUpdate(
-            $request->getId(),
-            [
-                'status'          => $request->getStatus(),
-                'minimum_amount'  => $request->getMinimumAmount(),
-                'maximum_amount'  => $request->getMaximumAmount(),
-                'statistics_type' => $request->getStatisticsType(),
-                'total_amount'    => $request->getTotalAmount()
-            ]
-        );
+        $item = app(BankCardAccountRepo::class)->companyInfo($request->getId());
+        if (!is_null($item)) {
+            /** @var Payment|null $payment */
+            $payment = $item->payment->first();
+            $detail = null;
+            if (!is_null($payment)) {
+                $detail = $payment->payment_information->payment_detail;
+                $detail['card_id'] = $request->getCardId();
+            }
+            $item = app(BankCardAccountRepo::class)->companyUpdate(
+                $item,
+                [
+                    'status'          => $request->getStatus(),
+                    'minimum_amount'  => $request->getMinimumAmount(),
+                    'maximum_amount'  => $request->getMaximumAmount(),
+                    'statistics_type' => $request->getStatisticsType(),
+                    'total_amount'    => $request->getTotalAmount()
+                ],
+                $detail
+            );
+        }
+
+        return $item;
     }
 
     /**

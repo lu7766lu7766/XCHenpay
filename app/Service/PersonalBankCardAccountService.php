@@ -122,21 +122,33 @@ class PersonalBankCardAccountService
 
     /**
      * @param PersonalAccountUpdateRequest $request
-     * @return int
+     * @return BankCardAccount|null
      */
     public function update(PersonalAccountUpdateRequest $request)
     {
-        return app(PersonalBankCardAccountRepo::class)->update(
-            $this->user->getKey(),
-            $request->getId(),
-            [
-                'status'          => $request->getStatus(),
-                'minimum_amount'  => $request->getMinimumAmount(),
-                'maximum_amount'  => $request->getMaximumAmount(),
-                'statistics_type' => $request->getStatisticsType(),
-                'total_amount'    => $request->getTotalAmount(),
-            ]
-        );
+        $item = app(PersonalBankCardAccountRepo::class)->info($this->user->getKey(), $request->getId());
+        if (!is_null($item)) {
+            /** @var Payment|null $payment */
+            $payment = $item->payment->first();
+            $detail = null;
+            if (!is_null($payment)) {
+                $detail = $payment->payment_information->payment_detail;
+                $detail['card_id'] = $request->getCardId();
+            }
+            $item = app(PersonalBankCardAccountRepo::class)->update(
+                $item,
+                [
+                    'status'          => $request->getStatus(),
+                    'minimum_amount'  => $request->getMinimumAmount(),
+                    'maximum_amount'  => $request->getMaximumAmount(),
+                    'statistics_type' => $request->getStatisticsType(),
+                    'total_amount'    => $request->getTotalAmount(),
+                ],
+                $detail
+            );
+        }
+
+        return $item;
     }
 
     /**

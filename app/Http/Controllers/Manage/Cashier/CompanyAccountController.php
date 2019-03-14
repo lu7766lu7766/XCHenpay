@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Manage\Cashier;
 use App\Constants\BankCardPayment\BankCardPaymentStatusConstants;
 use App\Exceptions\ApiErrorScalarCodeException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CashierCompany\CompanyAccountUpdateRequest;
 use App\Http\Requests\CashierCompany\CompanyAccountIndexRequest;
 use App\Http\Requests\CashierCompany\CompanyAccountInfoRequest;
 use App\Http\Requests\CashierCompany\CompanyAccountStoreRequest;
 use App\Http\Requests\CashierCompany\CompanyAccountTotalRequest;
+use App\Http\Requests\CashierCompany\CompanyAccountUpdateRequest;
 use App\Models\BankCardAccount;
 use App\Models\Payment;
 use App\Service\CompanyAccountService;
@@ -82,7 +82,7 @@ class CompanyAccountController extends Controller
 
     /**
      * @param CompanyAccountUpdateRequest $request
-     * @return int
+     * @return BankCardAccount|null
      */
     public function update(CompanyAccountUpdateRequest $request)
     {

@@ -10,6 +10,11 @@ namespace App\Pivot;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
+/**
+ * Class PaymentBankAccount
+ * @package App\Pivot
+ * @property array payment_detail
+ */
 class PaymentBankAccount extends Pivot
 {
     protected $casts = ['payment_detail' => 'array'];

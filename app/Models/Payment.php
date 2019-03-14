@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @package App\Models
  * @property Collection|User[] userFee
  * @property BankCardAccount[]|Collection bankAccount
+ * @property PaymentBankAccount payment_information
  */
 class Payment extends Model
 {

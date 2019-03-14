@@ -9,6 +9,7 @@
 namespace App\Repositories;
 
 use App\Models\BankCardAccount;
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -97,18 +98,25 @@ class PersonalBankCardAccountRepo
     }
 
     /**
-     * @param int $userId
-     * @param int $id
+     * @param BankCardAccount $bankCardAccount
      * @param array $data
-     * @return int
+     * @param array|null $paymentDetail
+     * @return BankCardAccount
      */
-    public function update(int $userId, int $id, array $data)
+    public function update(BankCardAccount $bankCardAccount, array $data, array $paymentDetail = null)
     {
-        return BankCardAccount::query()
-            ->where('id', $id)
-            ->whereHas('personal', function (Builder $subQuery) use ($userId) {
-                $subQuery->where('user_id', $userId);
-            })->update($data);
+        try {
+            $bankCardAccount->update($data);
+            /** @var Payment $payment */
+            if (!is_null($paymentDetail)) {
+                $payment = $bankCardAccount->payment->first();
+                $payment->payment_information->update(['payment_detail' => $paymentDetail]);
+            }
+        } catch (\Throwable $e) {
+            \Log::error($e->getMessage());
+        }
+
+        return $bankCardAccount;
     }
 
     /**

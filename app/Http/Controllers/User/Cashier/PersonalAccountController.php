@@ -70,7 +70,7 @@ class PersonalAccountController extends Controller
 
     /**
      * @param PersonalAccountUpdateRequest $request
-     * @return int
+     * @return BankCardAccount|null
      */
     public function update(PersonalAccountUpdateRequest $request)
     {

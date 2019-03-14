@@ -5,10 +5,9 @@ namespace App\Models;
 use App\Pivot\BankCardGateway;
 use App\Pivot\PaymentBankAccount;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Support\Collection;
 
 /**
  * Class BankCardPayment
