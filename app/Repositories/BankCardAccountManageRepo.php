@@ -12,6 +12,7 @@ use App\Constants\Roles\RolesConstants;
 use App\Models\BankCardAccount;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class BankCardAccountManageRepo
 {
@@ -46,7 +47,17 @@ class BankCardAccountManageRepo
         int $page = 1,
         int $perpage = 25
     ) {
-        $query = $this->listQuery($userId)->with(['payment', 'personal']);
+        $query = $this->listQuery($userId)
+            ->with([
+                'payment',
+                'personal' => function (Relation $query) {
+                    $query->select([
+                        $query->getRelated()->qualifyColumn('id'),
+                        $query->getRelated()->qualifyColumn('company_name'),
+                        $query->getRelated()->qualifyColumn('company_service_id'),
+                    ]);
+                }
+            ]);
         if (!is_null($status)) {
             $query->where('status', $status);
         }
@@ -88,6 +99,15 @@ class BankCardAccountManageRepo
      */
     public function info(int $id)
     {
-        return $this->listQuery()->with(['payment', 'personal'])->where('id', $id)->first();
+        return $this->listQuery()->with([
+            'payment',
+            'personal' => function (Relation $query) {
+                $query->select([
+                    $query->getRelated()->qualifyColumn('id'),
+                    $query->getRelated()->qualifyColumn('company_name'),
+                    $query->getRelated()->qualifyColumn('company_service_id'),
+                ]);
+            }
+        ])->where('id', $id)->first();
     }
 }

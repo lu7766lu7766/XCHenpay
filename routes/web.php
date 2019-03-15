@@ -459,21 +459,3 @@ Route::group(
         });
     }
 );
-#帳戶管理
-Route::group(
-    [
-        'prefix'     => 'admin/cashier/manage',
-        'as'         => 'admin.cashier.manage.',
-        'namespace'  => 'Manage\Cashier',
-        'middleware' => ['admin', 'has:management,BankCardAccountManagePolicy'],
-    ],
-    function () {
-        Route::get('/', 'AccountManageController@indexView')->name('view');
-        Route::group(['middleware' => ['json_api']], function () {
-            Route::get('/merchant', 'AccountManageController@merchant')->name('merchant');
-            Route::post('/', 'AccountManageController@index')->name('index');
-            Route::post('total', 'AccountManageController@total')->name('total');
-            Route::post('/info', 'AccountManageController@info')->name('info');
-        });
-    }
-);

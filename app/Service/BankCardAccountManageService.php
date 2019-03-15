@@ -28,7 +28,16 @@ class BankCardAccountManageService
      */
     public function merchant()
     {
-        return app(UserRepo::class)->getRole(RolesConstants::USER);
+        return app(UserRepo::class)
+            ->getRole(RolesConstants::USER)
+            ->map(function (User $item) {
+                return $item->only([
+                    'id',
+                    'company_name',
+                    'company_service_id'
+                ]);
+            })
+            ->all();
     }
 
     /**
