@@ -411,11 +411,3 @@ Route::group(
         });
     }
 );
-Route::group(
-    ['prefix' => 'pay/gateway/', 'namespace' => 'BankCardGateway'],
-    function () {
-        Route::get('to_bank_card/', 'GatewayController@indexView');
-        Route::get('to_bank_card/data', 'GatewayController@index')->middleware('json_api');
-        Route::get('/', 'GatewayController@paymentView');
-    }
-);
