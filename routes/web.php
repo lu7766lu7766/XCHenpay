@@ -1,7 +1,4 @@
 <?php
-
-use App\Policies\FillOrderPolicy;
-
 Route::get('setlocale/{locale}', function ($locale) {
     if (in_array($locale, \Config::get('app.locales'))) {
         Session::put('locale', $locale);
@@ -341,24 +338,6 @@ Route::group([
         Route::put('maintain/', 'FeeManagementController@edit')->name('edit');
     });
 });
-#fill order
-Route::group(
-    [
-        'prefix'     => 'admin/order/fill',
-        'middleware' => ['admin', 'has:management,' . FillOrderPolicy::class],
-        'as'         => 'admin.fill_order.'
-    ],
-    function () {
-        Route::get('/view', 'FillOrderController@view')->name('view');
-        Route::group(['middleware' => ['json_api']], function () {
-            Route::get('info/{id}', 'FillOrderController@info')->name('info');
-            Route::post('index', 'FillOrderController@index')->name('index');
-            Route::post('total', 'FillOrderController@total')->name('total');
-            Route::post('edit', 'FillOrderController@edit')->name('edit');
-            Route::get('options', 'FillOrderController@options')->name('options');
-        });
-    }
-);
 #informationLists
 Route::group(
     [
