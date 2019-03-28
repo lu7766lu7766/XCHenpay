@@ -297,19 +297,6 @@ Route::group([
         });
     });
 });
-#notifyOrderFail
-Route::group([
-    'prefix'     => 'admin/notifyOrderFail',
-    'middleware' => ['admin', 'has:management,NotifyOrderFailPolicy'],
-    'namespace'  => 'Admin',
-    'as'         => 'admin.order.fail.'
-], function () {
-    Route::get('/', 'NotifyOrderFailController@indexView')->name('view');
-    Route::group(['middleware' => 'json_api'], function () {
-        Route::post('/', 'NotifyOrderFailController@index')->name('index');
-        Route::post('/total', 'NotifyOrderFailController@total')->name('total');
-    });
-});
 #frond end use
 Route::group([
     'prefix'     => 'admin/description',
