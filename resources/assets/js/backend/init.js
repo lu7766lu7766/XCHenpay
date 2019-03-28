@@ -14,6 +14,7 @@ Vue.prototype.UserInfo = UserInfo
 
 // permission constant global
 import Permission from 'config/Permission'
+
 window.Permission = Permission
 Vue.prototype.Permission = Permission
 
@@ -25,6 +26,7 @@ Vue.prototype.Roles = Roles
 
 // number format
 import numFormat from 'vue-filter-number-format'
+
 Vue.filter('numFormat', numFormat)
 
 // vue init
@@ -144,4 +146,9 @@ async function doRequest(uri, method, data, loader, option) {
     // console.log(res)
 
     return res.data
+}
+
+
+Vue.prototype.$open = function (url, title, config) {
+    window.open(url, title, qs.stringify(config).replace('&', ','))
 }

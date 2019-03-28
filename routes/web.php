@@ -323,3 +323,12 @@ Route::group([
         Route::post('/', 'FeeListController@index')->name('index');
     });
 });
+#frond end use
+Route::group([
+    'prefix'     => 'admin/description',
+    'as'         => 'admin.description.',
+    'namespace'  => 'FrondEnd',
+    'middleware' => ['admin'],
+], function () {
+    Route::get('alipay', 'DescriptionController@alipay');
+});

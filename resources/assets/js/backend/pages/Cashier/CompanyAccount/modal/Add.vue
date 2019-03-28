@@ -13,7 +13,13 @@
                             <div class="col-md-9">
                                 <input type="text" class="form-control" v-model="data.card_id">
                                 <div class="tips text-danger">
-                                    隐藏银行卡号使用, 若无输入, 则无法隐藏银行卡号 <a href="" class="text-blue">(支付宝获取说明)</a>
+                                    隐藏银行卡号使用, 若无输入, 则无法隐藏银行卡号
+                                    <a href="javascript:void(0);"
+                                       @click="$open('/admin/description/alipay', '', {
+                                        width: 800,
+                                        height: 600
+                                    })"
+                                       class="text-blue">(支付宝获取说明)</a>
                                 </div>
                             </div>
                         </div>
