@@ -310,19 +310,6 @@ Route::group([
         Route::post('/total', 'NotifyOrderFailController@total')->name('total');
     });
 });
-#feeList
-Route::group([
-    'prefix'     => 'admin/channel/feeList',
-    'namespace'  => 'Admin',
-    'middleware' => 'admin',
-    'as'         => 'admin.channel.feeList.'
-], function () {
-    Route::get('/', 'FeeListController@indexView')->name('view')->middleware('has:management,FeeListPolicy');
-    Route::group(['middleware' => ['json_api', 'has:management,FeeListPolicy']], function () {
-        Route::get('/{id}', 'FeeListController@info')->name('info');
-        Route::post('/', 'FeeListController@index')->name('index');
-    });
-});
 #frond end use
 Route::group([
     'prefix'     => 'admin/description',
