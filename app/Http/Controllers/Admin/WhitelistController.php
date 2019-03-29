@@ -38,15 +38,15 @@ class WhitelistController extends Controller
     }
 
     /**
-     * @param $user_id
+     * @param $id
      * @return array
      * @throws ValidationException
      */
-    public function info($user_id)
+    public function info($id)
     {
         return [
             'data' => WhitelistService::getInstance()->info(
-                WhitelistInfoRequest::getHandle(['user_id' => $user_id])
+                WhitelistInfoRequest::getHandle(['id' => $id])
             )
         ];
     }

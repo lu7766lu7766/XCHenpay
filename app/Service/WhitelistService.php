@@ -31,7 +31,17 @@ class WhitelistService
      */
     public function list(WhitelistIndexRequest $request)
     {
-        return app(UserRepo::class)->getWhitelist($request->getPage(), $request->getPerPage());
+        return app(UserRepo::class)
+            ->getWhitelist($request->getPage(), $request->getPerPage())
+            ->map(function (User $item) {
+                return $item->setVisible([
+                    'id',
+                    'company_name',
+                    'company_service_id',
+                    'whitelist'
+                ]);
+            })
+            ->all();
     }
 
     /**

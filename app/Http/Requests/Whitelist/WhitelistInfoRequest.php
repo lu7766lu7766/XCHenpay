@@ -11,7 +11,7 @@ class WhitelistInfoRequest extends HandleInvalidRequest
      */
     public function getUserId()
     {
-        return $this->request['user_id'];
+        return $this->request['id'];
     }
 
     /**
@@ -20,7 +20,7 @@ class WhitelistInfoRequest extends HandleInvalidRequest
     protected function rules()
     {
         return [
-            'user_id' => 'integer|required'
+            'id' => 'integer|required'
         ];
     }
 

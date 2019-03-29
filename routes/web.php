@@ -279,24 +279,6 @@ Route::group(
         });
     }
 );
-#whitelist
-Route::group([
-    'prefix'     => 'admin/whitelist',
-    'namespace'  => 'Admin',
-    'middleware' => ['admin', 'whitelist'],
-    'as'         => 'admin.whitelist.'
-], function () {
-    Route::get('', 'WhitelistController@indexView')->name('view');
-    Route::group(['middleware' => 'json_api'], function () {
-        Route::post('/total', 'WhitelistController@total')->name('total');
-        Route::post('/', 'WhitelistController@index')->name('index');
-        Route::group(['prefix' => 'maintain'], function () {
-            Route::get('/{user_id}', 'WhitelistController@info')->name('info');
-            Route::post('/', 'WhitelistController@edit')->name('edit');
-            Route::delete('/', 'WhitelistController@delete')->name('delete');
-        });
-    });
-});
 #frond end use
 Route::group([
     'prefix'     => 'admin/description',
