@@ -27,6 +27,7 @@ class PermissionSubjectConstants
     const PERSONAL_ACCOUNT = 'personal.account';
     const MANAGE_ACCOUNT = 'manage.account';
     const PAYMENT_MANAGE = 'payment.manage';
+    const LISTENER = 'listener';
 }
 
 

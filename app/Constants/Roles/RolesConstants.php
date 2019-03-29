@@ -18,6 +18,8 @@ class RolesConstants
     const FINANCE = 'finance';
     //商户
     const USER = 'user';
+    //監聽機器人
+    const LISTENER = 'listener';
 
     /**
      * @return array
@@ -29,6 +31,7 @@ class RolesConstants
             self::CUSTOMER,
             self::FINANCE,
             self::USER,
+            self::LISTENER
         ];
     }
 }
