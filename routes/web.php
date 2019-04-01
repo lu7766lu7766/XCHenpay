@@ -220,29 +220,6 @@ Route::group(
         });
     }
 );
-# systemSetting
-Route::group(
-    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'system_setting'], 'as' => 'admin.'],
-    function () {
-        Route::get('systemSetting', 'SystemSettingController@index')
-            ->name('systemSetting.accountManage');
-        Route::group(['middleware' => 'json_api'], function () {
-            Route::get('systemSetting/getRolesList', 'SystemSettingController@getRolesList')
-                ->name('systemSetting.getRolesList');
-            Route::post('systemSetting/userList', 'SystemSettingController@userList')
-                ->name('systemSetting.userList');
-            Route::post('systemSetting/userDetail', 'SystemSettingController@userDetail')
-                ->name('systemSetting.userDetail');
-            Route::post('systemSetting/userTotal', 'SystemSettingController@userTotal')
-                ->name('systemSetting.userTotal');
-            Route::post('systemSetting/userAdd', 'SystemSettingController@userAdd')
-                ->name('systemSetting.userAdd');
-            Route::post('systemSetting/userUpdate', 'SystemSettingController@userUpdate')
-                ->name('systemSetting.userUpdate');
-            Route::post('systemSetting/userDel', 'SystemSettingController@userDel')->name('systemSetting.userDel');
-        });
-    }
-);
 #paymentManage
 Route::group([
     'prefix'     => 'admin/payment/manage',
@@ -279,24 +256,6 @@ Route::group(
         });
     }
 );
-#whitelist
-Route::group([
-    'prefix'     => 'admin/whitelist',
-    'namespace'  => 'Admin',
-    'middleware' => ['admin', 'whitelist'],
-    'as'         => 'admin.whitelist.'
-], function () {
-    Route::get('', 'WhitelistController@indexView')->name('view');
-    Route::group(['middleware' => 'json_api'], function () {
-        Route::post('/total', 'WhitelistController@total')->name('total');
-        Route::post('/', 'WhitelistController@index')->name('index');
-        Route::group(['prefix' => 'maintain'], function () {
-            Route::get('/{user_id}', 'WhitelistController@info')->name('info');
-            Route::post('/', 'WhitelistController@edit')->name('edit');
-            Route::delete('/', 'WhitelistController@delete')->name('delete');
-        });
-    });
-});
 #frond end use
 Route::group([
     'prefix'     => 'admin/description',

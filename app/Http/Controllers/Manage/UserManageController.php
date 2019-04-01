@@ -6,11 +6,12 @@
  * Time: 下午 04:27
  */
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manage;
 
+use App\Http\Controllers\Admin\BaseController;
 use App\Service\SystemSettingService;
 
-class SystemSettingController extends BaseController
+class UserManageController extends BaseController
 {
     /**
      * 帳號管理view
