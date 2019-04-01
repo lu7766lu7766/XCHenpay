@@ -4,6 +4,10 @@ use App\Constants\PermissionSubjectConstants;
 use App\Constants\Roles\RolesConstants;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * @todo 解決waring
+ * Class AddListenerRole
+ */
 class AddListenerRole extends Migration
 {
     /**

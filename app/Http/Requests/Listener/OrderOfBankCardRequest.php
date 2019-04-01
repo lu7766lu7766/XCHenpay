@@ -10,6 +10,11 @@ namespace App\Http\Requests\Listener;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @todo class name change to BankCardOrders or BankCardList 這類順向描述的命名
+ * Class OrderOfBankCardRequest
+ * @package App\Http\Requests\Listener
+ */
 class OrderOfBankCardRequest extends FormRequest
 {
     /**

@@ -12,6 +12,11 @@ use App\Http\Requests\Listener\OrderOfBankCardRequest;
 use App\Repositories\ListenerRepo;
 use App\Traits\Singleton;
 
+/**
+ * @todo class name 範圍很大,如果要用此名稱 需要再namespace上面增加更多prefix , e.g. Manage\Order
+ * Class ListenerService
+ * @package App\Service
+ */
 class ListenerService
 {
     use Singleton;

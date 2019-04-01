@@ -27,6 +27,7 @@ class PermissionSubjectConstants
     const PERSONAL_ACCOUNT = 'personal.account';
     const MANAGE_ACCOUNT = 'manage.account';
     const PAYMENT_MANAGE = 'payment.manage';
+    // @todo 權限與功能無法關聯上 範圍太大,請明確命名權限subject.
     const LISTENER = 'listener';
 }
 
