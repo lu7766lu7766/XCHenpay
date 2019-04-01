@@ -28,6 +28,7 @@ class PermissionSubjectConstants
     const MANAGE_ACCOUNT = 'manage.account';
     const PAYMENT_MANAGE = 'payment.manage';
     const WHITE_LIST = 'whitelist';
+    const USER_MANAGE = 'system.setting.user.manage';
 }
 
 

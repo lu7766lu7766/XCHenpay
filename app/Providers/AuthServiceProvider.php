@@ -19,6 +19,7 @@ use App\Policies\OrderNotifyPolicy;
 use App\Policies\PaymentManagePolicy;
 use App\Policies\PersonalAccountPolicy;
 use App\Policies\TrashedMerchantsPolicy;
+use App\Policies\UserManagePolicy;
 use App\Policies\WhiteListPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -49,6 +50,7 @@ class AuthServiceProvider extends ServiceProvider
         'BankCardAccountManagePolicy' => BankCardAccountManagePolicy::class,
         'PaymentManagePolicy'         => PaymentManagePolicy::class,
         WhiteListPolicy::class        => WhiteListPolicy::class,
+        UserManagePolicy::class       => UserManagePolicy::class,
     ];
 
     /**
