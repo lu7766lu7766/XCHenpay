@@ -13,7 +13,7 @@ use App\Policies\HeaderInfoPolicy;
 use App\Policies\InformationListsPolicy;
 use App\Policies\InformationManagePolicy;
 use App\Policies\LendManagePolicy;
-use App\Policies\ListenerPolicy;
+use App\Policies\ListenOrderPolicy;
 use App\Policies\MerchantsPolicy;
 use App\Policies\NotifyOrderFailPolicy;
 use App\Policies\OrderNotifyPolicy;
@@ -50,7 +50,7 @@ class AuthServiceProvider extends ServiceProvider
         'PersonalAccountPolicy'       => PersonalAccountPolicy::class,
         'BankCardAccountManagePolicy' => BankCardAccountManagePolicy::class,
         'PaymentManagePolicy'         => PaymentManagePolicy::class,
-        'ListenerPolicy'              => ListenerPolicy::class,
+        'ListenerOrderPolicy'         => ListenOrderPolicy::class,
         WhiteListPolicy::class        => WhiteListPolicy::class,
         UserManagePolicy::class       => UserManagePolicy::class,
     ];

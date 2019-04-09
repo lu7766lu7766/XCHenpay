@@ -2,13 +2,11 @@
 
 use App\Constants\PermissionSubjectConstants;
 use App\Constants\Roles\RolesConstants;
+use App\Models\Role;
+use App\User;
 use Illuminate\Database\Migrations\Migration;
 
-/**
- * @todo 解決waring
- * Class AddListenerRole
- */
-class AddListenerRole extends Migration
+class AddListenOrderRole extends Migration
 {
     /**
      * Run the migrations.
@@ -17,15 +15,17 @@ class AddListenerRole extends Migration
      */
     public function up()
     {
+        /** @var User $listener */
         $listener = Sentinel::registerAndActivate([
             'email'    => 'listener@henpay.net',
             'password' => "arxingkeyhonggun",
         ]);
+        /** @noinspection PhpUndefinedMethodInspection */
         $listenerRole = Sentinel::getRoleRepository()->createModel()->create([
             'name'        => '监听机器人',
             'slug'        => RolesConstants::LISTENER,
             'permissions' => [
-                PermissionSubjectConstants::LISTENER => true
+                PermissionSubjectConstants::LISTENER_ORDER => true
             ],
         ]);
         $listener->roles()->attach($listenerRole);
@@ -33,12 +33,16 @@ class AddListenerRole extends Migration
 
     /**
      * Reverse the migrations.
-     *
      * @return void
+     * @throws Exception
      */
     public function down()
     {
+        /** @var User $listener */
+        /** @noinspection PhpUndefinedMethodInspection */
         $listener = Sentinel::findByCredentials(['login' => 'listener@henpay.net']);
+        /** @var Role $listenerRole */
+        /** @noinspection PhpUndefinedMethodInspection */
         $listenerRole = Sentinel::findRoleByName('监听机器人');
         $listenerRole->delete();
         $listener->forcedelete();

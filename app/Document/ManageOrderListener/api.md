@@ -11,4 +11,5 @@
 | <b>權限</b>  | listener                    |              |              |          -          |      |
 | <b>參數</b>  |                             |              |              |                     |      |
 |             | id                          |  int         |              |      銀行卡id         |   o  |
+|             | pay_state                   |  int         |              |      交易狀態         |   x  |
 

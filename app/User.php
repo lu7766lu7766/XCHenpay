@@ -14,6 +14,8 @@ use App\Models\verifyCode;
 use App\Models\Whitelist;
 use Cartalyst\Sentinel\Users\EloquentUser;
 use Cviebrock\EloquentTaggable\Taggable;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -41,9 +43,10 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  * @method bool hasAnyAccess(array | string $permissions)
  * @mixin Builder
  */
-class User extends EloquentUser
+class User extends EloquentUser implements AuthenticatableContract
 {
     use Authorizable;
+    use Authenticatable;
     /**
      * The database table used by the model.
      *
@@ -144,5 +147,15 @@ class User extends EloquentUser
     public function informationNotify()
     {
         return $this->morphMany(InformationNotify::class, 'owner');
+    }
+
+    /**
+     * Get the column name for the "remember me" token.
+     *
+     * @return string
+     */
+    public function getRememberTokenName()
+    {
+        return '';
     }
 }

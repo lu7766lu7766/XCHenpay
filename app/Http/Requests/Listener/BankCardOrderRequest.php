@@ -11,11 +11,10 @@ namespace App\Http\Requests\Listener;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * @todo class name change to BankCardOrders or BankCardList 這類順向描述的命名
  * Class OrderOfBankCardRequest
  * @package App\Http\Requests\Listener
  */
-class OrderOfBankCardRequest extends FormRequest
+class BankCardOrderRequest extends FormRequest
 {
     /**
      * @return int
@@ -23,6 +22,14 @@ class OrderOfBankCardRequest extends FormRequest
     public function getId()
     {
         return $this->get('id');
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPayState()
+    {
+        return $this->get('pay_state') ?? null;
     }
 
     /**
@@ -39,7 +46,8 @@ class OrderOfBankCardRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer',
+            'id'        => 'required|integer',
+            'pay_state' => 'sometimes|required|integer',
         ];
     }
 }
