@@ -62,7 +62,6 @@ class Kernel extends HttpKernel
         'login'        => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle'     => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin'        => \App\Http\Middleware\SentinelAdmin::class,
-        'lendList'     => \App\Http\Middleware\LendListPermission::class,
         'tradeLog'     => \App\Http\Middleware\tradeLogPermission::class,
         'search'       => \App\Http\Middleware\SearchPermission::class,
         'to_json_resp' => SimpleJsonResponse::class,

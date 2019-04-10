@@ -146,23 +146,6 @@ Route::group(
             ->middleware(['json_api']);
     }
 );
-#lendList (下發列表)
-Route::group(
-    ['prefix' => 'admin/lendList', 'namespace' => 'Admin', 'middleware' => ['admin', 'lendList'], 'as' => 'admin.'],
-    function () {
-        Route::get('/', 'LendListController@indexView')->name('lend.list.index');
-        Route::group(['middleware' => 'json_api'], function () {
-            Route::get('userInfo', 'LendListController@userInfo');
-            Route::get('amountInfo', 'LendListController@amountInfo');
-            Route::get('lendStatus', 'LendListController@lendStatus');
-            Route::get('bankCardInfo', 'LendListController@bankCardInfo');
-            Route::post('/', 'LendListController@index');
-            Route::post('/apply', 'LendListController@apply');
-            Route::post('/total', 'LendListController@total');
-            Route::get('/{id}', 'LendListController@info');
-        });
-    }
-);
 #lendManage
 Route::group(
     [

@@ -30,4 +30,5 @@ class PermissionSubjectConstants
     const WHITE_LIST = 'whitelist';
     const USER_MANAGE = 'system.setting.user.manage';
     const LISTENER_ORDER = 'listener.order';
+    const LEND_LIST = 'lendList';
 }

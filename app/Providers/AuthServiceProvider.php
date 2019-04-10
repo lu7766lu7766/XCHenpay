@@ -12,6 +12,7 @@ use App\Policies\FillOrderPolicy;
 use App\Policies\HeaderInfoPolicy;
 use App\Policies\InformationListsPolicy;
 use App\Policies\InformationManagePolicy;
+use App\Policies\LendListPolicy;
 use App\Policies\LendManagePolicy;
 use App\Policies\ListenOrderPolicy;
 use App\Policies\MerchantsPolicy;
@@ -53,6 +54,7 @@ class AuthServiceProvider extends ServiceProvider
         'ListenerOrderPolicy'         => ListenOrderPolicy::class,
         WhiteListPolicy::class        => WhiteListPolicy::class,
         UserManagePolicy::class       => UserManagePolicy::class,
+        'LendListPolicy'              => LendListPolicy::class,
     ];
 
     /**

@@ -1,4 +1,4 @@
-# LendList Api Error
+# 商戶功能 >下發申請
 
 ## LendList Error Code
 > Return error code list

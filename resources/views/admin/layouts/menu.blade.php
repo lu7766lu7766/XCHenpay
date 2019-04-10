@@ -21,11 +21,10 @@
                 @if(Sentinel::getUser()->hasAccess('lendManage.index') || Sentinel::getUser()->hasAccess('lendManage'))
                     <li><a href="{{ URL::to('admin/lendManage') }}">下发管理</a></li>
                 @endif
-
-                @if(Sentinel::getUser()->hasAccess('lendList.index') || Sentinel::getUser()->hasAccess('lendList'))
+                @if(Sentinel::getUser()->can('management','LendListPolicy'))
                     <li><a href="{{route('admin.lend.list.index')}}">下发申请</a></li>
                 @endif
-                @if(Sentinel::getUser()->hasAccess('whitelist'))
+                @if(Sentinel::getUser()->can('management',\App\Policies\WhiteListPolicy::class))
                     <li><a href="{{route('admin.whitelist.view')}}">白名单设定</a></li>
                 @endif
             </ul>
@@ -109,12 +108,14 @@
 
         <li class="has-submenu ml-auto"></li>
 
-        @if (Sentinel::getUser()->hasAccess('systemSetting') ||
-            Sentinel::getUser()->can('management','PaymentManagePolicy'))
+        @if (Sentinel::getUser()->can('management','PaymentManagePolicy') ||
+            Sentinel::getUser()->can('management',\App\Policies\UserManagePolicy::class))
             <li class="has-submenu">
                 <a href="#"><i class="ti-settings"></i>系统设置</a>
                 <ul class="submenu">
-                    <li><a href="{{ route('admin.systemSetting.accountManage') }}">帐号管理</a></li>
+                    @if(Sentinel::getUser()->can('management',\App\Policies\UserManagePolicy::class))
+                        <li><a href="{{ route('admin.systemSetting.accountManage') }}">帐号管理</a></li>
+                    @endif
                     @if(Sentinel::getUser()->can('management','PaymentManagePolicy'))
                         <li><a href="{{ route('admin.systemSetting.paymentManage.view')  }}">金流管理</a></li>
                     @endif
