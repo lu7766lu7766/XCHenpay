@@ -23,7 +23,11 @@ class LendManageController extends BaseController
     public function dataInit()
     {
         return [
-            'companies'  => app(UserRepo::class)->getCompanies(),
+            'companies'  => app(UserRepo::class)->getCompanies()->map(function (\App\User $item) {
+                return $item->setVisible(
+                    ['id', 'company_name']
+                );
+            }),
             'lendStatus' => [
                 '0' => '下发中',
                 '1' => '完成下发',
