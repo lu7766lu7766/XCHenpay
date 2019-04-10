@@ -64,6 +64,7 @@ class BankCardListController extends Controller
     /**
      * @return array
      * @throws ValidationException
+     * @throws \App\Exceptions\ApiErrorScalarCodeException
      */
     public function delete()
     {
