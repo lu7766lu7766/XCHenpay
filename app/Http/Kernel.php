@@ -63,7 +63,6 @@ class Kernel extends HttpKernel
         'throttle'     => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin'        => \App\Http\Middleware\SentinelAdmin::class,
         'tradeLog'     => \App\Http\Middleware\tradeLogPermission::class,
-        'search'       => \App\Http\Middleware\SearchPermission::class,
         'to_json_resp' => SimpleJsonResponse::class,
         'env_export'   => ExtraEnvironmentExport::class,
         'has'          => \App\Http\Middleware\SentinelAuthorize::class

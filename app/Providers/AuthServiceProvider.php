@@ -20,6 +20,8 @@ use App\Policies\NotifyOrderFailPolicy;
 use App\Policies\OrderNotifyPolicy;
 use App\Policies\PaymentManagePolicy;
 use App\Policies\PersonalAccountPolicy;
+use App\Policies\ReportSearchPolicy;
+use App\Policies\ReportStatisticalPolicy;
 use App\Policies\TrashedMerchantsPolicy;
 use App\Policies\UserManagePolicy;
 use App\Policies\WhiteListPolicy;
@@ -55,6 +57,8 @@ class AuthServiceProvider extends ServiceProvider
         WhiteListPolicy::class        => WhiteListPolicy::class,
         UserManagePolicy::class       => UserManagePolicy::class,
         'LendListPolicy'              => LendListPolicy::class,
+        'ReportSearchPolicy'          => ReportSearchPolicy::class,
+        'ReportStatisticalPolicy'     => ReportStatisticalPolicy::class
     ];
 
     /**

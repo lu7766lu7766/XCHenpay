@@ -128,20 +128,6 @@ Route::group(
             ->middleware(['json_api']);
     }
 );
-#search
-Route::group(
-    ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin', 'search'], 'as' => 'admin.'],
-    function () {
-        Route::group(['prefix' => 'search'], function () {
-            Route::get('report/view', 'SearchController@reportIndex')->name('search.reportIndex');
-            Route::get('reportStat/view', 'SearchController@reportStatIndex')->name('search.reportStatIndex');
-            Route::group(['middleware' => ['json_api']], function () {
-                Route::post('reportQuery', 'SearchController@reportQuery')->name('search.reportQuery');
-                Route::post('reportStatQuery', 'SearchController@reportStatQuery')->name('search.reportStatQuery');
-            });
-        });
-    }
-);
 #permission
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], function () {
     Route::get('permissionSwitch', 'PermissionController@permissionSwitch')->name('permission.switch');

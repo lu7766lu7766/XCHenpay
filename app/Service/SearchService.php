@@ -9,7 +9,6 @@
 namespace App\Service;
 
 use App\Http\Requests\SearchReportQueryRequest;
-use App\Http\Requests\SearchReportStatQueryRequest;
 use App\Repositories\AuthCodes;
 use App\Traits\Singleton;
 use Illuminate\Validation\ValidationException;
@@ -45,28 +44,6 @@ class SearchService
         try {
             $handle = SearchReportQueryRequest::getHandle($this->data);
             $report = app(AuthCodes::class)->getReportRecord($handle->getStartDate(), $handle->getEndDate());
-            $result = ["code" => 200, "data" => $report];
-        } catch (ValidationException $e) {
-            $result = ["code" => 1000, "data" => $e->validator->getMessageBag()->getMessages()];
-        } catch (\Throwable $e) {
-            $result = ["code" => 1001, "data" => []];
-        }
-
-        return $result;
-    }
-
-    /**
-     * 報表統計(資料)
-     * @param string $companyServiceId
-     * @return array|null
-     */
-    public function reportStatQuery(string $companyServiceId)
-    {
-        $result = null;
-        try {
-            $handle = SearchReportStatQueryRequest::getHandle($this->data);
-            $report = app(AuthCodes::class)
-                ->getReportRecord($handle->getStartDate(), $handle->getEndDate(), $companyServiceId);
             $result = ["code" => 200, "data" => $report];
         } catch (ValidationException $e) {
             $result = ["code" => 1000, "data" => $e->validator->getMessageBag()->getMessages()];

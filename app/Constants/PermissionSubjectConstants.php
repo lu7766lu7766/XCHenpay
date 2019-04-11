@@ -31,4 +31,6 @@ class PermissionSubjectConstants
     const USER_MANAGE = 'system.setting.user.manage';
     const LISTENER_ORDER = 'listener.order';
     const LEND_LIST = 'lendList';
+    const REPORT_SEARCH = 'report.search';
+    const REPORT_STATISTICAL = 'report.statistical';
 }

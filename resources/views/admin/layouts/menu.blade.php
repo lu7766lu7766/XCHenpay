@@ -81,11 +81,11 @@
             <ul class="submenu">
                 <li><a href="{{ URL::to('admin/logQuery') }}">订单查询</a></li>
 
-                @if(Sentinel::getUser()->hasAccess('search.reportIndex') || Sentinel::getUser()->hasAccess('search'))
+                @if(Sentinel::getUser()->can('management','ReportSearchPolicy'))
                     <li><a href="{{ URL::to('admin/search/report/view') }}">报表查询</a></li>
                 @endif
 
-                @if(Sentinel::getUser()->hasAccess('search.reportStatIndex') || Sentinel::getUser()->hasAccess('search'))
+                @if(Sentinel::getUser()->can('management','ReportStatisticalPolicy'))
                     <li><a href="{{ URL::to('admin/search/reportStat/view') }}">报表统计</a></li>
                 @endif
 

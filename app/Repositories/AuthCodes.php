@@ -165,7 +165,7 @@ class AuthCodes
      * @param string $startDate 開始時間
      * @param string $endDate 結束時間
      * @param string $companyServiceId
-     * @return Collection
+     * @return Collection|User[]
      */
     public function getReportRecord(string $startDate, string $endDate, string $companyServiceId = null)
     {
