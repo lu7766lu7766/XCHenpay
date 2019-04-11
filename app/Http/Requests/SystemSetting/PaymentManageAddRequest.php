@@ -102,7 +102,7 @@ class PaymentManageAddRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|between:1,20',
+            'name'          => 'required|string|between:1,20',
             'status'        => 'sometimes|required|string|' . Rule::in(PaymentManageStatusConstants::enum()),
             'min_deposit'   => 'required|integer|digits_between:1,8|max:' . ($this->getMaxDeposit() - 1),
             'max_deposit'   => 'required|integer|digits_between:1,8',
