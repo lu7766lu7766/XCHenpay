@@ -164,20 +164,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'as' => 'admin.'], fu
     Route::get('permissionSwitch', 'PermissionController@permissionSwitch')->name('permission.switch');
     Route::post('permissionSwitch', 'PermissionController@update')->name('permission.update');
 });
-#headerInfo
-Route::group(
-    ['prefix' => 'admin', 'middleware' => ['admin', 'json_api']],
-    function () {
-        Route::group(['namespace' => 'Admin'], function () {
-            Route::get('tradeInfoOnToday', 'AuthcodeController@tradeInfoOnToday');
-            Route::get('pendingCount', 'BankCardListController@pendingCount')
-                ->middleware('has:pendingCount,HeaderInfoPolicy');
-        });
-        Route::group(['namespace' => 'User'], function () {
-            Route::get('unreadCount', 'InformationListController@unreadCount');
-        });
-    }
-);
 #frond end use
 Route::group([
     'prefix'     => 'admin/description',
