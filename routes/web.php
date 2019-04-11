@@ -41,21 +41,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     # Account Activation
     Route::get('activate/{userId}/{activationCode}', 'AuthController@getActivate')->name('activate');
 });
-# Activity log
-Route::group(
-    [
-        'prefix'     => 'admin',
-        'middleware' => ['admin'],
-        'as'         => 'admin.'
-    ],
-    function () {
-        Route::get('activity_log', 'ActivityHistoryController@view')->name('activity_log');
-        Route::group(['middleware' => ['json_api']], function () {
-            Route::post('activity_log/data', 'ActivityHistoryController@data')->name('activity_log.data');
-            Route::post('activity_log/data/total', 'ActivityHistoryController@total')->name('activity_log.data.total');
-        });
-    }
-);
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['admin'], 'as' => 'admin.'],
     function () {
