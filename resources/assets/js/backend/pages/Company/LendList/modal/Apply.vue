@@ -20,7 +20,7 @@
                             <div class="col-md-9">
                                 <input type="text" class="form-control" v-model.number="amount">
                                 <div class="tips">
-                                    下发金额 最少填入 1000, 最大不可超过 50000
+                                    下发金额 最少填入 1, 最大不可超过 50000
                                 </div>
                             </div>
                         </div>
@@ -83,8 +83,8 @@
                     message: '下发金额 请输入整数'
                 },
                 min: {
-                    value: 1000,
-                    message: '下发金额 最少填入 1000'
+                    value: 1,
+                    message: '下发金额 最少填入 1'
                 },
                 max: {
                     value: 50000,

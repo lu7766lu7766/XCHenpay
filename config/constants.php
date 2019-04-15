@@ -7,7 +7,7 @@
  */
 return [
     'apply' => [
-        'min' => 1000,
-        'max' => 50000
+        'min' => env('LEND_APPLY_MIX', 1),
+        'max' => env('LEND_APPLY_MAX', 50000)
     ]
 ];
