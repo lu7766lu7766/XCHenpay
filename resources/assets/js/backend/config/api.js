@@ -413,6 +413,12 @@ export default {
                 uri: '/pay/gateway/to_bank_card/data',
                 method: 'get'
             }
+        },
+        relay: {
+            data: {
+                uri: '/pay/gateway/relay/data',
+                method: 'get'
+            }
         }
     },
     /** 帳戶管理 */

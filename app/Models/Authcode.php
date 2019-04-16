@@ -36,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property Carbon created_at
  * @property float real_paid_amount
  * @property PaymentWindow|null paymentWindow
+ * @property float rand_fee
  */
 class Authcode extends Model
 {
@@ -132,5 +133,27 @@ class Authcode extends Model
             'authcodes_id',
             'payment_account_id'
         );
+    }
+
+    /**
+     * 產生隨機金額
+     * @return Authcode
+     */
+    public function createRandomFee()
+    {
+        if ($this->rand_fee == 0) {
+            $this->rand_fee = rand(1, 9) * 0.01;
+        }
+
+        return $this;
+    }
+
+    /**
+     * 應付金額
+     * @return float
+     */
+    public function amountPayable()
+    {
+        return bcsub($this->amount, $this->rand_fee, 2);
     }
 }

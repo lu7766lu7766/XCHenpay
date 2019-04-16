@@ -7,16 +7,20 @@
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>
-        在线支付 - 支付宝 - 网上支付 安全快速！
+        @yield('title')
     </title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ asset('gateway/front-old.css') }}">
+    @yield('header')
+
 </head>
 
 <body>
-
+<div id="loading">
+    <div id="loading-text">Loading...</div>
+    <div id="loading-content"></div>
+</div>
 <div id="gateway">
     @yield('content')
 </div>

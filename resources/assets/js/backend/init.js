@@ -3,8 +3,15 @@ window.Vue = require('vue')
 window.moment = require('moment')
 window.axios = require('axios')
 
+_.mixin({
+    getVal: function (data, prop, defaultVal = '') {
+        let res = _.head(_(data).at(prop).value())
+        return !_.isUndefined(res) ? res : defaultVal
+    }
+}, {chain: false})
+
 // vue-bus
-window.Vue.use(require('vue-bus'))
+Vue.use(require('vue-bus'))
 
 // UserInfo constant global
 import UserInfo from 'config/UserInfo'

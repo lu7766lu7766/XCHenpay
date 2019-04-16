@@ -7,10 +7,16 @@
  * Time: 下午 03:02
  */
 Route::group(
-    ['prefix' => 'pay/gateway/', 'namespace' => 'BankCardGateway'],
+    ['prefix' => 'pay/gateway/'],
     function () {
-        Route::get('to_bank_card/', 'GatewayController@indexView');
-        Route::get('to_bank_card/data', 'GatewayController@index')->middleware('json_api');
-        Route::get('/', 'GatewayController@paymentView');
+        Route::group(['namespace' => 'BankCardGateway'], function () {
+            Route::get('to_bank_card/', 'GatewayController@indexView');
+            Route::get('to_bank_card/data', 'GatewayController@index')->middleware('json_api');
+            Route::get('/', 'GatewayController@paymentView');
+        });
+        Route::group(['namespace' => 'Relay'], function () {
+            Route::get('/relay', 'RelayController@view');
+            Route::get('/relay/data', 'RelayController@data')->middleware('json_api');
+        });
     }
 );
