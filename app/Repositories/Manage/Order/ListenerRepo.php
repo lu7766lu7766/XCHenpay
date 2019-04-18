@@ -26,8 +26,8 @@ class ListenerRepo
     public function getOrderOfBankCard(int $id, int $payState = null)
     {
         $time = Carbon::now();
-        $start = $time->startOfMinute()->toDateTimeString();
-        $end = $time->addMinute(config('manageorderlistener.search_time'))->startOfMinute()->toDateTimeString();
+        $end = $time->startOfMinute()->toDateTimeString();
+        $start = $time->subMinute(config('manageorderlistener.search_time'))->startOfMinute()->toDateTimeString();
         $query = Authcode::query()
             ->whereHas('bankCardAccount', function (Builder $builder) use ($id) {
                 $builder->where('bank_card_account.id', $id);
