@@ -5,7 +5,7 @@
                 <div class="topbar-wrap fn-clear">
 
                     <slot name="help"></slot>
-                    
+
                 </div>
             </div>
             <div id="header">
@@ -58,10 +58,16 @@
                                         <div align="center">
                                             <span id="qrcode">
                                                 <span id="qrcode_img">
-                                                    <qrcode :value="data.qrcode_url" :options="{
-                                                        width: 168,
-                                                        margin: 0
-                                                    }"></qrcode>
+                                                    <qrcode v-if="urlIsImg"
+                                                            :value="data.qrcode_url"
+                                                            :options="{
+                                                                width: 168,
+                                                                margin: 0
+                                                            }">
+                                                    </qrcode>
+                                                    <img v-else
+                                                         width="168"
+                                                         :src="data.qrcode_url">
                                                 </span>
                                             </span>
                                             <span id="queren"></span>
@@ -119,7 +125,7 @@
 <script>
     export default {
         api: 'alipay',
-        props: ['isActive', 'data'],
+        props: ['isActive', 'data', 'urlIsImg'],
         components: {
             qrcode: require('@chenfengyuan/vue-qrcode').default
         },

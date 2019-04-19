@@ -9,6 +9,7 @@
     import GatewayPaymentType from 'config/GatewayPaymentType'
     import Mixins from './mixins'
 
+    // url: /pay/gateway/relay?trade_seq=xxx
     export default {
         api: 'relay',
         mixins: [Mixins],
@@ -16,6 +17,8 @@
             WeChatPay: () => import('./Relay/WeChatPay'),
             AlipayRedEnvelope: () => import('./Relay/AlipayRedEnvelope'),
             NewBank: () => import('./Relay/NewBank'),
+            HTian: () => import('./Relay/HTian'),
+            Redirect: () => import('./Relay/Redirect'),
             None: () => import('./Relay/None')
         },
         methods: {

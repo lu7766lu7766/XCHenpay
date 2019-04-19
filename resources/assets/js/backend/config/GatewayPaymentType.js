@@ -11,6 +11,14 @@ class GatewayPaymentType {
         '24': {
             component: 'NewBank',
             title: '在线支付 - 支付宝 - 网上支付 安全快速！'
+        },
+        '22': {
+            component: 'HTian',
+            title: '在线支付 - 海天支付 - 网上支付 安全快速！'
+        },
+        '23': {
+            component: 'Redirect',
+            title: '在线支付 - 海天支付 - 网上支付 安全快速！'
         }
     }
 }
