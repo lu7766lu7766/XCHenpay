@@ -1,5 +1,5 @@
 <template>
-    <layout :isActive="isActive" :data="data">
+    <layout :isActive="false" :data="data" v-if="!isActive">
         <div slot="miss">
             <img class="warning" src="/gateway/alipay/warning.png" alt="">
             订单不存在或已经过期<br>请重新发起支付
