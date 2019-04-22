@@ -6,6 +6,11 @@
             <span class="topbar-link-first">你好，欢迎使用支付宝付款！</span>
         </div>
 
+        <div slot="qrcode">
+            <img width="168"
+                 :src="data.qrcode_url"/>
+        </div>
+
         <div slot="expire">
             <img class="fn-left" src="/gateway/alipay/T1bdtfXfdiXXXXXXXX.png" alt="扫一扫标识">
             <div class="fn-left">

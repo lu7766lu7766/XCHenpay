@@ -16,6 +16,14 @@
             </div>
         </div>
 
+        <div slot="redirect_btn" v-if="isMobileOrTablet()">
+            <div class="text-center">
+                <a :href="data.qrcode_url">
+                    <button class="btn-open" type="button">点击唤起支付宝</button>
+                </a>
+            </div>
+        </div>
+
         <div slot="success">已创建订单，请在手机支付宝上完成付款</div>
 
         <div slot="step">

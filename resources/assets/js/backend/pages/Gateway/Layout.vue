@@ -58,16 +58,14 @@
                                         <div align="center">
                                             <span id="qrcode">
                                                 <span id="qrcode_img">
-                                                    <qrcode v-if="urlIsImg"
-                                                            :value="data.qrcode_url"
-                                                            :options="{
+                                                    <slot name="qrcode">
+                                                        <qrcode :value="data.qrcode_url"
+                                                                :options="{
                                                                 width: 168,
                                                                 margin: 0
                                                             }">
-                                                    </qrcode>
-                                                    <img v-else
-                                                         width="168"
-                                                         :src="data.qrcode_url">
+                                                        </qrcode>
+                                                    </slot>
                                                 </span>
                                             </span>
                                             <span id="queren"></span>
@@ -78,6 +76,7 @@
 
                                         </div>
                                     </div>
+                                    <slot name="redirect_btn"></slot>
                                     <div id="qrPayScanSuccess"
                                          class="mi-notice mi-notice-success  qrcode-notice fn-hide"
                                          style="display: none;margin-top: 5px;">
@@ -125,7 +124,7 @@
 <script>
     export default {
         api: 'alipay',
-        props: ['isActive', 'data', 'urlIsImg'],
+        props: ['isActive', 'data'],
         components: {
             qrcode: require('@chenfengyuan/vue-qrcode').default
         },
