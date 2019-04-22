@@ -82,12 +82,33 @@
                         </div>
                         <div class="selectChangeBox">
                             <div class="selectChangeList1">
-                                <div class="form-group row" v-for="connKey in connKeys" :key="connKey">
+                                <div class="form-group row" v-for="(connKey, index) in connKeys" :key="connKey">
                                     <label class="col-md-3 control-label required">
-                                        {{ $parent.config.PaymentConnConfigSummary[connKey]}}
+                                        {{
+                                        typeof $parent.config.PaymentConnConfigSummary[connKey] == 'object'
+                                        ? $parent.config.PaymentConnConfigSummary[connKey][data.vendor]
+                                        : $parent.config.PaymentConnConfigSummary[connKey]
+                                        }}
                                         <b>*</b></label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" v-model="data.conn_config[connKey]">
+                                        <span v-if="$parent.config.PaymentConnConfig.specialInput()[connKey] == 'qrcode'">
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="inputGroupFile02"
+                                                           @change="imgHandler($event, connKey, connKeys[index+1])">
+                                                    <label class="custom-file-label" for="inputGroupFile02"></label>
+                                                </div>
+                                            </div>
+                                            <div class="tips text-danger">注: 请将设定好的二维码图片，撷取上传解析</div>
+                                            <input type="text" class="form-control"
+                                                   v-if="data.conn_config[connKey]"
+                                                   v-model="data.conn_config[connKey]">
+                                        </span>
+                                        <span v-else>
+                                            <input type="text" class="form-control"
+                                                   :disabled="$parent.config.PaymentConnConfig.specialInput()[connKey] == 'text-readonly'"
+                                                   v-model="data.conn_config[connKey]">
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +157,7 @@
                     this.createSuccess()
                     $(this.$refs.modal).modal('hide')
                 })
-            }
+            },
         },
         mounted() {
             this.$root.$on('paymentManageCreate.show', _ => {

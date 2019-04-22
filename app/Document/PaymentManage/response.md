@@ -121,3 +121,19 @@
     "data": true
 }
 ```
+
+> 金流來源清單
+
+```
+{
+    "code": 200,
+    "data": [
+        "aliPay",
+        "weChatPay",
+        "unionPay",
+        "qqPay",
+        "aliPayRedEnvelop",
+        "aliPayPersonalBankAccount"
+    ]
+}
+```

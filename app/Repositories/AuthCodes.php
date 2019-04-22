@@ -358,7 +358,6 @@ class AuthCodes
         $result = null;
         try {
             $result = Authcode::query()
-                ->with('paymentWindow')
                 ->where('trade_seq', $tradeSeq)
                 ->first();
         } catch (\Exception $e) {

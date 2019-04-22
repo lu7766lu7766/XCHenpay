@@ -11,4 +11,5 @@ namespace App\Constants\Payment;
 class PaymentConstants
 {
     const ALI_PAY_BANK_CARD_CODE = 201;
+    const ALI_PAY_RED_ENVELOPE = 205;
 }

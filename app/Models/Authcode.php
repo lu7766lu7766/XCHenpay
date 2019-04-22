@@ -6,7 +6,9 @@ use App\Constants\TradeTypesConstants;
 use App\Pivot\BankCardGateway;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -37,6 +39,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property float real_paid_amount
  * @property PaymentWindow|null paymentWindow
  * @property float rand_fee
+ * @property Collection|UserPaymentAccount[] authCodesPaymentAccount
  */
 class Authcode extends Model
 {
@@ -109,7 +112,7 @@ class Authcode extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function bankCardAccount()
     {
@@ -125,6 +128,9 @@ class Authcode extends Model
         return $this->hasOne(PaymentWindow::class, 'authcode_id');
     }
 
+    /**
+     * @return BelongsToMany
+     */
     public function authCodesPaymentAccount()
     {
         return $this->belongsToMany(

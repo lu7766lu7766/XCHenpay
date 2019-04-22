@@ -11,8 +11,10 @@ namespace App\Http\Requests\SystemSetting;
 use App\Constants\PaymentManage\PaymentManageDepositTypeConstants;
 use App\Constants\PaymentManage\PaymentManageStatusConstants;
 use App\Constants\PaymentManage\PaymentManageVendorsCodeConstants;
+use App\Factory\Payment\Manage\ConnConfigRulesFactory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use XC\Independent\Kit\Support\Scalar\ArrayMaster;
 
 class PaymentManageUpdateRequest extends FormRequest
 {
@@ -89,7 +91,7 @@ class PaymentManageUpdateRequest extends FormRequest
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getVendor()
     {
@@ -109,7 +111,7 @@ class PaymentManageUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'id'            => 'required|integer',
             'name'          => 'required|string|between:1,20',
             'status'        => 'sometimes|required|string|' . Rule::in(PaymentManageStatusConstants::enum()),
@@ -120,7 +122,10 @@ class PaymentManageUpdateRequest extends FormRequest
             'withdraw'      => 'required|integer|digits_between:1,8',
             'vendor'        => 'required|string|' . Rule::in(PaymentManageVendorsCodeConstants::enum()),
             'conn_config'   => 'required|array',
-            'conn_config.*' => 'required|string',
         ];
+        $configRule = ConnConfigRulesFactory::make($this->getVendor())->rules();
+        $rules = ArrayMaster::arrayMerge($rules, $configRule);
+
+        return $rules;
     }
 }

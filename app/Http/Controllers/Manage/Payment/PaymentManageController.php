@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers\Manage\Payment;
 
+use App\Constants\PaymentManage\PaymentManageVendorsCodeConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SystemSetting\PaymentManageAddRequest;
 use App\Http\Requests\SystemSetting\PaymentManageDataListRequest;
@@ -79,5 +80,14 @@ class PaymentManageController extends Controller
     public function del(PaymentManageDelRequest $request)
     {
         return ['data' => PaymentManageService::getInstance()->del($request)];
+    }
+
+    /**
+     * 金流來源
+     * @return array
+     */
+    public function source()
+    {
+        return PaymentManageVendorsCodeConstants::enum();
     }
 }

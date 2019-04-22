@@ -7,14 +7,16 @@
                         <div class="search-select">
                             <select class="form-control" v-model="searchData.status">
                                 <option value="">状态</option>
-                                <option v-for="(name, val) in options.status" :key="val" :value="val">{{ name }}</option>
+                                <option v-for="(name, val) in options.status" :key="val" :value="val">{{ name }}
+                                </option>
                             </select>
                         </div>
                         <div class="search-input">
-                            <input type="text"  class="form-control" placeholder="关键字" v-model="searchData.keyword">
+                            <input type="text" class="form-control" placeholder="关键字" v-model="searchData.keyword">
                         </div>
                         <div>
-                            <button type="button" class="btn btn-search" data-toggle="button" @click="search">搜寻</button>
+                            <button type="button" class="btn btn-search" data-toggle="button" @click="search">搜寻
+                            </button>
                         </div>
                     </div>
                     <!-- search-box end -->
@@ -110,6 +112,7 @@
             config: {
                 PaymentManage,
                 PaymentManageDepositType,
+                PaymentConnConfig,
                 PaymentConnConfigSummary: PaymentConnConfig.summaryMap(),
             }
         }),

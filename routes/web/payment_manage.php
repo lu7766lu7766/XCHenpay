@@ -16,6 +16,7 @@ Route::group([
     Route::get('', 'PaymentManageController@indexView')->name('view');
     Route::group(['middleware' => ['json_api']], function () {
         Route::post('dataList', 'PaymentManageController@dataList')->name('dataList');
+        Route::get('source', 'PaymentManageController@source')->name('source');
         Route::post('dataTotal', 'PaymentManageController@dataTotal')->name('dataTotal');
         Route::post('detail', 'PaymentManageController@detail')->name('detail');
         Route::post('add', 'PaymentManageController@add')->name('add');

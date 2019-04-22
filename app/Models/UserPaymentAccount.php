@@ -11,6 +11,20 @@ namespace App\Models;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class UserPaymentAccount
+ * @package App\Models
+ * @property string name
+ * @property string status
+ * @property string vendor
+ * @property int user_id
+ * @property int max_deposit
+ * @property int min_deposit
+ * @property int total_deposit
+ * @property int withdraw
+ * @property string deposit_type
+ * @property array conn_config
+ */
 class UserPaymentAccount extends Model
 {
     /**
