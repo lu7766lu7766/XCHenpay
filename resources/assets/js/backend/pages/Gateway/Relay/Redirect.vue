@@ -10,6 +10,9 @@
 <script>
     export default {
         props: ['data', 'expireTime', 'isExpire'],
+        components: {
+            layout: require('../Layout')
+        },
         computed: {
             isActive() {
                 return !this.isExpire && this.data.amount
