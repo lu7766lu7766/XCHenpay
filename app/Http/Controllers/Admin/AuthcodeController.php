@@ -260,7 +260,7 @@ class AuthcodeController extends Controller
     public function bankCardAccountInfo($id)
     {
         return AuthCodeService::getInstance(Sentinel::getUser())->bankCardAccountInfo(
-            AuthCodeBankCardAccountInfoRequest::getHandle(['id' => $id])
+            AuthCodeBankCardAccountInfoRequest::getHandle(['bank_card_id' => $id])
         );
     }
 }
