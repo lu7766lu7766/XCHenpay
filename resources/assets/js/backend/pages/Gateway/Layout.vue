@@ -46,14 +46,9 @@
                                  v-if="isActive">
                                 <!-- 扫码区域 -->
                                 <div data-role="qrPayArea" class="qrcode-integration qrcode-area" id="J_qrPayArea">
-                                    <div class="qrcode-header">
-                                        <div class="ft-center">
-                                            扫一扫付款（元）
-                                        </div>
-                                        <div class="ft-center qrcode-header-money">
-                                            {{ data.amount | numFormat('0,0.00') }}
-                                        </div>
-                                    </div>
+
+                                    <slot name="qrcode-header"></slot>
+                                    
                                     <div class="qrcode-img-wrapper" id="payok">
                                         <div align="center">
                                             <span id="qrcode">

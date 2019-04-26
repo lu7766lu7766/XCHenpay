@@ -3826,6 +3826,7 @@ html body .fn-mt20 {
 .qrcode-area {
     margin: 0 auto;
     position: relative;
+    padding-top: 45px;
 }
 
 .qrcode-integration .qrcode-header {
@@ -4806,7 +4807,7 @@ body {
     }
 
     .qrguide-area {
-        top: 30px;
+        top: -38px;
         left: 75%;
         width: 114px;
     }
