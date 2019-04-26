@@ -7,5 +7,5 @@
 @stop
 
 @section('content')
-    <alipay trade_seq="{{ Request::get('trade_seq') }}"></alipay>
+    <to-bank-card trade_seq="{{ Request::get('trade_seq') }}"></to-bank-card>
 @stop

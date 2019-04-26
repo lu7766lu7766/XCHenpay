@@ -23,8 +23,3 @@
     }
 </script>
 
-<style>
-    .alipay-logo {
-        display: none;
-    }
-</style>

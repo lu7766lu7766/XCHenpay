@@ -408,7 +408,7 @@ export default {
     },
     /** 行動支付轉銀行卡 */
     gateway: {
-        alipay: {
+        toBankCard: {
             data: {
                 uri: '/pay/gateway/to_bank_card/data',
                 method: 'get'

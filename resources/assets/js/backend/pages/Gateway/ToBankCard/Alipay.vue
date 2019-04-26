@@ -1,5 +1,5 @@
 <template>
-    <layout :isActive="isActive" :data="data">
+    <layout :isActive="isActive" :data="data" v-if="!isForwardDirectly">
         <div slot="help">
             <a href="https://help.alipay.com/lab/help_detail.htm?help_id=258086" class="topbar-link-last"
                target="_blank" seed="goToHelp">常见问题</a>
@@ -18,8 +18,8 @@
 
         <div slot="redirect_btn" v-if="isMobileOrTablet()">
             <div class="text-center">
-                <a :href="data.qrcode_url">
-                    <button class="btn-open" type="button">点击唤起支付宝</button>
+                <a :href="'/pay/gateway/startup/taobo?trade_seq=' + tradeSeq">
+                    <button class="btn-open" type="button">点击唤起淘宝</button>
                 </a>
             </div>
         </div>
@@ -55,33 +55,23 @@
 </template>
 
 <script>
-    import Mixins from './mixins'
-
     export default {
-        api: 'alipay',
-        mixins: [Mixins],
+        props: ['data', 'expireTime', 'isExpire', 'tradeSeq'],
         components: {
-            layout: require('./Layout')
+            layout: require('../Layout')
         },
-        data: () => ({
-            isActive: false,
-        }),
-        async mounted() {
-            try {
-                var res = await this.$callApi(this.apiKey + ':data', {
-                    trade_seq: this.trade_seq
-                }, null, {isShowAlert: false, throwRes: true})
-                this.isActive = true
-                this.data = res.data
-                this.counter()
-                this.timer = setInterval(this.counter, 1000)
-            } catch (e) {
-                this.data = e.data
+        computed: {
+            isActive() {
+                return !this.isExpire && this.data.amount
+            },
+            isForwardDirectly() {
+                return location.pathname.indexOf('/pay/gateway/to_bank_card') > -1
             }
-            this.showView()
         },
-        destroyed() {
-            clearInterval(this.timer)
+        mounted() {
+            if (this.isActive && this.isForwardDirectly) {
+                location.href = this.data.qrcode_url
+            }
         }
     }
 </script>

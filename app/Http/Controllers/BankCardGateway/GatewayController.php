@@ -19,7 +19,7 @@ class GatewayController extends Controller
      */
     public function indexView()
     {
-        return view('gateway.alipay');
+        return view('gateway.to_bank_card');
     }
 
     /**
@@ -42,7 +42,6 @@ class GatewayController extends Controller
         if (!is_null($entrance)) {
             return \Redirect::to($entrance);
         }
-
         return;
     }
 }

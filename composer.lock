@@ -1,23 +1,23 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "0c6e3caa087eff988af62652111fb3e1",
     "packages": [
         {
             "name": "3rdpay/xc-alipay",
-            "version": "1.0.5",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "git@github.com:3rdpay/xc-alipay.git",
-                "reference": "167505aae7771db172b9d77276e8ed7da6ddbe08"
+                "reference": "36326b054bcd6b9234dbd43390d402e45224e424"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/3rdpay/xc-alipay/zipball/167505aae7771db172b9d77276e8ed7da6ddbe08",
-                "reference": "167505aae7771db172b9d77276e8ed7da6ddbe08",
+                "url": "https://api.github.com/repos/3rdpay/xc-alipay/zipball/36326b054bcd6b9234dbd43390d402e45224e424",
+                "reference": "36326b054bcd6b9234dbd43390d402e45224e424",
                 "shasum": ""
             },
             "require": {
@@ -46,10 +46,10 @@
             ],
             "description": "支付寶",
             "support": {
-                "source": "https://github.com/3rdpay/xc-alipay/tree/1.0.5",
+                "source": "https://github.com/3rdpay/xc-alipay/tree/1.0.8",
                 "issues": "https://github.com/3rdpay/xc-alipay/issues"
             },
-            "time": "2019-03-14T07:37:28+00:00"
+            "time": "2019-04-26T06:29:17+00:00"
         },
         {
             "name": "anahkiasen/underscore-php",

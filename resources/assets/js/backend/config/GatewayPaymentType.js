@@ -1,5 +1,9 @@
 class GatewayPaymentType {
     static Hook = {
+        '201': {
+            component: 'Alipay',
+            title: '在线支付 - 支付宝 - 网上支付 安全快速！'
+        },
         '203': {
             component: 'WeChatPay',
             title: '在线支付 - 微信支付 - 网上支付 安全快速！'

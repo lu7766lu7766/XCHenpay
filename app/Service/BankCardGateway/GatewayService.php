@@ -39,7 +39,8 @@ class GatewayService
             'order_number' => $orderInfo->trade_service_id,
             'amount'       => $orderInfo->amount,
             'expired_time' => $orderInfo->created_at->addMinute(2)->toDateTimeString(),
-            'qrcode_url'   => $bankCard->gatewayUri->uri
+            'qrcode_url'   => $bankCard->gatewayUri->uri,
+            'payment_type' => $orderInfo->payment_type,
         ];
 
         return $result;
