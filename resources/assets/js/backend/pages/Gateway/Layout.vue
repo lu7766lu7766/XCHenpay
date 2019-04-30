@@ -41,36 +41,39 @@
                         <div data-module="excashier/login/2015.08.02/loginPwdMemberT" id="J_loginPwdMemberTModule"
                              class="cashiser-switch-wrapper fn-clear">
                             <!-- 扫码支付页面 -->
-                            <div class="cashier-center-view view-qrcode fn-left" id="J_view_qr"
+                            <div class="cashier-center-view view-qrcode fn-left my-qrcode-style" id="J_view_qr"
                                  style="postion:relative;left:40px;"
                                  v-if="isActive">
                                 <!-- 扫码区域 -->
                                 <div data-role="qrPayArea" class="qrcode-integration qrcode-area" id="J_qrPayArea">
 
                                     <slot name="qrcode-header"></slot>
-                                    
-                                    <div class="qrcode-img-wrapper" id="payok">
-                                        <div align="center">
-                                            <span id="qrcode">
-                                                <span id="qrcode_img">
-                                                    <slot name="qrcode">
+
+                                    <slot name="qrcode-body">
+                                        <div class="qrcode-img-wrapper" id="payok">
+                                            <div align="center">
+                                                <span id="qrcode">
+                                                    <span id="qrcode_img">
+
                                                         <qrcode :value="data.qrcode_url"
                                                                 :options="{
                                                                 width: 168,
                                                                 margin: 0
                                                             }">
                                                         </qrcode>
-                                                    </slot>
+    
+                                                    </span>
                                                 </span>
-                                            </span>
-                                            <span id="queren"></span>
-                                        </div>
-                                        <div class="qrcode-img-explain fn-clear">
+                                                <span id="queren"></span>
+                                            </div>
+                                            <div class="qrcode-img-explain fn-clear">
 
-                                            <slot name="expire"></slot>
+                                                <slot name="expire"></slot>
 
+                                            </div>
                                         </div>
-                                    </div>
+                                    </slot>
+
                                     <slot name="redirect_btn"></slot>
                                     <div id="qrPayScanSuccess"
                                          class="mi-notice mi-notice-success  qrcode-notice fn-hide"

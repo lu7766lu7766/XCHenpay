@@ -43,6 +43,9 @@ export default {
                         case 'integer':
                             proccessValidate(realVar !== parseInt(realVar, 10), rule.message)
                             break
+                        case 'len':
+                            proccessValidate(('' + realVar).length !== rule.value, rule.message)
+                            break
                         case 'min':
                             if (typeof realVar == 'number' || isNum(realVar)) {
                                 if (typeof rule.value == 'string') {

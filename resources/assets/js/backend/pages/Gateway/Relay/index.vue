@@ -19,6 +19,7 @@
             NewBank: () => import('./NewBank'),
             HTian: () => import('./HTian'),
             Redirect: () => import('./Redirect'),
+            Unionpay: () => import('./Unionpay'),
             None: require('../Common/None')
         }
     }

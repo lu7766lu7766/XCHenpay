@@ -6,9 +6,21 @@
             <span class="topbar-link-first">你好，欢迎使用支付宝付款！</span>
         </div>
 
-        <div slot="qrcode">
-            <img width="168"
-                 :src="data.qrcode_url"/>
+        <div class="qrcode-img-wrapper" id="payok" slot="qrcode-body">
+            <div align="center">
+                <span id="qrcode">
+                    <span id="qrcode_img">
+                        <img width="168"
+                             :src="data.qrcode_url"/>
+                    </span>
+                </span>
+                <span id="queren"></span>
+            </div>
+            <div class="qrcode-img-explain fn-clear">
+
+                <slot name="expire"></slot>
+
+            </div>
         </div>
 
         <div slot="expire">

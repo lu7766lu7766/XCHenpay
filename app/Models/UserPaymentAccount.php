@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int withdraw
  * @property string deposit_type
  * @property array conn_config
+ * @property AuthcodesPaymentAccount authcodesPaymentAccount
  */
 class UserPaymentAccount extends Model
 {

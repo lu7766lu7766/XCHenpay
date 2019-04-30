@@ -42,8 +42,8 @@ class RelayService
         }
         /** @var UserPaymentAccount $paymentAccount */
         if ($orderInfo->payment_type == PaymentConstants::ALI_PAY_RED_ENVELOPE &&
-            ($orderInfo->authCodesPaymentAccount->isNotEmpty()) &&
-            $paymentAccount = $orderInfo->authCodesPaymentAccount->first()) {
+            ($orderInfo->userPaymentAccount->isNotEmpty()) &&
+            $paymentAccount = $orderInfo->userPaymentAccount->first()) {
             if (isset($paymentAccount->conn_config['ali_pay_account']) && isset($paymentAccount->conn_config['pid'])) {
                 $result['friend_url'] = AppTool::getAddFriendUrl(
                     $paymentAccount->conn_config['pid'],

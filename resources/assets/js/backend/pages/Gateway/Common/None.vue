@@ -23,3 +23,6 @@
     }
 </script>
 
+<style>
+    @import '/gateway/alipay/front-old.css';
+</style>

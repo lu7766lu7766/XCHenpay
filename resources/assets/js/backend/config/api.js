@@ -418,6 +418,10 @@ export default {
             data: {
                 uri: '/pay/gateway/relay/data',
                 method: 'get'
+            },
+            extraInfo: {
+                uri: '/pay/gateway/extra/info',
+                method: 'get'
             }
         }
     },

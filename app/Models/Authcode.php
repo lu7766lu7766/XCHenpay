@@ -39,7 +39,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property float real_paid_amount
  * @property PaymentWindow|null paymentWindow
  * @property float rand_fee
- * @property Collection|UserPaymentAccount[] authCodesPaymentAccount
+ * @property Collection|UserPaymentAccount[] userPaymentAccount
+ * @property AuthcodesPaymentAccount authcodesPaymentAccount
  */
 class Authcode extends Model
 {
@@ -131,14 +132,17 @@ class Authcode extends Model
     /**
      * @return BelongsToMany
      */
-    public function authCodesPaymentAccount()
+    public function userPaymentAccount()
     {
         return $this->belongsToMany(
             UserPaymentAccount::class,
             'authcodes_payment_account',
             'authcodes_id',
             'payment_account_id'
-        );
+        )
+            ->using(AuthcodesPaymentAccount::class)
+            ->withPivot(['extra'])
+            ->as('authcodesPaymentAccount');
     }
 
     /**

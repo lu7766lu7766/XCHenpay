@@ -20,5 +20,8 @@ Route::group(
             Route::get('/relay', 'RelayController@view');
             Route::get('/relay/data', 'RelayController@data')->middleware('json_api');
         });
+        Route::group(['namespace' => 'Order'], function () {
+            Route::get('/extra/info', 'ExtraInfoController@add')->middleware('json_api');
+        });
     }
 );

@@ -366,4 +366,23 @@ class AuthCodes
 
         return $result;
     }
+
+    /**
+     * @param string $tradeSeq
+     * @return Authcode|null
+     */
+    public function findAuthcodesPaymentAccount(string $tradeSeq)
+    {
+        $result = null;
+        try {
+            $result = Authcode::query()
+                ->with('userPaymentAccount')
+                ->where('trade_seq', $tradeSeq)
+                ->first();
+        } catch (\Exception $e) {
+            \Log::log('debug', $e->getMessage());
+        }
+
+        return $result;
+    }
 }
