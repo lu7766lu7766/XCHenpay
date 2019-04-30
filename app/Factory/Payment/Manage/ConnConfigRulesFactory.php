@@ -43,7 +43,8 @@ class ConnConfigRulesFactory
             PaymentManageVendorsCodeConstants::ALI_PAY_RED_ENVELOPE          => AliPayRedEnvelope::class,
             PaymentManageVendorsCodeConstants::ALI_APY_PERSONAL_BANK_ACCOUNT => AliPayPersonalBankAccount::class,
             PaymentManageVendorsCodeConstants::WE_CHAT_PAYEE_QR_CODE         => WeChatPayeeQRCode::class,
-            PaymentManageVendorsCodeConstants::QUICK_PASS_PAYEE_QR_CODE      => QuickPassPayeeQRCode::class
+            PaymentManageVendorsCodeConstants::QUICK_PASS_PAYEE_QR_CODE      => QuickPassPayeeQRCode::class,
+            PaymentManageVendorsCodeConstants::ALI_PAY_PERSONAL_PAYEE        => AliPayPersonalPayee::class,
         ];
     }
 }

@@ -107,7 +107,7 @@
 >conn_config_payload
 
 | 代碼 |  參數 |  類型 |  說明 |
-|-----|------|------|
+|-----|------|------|------|
 | aliPay   |  app_id  |    string  |      應用ID  |
 | aliPay   |  app_public_key  |    string  |      公開鑰匙  |
 | aliPay   |  private_key  |    string  |      私鑰  |
@@ -131,4 +131,6 @@
 | weChatPayeeQRCode   |  qr_code_url_time  |    string  |      qrCode解析後時間  |
 | QuickPassPayeeQRCode   |  account  |    string  |      雲閃付帳號  | 
 | QuickPassPayeeQRCode   |  qr_code_url  |    string  |      qrCode解析後的網址  |
-| QuickPassPayeeQRCode   |  qr_code_url_time  |    string  |      qrCode解析後時間  |  
+| QuickPassPayeeQRCode   |  qr_code_url_time  |    string  |      qrCode解析後時間  |
+| aliPayPersonPayee   |  ali_pay_account  |    string  |      支付寶帳號  |  
+| aliPayPersonPayee   |  pid  |    string  |      開發者ID  |    

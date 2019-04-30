@@ -8,7 +8,9 @@
 
 namespace App\Constants\PaymentManage;
 
-class PaymentManageVendorsCodeConstants
+use XC\Independent\Kit\Constants\BaseConstants;
+
+class PaymentManageVendorsCodeConstants extends BaseConstants
 {
     //支付寶
     const ALI_PAY = 'aliPay';
@@ -20,17 +22,19 @@ class PaymentManageVendorsCodeConstants
     const QQ_PAY = 'qqPay';
     //支付寶紅包
     const ALI_PAY_RED_ENVELOPE = 'aliPayRedEnvelop';
-    //支付寶個人帳戶
+    //支付寶個人帳戶固碼收款
     const ALI_APY_PERSONAL_BANK_ACCOUNT = 'aliPayPersonalBankAccount';
     //微信支付固碼收款
     const WE_CHAT_PAYEE_QR_CODE = 'weChatPayeeQRCode';
     //雲閃付固碼收款
     const QUICK_PASS_PAYEE_QR_CODE = 'QuickPassPayeeQRCode';
+    //支付寶轉個人收款
+    const ALI_PAY_PERSONAL_PAYEE = 'aliPayPersonPayee';
 
     /**
      * @return array
      */
-    public static function enum()
+    public static function enum(): array
     {
         return [
             self::ALI_PAY,
@@ -40,7 +44,8 @@ class PaymentManageVendorsCodeConstants
             self::ALI_PAY_RED_ENVELOPE,
             self::ALI_APY_PERSONAL_BANK_ACCOUNT,
             self::WE_CHAT_PAYEE_QR_CODE,
-            self::QUICK_PASS_PAYEE_QR_CODE
+            self::QUICK_PASS_PAYEE_QR_CODE,
+            self::ALI_PAY_PERSONAL_PAYEE,
         ];
     }
 }

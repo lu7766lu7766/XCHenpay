@@ -17,6 +17,8 @@ class PaymentManage {
 
     static QUICK_PASS_PAYEE_QRCODE = 'QuickPassPayeeQRCode'
 
+    static ALI_PAY_PERSON_PAYEE = 'aliPayPersonPayee'
+
     static ALI_PAY_TXT = '支付宝'
 
     static WE_CHAT_PAY_TXT = '微信'
@@ -33,6 +35,8 @@ class PaymentManage {
 
     static QUICK_PASS_PAYEE_QRCODE_TXT = '云闪付收款(固码)'
 
+    static ALI_PAY_PERSON_PAYEE_TXT = '支付宝转支付宝'
+
     static enum() {
         return [
             this.ALI_PAY,
@@ -42,7 +46,8 @@ class PaymentManage {
             this.ALI_PAY_RED_ENVELOP,
             this.ALI_PAY_PERSONAL_BANK_ACCOUNT,
             this.WE_CHAT_PAYEE_QRCODE,
-            this.QUICK_PASS_PAYEE_QRCODE
+            this.QUICK_PASS_PAYEE_QRCODE,
+            this.ALI_PAY_PERSON_PAYEE
         ]
     }
 
@@ -55,7 +60,8 @@ class PaymentManage {
             [this.ALI_PAY_RED_ENVELOP]: this.ALI_PAY_RED_ENVELOP_TXT,
             [this.ALI_PAY_PERSONAL_BANK_ACCOUNT]: this.ALI_PAY_PERSONAL_BANK_ACCOUNT_TXT,
             [this.WE_CHAT_PAYEE_QRCODE]: this.WE_CHAT_PAYEE_QRCODE_TXT,
-            [this.QUICK_PASS_PAYEE_QRCODE]: this.QUICK_PASS_PAYEE_QRCODE_TXT
+            [this.QUICK_PASS_PAYEE_QRCODE]: this.QUICK_PASS_PAYEE_QRCODE_TXT,
+            [this.ALI_PAY_PERSON_PAYEE]: this.ALI_PAY_PERSON_PAYEE_TXT
         }
     }
 
@@ -84,6 +90,7 @@ class PaymentManage {
                 res[PaymentConConfig.CERT_PATH] = true
                 break
             case this.ALI_PAY_RED_ENVELOP:
+            case this.ALI_PAY_PERSON_PAYEE:
                 res[PaymentConConfig.ALI_PAY_ACCOUNT] = true
                 res[PaymentConConfig.PID] = true
                 break
