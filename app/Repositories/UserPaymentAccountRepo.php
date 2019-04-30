@@ -8,8 +8,10 @@
 
 namespace App\Repositories;
 
+use App\Constants\PaymentManage\PaymentManageStatusConstants;
 use App\Models\UserPaymentAccount;
 use Illuminate\Support\Collection;
+use XC\Independent\Kit\Support\Scalar\ArrayMaster;
 
 class UserPaymentAccountRepo
 {
@@ -108,5 +110,23 @@ class UserPaymentAccountRepo
             ->where('id', $id)
             ->whereDoesntHave('authcodes')
             ->exists();
+    }
+
+    /**
+     * 取得可用金流帳號
+     * @param int|null $userId
+     * @param array $vendors
+     * @return UserPaymentAccount[]|Collection
+     */
+    public function getAccount(int $userId = null, array $vendors = [])
+    {
+        $builder = UserPaymentAccount::query()
+            ->where('status', PaymentManageStatusConstants::ON);
+        is_null($userId) ? $builder->whereNull('user_id') : $builder->where('user_id', $userId);
+        if (ArrayMaster::isList($vendors)) {
+            $builder->whereIn('vendor', $vendors);
+        }
+
+        return $builder->get();
     }
 }

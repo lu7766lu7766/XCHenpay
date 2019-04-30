@@ -24,6 +24,7 @@ use App\Policies\ReportSearchPolicy;
 use App\Policies\ReportStatisticalPolicy;
 use App\Policies\TrashedMerchantsPolicy;
 use App\Policies\UserManagePolicy;
+use App\Policies\UserPaymentAccountPolicy;
 use App\Policies\WhiteListPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -58,7 +59,8 @@ class AuthServiceProvider extends ServiceProvider
         UserManagePolicy::class       => UserManagePolicy::class,
         'LendListPolicy'              => LendListPolicy::class,
         'ReportSearchPolicy'          => ReportSearchPolicy::class,
-        'ReportStatisticalPolicy'     => ReportStatisticalPolicy::class
+        'ReportStatisticalPolicy'     => ReportStatisticalPolicy::class,
+        'UserPaymentAccountPolicy'    => UserPaymentAccountPolicy::class
     ];
 
     /**
