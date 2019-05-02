@@ -118,7 +118,7 @@
         }),
         methods: {
             onGetTotal(res) {
-                this.paginate.total = res.data.total
+                this.paginate.total = res.data
             },
             onGetList(res) {
                 this.datas = res.data
