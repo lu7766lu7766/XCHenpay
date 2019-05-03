@@ -12,6 +12,10 @@ class GatewayPaymentType {
             component: 'NewBank',
             title: '在线支付 - 支付宝 - 网上支付 安全快速！'
         },
+        '50': {
+            component: 'Redirect',
+            title: '在线支付 - 微信固码 - 网上支付 安全快速！'
+        },
         '201': {
             component: 'Alipay',
             title: '在线支付 - 支付宝 - 网上支付 安全快速！'
