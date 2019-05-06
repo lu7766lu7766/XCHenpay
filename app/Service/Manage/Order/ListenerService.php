@@ -9,8 +9,10 @@
 namespace App\Service\Manage\Order;
 
 use App\Http\Requests\Listener\BankCardOrderRequest;
+use App\Http\Requests\Listener\IsCallBackRequest;
 use App\Repositories\Manage\Order\ListenerRepo;
 use App\Traits\Singleton;
+use Carbon\Carbon;
 
 /**
  * Class ListenerService
@@ -26,6 +28,34 @@ class ListenerService
      */
     public function orderOfBankCard(BankCardOrderRequest $request)
     {
-        return app(ListenerRepo::class)->getOrderOfBankCard($request->getId(), $request->getPayState());
+        $time = Carbon::now();
+        $end = $time->toDateTimeString();
+        $start = $time->subMinute(config('manageorderlistener.search_time'))->startOfMinute()->toDateTimeString();
+
+        return app(ListenerRepo::class)->getOrderOfBankCard(
+            $request->getId(),
+            $start,
+            $end,
+            $request->getPayState()
+        );
+    }
+
+    /**
+     * @param IsCallBackRequest $request
+     * @return bool
+     */
+    public function isCallBack(IsCallBackRequest $request)
+    {
+        $time = new Carbon($request->getDate());
+        $end = $time->toDateTimeString();
+        $start = $time->subMinute(config('manageorderlistener.compare_time'))->startOfMinute()->toDateTimeString();
+        $result = app(ListenerRepo::class)->getOrderByCardNoAmountDate(
+            $request->getCardNo(),
+            $request->getAmount(),
+            $start,
+            $end
+        )->isNotEmpty();
+
+        return $result;
     }
 }

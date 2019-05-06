@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Manage\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Listener\BankCardOrderRequest;
+use App\Http\Requests\Listener\IsCallBackRequest;
 use App\Service\Manage\Order\ListenerService;
 
 /**
@@ -25,5 +26,15 @@ class ListenerController extends Controller
     public function order(BankCardOrderRequest $request)
     {
         return ListenerService::getInstance()->orderOfBankCard($request);
+    }
+
+    /**
+     * 是否已經回調
+     * @param IsCallBackRequest $request
+     * @return array
+     */
+    public function isCallBack(IsCallBackRequest $request)
+    {
+        return ['data' => ListenerService::getInstance()->isCallBack($request)];
     }
 }
