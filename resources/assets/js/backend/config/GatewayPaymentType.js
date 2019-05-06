@@ -35,6 +35,10 @@ class GatewayPaymentType {
         '208': {
             component: 'Unionpay',
             title: '在线支付 - 云闪付 - 网上支付 安全快速！'
+        },
+        '209': {
+            component: 'AlipayForwardAlipay',
+            title: '在线支付 - 支付宝 - 网上支付 安全快速！'
         }
     }
 }
