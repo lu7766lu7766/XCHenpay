@@ -16,6 +16,18 @@ class GatewayPaymentType {
             component: 'Redirect',
             title: '在线支付 - 微信固码 - 网上支付 安全快速！'
         },
+        '52': {
+            component: 'Redirect',
+            title: '在线支付 - 農信易掃 - 网上支付 安全快速！'
+        },
+        '53': {
+            component: 'Redirect',
+            title: '在线支付 - 農信易掃 - 网上支付 安全快速！'
+        },
+        '54': {
+            component: 'Redirect',
+            title: '在线支付 - 農信易掃 - 网上支付 安全快速！'
+        },
         '55': {
             component: 'Redirect',
             title: '在线支付 - 蚕宝宝支付 - 网上支付 安全快速！'
