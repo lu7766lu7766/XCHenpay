@@ -5,5 +5,5 @@
 @stop
 
 @section('content')
-    <relay trade_seq="{{ Request::get('trade_seq') }}"></relay>
+    <relay/>
 @stop

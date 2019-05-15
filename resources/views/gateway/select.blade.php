@@ -1,5 +1,5 @@
 @extends('gateway.default')
 
 @section('content')
-    <startup-to-bank-card/>
+    <startup-select/>
 @stop

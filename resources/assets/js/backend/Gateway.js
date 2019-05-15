@@ -7,7 +7,8 @@ if ($gateway) {
         api: 'gateway',
         components: {
             /** 行動支付轉銀行卡 */
-            ToBankCard: () => import('./pages/Gateway/ToBankCard'),
+            StartupSelect: () => import('./pages/Gateway/Select'),
+            StartupToBankCard: () => import('./pages/Gateway/Select/ToBankCard'),
             /** 行動掃碼 */
             Relay: () => import('./pages/Gateway/Relay'),
         }

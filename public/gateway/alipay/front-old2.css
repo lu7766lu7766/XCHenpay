@@ -331,7 +331,19 @@ fieldset {
   background-color: #00aaee;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  width: 182px;
+  border-radius: 6px;
+}
+.btn-open2{
+  background-color: #fe7513;
+  border: none;
+  color: white;
+  padding: 10px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -2337,7 +2349,7 @@ div.mi-fm-item-tip {
 .orderDetail-base {
     background-color: #EFF4FF;
     border-bottom: 3px solid #A3B5DB;
-    padding: 16px 20px;
+    padding: 5px 20px;
     position: relative
 }
 
@@ -3828,7 +3840,9 @@ html body .fn-mt20 {
 .qrcode-area {
     margin: 0 auto;
     position: relative;
-    padding-top: 45px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    text-align: center;
 }
 
 .qrcode-integration .qrcode-header {
@@ -3937,9 +3951,10 @@ a.mi-button-lwhite .mi-button-text {
 .qrcode-downloadApp:hover,
 .qrcode-downloadApp:active,
 .qrcode-explain a.qrcode-downloadApp:hover {
-    font-size: 12px;
+    font-size: 13px;
     color: #a6a6a6;
     text-decoration: underline;
+    display: block;
 }
 
 .area-split {
@@ -4694,17 +4709,31 @@ body {
     width: 100%;
     height: 100%;
 }
-
-.openalipay a {
+.aplogo, .tblogo {
+    width: 80px;
+    padding: 8px;
+    padding-bottom: 3px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border: 1px solid #ececec;
+    border-radius: 18px;
+    box-sizing: content-box;
+}
+.aplogo img, .tblogo img {
+    width:100%;
+    height: auto;
+}
+.openalipay {
     display: block;
-    width: 182px;
-    font-size: 15px;
+    width: 180px;
+    font-size: 13px;
     margin: 10px auto;
-    padding: 10px;
     box-sizing: border-box;
     border-radius: 6px;
-    text-align: left;
-    border: 1px solid #dbdcdb;
+    text-align: center;
+    color: red;
+}
+.openalipay a {
     color: red;
 }
 .commodity-message-row t {

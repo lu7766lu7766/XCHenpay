@@ -1,8 +1,8 @@
 import ReqMixins from 'mixins/request'
 import GatewayPaymentType from 'config/GatewayPaymentType'
+import {getUrlParameter} from 'lib/myLib'
 
 export default {
-    props: ['trade_seq'],
     mixins: [ReqMixins],
     data: () => ({
         data: {},
@@ -62,6 +62,9 @@ export default {
         },
         isNone() {
             return this.paymentHook.component === 'None'
+        },
+        trade_seq() {
+            return getUrlParameter('trade_seq')
         }
     },
     async mounted() {

@@ -30,4 +30,18 @@ class StartUpService
 
         return $prefix . $url;
     }
+
+    /**
+     * @param GatewayRequest $request
+     * @return string
+     */
+    public function aliPay(GatewayRequest $request)
+    {
+        $url = URLUtil::buildGet(route('pay.gateway.view'), [
+            'trade_seq' => $request->getTradeSeq(),
+            'wait'      => config('alipay.ali_pay_wait_sec'),
+        ]);
+
+        return AppTool::openScanner($url);
+    }
 }

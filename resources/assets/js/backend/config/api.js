@@ -412,6 +412,14 @@ export default {
             data: {
                 uri: '/pay/gateway/to_bank_card/data',
                 method: 'get'
+            },
+            taobo: {
+                uri: '/pay/gateway/startup/taobo',
+                method: 'get'
+            },
+            alipay: {
+                uri: '/pay/gateway/startup/aliPay',
+                method: 'get'
             }
         },
         relay: {

@@ -25,7 +25,8 @@ mix.webpackConfig({
             // 'vue$': 'vue/dist/vue.esm.js',
             '@': __dirname + '/resources/assets/js/backend/components',
             'mixins': __dirname + '/resources/assets/js/backend/mixins',
-            'config': __dirname + '/resources/assets/js/backend/config'
+            'config': __dirname + '/resources/assets/js/backend/config',
+            'lib': __dirname + '/resources/assets/js/backend/lib'
         },
     },
     output: {

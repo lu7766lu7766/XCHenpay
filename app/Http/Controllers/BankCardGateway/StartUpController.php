@@ -13,16 +13,24 @@ class StartUpController extends Controller
      */
     public function selectView()
     {
-        return view('gateway.to_bank_card');
+        return view('gateway.select');
     }
 
     /**
      * @param GatewayRequest $request
-     * @return mixed
+     * @return string
      */
     public function taoBo(GatewayRequest $request)
     {
-        $url = StartUpService::getInstance()->taoBo($request);
-        return response('', 200)->header('Location', $url);
+        return StartUpService::getInstance()->taoBo($request);
+    }
+
+    /**
+     * @param GatewayRequest $request
+     * @return string
+     */
+    public function aliPay(GatewayRequest $request)
+    {
+        return StartUpService::getInstance()->aliPay($request);
     }
 }
