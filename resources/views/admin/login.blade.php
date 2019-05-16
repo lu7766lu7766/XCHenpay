@@ -26,14 +26,17 @@
         <div class="card-body">
 
             <h3 class="text-center m-0">
-                <a href="#" class="logo logo-admin"><img src="{{ asset('img/logo.png') }}" height="30" alt="logo"></a>
+                <a href="#" class="logo logo-admin">
+                    <img src="{{ asset('img/logo.png') }}" height="45" alt="logo">
+                </a>
             </h3>
             <div class="p-3">
                 <form class="form-horizontal" action="{{ route('signin') }}" method="post">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                     <div class="form-group">
                         <label for="email">帐户信箱</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{request()->old('email')}}" placeholder="帐户信箱">
+                        <input type="email" class="form-control" id="email" name="email"
+                               value="{{request()->old('email')}}" placeholder="帐户信箱">
                     </div>
 
                     <div class="form-group">
@@ -44,7 +47,8 @@
                     <div class="form-group row m-t-20">
                         <div class="col-6">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="remember-me" name="remember-me" value="remember-me">
+                                <input type="checkbox" class="custom-control-input" id="remember-me" name="remember-me"
+                                       value="remember-me">
                                 <label class="custom-control-label" for="customControlInline">保持登陆状态</label>
                             </div>
                         </div>
