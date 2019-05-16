@@ -30,6 +30,8 @@ class PaymentManageVendorsCodeConstants extends BaseConstants
     const QUICK_PASS_PAYEE_QR_CODE = 'QuickPassPayeeQRCode';
     //支付寶轉個人收款
     const ALI_PAY_PERSONAL_PAYEE = 'aliPayPersonPayee';
+    //支付寶轉帳
+    const ALI_PAY_TRANSFER_OUT = 'aliPayTransferOut';
 
     /**
      * @return array
@@ -46,6 +48,7 @@ class PaymentManageVendorsCodeConstants extends BaseConstants
             self::WE_CHAT_PAYEE_QR_CODE,
             self::QUICK_PASS_PAYEE_QR_CODE,
             self::ALI_PAY_PERSONAL_PAYEE,
+            self::ALI_PAY_TRANSFER_OUT,
         ];
     }
 }

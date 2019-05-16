@@ -133,4 +133,6 @@
 | QuickPassPayeeQRCode   |  qr_code_url  |    string  |      qrCode解析後的網址  |
 | QuickPassPayeeQRCode   |  qr_code_url_time  |    string  |      qrCode解析後時間  |
 | aliPayPersonPayee   |  ali_pay_account  |    string  |      支付寶帳號  |  
-| aliPayPersonPayee   |  pid  |    string  |      開發者ID  |    
+| aliPayPersonPayee   |  pid  |    string  |      開發者ID  |
+| aliPayTransferOut   |  ali_pay_account  |    string  |      支付寶帳號  |  
+| aliPayTransferOut   |  pid  |    string  |      開發者ID  |        

@@ -69,7 +69,12 @@ class GatewayPaymentType {
         '209': {
             component: 'AlipayForwardAlipay',
             title: '在线支付 - 支付宝 - 网上支付 安全快速！'
-        }
+        },
+        // 支付寶轉帳
+        '211': {
+            component: 'AlipayForwardAlipay',
+            title: '在线支付 - 支付宝 - 网上支付 安全快速！'
+        },
     }
 }
 
