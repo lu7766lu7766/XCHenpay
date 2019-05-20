@@ -1,4 +1,5 @@
 import ValidMixins from 'mixins/validate'
+
 export default {
     mixins: [ValidMixins],
     data: () => ({
@@ -29,6 +30,19 @@ export default {
             _.mergeWith(this.$options.rules, rules, (oValue, nValue) => {
                 return _.assign(oValue, nValue);
             })
+        },
+        // new api
+        async callApi(f) {
+            let loader = this.$loading.show({
+                container: this.$el,
+            })
+            try {
+                await f()
+            } catch (e) {
+                loader.hide()
+                throw e
+            }
+            loader.hide()
         }
     },
     computed: {

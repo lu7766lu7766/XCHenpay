@@ -29,9 +29,10 @@ if ($app) {
             MessageList: () => import('./pages/MessageNotify/List'), // 信息列表
             MessageManage: () => import('./pages/MessageNotify/Manage'), // 信息管理
             /** 收款管理 */
-            CompanyAccount: () => import('./pages/Cashier/CompanyAccount'),
-            AccountSetting: () => import('./pages/Cashier/AccountSetting'),
-            CashierAccountSetting: () => import('./pages/Cashier/AccountManage'),
+            CompanyAccount: () => import('./pages/Cashier/CompanyAccount'), // 公司帳戶
+            AccountSetting: () => import('./pages/Cashier/AccountSetting'), //
+            CashierAccountSetting: () => import('./pages/Cashier/AccountManage'), //
+            ListenerSetting: () => import('./pages/Cashier/ListenerSetting'), // 監聽設置
             /** 查詢功能 */
             OrderSearch: () => import('./pages/Search/OrderSearch'),
             ReportStatistics: () => import('./pages/Search/Report/Statistics'), // 報表統計

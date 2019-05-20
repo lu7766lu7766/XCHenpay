@@ -1,0 +1,26 @@
+{
+  "list": {
+    "uri": "",
+    "method": "post"
+  },
+  "listTotal": {
+    "uri": "total",
+    "method": "post"
+  },
+  "info": {
+    "uri": "{id}",
+    "method": "get"
+  },
+  "create": {
+    "uri": "edit",
+    "method": "post"
+  },
+  "update": {
+    "uri": "edit",
+    "method": "post"
+  },
+  "options": {
+    "uri": "search/options",
+    "method": "get"
+  }
+}

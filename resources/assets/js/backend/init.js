@@ -29,6 +29,11 @@ import UserInfo from 'config/UserInfo'
 window.UserInfo = UserInfo
 Vue.prototype.UserInfo = UserInfo
 
+// new api
+import API from 'lib/API'
+
+Vue.prototype.$api = new API()
+
 // permission constant global
 import Permission from 'config/Permission'
 

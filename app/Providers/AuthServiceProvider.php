@@ -14,6 +14,7 @@ use App\Policies\InformationListsPolicy;
 use App\Policies\InformationManagePolicy;
 use App\Policies\LendListPolicy;
 use App\Policies\LendManagePolicy;
+use App\Policies\ListenerSettingPolicy;
 use App\Policies\ListenOrderPolicy;
 use App\Policies\MerchantsPolicy;
 use App\Policies\NotifyOrderFailPolicy;
@@ -60,7 +61,8 @@ class AuthServiceProvider extends ServiceProvider
         'LendListPolicy'              => LendListPolicy::class,
         'ReportSearchPolicy'          => ReportSearchPolicy::class,
         'ReportStatisticalPolicy'     => ReportStatisticalPolicy::class,
-        'UserPaymentAccountPolicy'    => UserPaymentAccountPolicy::class
+        'UserPaymentAccountPolicy'    => UserPaymentAccountPolicy::class,
+        'ListenerSettingPolicy'       => ListenerSettingPolicy::class,
     ];
 
     /**

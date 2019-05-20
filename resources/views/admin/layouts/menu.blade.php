@@ -58,9 +58,11 @@
                 </ul>
             </li>
         @endif
+
         @if(Sentinel::getUser()->can('management','CompanyAccountPolicy') ||
             Sentinel::getUser()->can('management','PersonalAccountPolicy') ||
-            Sentinel::getUser()->can('management', 'BankCardAccountManagePolicy'))
+            Sentinel::getUser()->can('management', 'BankCardAccountManagePolicy') ||
+            Sentinel::getUser()->can('bankTemplate','ListenerSettingPolicy'))
             <li class="has-submenu">
                 <a href="#"><i class="ti-money"></i>收款管理</a>
                 <ul class="submenu">
@@ -72,6 +74,9 @@
                     @endif
                     @if(Sentinel::getUser()->can('management','PersonalAccountPolicy'))
                         <li><a href="{{route('user.cashier.personal.view')}}">帐户设置</a></li>
+                    @endif
+                    @if(Sentinel::getUser()->can('bankTemplate','ListenerSettingPolicy'))
+                        <li><a href="{{route('admin.cashier.listener.setting')}}">监听设置</a></li>
                     @endif
                 </ul>
             </li>

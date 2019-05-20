@@ -33,5 +33,6 @@ class PermissionSubjectConstants
     const LEND_LIST = 'lendList';
     const REPORT_SEARCH = 'report.search';
     const REPORT_STATISTICAL = 'report.statistical';
+    const LISTENER_SETTING_BANK_TEMPLATE = 'listener.setting.bankTemplate';
     const USER_ORDER_LISTENER = 'user.order.listener';
 }
