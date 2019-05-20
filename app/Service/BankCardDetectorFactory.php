@@ -26,7 +26,8 @@ class BankCardDetectorFactory
     public static function map(): array
     {
         return [
-            PaymentConstants::ALI_PAY_BANK_CARD_CODE => AliPayBankCardDetector::class
+            PaymentConstants::ALI_PAY_BANK_CARD_CODE          => AliPayBankCardDetector::class,
+            PaymentConstants::ALI_PAY_BANK_CARD_PERSONAL_CODE => AliPayBankCardDetector::class
         ];
     }
 }
