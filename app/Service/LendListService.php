@@ -43,10 +43,12 @@ class LendListService
      */
     public function amountInfo()
     {
-        $orderAmount = app(AuthCodes::class)->getTotalMoneyAndTotalFee($this->user->getKey());
+        $repo = app(AuthCodes::class);
+        $handlingFee = $repo->getHandlingChargeTotal($this->user->getKey());
+        $paidAmount = $repo->getRealPaidTotal($this->user->getKey());
         $lendAmount = app(LendRecords::class)->getApplyingAndWithdrawalAmount([$this->user->getKey()]);
-        $totalMoney = round($orderAmount->totalMoney, 3);
-        $totalFee = round($orderAmount->totalFee, 3);
+        $totalMoney = round($paidAmount->totalMoney, 3);
+        $totalFee = round($handlingFee->totalFee, 3);
         $applying = round($lendAmount->totalApply, 3);
         $accepted = round($lendAmount->totalAccept, 3);
         $withdrawal = round($totalMoney - $totalFee - $applying - $accepted, 3);

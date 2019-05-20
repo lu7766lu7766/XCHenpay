@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Constants\Common\StatusConstants;
 use App\Constants\TradeTypesConstants;
 use App\Pivot\BankCardGateway;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -60,7 +62,7 @@ class Authcode extends Model
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function currency()
     {
@@ -68,7 +70,7 @@ class Authcode extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      * @deprecated
      */
     public function i6payment()
@@ -77,7 +79,7 @@ class Authcode extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function payment()
     {
@@ -85,7 +87,7 @@ class Authcode extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function company()
     {
@@ -93,7 +95,7 @@ class Authcode extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function tradeType()
     {
@@ -165,5 +167,13 @@ class Authcode extends Model
     public function amountPayable()
     {
         return bcsub($this->amount, $this->rand_fee, 2);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function lendAblePayment()
+    {
+        return $this->payment()->where('is_lend', StatusConstants::YES);
     }
 }

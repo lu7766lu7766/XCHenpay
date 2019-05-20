@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Collection|User[] userFee
  * @property BankCardAccount[]|Collection bankAccount
  * @property PaymentBankAccount payment_information
+ * @property int i6pay_id
+ * @property string on_lend_list
  */
 class Payment extends Model
 {

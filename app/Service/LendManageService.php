@@ -108,17 +108,21 @@ class LendManageService
     {
         $result = null;
         try {
+            $repo = app(AuthCodes::class);
             $handle = LendManageTotalRequest::getHandle($this->data);
-            $sum = app(AuthCodes::class)->getTotalMoneyAndTotalFee($handle->getUserId());
-            $totalRealMoney = round(app(AuthCodes::class)->getTotalRealMoney($handle->getUserId())->totalRealMoney, 3);
-            $lendRecords = app(LendRecords::class)->getLendRecordTotalInfo($handle->getUserId());
-            $totalLendRecords = round($lendRecords->totalLendRecords, 3);
+            $paidAmount = $repo->getRealPaidTotal($handle->getUserId());
+            $handlingFee = $repo->getHandlingChargeTotal($handle->getUserId());
+            $lendAmount = app(LendRecords::class)->getLendRecordTotalInfo($handle->getUserId());
+            $totalMoney = round($paidAmount->totalMoney, 3);
+            $totalFee = round($handlingFee->totalFee, 3);
+            $applying = round($lendAmount->totalApply, 3);
+            $accepted = round($lendAmount->totalAccept, 3);
             $result = [
-                'total'           => round($sum->totalMoney, 3),
-                'totalFee'        => round($sum->totalFee, 3),
-                'totalApplying'   => round($lendRecords->totalApplying, 3),
-                'totalAccepted'   => round($lendRecords->totalAccept, 3),
-                'totalWithdrawal' => round($totalRealMoney - $totalLendRecords, 3)
+                'total'           => $totalMoney,
+                'totalFee'        => $totalFee,
+                'totalApplying'   => $applying,
+                'totalAccepted'   => $accepted,
+                'totalWithdrawal' => round($totalMoney - $totalFee - $applying - $accepted, 3)
             ];
         } catch (ValidationException $e) {
             $result = ["code" => 1000, "data" => $e->validator->getMessageBag()->getMessages()];

@@ -142,25 +142,6 @@ class AuthCodes
     }
 
     /**
-     * @param int|null $userId
-     * @return Authcode
-     */
-    public function getTotalRealMoney(int $userId = null)
-    {
-        $result = Authcode::query()
-            ->whereHas('company', function (Builder $builder) use ($userId) {
-                if (!is_null($userId)) {
-                    $builder->where('id', $userId);
-                }
-            })
-            ->whereIn('pay_state', [self::ALL_DONE_STATE, self::ACCEPT_STATE, self::DENY_STATE])
-            ->select(\DB::raw('IFNULL(SUM(amount - fee),0) as totalRealMoney'))
-            ->first();
-
-        return $result;
-    }
-
-    /**
      * 查詢報表資訊
      * @param string $startDate 開始時間
      * @param string $endDate 結束時間
@@ -205,15 +186,14 @@ class AuthCodes
     }
 
     /**
-     * 得到指定對象的總加合
+     * 計算總手續費
      * @param int|null $userId
      * @return Authcode
      */
-    public function getTotalMoneyAndTotalFee(int $userId = null)
+    public function getHandlingChargeTotal(int $userId = null)
     {
         return Authcode::query()
             ->select(
-                \DB::raw('IFNULL(SUM(real_paid_amount),0 )as totalMoney'),
                 \DB::raw('IFNULL(SUM(fee),0) as totalFee')
             )
             ->whereHas('company', function (Builder $builder) use ($userId) {
@@ -384,5 +364,25 @@ class AuthCodes
         }
 
         return $result;
+    }
+
+    /**
+     * 獲取總實際支付金額
+     * @param int|null $userId
+     * @return Authcode
+     */
+    public function getRealPaidTotal(int $userId = null)
+    {
+        return Authcode::query()
+            ->select(
+                \DB::raw('IFNULL(SUM(real_paid_amount),0 )as totalMoney')
+            )->whereHas('company', function (Builder $builder) use ($userId) {
+                $builder->whereHas('roles', function (Builder $b) {
+                    $b->where('slug', RolesConstants::USER);
+                });
+                if (!is_null($userId)) {
+                    $builder->where('id', $userId);
+                }
+            })->where('pay_state', OrderStatusConstants::ALL_DONE_CODE)->whereHas('lendAblePayment')->first();
     }
 }
