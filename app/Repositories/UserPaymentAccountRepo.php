@@ -24,7 +24,7 @@ class UserPaymentAccountRepo
      */
     public function getList(string $status = null, string $keyword = null, int $page = 1, int $perpage = 10)
     {
-        return $this->getListQuery($status, $keyword)->forPage($page, $perpage)->get();
+        return $this->getListQuery($status, $keyword)->orderBy('id', 'DESC')->forPage($page, $perpage)->get();
     }
 
     /**
