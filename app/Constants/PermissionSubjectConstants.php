@@ -33,4 +33,5 @@ class PermissionSubjectConstants
     const LEND_LIST = 'lendList';
     const REPORT_SEARCH = 'report.search';
     const REPORT_STATISTICAL = 'report.statistical';
+    const USER_ORDER_LISTENER = 'user.order.listener';
 }

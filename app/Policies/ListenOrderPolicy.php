@@ -23,4 +23,13 @@ class ListenOrderPolicy
     {
         return $user->inRole(RolesConstants::LISTENER) && $user->hasAccess(PermissionSubjectConstants::LISTENER_ORDER);
     }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function userOrderListener(User $user)
+    {
+        return $user->inRole(RolesConstants::USER);
+    }
 }
