@@ -60,6 +60,11 @@ class GatewayPaymentType {
             component: 'NewBank',
             title: '在线支付 - 支付宝 - 网上支付 安全快速！'
         },
+        // 微信收款(固碼)
+        '207': {
+            component: 'WeChatPay',
+            title: '在线支付 - 微信支付 - 网上支付 安全快速！'
+        },
         // 云闪付
         '208': {
             component: 'Unionpay',

@@ -23,11 +23,11 @@
 
         <div slot="step">
             <div class="openalipay">
-                <a style="text-decoration:none;">1. 手动截屏二维码<br>2. 开启微信支付扫一扫</a>
+                1. 手动截屏二维码<br>
+                2. 开启微信支付扫一扫
             </div>
             <div style="text-align: center">
-                <a href="https://weixin.qq.com/" target="_blank"
-                   class="qrcode-downloadApp">首次使用请下载手机微信支付</a>
+                <a href="https://weixin.qq.com/" target="_blank">首次使用请下载手机微信支付</a>
             </div>
             <br>
         </div>
