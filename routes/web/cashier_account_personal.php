@@ -23,6 +23,7 @@ Route::group(
             Route::get('/channel', 'PersonalAccountController@channel')->name('channel');
             Route::post('create', 'PersonalAccountController@create')->name('create');
             Route::put('/', 'PersonalAccountController@update')->name('update');
+            Route::get('bank', 'PersonalAccountController@bank');
         });
     }
 );

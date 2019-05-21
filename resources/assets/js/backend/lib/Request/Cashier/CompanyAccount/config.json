@@ -1,0 +1,26 @@
+{
+  "channel": {
+    "uri": "channel",
+    "method": "get"
+  },
+  "bank": {
+    "uri": "bank",
+    "method": "get"
+  },
+  "list": {
+    "uri": "",
+    "method": "post"
+  },
+  "total": {
+    "uri": "total",
+    "method": "post"
+  },
+  "create": {
+    "uri": "create",
+    "method": "post"
+  },
+  "update": {
+    "uri": "",
+    "method": "put"
+  }
+}

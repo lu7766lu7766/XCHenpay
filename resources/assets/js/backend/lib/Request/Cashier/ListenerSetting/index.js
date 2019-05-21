@@ -1,4 +1,4 @@
-import BaseRequest from '../BaseRequest'
+import BaseRequest from '../../BaseRequest'
 import _config from './config'
 
 export default class User extends BaseRequest {

@@ -106,18 +106,18 @@
         }),
         methods: {
             dataInit() {
-                this.$api.listenerSetting.getOptions({}, {
+                this.$api.cashier.listenerSetting.getOptions({}, {
                     s: res => this.options.banks = res.data
                 })
             },
             getTotal() {
-                this.$api.listenerSetting.getListTotal(this.getReqBody, {
+                this.$api.cashier.listenerSetting.getListTotal(this.getReqBody, {
                     s: res => this.paginate.total = res.data
                 })
             },
             getList() {
                 this.callApi(async () => {
-                    await this.$api.listenerSetting.getList(this.getReqBody, {
+                    await this.$api.cashier.listenerSetting.getList(this.getReqBody, {
                         s: res => this.datas = res.data
                     })
                 })

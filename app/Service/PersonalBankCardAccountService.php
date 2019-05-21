@@ -17,6 +17,7 @@ use App\Http\Requests\CashierPersonal\PersonalAccountTotalRequest;
 use App\Http\Requests\CashierPersonal\PersonalAccountUpdateRequest;
 use App\Models\BankCardAccount;
 use App\Models\Payment;
+use App\Repositories\Company\Listener\Setting\Bank;
 use App\Repositories\PaymentRepo;
 use App\Repositories\PersonalBankCardAccountRepo;
 use App\Traits\Singleton;
@@ -161,5 +162,13 @@ class PersonalBankCardAccountService
             $this->user->getKey(),
             $request->getId()
         );
+    }
+
+    /**
+     * @return Bank|Collection
+     */
+    public function bank()
+    {
+        return app(Bank::class)->all();
     }
 }

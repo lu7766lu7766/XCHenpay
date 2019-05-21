@@ -18,6 +18,7 @@ use App\Http\Requests\CashierCompany\CompanyAccountUpdateRequest;
 use App\Models\BankCardAccount;
 use App\Models\Payment;
 use App\Repositories\BankCardAccountRepo;
+use App\Repositories\Company\Listener\Setting\Bank;
 use App\Repositories\PaymentRepo;
 use App\Traits\Singleton;
 use Illuminate\Database\Eloquent\Collection;
@@ -134,5 +135,13 @@ class CompanyAccountService
     public function channel()
     {
         return app(PaymentRepo::class)->allActive();
+    }
+
+    /**
+     * @return Bank|Collection
+     */
+    public function bank()
+    {
+        return app(Bank::class)->all();
     }
 }

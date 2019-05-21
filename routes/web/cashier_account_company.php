@@ -23,6 +23,7 @@ Route::group(
             Route::post('create', 'CompanyAccountController@create')->name('create');
             Route::put('/', 'CompanyAccountController@update')->name('update');
             Route::get('status', 'CompanyAccountController@status')->name('status');
+            Route::get('bank', 'CompanyAccountController@bank');
         });
     }
 );

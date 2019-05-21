@@ -88,4 +88,12 @@ class CompanyAccountController extends Controller
     {
         return CompanyAccountService::getInstance()->update($request);
     }
+
+    /**
+     * @return \App\Repositories\Company\Listener\Setting\Bank|Collection
+     */
+    public function bank()
+    {
+        return CompanyAccountService::getInstance()->bank();
+    }
 }

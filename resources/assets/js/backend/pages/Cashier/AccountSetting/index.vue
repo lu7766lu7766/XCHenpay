@@ -87,7 +87,6 @@
     import CashierStatisticsType from 'config/CashierStatisticsType'
 
     export default {
-        api: "accountSetting",
         mixins: [ListMixins, PaymentMixins],
         components: {
             Info: require('./modal/Info'),
@@ -113,16 +112,26 @@
             }
         }),
         methods: {
-            dataInit() {
-                this.proccessAjax('dataInit', {}, res => {
-                    this.options.channel = res.data
+            async dataInit() {
+                const res = await this.$api.cashier.accountSetting.getOptions()
+                this.options.channel = res[0].data
+                this.options.bank = res[1].data
+            },
+            getList() {
+                this.callApi(async () => {
+                    await this.$api.cashier.accountSetting.getList(this.getReqBody, {
+                        s: res => {
+                            this.datas = res.data
+                        }
+                    })
                 })
             },
-            onGetTotal(res) {
-                this.paginate.total = res.data
-            },
-            onGetList(res) {
-                this.datas = res.data
+            getTotal() {
+                this.$api.cashier.accountSetting.getListTotal(this.getReqBody, {
+                    s: res => {
+                        this.paginate.total = res.data
+                    }
+                })
             }
         },
         mounted() {

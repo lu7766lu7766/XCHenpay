@@ -84,7 +84,7 @@
                     return alert(e)
                 }
                 this.callApi(async () => {
-                    await this.$api.listenerSetting.create(_.pick(this.data, [
+                    await this.$api.cashier.listenerSetting.create(_.pick(this.data, [
                         'id',
                         'bank_id',
                         'contents',

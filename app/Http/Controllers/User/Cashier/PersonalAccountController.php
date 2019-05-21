@@ -87,4 +87,12 @@ class PersonalAccountController extends Controller
         return PersonalBankCardAccountService::getInstance(\Sentinel::getUser())
             ->info(PersonalAccountInfoRequest::getHandle(['id' => $id]));
     }
+
+    /**
+     * @return \App\Repositories\Company\Listener\Setting\Bank|Collection
+     */
+    public function bank()
+    {
+        return PersonalBankCardAccountService::getInstance(\Sentinel::getUser())->bank();
+    }
 }

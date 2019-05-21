@@ -87,7 +87,6 @@
     import CashierStatisticsType from 'config/CashierStatisticsType'
 
     export default {
-        api: "companyAccount",
         mixins: [ListMixins, PaymentMixins],
         components: {
             Info: require('./modal/Info'),
@@ -101,6 +100,7 @@
                     'N': '关闭'
                 },
                 channel: [],
+                bank: [],
                 CashierStatisticsTypeSummary: CashierStatisticsType.summaryMap()
             },
             searchData: {
@@ -113,16 +113,26 @@
             }
         }),
         methods: {
-            dataInit() {
-                this.proccessAjax('dataInit', {}, res => {
-                    this.options.channel = res.data
+            async dataInit() {
+                const res = await this.$api.cashier.companyAccount.getOptions()
+                this.options.channel = res[0].data
+                this.options.bank = res[1].data
+            },
+            getList() {
+                this.callApi(async () => {
+                    await this.$api.cashier.companyAccount.getList(this.getReqBody, {
+                        s: res => {
+                            this.datas = res.data
+                        }
+                    })
                 })
             },
-            onGetTotal(res) {
-                this.paginate.total = res.data
-            },
-            onGetList(res) {
-                this.datas = res.data
+            getTotal() {
+                this.$api.cashier.companyAccount.getListTotal(this.getReqBody, {
+                    s: res => {
+                        this.paginate.total = res.data
+                    }
+                })
             }
         },
         mounted() {

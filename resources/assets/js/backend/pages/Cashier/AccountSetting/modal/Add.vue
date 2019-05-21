@@ -32,7 +32,12 @@
                         <div class="form-group row">
                             <label class="col-md-3 control-label required">银行名 <b>*</b></label>
                             <div class="col-md-9">
-                                <input type="text" class="form-control" v-model="data.bank_name">
+                                <select class="form-control" v-model="data.bank_name">
+                                    <option v-for="bank in $parent.options.bank"
+                                            :key="bank.id"
+                                            :value="bank.name">{{ bank.name }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -40,8 +45,8 @@
                             <div class="col-md-9">
                                 <select class="form-control" v-model="data.channel">
                                     <option value="">请选择</option>
-                                    <option v-for="channel in $parent.options.channel"
-                                            :key="channel.id"
+                                    <option v-for="(channel, index) in $parent.options.channel"
+                                            :key="index"
                                             :value="channel.i6pay_id">{{ channel.name }}
                                     </option>
                                 </select>
@@ -176,18 +181,22 @@
                 } catch (e) {
                     return alert(e)
                 }
-                this.proccessAjax('create', _.pick(this.data, [
-                    'card_id',
-                    'user_name',
-                    'card_no',
-                    'bank_name',
-                    'channel',
-                    'status',
-                    'minimum_amount',
-                    'maximum_amount',
-                    'total_amount',
-                    'statistics_type',
-                ]), this.onCreate)
+                this.callApi(async () => {
+                    await this.$api.cashier.accountSetting.create(_.pick(this.data, [
+                        'card_id',
+                        'user_name',
+                        'card_no',
+                        'bank_name',
+                        'channel',
+                        'status',
+                        'minimum_amount',
+                        'maximum_amount',
+                        'total_amount',
+                        'statistics_type',
+                    ]), {
+                        s: this.onCreate
+                    })
+                })
             },
             onCreate() {
                 this.createSuccess()

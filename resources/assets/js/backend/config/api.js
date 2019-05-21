@@ -360,52 +360,6 @@ export default {
             method: 'put'
         }
     },
-    /** 商戶帳號 */
-    companyAccount: {
-        dataInit: {
-            uri: '/admin/cashier/company/channel',
-            method: 'get'
-        },
-        list: {
-            uri: '/admin/cashier/company',
-            method: 'post'
-        },
-        total: {
-            uri: '/admin/cashier/company/total',
-            method: 'post'
-        },
-        create: {
-            uri: '/admin/cashier/company/create',
-            method: 'post'
-        },
-        update: {
-            uri: '/admin/cashier/company',
-            method: 'put'
-        }
-    },
-    /** 帳戶設置 */
-    accountSetting: {
-        dataInit: {
-            uri: '/user/cashier/personal/channel',
-            method: 'get'
-        },
-        list: {
-            uri: '/user/cashier/personal',
-            method: 'post'
-        },
-        total: {
-            uri: '/user/cashier/personal/total',
-            method: 'post'
-        },
-        create: {
-            uri: '/user/cashier/personal/create',
-            method: 'post'
-        },
-        update: {
-            uri: '/user/cashier/personal',
-            method: 'put'
-        }
-    },
     /** 行動支付轉銀行卡 */
     gateway: {
         toBankCard: {

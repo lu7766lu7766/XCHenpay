@@ -152,15 +152,19 @@
                 } catch (e) {
                     return alert(e)
                 }
-                this.proccessAjax('update', _.pick(this.data, [
-                    'id',
-                    'card_id',
-                    'status',
-                    'minimum_amount',
-                    'maximum_amount',
-                    'total_amount',
-                    'statistics_type',
-                ]), this.onUpdate)
+                this.callApi(async () => {
+                    await this.$api.cashier.companyAccount.update(_.pick(this.data, [
+                        'id',
+                        'card_id',
+                        'status',
+                        'minimum_amount',
+                        'maximum_amount',
+                        'total_amount',
+                        'statistics_type',
+                    ]), {
+                        s: this.onUpdate
+                    })
+                })
             },
             onUpdate() {
                 this.updateSuccess()
