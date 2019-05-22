@@ -18,7 +18,7 @@
 |-------------|-----------------------------|--------------|--------------|---------------------|-------|
 | <b>路徑</b>  |logQuery/showState/{authcode}|              |              |                     |      |
 | <b>方法</b>  | GET                         |              |              |                     |      |
-| <b>權限</b>  | logQuery.showState          |              |              |          -          |      |
+| <b>權限</b>  | logQuery.showState|logQuery          |              |              |          -          |      |
 | <b>參數</b>  |                             |              |              |                     |      |
 |             | authcode                    |  int         |              |     訂單id           |   o  |
 
@@ -28,11 +28,12 @@
 |-------------|-----------------------------|--------------|--------------|---------------------|-------|
 | <b>路徑</b>  |logQuery/updateState         |              |              |                     |      |
 | <b>方法</b>  | POST                        |              |              |                     |      |
-| <b>權限</b>  | logQuery.updateState        |              |              |          -          |      |
+| <b>權限</b>  | order.query.update|logQuery       |              |              |          -          |      |
 | <b>參數</b>  |                             |              |              |                     |      |
 |             | id                          |  int         |              |     訂單id           |   o  |
 |             | status                      |  int         |              |     訂單狀態          |   o  |
 |             | real_paid_amount            |  int         |              |     實際支付金額       |   o  |
+|             | pay_end_time            |  datetime         |              |     完成時間(yyyy-mm-dd HH:ii:ss)       |   x  |
 
 
 > 商戶注單總數
