@@ -29,24 +29,24 @@ class PaymentManage {
 
     static QQ_PAY_TXT = 'QQ钱包'
 
-    static ALI_PAY_RED_ENVELOP_TXT = '支付宝红包'
+    static ALI_PAY_RED_ENVELOP_TXT = '支付宝红包(205)'
 
-    static ALI_PAY_PERSONAL_BANK_ACCOUNT_TXT = '支付宝收款(固码)'
+    static ALI_PAY_PERSONAL_BANK_ACCOUNT_TXT = '支付宝收款(206)'
 
-    static WE_CHAT_PAYEE_QRCODE_TXT = '微信收款(固码)'
+    static WE_CHAT_PAYEE_QRCODE_TXT = '微信收款(207)'
 
-    static QUICK_PASS_PAYEE_QRCODE_TXT = '云闪付收款(固码)'
+    static QUICK_PASS_PAYEE_QRCODE_TXT = '云闪付收款(208)'
 
-    static ALI_PAY_PERSON_PAYEE_TXT = '支付宝转支付宝'
+    static ALI_PAY_PERSON_PAYEE_TXT = '支付宝转支付宝(209)'
 
-    static ALI_PAY_TRANSFER_OUT_TXT = '支付宝转帐'
+    static ALI_PAY_TRANSFER_OUT_TXT = '支付宝转帐(211)'
 
     static enum() {
         return [
-            this.ALI_PAY,
-            this.WE_CHAT_PAY,
-            this.UNION_PAY,
-            this.QQ_PAY,
+            // this.ALI_PAY,
+            // this.WE_CHAT_PAY,
+            // this.UNION_PAY,
+            // this.QQ_PAY,
             this.ALI_PAY_RED_ENVELOP,
             this.ALI_PAY_PERSONAL_BANK_ACCOUNT,
             this.WE_CHAT_PAYEE_QRCODE,
@@ -58,10 +58,10 @@ class PaymentManage {
 
     static summaryMap() {
         return {
-            [this.ALI_PAY]: this.ALI_PAY_TXT,
-            [this.WE_CHAT_PAY]: this.WE_CHAT_PAY_TXT,
-            [this.UNION_PAY]: this.UNION_PAY_TXT,
-            [this.QQ_PAY]: this.QQ_PAY_TXT,
+            // [this.ALI_PAY]: this.ALI_PAY_TXT,
+            // [this.WE_CHAT_PAY]: this.WE_CHAT_PAY_TXT,
+            // [this.UNION_PAY]: this.UNION_PAY_TXT,
+            // [this.QQ_PAY]: this.QQ_PAY_TXT,
             [this.ALI_PAY_RED_ENVELOP]: this.ALI_PAY_RED_ENVELOP_TXT,
             [this.ALI_PAY_PERSONAL_BANK_ACCOUNT]: this.ALI_PAY_PERSONAL_BANK_ACCOUNT_TXT,
             [this.WE_CHAT_PAYEE_QRCODE]: this.WE_CHAT_PAYEE_QRCODE_TXT,

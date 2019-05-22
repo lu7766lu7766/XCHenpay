@@ -5,11 +5,12 @@ import errorCode from 'config/error'
 var path = require('path')
 
 axios.defaults.baseURL = `/`
-axios.interceptors.response.use((response) => {
-    return response
-}, function (error) {
-    return Promise.reject(error.response)
-})
+// asign in init.js
+// axios.interceptors.response.use((response) => {
+//     return response
+// }, function (error) {
+//     return Promise.reject(error.response)
+// })
 
 export default class BaseRequest {
     get baseUrls() {
@@ -33,24 +34,20 @@ export default class BaseRequest {
         const conf = this.config[key]
         if (!conf) throw 'not found the config'
 
+        let res = await axios(createApiBody(
+            conf.method,
+            path.join(...this.baseUrls, conf.uri),
+            _.merge(
+                _.pickBy(this.convertMoment2String(data), x => x !== '' && !_.isNull(x) && !_.isUndefined(x)), conf.data),
+            conf.header)
+        ).catch(e => this.resultProccess(e, options))
+
+        return this.resultProccess(res, options)
+    }
+
+    resultProccess(res, options) {
         const successF = options.success || options.s
         const failF = options.fail || options.f
-
-        // console.log(createApiBody(conf.method, conf.uri, _.merge(_.pickBy(data), conf.data), conf.header))
-
-        let res
-        try {
-            res = await axios(createApiBody(
-                conf.method,
-                path.join(...this.baseUrls, conf.uri),
-                _.merge(
-                    _.pickBy(this.convertMoment2String(data), x => x !== '' && !_.isNull(x) && !_.isUndefined(x)), conf.data),
-                conf.header))
-        } catch (e) {
-            alert('system error!! please try again later')
-            throw e
-            return
-        }
 
         let errorMessages = []
         _.forEach(res.data.code, code => {
@@ -60,7 +57,7 @@ export default class BaseRequest {
                 default:
                     errorMessages.push(errorCode[code]
                         ? errorCode[code]
-                        : 'have error!')
+                        : 'system error!! please try again later')
                     break
             }
         })
@@ -71,7 +68,6 @@ export default class BaseRequest {
             : successF
                 ? successF(roopParse(res.data))
                 : roopParse(res.data)
-
     }
 
     errorHandle(errorMessages) {

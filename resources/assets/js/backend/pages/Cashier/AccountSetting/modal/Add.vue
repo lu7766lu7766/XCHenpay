@@ -43,7 +43,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 control-label required">通道类型 <b>*</b></label>
                             <div class="col-md-9">
-                                <select class="form-control" v-model="data.channel">
+                                <select class="form-control" v-model="data.channel" disabled>
                                     <option value="">请选择</option>
                                     <option v-for="(channel, index) in $parent.options.channel"
                                             :key="index"
@@ -116,6 +116,7 @@
 
 <script>
     import DetailMixins from 'mixins/detail'
+    import Channel from 'config/Channel'
 
     export default {
         mixins: [DetailMixins],
@@ -206,7 +207,7 @@
         mounted() {
             this.$root.$on('accountSettingAdd.show', () => {
                 this.data = {
-                    channel: '',
+                    channel: Channel.ALIPAY_TO_BANK_CARD_USER,
                     status: 'Y',
                     statistics_type: this.$parent.config.CashierStatisticsType.DAY
                 }
