@@ -1,0 +1,38 @@
+{
+  "dataInit": {
+    "uri": "logQuery/dataInit",
+    "method": "get"
+  },
+  "payment": {
+    "uri": "logQuery/payment",
+    "method": "get"
+  },
+  "list": {
+    "uri": "data",
+    "method": "post"
+  },
+  "tradeInfo": {
+    "uri": "orderTradeInfo",
+    "method": "post"
+  },
+  "listTotal": {
+    "uri": "dataTotal",
+    "method": "post"
+  },
+  "info": {
+    "uri": "logQuery/showInfo/{authcode}",
+    "method": "get"
+  },
+  "state": {
+    "uri": "logQuery/showState/{authcode}",
+    "method": "get"
+  },
+  "update": {
+    "uri": "logQuery/updateState",
+    "method": "post"
+  },
+  "notify": {
+    "uri": "logQuery/callNotify",
+    "method": "post"
+  }
+}

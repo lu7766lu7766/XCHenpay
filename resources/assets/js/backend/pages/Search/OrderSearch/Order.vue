@@ -116,7 +116,8 @@
                             <th class="sorting" @click="changeSort('amount')" :class="{
                                 'sort-asc': this.sort.column == 'amount' && this.sort.direction == 'asc',
                                 'sort-desc': this.sort.column == 'amount' && this.sort.direction == 'desc'
-                            }">订单金额</th>
+                            }">订单金额
+                            </th>
                             <th>应付金额</th>
                             <th>实付金额</th>
                             <th>支付方式</th>
@@ -144,7 +145,9 @@
                             <td alt="系统交易号">{{ data.trade_seq }}</td>
                             <td alt="商户交易号">{{ data.trade_service_id }}</td>
                             <td alt="订单金额" class="text-right">{{ data.amount | numFormat('0,0.00') }}</td>
-                            <td alt="应付金额" class="text-right">{{ +data.amount - (+data.rand_fee) | numFormat('0,0.00') }}</td>
+                            <td alt="应付金额" class="text-right">{{ +data.amount - (+data.rand_fee) | numFormat('0,0.00')
+                                }}
+                            </td>
                             <td alt="实付金额" class="text-right">{{ data.real_paid_amount | numFormat('0,0.00') }}</td>
                             <td alt="支付方式">
                                 <span :class="data.bank_card_account[0] ? 'text-modal' : ''"
@@ -223,7 +226,6 @@
     import CashierStatisticsType from 'config/CashierStatisticsType'
 
     export default {
-        api: "order",
         mixins: [ListMixins],
         components: {
             OrderInfo: require('./modal/OrderInfo'),
@@ -288,33 +290,44 @@
             }
         },
         methods: {
-            dataInit() {
-                this.proccessAjax('dataInit', {}, res => {
-                    this.options.paymentType = _.assign(_.keyBy(res.data, 'i6pay_id'), {0: {name: '支付方式'}})
+            async dataInit() {
+                const res = await this.$api.search.orderSearch.getPayment()
+                this.options.paymentType = _.assign(_.keyBy(res.data, 'i6pay_id'), {0: {name: '支付方式'}})
+            },
+            getList() {
+                this.callApi(async () => {
+                    const res = await this.$api.search.orderSearch.getList(this.getReqBody)
+                    this.datas = res[0].data
+
+                    this.count.successful_deal = res[1].data.successful_deal
+                    this.count.failure_deal = res[1].data.failure_deal
+                    this.count.amount = res[1].data.amount
+                    this.count.fee = res[1].data.fee
                 })
             },
-            onGetList(res) {
-                this.datas = res[0].data
-
-                this.count.successful_deal = res[1].data.successful_deal
-                this.count.failure_deal = res[1].data.failure_deal
-                this.count.amount = res[1].data.amount
-                this.count.fee = res[1].data.fee
-            },
-            onGetTotal(res) {
-                this.paginate.total = res.data
+            getTotal() {
+                this.$api.search.orderSearch.getListTotal(this.getReqBody, {
+                    s: res => {
+                        this.paginate.total = res.data
+                    }
+                })
             },
             confirmNotify(id) {
                 swal(this.config.notify).then(() => {
-                    this.proccessAjax('notify', {id}, res => {
-                        if (res.data) {
-                            this.getList()
-                            swal(this.config.success)
-                        } else {
-                            swal(this.config.fail)
-                        }
+                    this.callApi(async () => {
+                        await this.$api.search.orderSearch.notify({id}, {
+                            s: res => {
+                                if (res.data) {
+                                    this.getList()
+                                    swal(this.config.success)
+                                } else {
+                                    swal(this.config.fail)
+                                }
+                            }
+                        })
                     })
-                }).catch(_ => {})
+                }).catch(() => {
+                })
             },
             needNotify(state) {
                 return this.config.notifyState.indexOf(state) > -1

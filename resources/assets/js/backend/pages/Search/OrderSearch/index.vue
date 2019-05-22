@@ -16,7 +16,6 @@
     import ReqMixins from 'mixins/request'
 
     export default {
-        api: "orderSearch",
         mixins: [ReqMixins],
         components: {
             CompanySelector: require('@/CompanySelector'),
@@ -27,12 +26,11 @@
             companies: [],
         }),
         async mounted() {
-            this.proccessAjax('dataInit', {}, res => {
-                this.companies = _.concat([{id: '', company_name: '全部'}], _.map(res.companies))
-                this.company_id = UserInfo.this().has(Permission.CompanyChange)
-                    ? this.company_id
-                    : res.user.id
-            })
+            const res = await this.$api.search.orderSearch.getDataInit()
+            this.companies = _.concat([{id: '', company_name: '全部'}], _.map(res.companies))
+            this.company_id = UserInfo.this().has(Permission.CompanyChange)
+                ? this.company_id
+                : res.user.id
         }
     }
 </script>

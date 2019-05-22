@@ -53,7 +53,7 @@ class OrderStatusConstants
     /**
      * @return array
      */
-    private static function summaryMap()
+    public static function summaryMap()
     {
         return [
             self::PREPARE_CODE   => self::PREPARE,

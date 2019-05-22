@@ -1,7 +1,8 @@
 <template>
     <div class="date-select">
         <date-time-picker :type="type"
-                          :placeholder="placeholder" :value="value"
+                          :placeholder="placeholder"
+                          :value="value"
                           @input="newVal => $emit('input', newVal)"/>
     </div>
 </template>

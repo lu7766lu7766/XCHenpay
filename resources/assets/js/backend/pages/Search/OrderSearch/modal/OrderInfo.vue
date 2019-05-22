@@ -39,7 +39,8 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 control-label">应付金额</label>
-                            <div class="col-md-9 p-t-7">{{ +data.amount - (+data.rand_fee) | numFormat('0,0.00') }}</div>
+                            <div class="col-md-9 p-t-7">{{ +data.amount - (+data.rand_fee) | numFormat('0,0.00') }}
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 control-label">实付金额</label>
@@ -69,7 +70,9 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 control-label">完成时间</label>
-                            <div class="col-md-9 p-t-7">{{ data.pay_end_time }}</div>
+                            <div class="col-md-9 p-t-7">
+                                <span v-if="isShowEndTime">{{ data.pay_end_time }}</span>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -84,6 +87,7 @@
 
 <script>
     import DetailMixins from 'mixins/detail'
+    import PayState from 'config/PayState'
 
     export default {
         mixins: [DetailMixins],
@@ -92,7 +96,17 @@
                 this.data = res.authcode
             },
             async getInfo(data) {
-                this.proccessAjax('info', data, this.onGetInfo)
+                this.callApi(async () => {
+                    await this.$api.search.orderSearch.getInfo(data, {
+                        s: this.onGetInfo
+                    })
+                })
+            }
+        },
+        computed: {
+            isShowEndTime() {
+                // 交易完成，未回條，交易結束
+                return [PayState.SUCCESS_CODE, PayState.ALL_DONE_CODE].indexOf(this.data.pay_state) > -1
             }
         },
         mounted() {

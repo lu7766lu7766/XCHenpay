@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Constants\Order\OrderStatusConstants;
 use App\Constants\Roles\RolesConstants;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthCodeBankCardAccountInfoRequest;
@@ -9,6 +10,7 @@ use App\Http\Requests\AuthCodeOrderNotifyRequest;
 use App\Http\Requests\AuthCodeOrderSearchRequest;
 use App\Models\Authcode;
 use App\Models\PaymentFees;
+use App\Policies\OrderQueryPolicy;
 use App\Repositories\AuthCodes;
 use App\Repositories\UserRepo;
 use App\Service\AuthCodeService;
@@ -18,6 +20,7 @@ use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Response;
 use Sentinel;
@@ -93,13 +96,24 @@ class AuthcodeController extends Controller
         ];
     }
 
+    /**
+     * 注單資訊
+     * @param Authcode $authcode
+     * @return array
+     */
     public function showInfo(Authcode $authcode)
     {
-//        return view('admin.trade.showTradeLogModal', compact('authcode'));
-        $authcode->load(['currency', 'tradeType']);
+        $order = null;
+        /** @var User $user */
+        $user = Sentinel::getUser();
+        if ($user->can('manage', OrderQueryPolicy::class)
+            || $authcode->company_service_id == $user->company_service_id) {
+            $order = $authcode;
+            $order->load(['currency', 'tradeType']);
+        }
 
         return [
-            'authcode' => $authcode
+            'authcode' => $order
         ];
     }
 
@@ -165,54 +179,51 @@ class AuthcodeController extends Controller
         return ['data' => OrderService::getInstance(Sentinel::getUser())->callNotify($request)];
     }
 
+    /**
+     * 單筆資訊
+     * @param Authcode $authcode
+     * @return array
+     */
     public function showState(Authcode $authcode)
     {
-        $stateList = [
-            0 => '申请成功',
-            1 => '交易中',
-            2 => '交易成功,未回调',
-            3 => '交易结束',
-            4 => '交易失败'
-        ];
-
-//        return view('admin.trade.stateEditModal', compact('authcode', 'stateList'));
         return [
             'authcode'  => $authcode,
-            'stateList' => $stateList
+            'stateList' => OrderStatusConstants::summaryMap()
         ];
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateState(Request $request)
     {
         $validator = Validator::make($request->toArray(), [
             'id'               => 'required|integer|exists:authcodes,id',
-            'state'            => 'required|integer|in:0,1,2,3,4',
-            'real_paid_amount' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/|min:0'
+            'state'            => 'required|integer|' . Rule::in(OrderStatusConstants::fillOrderEnum()),
+            'pay_end_time'     => 'sometimes|required|date_format:"Y-m-d H:i:s"',
+            'real_paid_amount' => 'required|numeric|min:0'
         ]);
         if ($validator->fails()) {
             return Response::json($validator->messages());
         }
         $user = Sentinel::getUser();
-        $stateList = [
-            0 => '申请成功',
-            1 => '交易中',
-            2 => '交易成功,未回调',
-            3 => '交易结束',
-            4 => '交易失败'
-        ];
-        /** @var Authcode $authcode */
-        $authcode = Authcode::find($request->id);
-        $oldState = $authcode->pay_summary;
-        $authcode->pay_state = $request->state;
-        $authcode->pay_summary = $stateList[$request->state];
-        $authcode->real_paid_amount = $request->real_paid_amount;
-        $authcode->manual_at = date('Y-m-d H:i:s');
-        $authcode->save();
+        /** @var Authcode $order */
+        $order = Authcode::query()->find($request->get('id'));
+        $oldState = $order->pay_summary;
+        $order->pay_state = $request->get('state');
+        $order->pay_summary = OrderStatusConstants::toSummary($request->state);
+        $order->real_paid_amount = $request->get('real_paid_amount');
+        if (!is_null($request->get('pay_end_time'))) {
+            $order->pay_end_time = $request->get('pay_end_time');
+        }
+        $order->manual_at = date('Y-m-d H:i:s');
+        $order->save();
         activity($user->email)
             ->causedBy($user)
-            ->log('修改订单:' . $authcode->trade_seq . ' 状态,由"' . $oldState . '"修改至"' . $authcode->pay_summary . '"');
+            ->log('修改订单:' . $order->trade_seq . ' 状态,由"' . $oldState . '"修改至"' . $order->pay_summary . '"');
 
-        return Response::json($authcode);
+        return Response::json($order);
     }
 
     /**

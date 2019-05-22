@@ -35,4 +35,8 @@ class PermissionSubjectConstants
     const REPORT_STATISTICAL = 'report.statistical';
     const LISTENER_SETTING_BANK_TEMPLATE = 'listener.setting.bankTemplate';
     const USER_ORDER_LISTENER = 'user.order.listener';
+    const ORDER_QUERY_DOMINATE = 'logQuery';// 訂單查詢全功能
+    const ORDER_QUERY_SHOW_STATE = 'logQuery.showState';
+    const ORDER_QUERY_MANAGE = 'order.query.manage';
+    const ORDER_QUERY_UPDATE = 'order.query.update';
 }

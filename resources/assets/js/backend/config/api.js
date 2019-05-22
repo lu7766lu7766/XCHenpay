@@ -49,24 +49,6 @@ export default {
                 uri: '/admin/logQuery/callNotify',
                 method: 'post'
             }
-        },
-        fee: {
-            list: {
-                uri: '/admin/logQuery/feeData',
-                method: 'post'
-            },
-            info: {
-                uri: '/admin/logQuery/showFeeInfo/{payment}',
-                method: 'get'
-            },
-            state: {
-                uri: '/admin/logQuery/editFeeInfo/{payment}',
-                method: 'get'
-            },
-            update: {
-                uri: '/admin/logQuery/updateFeeInfo',
-                method: 'post'
-            }
         }
     },
     /** 下發列表 */

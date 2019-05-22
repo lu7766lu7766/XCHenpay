@@ -19,6 +19,7 @@ use App\Policies\ListenOrderPolicy;
 use App\Policies\MerchantsPolicy;
 use App\Policies\NotifyOrderFailPolicy;
 use App\Policies\OrderNotifyPolicy;
+use App\Policies\OrderQueryPolicy;
 use App\Policies\PaymentManagePolicy;
 use App\Policies\PersonalAccountPolicy;
 use App\Policies\ReportSearchPolicy;
@@ -63,6 +64,7 @@ class AuthServiceProvider extends ServiceProvider
         'ReportStatisticalPolicy'     => ReportStatisticalPolicy::class,
         'UserPaymentAccountPolicy'    => UserPaymentAccountPolicy::class,
         'ListenerSettingPolicy'       => ListenerSettingPolicy::class,
+        OrderQueryPolicy::class       => OrderQueryPolicy::class,
     ];
 
     /**

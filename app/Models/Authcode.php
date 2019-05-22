@@ -43,6 +43,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property float rand_fee
  * @property Collection|UserPaymentAccount[] userPaymentAccount
  * @property AuthcodesPaymentAccount authcodesPaymentAccount
+ * @property Carbon manual_at
+ * @property Carbon pay_end_time
  */
 class Authcode extends Model
 {

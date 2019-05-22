@@ -5,14 +5,21 @@
  * Date: 2019/4/11
  * Time: 下午 03:21
  */
+
+use App\Policies\OrderQueryPolicy;
+
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admin', 'as' => 'admin.'],
     function () {
         Route::group(['middleware' => 'tradeLog'], function () {
             Route::get('logQuery', 'AuthcodeController@index')->name('authcode.index');
             Route::get('logQuery/showInfo/{authcode}', 'AuthcodeController@showInfo')->name('authcode.showInfo');
-            Route::get('logQuery/showState/{authcode}', 'AuthcodeController@showState')->name('authcode.showState');
-            Route::post('logQuery/updateState', 'AuthcodeController@updateState')->name('authcode.stateUpdate');
+            Route::get('logQuery/showState/{authcode}', 'AuthcodeController@showState')
+                ->middleware('has:showState,' . OrderQueryPolicy::class)
+                ->name('authcode.showState');
+            Route::post('logQuery/updateState', 'AuthcodeController@updateState')
+                ->middleware('has:update,' . OrderQueryPolicy::class)
+                ->name('authcode.stateUpdate');
             Route::get('logQuery/showFeeInfo/{payment}', 'AuthcodeController@showFeeInfo')
                 ->name('authcode.showFeeInfo');
             Route::get('logQuery/editFeeInfo/{payment}', 'AuthcodeController@editFeeInfo')

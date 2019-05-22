@@ -5,5 +5,8 @@ export default class API {
             accountSetting: new (require('./Request/Cashier/AccountSetting').default),
             companyAccount: new (require('./Request/Cashier/CompanyAccount').default)
         }
+        this.search = {
+            orderSearch: new (require('./Request/Search/OrderSearch').default)
+        }
     }
 }

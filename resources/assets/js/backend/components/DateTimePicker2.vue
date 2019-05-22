@@ -1,6 +1,9 @@
 <template>
     <div class="input-group">
-        <input type='text' class="form-control" ref="picker" :placeholder="placeholder"/>
+        <date-time-picker :type="type"
+                          :placeholder="placeholder"
+                          :value="value"
+                          @input="newVal => $emit('input', newVal)"/>
         <div class="input-group-append">
             <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
         </div>
@@ -8,6 +11,9 @@
 </template>
 <script>
     export default {
+        components: {
+            DateTimePicker: require('@/DateTimePickerInput')
+        },
         props: {
             type: {
                 type: String,
@@ -21,25 +27,6 @@
                 type: Object,
                 requered: true
             }
-        },
-        watch: {
-            value(newValue) {
-                moment.isMoment(newValue) && $(this.$refs.picker).val(newValue.format('YYYY-MM-DD HH:mm:ss'))
-            }
-        },
-        mounted() {
-            $(this.$refs.picker).datetimepicker({
-                format: 'YYYY-MM-DD HH:mm:ss',
-                date: this.value,
-                locale: moment.locale('zh-cn')//'zh_CN'
-            })
-            $(this.$refs.picker).on("dp.change", e => {
-                // console.log(e.date)
-                this.$emit('input', e.date)
-            })
-        },
-        destroyed() {
-            $(this.$refs.picker).off("dp.change")
         }
     }
 </script>
