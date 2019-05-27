@@ -37,7 +37,7 @@ class GatewayService
         $bankCard = $orderInfo->bankCardAccount->first();
         $result = [
             'order_number' => $orderInfo->trade_service_id,
-            'amount'       => $orderInfo->amount,
+            'amount'       => $orderInfo->amountPayable(),
             'expired_time' => $orderInfo->created_at->addMinute(2)->toDateTimeString(),
             'qrcode_url'   => $bankCard->gatewayUri->uri,
             'payment_type' => $orderInfo->payment_type,
