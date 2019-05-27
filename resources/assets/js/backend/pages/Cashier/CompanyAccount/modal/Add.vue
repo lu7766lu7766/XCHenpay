@@ -16,9 +16,9 @@
                                     隐藏银行卡号使用, 若无输入, 则无法隐藏银行卡号
                                     <a href="javascript:void(0);"
                                        @click="$open('/admin/description/alipay', '', {
-                                        width: 800,
-                                        height: 600
-                                    })"
+                                           width: 800,
+                                           height: 600
+                                       })"
                                        class="text-blue">(支付宝获取说明)</a>
                                 </div>
                             </div>

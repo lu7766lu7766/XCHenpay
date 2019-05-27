@@ -69,20 +69,24 @@ export default {
     },
     async mounted() {
         document.getElementsByClassName('alipay-logo')[0].style.display = 'none'
-        try {
-            var res = await this.$callApi(this.apiKey + ':data', {
-                trade_seq: this.trade_seq
-            }, null, {isShowAlert: false, throwRes: true})
-            this.data = res.data
-            this.isExpire = moment.duration(moment(this.data.expired_time).diff(moment())).asSeconds() <= 0
-            if (!this.isExpire) {
-                this.counter()
-                this.timer = setInterval(this.counter, 1000)
+
+        await this.$api.gateway[this.$options.api].getData({
+            trade_seq: this.trade_seq
+        }, {
+            s: res => {
+                this.data = res.data
+                this.isExpire = moment.duration(moment(this.data.expired_time).diff(moment())).asSeconds() <= 0
+                if (!this.isExpire) {
+                    this.counter()
+                    this.timer = setInterval(this.counter, 1000)
+                }
+            },
+            f: e => {
+                // console.log(e)
+                this.data = e.data || {}
             }
-        } catch (e) {
-            console.log(e)
-            this.data = e.data
-        }
+        })
+
         this.waitPageReady()
         document.title = this.paymentHook.title
     },

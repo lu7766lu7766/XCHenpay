@@ -10,7 +10,7 @@
     import Mixins from '../Common/mixins'
 
     export default {
-        api: 'toBankCard',
+        api: 'select',
         mixins: [Mixins],
         components: {
             Alipay: require('./Alipay'),

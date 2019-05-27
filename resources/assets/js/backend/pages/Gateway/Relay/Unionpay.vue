@@ -122,10 +122,11 @@
                 } catch (e) {
                     return alert(e);
                 }
-                this.proccessAjax(`extraInfo`, {
-                    trade_seq: this.tradeSeq,
-                    account: this.search.account
-                }, res => {
+                this.callApi(async () => {
+                    const res = await this.$api.gateway.relay.getInfo({
+                        trade_seq: this.tradeSeq,
+                        account: this.search.account
+                    })
                     if (res.data.result) {
                         this.isShowQRCode = true
                     }

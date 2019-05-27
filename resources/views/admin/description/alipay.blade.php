@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="{{ asset('plugins/datepicker/css/bootstrap-datetimepicker.min.css') }}">
 
     <!-- Sweet Alert -->
-    <link href="{{ asset('plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">
+{{--<link href="{{ asset('plugins/sweet-alert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css">--}}
 
-    <!-- Magnific popup -->
+<!-- Magnific popup -->
     <link href="{{ asset('plugins/magnific-popup/magnific-popup.css') }}" rel="stylesheet" type="text/css">
 
     <!-- default style -->
@@ -161,52 +161,52 @@
 </div>
 <!-- end step-list -->
 <!-- jQuery  -->
-<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
-<script src="{{ asset('assets/js/waves.min.js') }}"></script>
+{{--<script src="{{ asset('assets/js/jquery.min.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>--}}
+{{--<script src="{{ asset('assets/js/waves.min.js') }}"></script>--}}
 
-<script src="{{ asset('plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+{{--<script src="{{ asset('plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>--}}
 
 <!-- datapicker js -->
-<script src="{{ asset('plugins/datepicker/js/moment.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('plugins/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
-<script src="{{ asset('plugins/datepicker/js/bootstrap-datetimepicker.zh-CN.js') }}"></script>
+{{--<script src="{{ asset('plugins/datepicker/js/moment.min.js') }}" type="text/javascript"></script>--}}
+{{--<script src="{{ asset('plugins/datepicker/js/bootstrap-datetimepicker.min.js') }}"></script>--}}
+{{--<script src="{{ asset('plugins/datepicker/js/bootstrap-datetimepicker.zh-CN.js') }}"></script>--}}
 
 <!-- Sweet-Alert  -->
-<script src="{{ asset('plugins/sweet-alert2/sweetalert2.min.js') }}"></script>
+{{--<script src="{{ asset('plugins/sweet-alert2/sweetalert2.min.js') }}"></script>--}}
 
 <!-- Magnific popup -->
-<script src="{{ asset('plugins/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+{{--<script src="{{ asset('plugins/magnific-popup/jquery.magnific-popup.min.js') }}"></script>--}}
 
 <!-- App js -->
-<script src="{{ asset('assets/js/app.js') }}"></script>
+{{--<script src="{{ asset('assets/js/app.js') }}"></script>--}}
 <script>
-    $(function () {
-        $('.zoom-gallery').magnificPopup({
-            delegate: 'a',
-            type: 'image',
-            closeOnContentClick: false,
-            closeBtnInside: false,
-            mainClass: 'mfp-with-zoom mfp-img-mobile',
-            image: {
-                verticalFit: true,
-                titleSrc: function (item) {
-                    // return item.el.attr('title') + ' &middot; <a href="'+item.el.attr('data-source')+'" target="_blank">image source</a>';
-                }
-            },
-            gallery: {
-                enabled: true
-            },
-            zoom: {
-                enabled: true,
-                duration: 300, // don't foget to change the duration also in CSS
-                opener: function (element) {
-                    return element.find('img');
-                }
-            }
-        });
-    })
+    // $(function () {
+    //     $('.zoom-gallery').magnificPopup({
+    //         delegate: 'a',
+    //         type: 'image',
+    //         closeOnContentClick: false,
+    //         closeBtnInside: false,
+    //         mainClass: 'mfp-with-zoom mfp-img-mobile',
+    //         image: {
+    //             verticalFit: true,
+    //             titleSrc: function (item) {
+    //                 // return item.el.attr('title') + ' &middot; <a href="'+item.el.attr('data-source')+'" target="_blank">image source</a>';
+    //             }
+    //         },
+    //         gallery: {
+    //             enabled: true
+    //         },
+    //         zoom: {
+    //             enabled: true,
+    //             duration: 300, // don't foget to change the duration also in CSS
+    //             opener: function (element) {
+    //                 return element.find('img');
+    //             }
+    //         }
+    //     });
+    // })
 </script>
 </body>
 </html>

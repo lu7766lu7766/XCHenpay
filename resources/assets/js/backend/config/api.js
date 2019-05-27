@@ -14,43 +14,6 @@ export default {
             method: 'post',
         }
     },
-    /** 訂單查詢 */
-    orderSearch: {
-        dataInit: {
-            uri: '/admin/logQuery/dataInit',
-            method: 'get'
-        },
-        order: {
-            dataInit: {
-                uri: '/admin/logQuery/payment',
-                method: 'get'
-            },
-            list: {
-                uri: ['/admin/data', '/admin/orderTradeInfo'],
-                method: 'post'
-            },
-            total: {
-                uri: '/admin/dataTotal',
-                method: 'post'
-            },
-            info: {
-                uri: '/admin/logQuery/showInfo/{authcode}',
-                method: 'get'
-            },
-            state: {
-                uri: '/admin/logQuery/showState/{authcode}',
-                method: 'get'
-            },
-            update: {
-                uri: '/admin/logQuery/updateState',
-                method: 'post'
-            },
-            notify: {
-                uri: '/admin/logQuery/callNotify',
-                method: 'post'
-            }
-        }
-    },
     /** 下發列表 */
     lendList: {
         amountInfo: {
@@ -340,33 +303,6 @@ export default {
         update: {
             uri: '/admin/user/profile/password',
             method: 'put'
-        }
-    },
-    /** 行動支付轉銀行卡 */
-    gateway: {
-        toBankCard: {
-            data: {
-                uri: '/pay/gateway/to_bank_card/data',
-                method: 'get'
-            },
-            taobo: {
-                uri: '/pay/gateway/startup/taobo',
-                method: 'get'
-            },
-            alipay: {
-                uri: '/pay/gateway/startup/aliPay',
-                method: 'get'
-            }
-        },
-        relay: {
-            data: {
-                uri: '/pay/gateway/relay/data',
-                method: 'get'
-            },
-            extraInfo: {
-                uri: '/pay/gateway/extra/info',
-                method: 'get'
-            }
         }
     },
     /** 帳戶管理 */

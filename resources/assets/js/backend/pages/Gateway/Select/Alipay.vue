@@ -56,22 +56,13 @@
             layout: require('../Layout')
         },
         methods: {
-            waiter(times) {
-                return new Promise(resolve => {
-                    setTimeout(() => {
-                        resolve(1)
-                    }, times * 1000)
-                })
-            },
-            async getUrl(key) {
-                const res = await this.$callApi(this.apiKey + ':' + key, {
-                    trade_seq: this.tradeSeq
-                })
-                return res.data
-            },
             async linkTo(key) {
-                const url = await this.getUrl(key)
-                location.href = url
+                console.log(key)
+                this.$api.gateway.select[key]({
+                    trade_seq: this.tradeSeq
+                }, {
+                    s: res => location.href = res.data
+                })
             }
         },
         computed: {

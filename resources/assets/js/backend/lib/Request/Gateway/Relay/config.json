@@ -1,0 +1,10 @@
+{
+  "data": {
+    "uri": "relay/data",
+    "method": "get"
+  },
+  "info": {
+    "uri": "extra/info",
+    "method": "get"
+  }
+}

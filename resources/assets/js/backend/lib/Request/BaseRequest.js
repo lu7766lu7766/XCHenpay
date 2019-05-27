@@ -34,13 +34,18 @@ export default class BaseRequest {
         const conf = this.config[key]
         if (!conf) throw 'not found the config'
 
-        let res = await axios(createApiBody(
-            conf.method,
-            path.join(...this.baseUrls, conf.uri),
-            _.merge(
-                _.pickBy(this.convertMoment2String(data), x => x !== '' && !_.isNull(x) && !_.isUndefined(x)), conf.data),
-            conf.header)
-        ).catch(e => this.resultProccess(e, options))
+        let res
+        try {
+            res = await axios(createApiBody(
+                conf.method,
+                path.join(...this.baseUrls, conf.uri),
+                _.merge(
+                    _.pickBy(this.convertMoment2String(data), x => x !== '' && !_.isNull(x) && !_.isUndefined(x)), conf.data),
+                conf.header)
+            )
+        } catch (e) {
+            return this.resultProccess(e, options)
+        }
 
         return this.resultProccess(res, options)
     }
@@ -63,16 +68,16 @@ export default class BaseRequest {
         })
         return errorMessages.length
             ? failF
-                ? failF(errorMessages)
-                : this.errorHandle(errorMessages)
+                ? failF(res.data, errorMessages)
+                : this.errorHandle(res.data, errorMessages)
             : successF
                 ? successF(roopParse(res.data))
                 : roopParse(res.data)
     }
 
-    errorHandle(errorMessages) {
+    errorHandle(res, errorMessages) {
         const msg = errorMessages.join('\n')
         alert(msg)
-        throw msg
+        throw {message: msg, ...res}
     }
 }

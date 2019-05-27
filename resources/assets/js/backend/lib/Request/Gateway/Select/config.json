@@ -1,0 +1,14 @@
+{
+  "data": {
+    "uri": "to_bank_card/data",
+    "method": "get"
+  },
+  "taobo": {
+    "uri": "startup/taobo",
+    "method": "get"
+  },
+  "alipay": {
+    "uri": "startup/aliPay",
+    "method": "get"
+  }
+}

@@ -8,5 +8,9 @@ export default class API {
         this.search = {
             orderSearch: new (require('./Request/Search/OrderSearch').default)
         }
+        this.gateway = {
+            select: new (require('./Request/Gateway/Select').default),
+            relay: new (require('./Request/Gateway/Relay').default)
+        }
     }
 }
