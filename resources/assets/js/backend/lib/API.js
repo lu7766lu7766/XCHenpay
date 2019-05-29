@@ -12,5 +12,8 @@ export default class API {
             select: new (require('./Request/Gateway/Select').default),
             relay: new (require('./Request/Gateway/Relay').default)
         }
+        this.software = {
+            download: new (require('./Request/Software/Download').default)
+        }
     }
 }

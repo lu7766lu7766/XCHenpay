@@ -88,6 +88,10 @@ body {
   width: 80px;
 }
 
+.width-control-md {
+  width: 105px;
+}
+
 .width-control-lg {
   width: 130px;
 }
@@ -393,8 +397,18 @@ body {
           flex: 0 0 calc(75% - 15px);
 }
 
+#topnav .navigation-menu > li > a {
+  cursor: pointer;
+}
+
 #topnav .topbar-main .logo .logo-large {
   height: 30px;
+}
+
+@media (max-width: 620px) {
+  #topnav .topbar-main .logo .logo-large {
+    display: inline-block;
+  }
 }
 
 @media screen and (min-width: 991px) {

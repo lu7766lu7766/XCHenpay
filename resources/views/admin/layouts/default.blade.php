@@ -70,6 +70,12 @@
 
 @yield('modal')
 
+<script>
+    function openDownloadPage() {
+        window.open('{{ route('software.download') }}', '软件下载', config = 'height=600,width=800,top=50,left=200');
+    }
+</script>
+
 <!-- jQuery  -->
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
