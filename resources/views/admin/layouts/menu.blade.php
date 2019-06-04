@@ -131,10 +131,10 @@
         @endif
 
         <li class="has-submenu">
-            <a href="https://xing99.hackmd.io/s/HyzvUz8vV" target="_blank"><i class="ti-link"></i>串接文件</a>
+            <a href="https://doc.xing99.cc/s/HyzvUz8vV" target="_blank"><i class="ti-link"></i>串接文件</a>
         </li>
         <li class="has-submenu">
-            <a href="javascript:;" onclick="openDownloadPage()"><i class="ti-download"></i>软件下载</a>
+            <a href="javascript:;" onclick="openDownloadPage()"><i class="ti-link"></i>软件下载</a>
         </li>
     </ul>
     <!-- End navigation menu -->
