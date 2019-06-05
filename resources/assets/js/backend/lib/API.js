@@ -15,5 +15,9 @@ export default class API {
         this.software = {
             download: new (require('./Request/Software/Download').default)
         }
+        this.channel = {
+            manage: new (require('./Request/ChannelSetting/FeeManage').default),
+            list: new (require('./Request/ChannelSetting/FeeList').default),
+        }
     }
 }

@@ -1,0 +1,6 @@
+{
+  "list": {
+    "uri": "feeList",
+    "method": "post"
+  }
+}

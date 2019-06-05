@@ -1,0 +1,14 @@
+{
+  "list": {
+    "uri": "",
+    "method": "post"
+  },
+  "update": {
+    "uri": "maintain",
+    "method": "put"
+  },
+  "options": {
+    "uri": "merchantList",
+    "method": "get"
+  }
+}

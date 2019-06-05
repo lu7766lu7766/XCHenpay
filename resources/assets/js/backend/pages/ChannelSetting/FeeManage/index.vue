@@ -43,9 +43,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- table-responsive end -->
-                    <paginate :page="paginate.page" :last-page="lastPage" @pageChange="pageChange"/>
-                    <!-- <nav aria-label="Page navigation" class="page-bar"> end -->
+
                 </div>
             </div>
             <!-- card end -->
@@ -86,14 +84,20 @@
         },
         methods: {
             dataInit() {
-                this.proccessAjax('dataInit', {}, res => {
-                    this.companies = res.data
+                this.callApi(async () => {
+                    await this.$api.channel.manage.getOptions({
+                        s: res => this.companies = res.data
+                    })
                 })
             },
-            getTotal(res) {
+            getList() {
+                this.callApi(async () => {
+                    await this.$api.channel.manage.getList(this.customGetReqBody, {
+                        s: res => this.datas = _.orderBy(res.data, x => +x.i6pay_id, 'asc')
+                    })
+                })
             },
-            onGetList(res) {
-                this.datas = _.orderBy(res.data, x => +x.i6pay_id, 'asc')
+            getTotal() {
             }
         },
         computed: {

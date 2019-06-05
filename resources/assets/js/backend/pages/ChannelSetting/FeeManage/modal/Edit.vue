@@ -55,14 +55,18 @@
         mixins: [DetailMixins, FeeMixins],
         methods: {
             update() {
-                this.proccessAjax('update', {
-                    status: this.data.status,
-                    id: this.data.id,
-                    merchant_id: this.$parent.company_id,
-                    fee: this.data.fee
-                }, _ => {
-                    this.updateSuccess()
-                    $(this.$refs.modal).modal('hide')
+                this.callApi(async () => {
+                    await this.$api.channel.manage.update({
+                        status: this.data.status,
+                        id: this.data.id,
+                        merchant_id: this.$parent.company_id,
+                        fee: this.data.fee
+                    }, {
+                        s: () => {
+                            this.updateSuccess()
+                            $(this.$refs.modal).modal('hide')
+                        }
+                    })
                 })
             }
         },

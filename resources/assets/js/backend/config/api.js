@@ -276,28 +276,6 @@ export default {
             method: 'get'
         }
     },
-    /** 通道列表 */
-    feeList: {
-        list: {
-            uri: '/admin/channel/feeList',
-            method: 'post'
-        }
-    },
-    /** 通道管理 */
-    feeManage: {
-        dataInit: {
-            uri: '/admin/channel/feeManagement/merchantList',
-            method: 'get'
-        },
-        list: {
-            uri: '/admin/channel/feeManagement',
-            method: 'post'
-        },
-        update: {
-            uri: '/admin/channel/feeManagement/maintain',
-            method: 'put'
-        }
-    },
     /** 商戶資料 */
     companyData: {
         update: {

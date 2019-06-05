@@ -40,9 +40,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- table-responsive end -->
-                    <paginate :page="paginate.page" :last-page="lastPage" @pageChange="pageChange"/>
-                    <!-- <nav aria-label="Page navigation" class="page-bar"> end -->
+                    
                 </div>
             </div>
             <!-- card end -->
@@ -62,10 +60,14 @@
             Detail: require('./modal/Detail')
         },
         methods: {
-            getTotal(res) {
+            getList() {
+                this.callApi(async () => {
+                    await this.$api.channel.list.getList(this.getReqBody, {
+                        s: res => this.datas = _.orderBy(res.data, x => +x.i6pay_id, 'asc')
+                    })
+                })
             },
-            onGetList(res) {
-                this.datas = _.orderBy(res.data, x => +x.i6pay_id, 'asc')
+            getTotal() {
             }
         },
         mounted() {
