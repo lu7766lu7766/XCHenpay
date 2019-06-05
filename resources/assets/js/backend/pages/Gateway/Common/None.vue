@@ -24,5 +24,5 @@
 </script>
 
 <style>
-    @import '/gateway/alipay/front-old.css';
+    @import '/gateway/alipay/front-old2.css';
 </style>

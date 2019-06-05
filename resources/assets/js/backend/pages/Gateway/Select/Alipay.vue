@@ -8,27 +8,33 @@
 
         <div slot="qrcode-body">
             <div data-role="qrPayArea" class="qrcode-integration qrcode-area" id="J_qrPayArea">
-                <div class="aplogo"><img src="/gateway/alipay/aplogo.png" alt=""></div>
-                <div class="text-center">
-                    <button class="btn-open" type="button" @click="linkTo('alipay')">
-                        点击唤起支付宝
-                    </button>
+                <div class="tblogo"><img src="/gateway/alipay/tblogo.png" alt=""></div>
+                <div class="text-area">
+                    <div class="openalipay">透过淘宝跳转可直接支付</div>
+                    <a href="https://mpage.taobao.com/hd/download.html?TBG=146112.176505.4&spm=1.146112.176505.4"
+                       target="_blank" class="qrcode-downloadApp">首次使用请下载手机淘宝</a>
+                    <button class="btn-open2" type="button" @click="linkTo('taobo')">点击唤起淘宝</button>
                 </div>
-                <div class="openalipay">使用支付宝支付需要等待120秒</div>
-                <a href="https://mobile.alipay.com/index.htm" target="_blank"
-                   class="qrcode-downloadApp">首次使用请下载手机支付宝</a>
+                　
             </div>
 
             <div data-role="qrPayArea" class="qrcode-integration qrcode-area" id="J_qrPayArea">
-                <div class="tblogo"><img src="/gateway/alipay/tblogo.png" alt=""></div>
-                <div class="text-center">
-                    <button class="btn-open2" type="button" @click="linkTo('taobo')">
-                        点击唤起淘宝
-                    </button>
+                <div class="aplogo"><img src="/gateway/alipay/aplogo.png" alt=""></div>
+                <div class="text-area">
+                    <div class="openalipay">使用支付宝支付需要等待120秒</div>
+                    <a href="https://mobile.alipay.com/index.htm" target="_blank" class="qrcode-downloadApp">首次使用请下载手机支付宝</a>
+                    <button class="btn-open" type="button" @click="linkTo('alipay')">点击唤起支付宝</button>
                 </div>
-                <div class="openalipay">透过淘宝跳转可直接支付</div>
-                <a href="https://mpage.taobao.com/hd/download.html?TBG=146112.176505.4&spm=1.146112.176505.4"
-                   target="_blank" class="qrcode-downloadApp">首次使用请下载手机淘宝</a>　　 　
+            </div>
+
+            　
+            <div data-role="qrPayArea" class="qrcode-integration qrcode-area" id="J_qrPayArea">
+                <div class="aplogo"><img src="/gateway/alipay/aplogo.png" alt=""></div>
+                <div class="text-area">
+                    <div class="openalipay">目前暂不开放</div>
+                    <a href="https://mobile.alipay.com/index.htm" target="_blank" class="qrcode-downloadApp">首次使用请下载手机支付宝</a>
+                    <button class="btn-open" type="button">点击显示二维码</button>
+                </div>
             </div>
         </div>
 
@@ -73,6 +79,6 @@
     }
 </script>
 
-<style>
+<style scoped>
     @import '/gateway/alipay/front-old2.css';
 </style>

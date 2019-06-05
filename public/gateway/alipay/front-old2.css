@@ -331,25 +331,29 @@ fieldset {
   background-color: #00aaee;
   border: none;
   color: white;
-  padding: 10px 32px;
+  padding: 8px 8px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  width: 182px;
+  width: 100%;
+  margin-top: 4px;
   border-radius: 6px;
+  cursor: pointer;
 }
 .btn-open2{
   background-color: #fe7513;
   border: none;
   color: white;
-  padding: 10px 32px;
+  padding: 8px 8px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  width: 182px;
+  width: 100%;
+  margin-top: 4px;
   border-radius: 6px;
+  cursor: pointer;
 }
 
 .mi-form-item {
@@ -3606,7 +3610,7 @@ a.ui-poptip-close:hover {
 
 .qrcode-independence,
 .qrcode-integration {
-    width: 300px;
+    max-width: 420px;
     margin: 0 auto
 }
 
@@ -3840,9 +3844,10 @@ html body .fn-mt20 {
 .qrcode-area {
     margin: 0 auto;
     position: relative;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    text-align: center;
+    padding: 10px;
+    margin-bottom: 30px;
+    box-shadow: 3px 4px 17px #eff0f1;
+    box-sizing: border-box;
 }
 
 .qrcode-integration .qrcode-header {
@@ -3951,7 +3956,8 @@ a.mi-button-lwhite .mi-button-text {
 .qrcode-downloadApp:hover,
 .qrcode-downloadApp:active,
 .qrcode-explain a.qrcode-downloadApp:hover {
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 200%;
     color: #a6a6a6;
     text-decoration: underline;
     display: block;
@@ -4391,6 +4397,7 @@ body,
     position: relative;
     width: 803px;
     margin:0 auto;
+    padding: 50px 0px 30px 0px;
 }
 
 .cashier-center-view.view-pc {
@@ -4710,27 +4717,35 @@ body {
     height: 100%;
 }
 .aplogo, .tblogo {
-    width: 80px;
+    width: 30%;
     padding: 8px;
     padding-bottom: 3px;
     margin: 0 auto;
-    margin-bottom: 10px;
     border: 1px solid #ececec;
     border-radius: 18px;
+    display: inline-block;
+    vertical-align: top;
     box-sizing: content-box;
 }
 .aplogo img, .tblogo img {
     width:100%;
     height: auto;
 }
+.text-area {
+    width: 60%;
+    padding: 3%;
+    box-sizing: border-box;
+    display: inline-block;
+}
 .openalipay {
     display: block;
-    width: 180px;
-    font-size: 13px;
-    margin: 10px auto;
+    width: auto;
+    font-size: 14px;
+    line-height: 200%;
+    margin: 0px;
     box-sizing: border-box;
     border-radius: 6px;
-    text-align: center;
+    text-align: left;
     color: red;
 }
 .openalipay a {
@@ -4819,7 +4834,20 @@ body {
 
     .cashier-center-view {
         left: auto !important;
-        padding: 0px;
+        padding: 10px 0px 10px 0px;
+    }
+    
+    .qrcode-area {
+        margin-bottom: 10px;
+    }
+
+    .aplogo, .tblogo {
+        width: 20%;
+    } 
+
+    .text-area {
+        width: 65%;
+        padding-left: 5%;
     }
 
     #partner img {
@@ -4856,4 +4884,23 @@ body {
         left: 73%;
         width: 114px;
     }
+    .qrcode-independence, .qrcode-integration {
+        width: 100%;
+        padding: 0px;
+        padding-right: 0px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        border-bottom: 1px dashed #dedede;
+    }
+    .btn-open, .btn-open2{
+        padding: 3px 0px;
+    }
+    .cashier-center-view {
+        padding: 10px 0px 10px 0px;
+    }
+    .text-area {
+        width: 70%;
+        padding-left: 3%;
+    }
+
 }
