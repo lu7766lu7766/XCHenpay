@@ -40,6 +40,11 @@ class GatewayPaymentType {
             component: 'Redirect',
             title: '在线支付 - 蚕宝宝支付 - 网上支付 安全快速！'
         },
+        // 直接跳轉
+        '56': {
+            component: 'Redirect',
+            title: '在线支付 - 蚕宝宝支付 - 网上支付 安全快速！'
+        },
         // 支轉銀
         '201': {
             component: 'Alipay',
