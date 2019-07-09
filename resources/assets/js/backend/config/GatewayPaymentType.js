@@ -45,6 +45,16 @@ class GatewayPaymentType {
             component: 'Redirect',
             title: '在线支付 - 蚕宝宝支付 - 网上支付 安全快速！'
         },
+        // 支付寶掃碼
+        '86': {
+            component: 'Post2',
+            title: '在线支付 - 支付寶 - 网上支付 安全快速！'
+        },
+        // 微信掃碼
+        '87': {
+            component: 'Post2',
+            title: '在线支付 - 微信支付 - 网上支付 安全快速！'
+        },
         // 支轉銀
         '201': {
             component: 'Alipay',

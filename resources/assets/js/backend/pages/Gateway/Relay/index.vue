@@ -21,6 +21,7 @@
             Redirect: () => import('./Redirect'),
             AlipayForwardAlipay: () => import('./AlipayForwardAlipay'),
             Unionpay: () => import('./Unionpay'),
+            Post2: () => import('./Post2'),
             None: require('../Common/None')
         }
     }

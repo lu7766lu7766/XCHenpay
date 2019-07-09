@@ -82,4 +82,32 @@ export const getUrlParameter = name => {
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
 
+export const urlParse = url => {
+    const search = url.split('?')[1]
+    url = url.split('?')[0]
+    const res = {}
+    const params = search.split('&')
+    _.forEach(params, param => {
+        res[param.split('=')[0]] = param.split('=')[1]
+    })
+    return {
+        url, params: res
+    }
+}
 
+export const formSubmit = (url, params, method = 'post') => {
+    const form = document.createElement('form')
+    form.method = method
+    form.action = url
+    for (const key in params) {
+        if (params.hasOwnProperty(key)) {
+            const hiddenField = document.createElement('input');
+            hiddenField.type = 'hidden';
+            hiddenField.name = key;
+            hiddenField.value = params[key];
+            form.appendChild(hiddenField);
+        }
+    }
+    document.body.appendChild(form);
+    form.submit();
+}
