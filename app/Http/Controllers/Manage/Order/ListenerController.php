@@ -11,19 +11,22 @@ namespace App\Http\Controllers\Manage\Order;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Listener\BankCardOrderRequest;
 use App\Http\Requests\Listener\IsCallBackRequest;
+use App\Http\Requests\Listener\OrderRequest;
+use App\Models\Authcode;
 use App\Service\Manage\Order\ListenerService;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
- * Class OrderController
+ * Class ListenerController
  * @package App\Http\Controllers\Manage\Listener
  */
 class ListenerController extends Controller
 {
     /**
      * @param BankCardOrderRequest $request
-     * @return \App\Models\Authcode|\Illuminate\Database\Eloquent\Collection
+     * @return Authcode|Collection
      */
-    public function order(BankCardOrderRequest $request)
+    public function bankCardOrder(BankCardOrderRequest $request)
     {
         return ListenerService::getInstance()->orderOfBankCard($request);
     }
@@ -36,5 +39,14 @@ class ListenerController extends Controller
     public function isCallBack(IsCallBackRequest $request)
     {
         return ['data' => ListenerService::getInstance()->isCallBack($request)];
+    }
+
+    /**
+     * @param OrderRequest $request
+     * @return Authcode[]|Collection
+     */
+    public function order(OrderRequest $request)
+    {
+        return ListenerService::getInstance()->findOrders($request);
     }
 }

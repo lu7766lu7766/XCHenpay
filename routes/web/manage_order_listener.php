@@ -11,6 +11,7 @@ Route::group([
     'namespace'  => 'Manage\Order',
     'middleware' => ['admin', 'has:listenOrder,ListenerOrderPolicy', 'json_api', 'throttle:60,1'],
 ], function () {
-    Route::POST('/', 'ListenerController@order');
+    Route::POST('/', 'ListenerController@bankCardOrder');
+    Route::POST('/payment', 'ListenerController@order');
     Route::POST('is_call_back', 'ListenerController@isCallBack');
 });

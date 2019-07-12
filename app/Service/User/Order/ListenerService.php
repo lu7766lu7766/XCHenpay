@@ -10,10 +10,13 @@ namespace App\Service\User\Order;
 
 use App\Http\Requests\Listener\BankCardOrderRequest;
 use App\Http\Requests\Listener\IsCallBackRequest;
+use App\Http\Requests\Listener\OrderRequest;
+use App\Models\Authcode;
 use App\Repositories\User\Order\ListenerRepo;
 use App\Traits\Singleton;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 
 class ListenerService
 {
@@ -31,7 +34,7 @@ class ListenerService
 
     /**
      * @param BankCardOrderRequest $request
-     * @return \App\Models\Authcode|\Illuminate\Database\Eloquent\Collection
+     * @return Authcode|Collection
      */
     public function orderOfBankCard(BankCardOrderRequest $request)
     {
@@ -44,6 +47,25 @@ class ListenerService
             $request->getId(),
             $start,
             $end,
+            $request->getPayState()
+        );
+    }
+
+    /**
+     * @param OrderRequest $request
+     * @return Authcode[]|Collection
+     */
+    public function orders(OrderRequest $request)
+    {
+        $time = Carbon::now();
+        $end = $time->toDateTimeString();
+        $start = $time->subMinute(config('manageorderlistener.search_time'))->startOfMinute()->toDateTimeString();
+
+        return app(ListenerRepo::class)->findOrders(
+            $this->user->company_service_id,
+            $start,
+            $end,
+            $request->getPaymentType(),
             $request->getPayState()
         );
     }

@@ -11,6 +11,8 @@ namespace App\Repositories\Manage\Order;
 use App\Constants\Order\OrderStatusConstants;
 use App\Models\Authcode;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use XC\Independent\Kit\Support\Scalar\ArrayMaster;
 
 /**
  * Class ListenerRepo
@@ -23,7 +25,7 @@ class ListenerRepo
      * @param string $start
      * @param string $end
      * @param int|null $payState
-     * @return Authcode|\Illuminate\Database\Eloquent\Collection
+     * @return Authcode|Collection
      */
     public function getOrderOfBankCard(int $id, string $start, string $end, int $payState = null)
     {
@@ -43,7 +45,7 @@ class ListenerRepo
      * @param float $amount
      * @param string $start
      * @param string $end
-     * @return Authcode|\Illuminate\Database\Eloquent\Collection
+     * @return Authcode|Collection
      */
     public function getOrderByCardNoAmountDate(string $bankCardNo, float $amount, string $start, string $end)
     {
@@ -53,5 +55,25 @@ class ListenerRepo
             ->whereHas('bankCardAccount', function (Builder $builder) use ($bankCardNo) {
                 $builder->where('bank_card_account.card_no', $bankCardNo);
             })->whereBetween('created_at', [$start, $end])->get();
+    }
+
+    /**
+     * @param string $start
+     * @param string $end
+     * @param array $paymentType
+     * @param int|null $payState
+     * @return Authcode[]|Collection
+     */
+    public function findOrders(string $start, string $end, array $paymentType = [], int $payState = null)
+    {
+        $query = Authcode::query()->whereBetween('created_at', [$start, $end]);
+        if (ArrayMaster::isList($paymentType)) {
+            $query->whereIn('payment_type', $paymentType);
+        }
+        if (!is_null($payState)) {
+            $query->where('pay_state', $payState);
+        }
+
+        return $query->orderBy('id', 'DESC')->get();
     }
 }
